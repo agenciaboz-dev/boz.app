@@ -1,0 +1,86 @@
+:root {
+    background-image: linear-gradient(white, #d7d7d7);
+  }
+
+@font-face {
+    font-family: Montserrat;
+    src: url("/fonts/Montserrat-Regular.ttf") ;
+}
+
+/* @font-face {
+    font-family: Montserrat;
+    src: url("../public/fonts/Montserrat-SemiBold.ttf") ;
+    font-weight: 200 400;
+} */
+
+@font-face {
+    font-family: Montserrat;
+    src: url("/fonts/Montserrat-Bold.ttf") ;
+    font-weight: bold;
+}
+
+
+.MuiList-root {
+    width: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Montserrat;
+    user-select: none;
+}
+
+.MuiTextField-root {
+    width: 100%;
+}
+
+/* .slide-routes {
+    width: 100%;
+    overflow-y: auto!important;
+    height: 100%;
+
+    .item {
+        width: 100%;
+        height: 100%;
+
+    }
+} */
+
+
+form {
+    display: contents;
+    width: 100%;
+}
+
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+section {
+    display: contents;
+}
+
+div {
+    display: flex;
+    flex-shrink: 0
+}
+
+img {
+    object-fit: contain;
+}
+
+::-webkit-scrollbar {
+    display: none;
+  }
