@@ -10,6 +10,11 @@ export const useUser = () => {
     const userContext = useContext(UserContext)
     const user = userContext.user
     const setUser = userContext.setUser
+    const drawer = {
+        open: userContext.drawer.open,
+        toogle: () => userContext.drawer.setOpen(!userContext.drawer.open),
+        close: () => userContext.drawer.setOpen(false),
+    }
 
     const login = (values: LoginForm, setLoading: (value: boolean) => void) => {
         setLoading(true)
@@ -28,5 +33,5 @@ export const useUser = () => {
         })
     }
 
-    return { user, login }
+    return { user, login, drawer }
 }

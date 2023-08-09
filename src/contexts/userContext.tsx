@@ -1,13 +1,15 @@
 import { createContext, useState } from 'react';
 import React from 'react';
 
-export interface User {
-    
-}
 
 interface UserContextValue {
-    user: User|null;
-    setUser: (user:User|null) => void;
+    user: User | null
+    setUser: (user: User | null) => void
+
+    drawer: {
+        open: boolean
+        setOpen: (open: boolean) => void
+    }
 }
 
 interface UserProviderProps {
@@ -20,10 +22,12 @@ export default UserContext;
 
 export const UserProvider:React.FC<UserProviderProps> = ({children}) => {
     const [user, setUser] = useState<User|null>(null)
+    const [openDrawer, setOpenDrawer] = useState(false)
 
-    return (
-         <UserContext.Provider value={{user, setUser}}>
-              {children}
-         </UserContext.Provider>
-    )
+    const drawer = {
+        open: openDrawer,
+        setOpen: setOpenDrawer,
+    }
+
+    return <UserContext.Provider value={{ user, setUser, drawer }}>{children}</UserContext.Provider>
 }

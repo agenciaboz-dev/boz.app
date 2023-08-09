@@ -3,12 +3,15 @@ import { Box, IconButton, SxProps, TextField } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import SearchIcon from "@mui/icons-material/Search"
+import { useUser } from "../hooks/useUser"
 
 interface HeaderProps {
     user: User
 }
 
 export const Header: React.FC<HeaderProps> = ({ user }) => {
+    const userDrawer = useUser().drawer
+
     const iconButtonStyle: SxProps = {
         width: "4vw",
         height: "4vw",
@@ -48,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
 
             <Box sx={containerStyle}>
                 <p>{user.name}</p>
-                <IconButton color="secondary" sx={iconButtonStyle}>
+                <IconButton color="secondary" sx={iconButtonStyle} onClick={() => userDrawer.toogle()}>
                     <AccountCircleIcon sx={iconStyle} />
                 </IconButton>
             </Box>
