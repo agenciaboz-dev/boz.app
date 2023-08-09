@@ -7,3 +7,8 @@ declare interface User {
     
     roles: User[]
 }
+
+interface LoginForm {
+    login: string
+    password: string
+}

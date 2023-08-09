@@ -6,18 +6,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import { useApi } from "../hooks/useApi"
 import { useSnackbar } from "burgos-snackbar"
+import { useUser } from "../hooks/useUser"
 
 interface LoginProps {}
 
-interface LoginForm {
-    login: string
-    password: string
-}
-
 export const Login: React.FC<LoginProps> = ({}) => {
-    const api = useApi()
-
-    const { snackbar } = useSnackbar()
+    const { login } = useUser()
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -30,21 +24,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
     const handleSubmit = (values: LoginForm) => {
         if (loading) return
 
-        setLoading(true)
-        api.user.login({
-            data: values,
-            callback: (response: { data?: User }) => {
-                const user = response.data
-                if (user) {
-                    alert("oi")
-                } else {
-                    snackbar({ severity: "error", text: "não foi possível fazer login" })
-                }
-            },
-            finallyCallback: () => setLoading(false),
-        })
-
-        console.log(values)
+        login(values, setLoading)
     }
 
     return (
