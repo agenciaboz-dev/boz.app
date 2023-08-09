@@ -4,8 +4,8 @@ declare interface User {
     email: string
     password: string
     name: string
-    
-    roles: User[]
+
+    roles: Role[]
 }
 
 interface LoginForm {
