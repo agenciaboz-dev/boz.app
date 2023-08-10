@@ -10,8 +10,7 @@ export const useUser = () => {
     const io = useIo()
 
     const userContext = useContext(UserContext)
-    const user = userContext.user
-    const setUser = userContext.setUser
+    const { user, setUser, connected } = userContext
 
     const drawer = {
         open: userContext.drawer.open,
@@ -43,5 +42,5 @@ export const useUser = () => {
         drawer.close()
     }
 
-    return { user, drawer, login, logout }
+    return { user, drawer, login, logout, connected }
 }

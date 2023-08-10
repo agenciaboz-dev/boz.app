@@ -74,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
             <Box sx={containerStyle}>
                 <p>{user.name}</p>
                 <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => userDrawer.toogle()}>
-                    <Avatar user={user} size={Number(iconStyle.width)} />
+                    <Avatar user={user} size={Number(iconStyle.width)} small />
                 </IconButton>
             </Box>
         </Box>
