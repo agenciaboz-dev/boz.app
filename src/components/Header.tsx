@@ -24,7 +24,12 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
 
     const iconStyle: SxProps = { height: "100%", width: "100%" }
 
-    const containerStyle: SxProps = { gap: "1vw", alignItems: "center", color: "secondary.main", fontWeight: "bold" }
+    const containerStyle: SxProps = {
+        gap: "1vw",
+        alignItems: "center",
+        color: "secondary.main",
+        fontWeight: "bold",
+    }
 
     return (
         <Box
@@ -35,6 +40,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "1vw",
+                gap: "2vw",
             }}
         >
             <Box sx={containerStyle}>
@@ -44,19 +50,21 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
                 <p>Agência Boz</p>
             </Box>
 
-            <TextField
-                label="pesquisar"
-                color={"secondary"}
-                sx={{ width: "50vw", color: darkMode ? colors.text.primary : "secondary.main" }}
-                InputProps={{
-                    color: "secondary",
-                    sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw" },
-                    startAdornment: <SearchIcon />,
-                }}
-                InputLabelProps={{ color: "secondary" }}
-                variant="standard"
-                autoComplete="off"
-            />
+            <Box sx={{ flex: 1 }}>
+                <TextField
+                    label="pesquisar"
+                    color={"secondary"}
+                    sx={{ color: darkMode ? colors.text.primary : "secondary.main" }}
+                    InputProps={{
+                        color: "secondary",
+                        sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw" },
+                        startAdornment: <SearchIcon />,
+                    }}
+                    InputLabelProps={{ color: "secondary" }}
+                    variant="standard"
+                    autoComplete="off"
+                />
+            </Box>
 
             <Box sx={containerStyle}>
                 <p>{user.name}</p>
