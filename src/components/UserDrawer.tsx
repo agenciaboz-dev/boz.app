@@ -22,7 +22,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
             PaperProps={{ sx: { width: "22vw", backgroundColor: "background.paper" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
-            <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
+            <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"secondary.main"}>
                 <Avatar user={user} size="10vw" />
                 <p style={{ fontWeight: "bold" }}>{user?.name}</p>
             </Box>
