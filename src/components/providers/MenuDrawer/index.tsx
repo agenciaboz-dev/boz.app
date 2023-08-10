@@ -6,6 +6,7 @@ import logo from "../../../assets/logo.png"
 import { useUser } from "../../../hooks/useUser"
 import { useNavigate } from "react-router-dom"
 import { MenuButton } from "./MenuButton"
+import LogoutIcon from "@mui/icons-material/Logout"
 
 interface MenuDrawerProps {}
 
@@ -13,7 +14,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
     const navigate = useNavigate()
 
     const { drawer } = useMenu()
-    const { user } = useUser()
+    const { user, logout } = useUser()
 
     return (
         <Drawer
@@ -26,10 +27,14 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
             <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
                 <img src={logo} style={{ width: "10vw" }} />
             </Box>
-            <Box sx={{ flexDirection: "column" }}>
+            <Box sx={{ flexDirection: "column", height: "80%" }}>
                 {drawer.menus.map((menu) => (
                     <MenuButton menu={menu} />
                 ))}
+                <MenuButton
+                    menu={{ id: 0, name: "sair", path: "/login", icon: <LogoutIcon />, onClick: () => logout() }}
+                    sx={{ marginTop: "auto" }}
+                />
             </Box>
         </Drawer>
     )

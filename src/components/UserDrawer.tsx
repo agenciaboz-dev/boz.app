@@ -7,9 +7,7 @@ import { ModeToggler } from "./ModeToggler"
 interface UserDrawerProps {}
 
 export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
-    const { user, drawer, logout } = useUser()
-
-    const menuItemStyle: SxProps = { justifyContent: "center", color: "secondary.main", fontWeight: "bold" }
+    const { user, drawer } = useUser()
 
     const handleClose = () => {
         drawer.close()
@@ -30,14 +28,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                 />
                 <p style={{ fontWeight: "bold" }}>{user?.name}</p>
             </Box>
-            <Box sx={{ flexDirection: "column" }}>
-                <MenuItem color="secondary" sx={menuItemStyle}>
-                    perfil
-                </MenuItem>
-                <MenuItem color="secondary" sx={menuItemStyle} onClick={() => logout()}>
-                    sair
-                </MenuItem>
-            </Box>
+            <Box sx={{ flexDirection: "column" }}></Box>
 
             <ModeToggler />
         </Drawer>

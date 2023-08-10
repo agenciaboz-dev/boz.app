@@ -1,6 +1,6 @@
 import { createContext, useState } from "react"
 import React from "react"
-import { menus } from "../lists/menus"
+import { useMenuList } from "../hooks/useMenuList"
 
 interface MenuContextValue {
     drawer: {
@@ -19,6 +19,8 @@ const MenuContext = createContext<MenuContextValue>({} as MenuContextValue)
 export default MenuContext
 
 export const MenuProvider: React.FC<MenuProviderProps> = ({ children }) => {
+    const menus = useMenuList()
+
     const [openDrawer, setOpenDrawer] = useState(false)
 
     const drawer = {

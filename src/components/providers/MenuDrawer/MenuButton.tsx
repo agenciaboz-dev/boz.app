@@ -1,26 +1,26 @@
 import React from "react"
 import { MenuItem, SxProps } from "@mui/material"
-import { useNavigate } from "react-router-dom"
 import { useMenu } from "../../../hooks/useMenu"
 
 interface MenuButtonProps {
     menu: Menu
+    sx?: SxProps
 }
 
-export const MenuButton: React.FC<MenuButtonProps> = ({ menu }) => {
+export const MenuButton: React.FC<MenuButtonProps> = ({ menu, sx }) => {
     const Icon = () => menu.icon
-    const navigate = useNavigate()
     const { drawer } = useMenu()
 
     const menuItemStyle: SxProps = {
         color: "secondary.main",
         fontWeight: "bold",
         gap: "1vw",
+        ...sx,
     }
 
     const handleMenuClick = () => {
         drawer.close()
-        navigate(menu.path)
+        menu.onClick()
     }
 
     return (
