@@ -1,18 +1,13 @@
 import React from "react"
-import { Avatar, Box, Drawer, MenuItem, Switch, SxProps } from "@mui/material"
+import { Avatar, Box, Drawer, MenuItem, SxProps } from "@mui/material"
 import { useUser } from "../hooks/useUser"
 import { backdropStyle } from "../style/backdrop"
-import { useDarkMode } from "../hooks/useDarkMode"
-import { useColors } from "../hooks/useColors"
-import DarkModeIcon from "@mui/icons-material/DarkMode"
-import LightModeIcon from "@mui/icons-material/LightMode"
+import { ModeToggler } from "./ModeToggler"
 
 interface UserDrawerProps {}
 
 export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
     const { user, drawer, logout } = useUser()
-    const { darkMode, toogleDarkMode } = useDarkMode()
-    const colors = useColors()
 
     const menuItemStyle: SxProps = { justifyContent: "center" }
 
@@ -44,11 +39,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                 </MenuItem>
             </Box>
 
-            <Box sx={{ marginTop: "auto", position: "absolute", alignItems: "center", padding: "1vw", top: "0", right: "0" }}>
-                <LightModeIcon color={darkMode ? "disabled" : "primary"} />
-                <Switch checked={darkMode} onChange={() => toogleDarkMode()} />
-                <DarkModeIcon color={darkMode ? "primary" : "disabled"} />
-            </Box>
+            <ModeToggler />
         </Drawer>
     )
 }
