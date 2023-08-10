@@ -22,9 +22,9 @@ export const DarkModeProvider: React.FC<DarkModeProviderProps> = ({ children }) 
         setValue(!value)
     }
 
-    useEffect(() => {
-        console.log({ darkMode: value })
-    }, [value])
+    // useEffect(() => {
+    //     setTimeout(() => toogleDarkMode(), 300)
+    // }, [value])
 
     return <DarkModeContext.Provider value={{ value, setValue, toogleDarkMode }}>{children}</DarkModeContext.Provider>
 }
