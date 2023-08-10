@@ -9,7 +9,7 @@ interface UserDrawerProps {}
 export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
     const { user, drawer, logout } = useUser()
 
-    const menuItemStyle: SxProps = { justifyContent: "center" }
+    const menuItemStyle: SxProps = { justifyContent: "center", color: "secondary.main", fontWeight: "bold" }
 
     const handleClose = () => {
         drawer.close()
@@ -23,18 +23,18 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
             PaperProps={{ sx: { width: "22vw", backgroundColor: "background.paper" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
-            <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }}>
+            <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
                 <Avatar
                     src={`https://app.agenciaboz.com.br:4105/${user?.id}`}
-                    sx={{ width: "10vw", height: "10vw", color: "secondary.main", backgroundColor: "primary.main" }}
+                    sx={{ width: "10vw", height: "10vw", color: "primary.main", backgroundColor: "background.default" }}
                 />
                 <p style={{ fontWeight: "bold" }}>{user?.name}</p>
             </Box>
             <Box sx={{ flexDirection: "column" }}>
-                <MenuItem color="primary" sx={menuItemStyle}>
+                <MenuItem color="secondary" sx={menuItemStyle}>
                     perfil
                 </MenuItem>
-                <MenuItem color="primary" sx={menuItemStyle} onClick={() => logout()}>
+                <MenuItem color="secondary" sx={menuItemStyle} onClick={() => logout()}>
                     sair
                 </MenuItem>
             </Box>
