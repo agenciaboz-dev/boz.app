@@ -6,6 +6,7 @@ interface ZapContextValue {
     client?: Zap
 
     qrcode: string
+    loading: boolean
 }
 
 interface ZapProviderProps {
@@ -18,6 +19,7 @@ export default ZapContext
 
 export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
     const io = useIo()
+    const [loading, setLoading] = useState(true)
     const [qrcode, setQrcode] = useState("")
     const [chats, setChats] = useState<Chat[]>([])
     const [info, setInfo] = useState<any>()
@@ -49,13 +51,27 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
             setConnected(true)
             setInfo(data.info)
             setChats(data.chats)
+            setLoading(false)
+        })
+
+        io.on("zap:loading", (info: Info) => {
+            setInfo(info)
+            setConnected(true)
+            setLoading(true)
+        })
+
+        io.on("zap:disconnected", () => {
+            setConnected(false)
+            setQrcode("")
         })
 
         return () => {
             io.off("zap:qrcode")
             io.off("zap:ready")
+            io.off("zap:loading")
+            io.off("zap:disconnected")
         }
     }, [])
 
-    return <ZapContext.Provider value={{ qrcode, client }}>{children}</ZapContext.Provider>
+    return <ZapContext.Provider value={{ qrcode, client, loading }}>{children}</ZapContext.Provider>
 }

@@ -6,6 +6,7 @@ import { useZap } from "../../hooks/useZap"
 import { QrCode } from "./QrCode"
 import { useIo } from "../../hooks/useIo"
 import { Chats } from "./Chats"
+import { ChatsSkeletons } from "./ChatsSkeletons"
 
 interface ZapProps {
     user: User
@@ -13,7 +14,7 @@ interface ZapProps {
 
 export const Zap: React.FC<ZapProps> = ({ user }) => {
     const io = useIo()
-    const { client, qrcode } = useZap()
+    const { client, qrcode, loading } = useZap()
 
     const [chats, setChats] = useState<Chat[]>([])
 
@@ -53,7 +54,7 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
                     }}
                 >
                     <p style={{ fontWeight: "bold" }}>{client.info.pushname}</p>
-                    {chats && <Chats chats={chats} />}
+                    {loading ? <ChatsSkeletons /> : <Chats chats={chats} />}
                 </Box>
             ) : (
                 <QrCode qrcode={qrcode} />
