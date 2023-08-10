@@ -33,6 +33,10 @@ export const useMuiTheme = () => {
                     primary: colors.text.primary,
                     secondary: colors.text.secondary,
                 },
+
+                success: {
+                    main: colors.success,
+                },
             },
         })
     }, [darkMode])

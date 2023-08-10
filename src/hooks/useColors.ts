@@ -8,6 +8,8 @@ export const useColors = () => {
         secondary: darkMode ? "#0078D4" : "#ffffff",
         terciary: darkMode ? "#D9D9D9" : "#1F1F1F",
 
+        success: "#34A853",
+
         background: {
             primary: darkMode ? "#1F1F1F" : "#ffffff",
             secondary: darkMode ? "#181818" : "#00AFEF",
