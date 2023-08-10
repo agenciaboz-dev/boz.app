@@ -9,6 +9,7 @@ import { useColors } from "../hooks/useColors"
 import logo from "../assets/logo.png"
 import { useMenu } from "../hooks/useMenu"
 import { textFieldStyle } from "../style/textfield"
+import { Avatar } from "./Avatar"
 
 interface HeaderProps {
     user: User
@@ -73,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
             <Box sx={containerStyle}>
                 <p>{user.name}</p>
                 <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => userDrawer.toogle()}>
-                    <AccountCircleIcon sx={iconStyle} />
+                    <Avatar user={user} size={Number(iconStyle.width)} />
                 </IconButton>
             </Box>
         </Box>
