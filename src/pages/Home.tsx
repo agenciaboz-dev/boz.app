@@ -1,5 +1,5 @@
 import React from 'react'
-import { Paper } from "@mui/material"
+import { Box } from "@mui/material"
 import { Header } from "../components/Header"
 
 interface HomeProps {
@@ -8,8 +8,8 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ user }) => {
     return (
-        <Paper sx={{ flexDirection: "column", width: "100%", height: "100vh", backgroundColor: "background.default" }}>
+        <Box sx={{ flexDirection: "column", width: "100%", height: "100vh", backgroundColor: "background.default" }}>
             <Header user={user} />
-        </Paper>
+        </Box>
     )
 }
