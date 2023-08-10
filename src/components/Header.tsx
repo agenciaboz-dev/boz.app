@@ -7,6 +7,7 @@ import { useUser } from "../hooks/useUser"
 import { useDarkMode } from "../hooks/useDarkMode"
 import { useColors } from "../hooks/useColors"
 import logo from "../assets/logo.png"
+import { useMenu } from "../hooks/useMenu"
 
 interface HeaderProps {
     user: User
@@ -14,6 +15,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ user }) => {
     const userDrawer = useUser().drawer
+    const menuDrawer = useMenu().drawer
 
     const { darkMode } = useDarkMode()
     const colors = useColors()
@@ -45,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
             }}
         >
             <Box sx={containerStyle}>
-                <IconButton color={"secondary"} sx={iconButtonStyle}>
+                <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => menuDrawer.toogle()}>
                     <MenuIcon sx={iconStyle} />
                 </IconButton>
                 <img src={logo} alt="boz" style={{ width: "3.5vw" }} />
