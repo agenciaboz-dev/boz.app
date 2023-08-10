@@ -5,7 +5,7 @@ import { IoProvider } from './contexts/ioContext'
 import { UserProvider } from './contexts/userContext'
 import { UserDrawer } from "./components/UserDrawer"
 import { MenuProvider } from "./contexts/menuContext"
-import { MenuDrawer } from "./components/providers/MenuDrawer"
+import { MenuDrawer } from "./components/MenuDrawer"
 
 interface ProvidersProps {
     children: React.ReactNode
