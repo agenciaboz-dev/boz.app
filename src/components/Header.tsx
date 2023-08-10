@@ -20,26 +20,25 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
     const iconButtonStyle: SxProps = {
         width: "4vw",
         height: "4vw",
-        color: darkMode ? colors.text.primary : "",
     }
 
     const iconStyle: SxProps = { height: "100%", width: "100%" }
 
-    const containerStyle: SxProps = { gap: "1vw", alignItems: "center", color: darkMode ? colors.text.primary : "secondary.main", fontWeight: "bold" }
+    const containerStyle: SxProps = { gap: "1vw", alignItems: "center", color: "secondary.main", fontWeight: "bold" }
 
     return (
         <Box
             sx={{
                 height: "10vh",
                 width: "100vw",
-                backgroundColor: darkMode ? "background.paper" : "primary.main",
+                backgroundColor: "background.paper",
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "1vw",
             }}
         >
             <Box sx={containerStyle}>
-                <IconButton color={darkMode ? "info" : "secondary"} sx={iconButtonStyle}>
+                <IconButton color={"secondary"} sx={iconButtonStyle}>
                     <MenuIcon sx={iconStyle} />
                 </IconButton>
                 <p>Agência Boz</p>
@@ -47,21 +46,21 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
 
             <TextField
                 label="pesquisar"
-                color={darkMode ? "info" : "secondary"}
+                color={"secondary"}
                 sx={{ width: "50vw", color: darkMode ? colors.text.primary : "secondary.main" }}
                 InputProps={{
-                    color: darkMode ? "info" : "secondary",
-                    sx: { color: darkMode ? colors.text.primary : "secondary.main", gap: "0.5vw" },
+                    color: "secondary",
+                    sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw" },
                     startAdornment: <SearchIcon />,
                 }}
-                InputLabelProps={{ color: darkMode ? "info" : "secondary" }}
+                InputLabelProps={{ color: "secondary" }}
                 variant="standard"
                 autoComplete="off"
             />
 
             <Box sx={containerStyle}>
                 <p>{user.name}</p>
-                <IconButton color={darkMode ? "primary" : "secondary"} sx={iconButtonStyle} onClick={() => userDrawer.toogle()}>
+                <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => userDrawer.toogle()}>
                     <AccountCircleIcon sx={iconStyle} />
                 </IconButton>
             </Box>
