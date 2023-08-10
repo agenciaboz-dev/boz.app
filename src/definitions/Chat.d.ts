@@ -12,8 +12,9 @@ declare interface Chat {
     unreadCount: number
 
     lastMessage: Message
-
     groupMetadata?: Group
+
+    profilePic: string
 }
 
 declare interface Message {

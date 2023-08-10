@@ -8,7 +8,7 @@ interface ChatsProps {
 
 export const Chats: React.FC<ChatsProps> = ({ chats }) => {
     return (
-        <Box sx={{ flexDirection: "column", gap: "1vw" }}>
+        <Box sx={{ flexDirection: "column", gap: "1vw", width: "30%" }}>
             {chats.map((chat) => (
                 <Chat key={chat.id.user} chat={chat} />
             ))}
