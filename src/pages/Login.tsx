@@ -7,11 +7,13 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import { useApi } from "../hooks/useApi"
 import { useSnackbar } from "burgos-snackbar"
 import { useUser } from "../hooks/useUser"
+import { useDarkMode } from "../hooks/useDarkMode"
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
     const { login } = useUser()
+    const { darkMode } = useDarkMode()
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -30,7 +32,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
     return (
         <Box
             sx={{
-                backgroundColor: "primary.main",
+                backgroundColor: darkMode ? "background.default" : "primary.main",
                 width: "100vw",
                 height: "100vh",
                 justifyContent: "center",
@@ -47,7 +49,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                             sx={{
                                 padding: "3vw",
                                 width: "30vw",
-                                backgroundColor: "secondary.main",
+                                backgroundColor: darkMode ? "secondary.main" : "secondary.main",
                                 borderRadius: "2.5vw",
                                 flexDirection: "column",
                                 gap: "1vw",
@@ -83,7 +85,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                                 type="submit"
                                 variant="contained"
                                 sx={{
-                                    color: "white",
+                                    color: "secondary.main",
                                     fontWeight: "bold",
                                     // width: "50%",
                                     // alignSelf: "flex-end",

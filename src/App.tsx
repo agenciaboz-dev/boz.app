@@ -4,8 +4,9 @@ import { useMuiTheme } from "./hooks/useMuiTheme"
 import { ThemeProvider } from "@mui/material"
 import { Providers } from "./Providers"
 import { Routes } from "./Routes"
+import { DarkModeProvider } from "./contexts/darkModeContext"
 
-function App() {
+const Themed = () => {
     const theme = useMuiTheme()
 
     return (
@@ -16,6 +17,14 @@ function App() {
                 </Providers>
             </BrowserRouter>
         </ThemeProvider>
+    )
+}
+
+const App = () => {
+    return (
+        <DarkModeProvider>
+            <Themed />
+        </DarkModeProvider>
     )
 }
 
