@@ -19,8 +19,8 @@ export const useColors = () => {
 
         text: {
             primary: darkMode ? "#8CDCFE" : "#00AFEF",
-            secondary: darkMode ? "#0078D4" : "#ffffff",
-            terciary: darkMode ? "#D9D9D9" : "#1F1F1F",
+            secondary: darkMode ? "#D9D9D9" : "#1F1F1F",
+            terciary: darkMode ? "#0078D4" : "#ffffff",
         },
     }
 }
