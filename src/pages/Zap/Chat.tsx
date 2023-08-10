@@ -19,9 +19,11 @@ export const Chat: React.FC<ChatProps> = ({ chat }) => {
                 }}
             >
                 <p style={{ fontWeight: "bold" }}>{chat.name}</p>
-                <p style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: "19vw", overflow: "hidden" }} title={chat.lastMessage.body}>
-                    {chat.lastMessage.body}
-                </p>
+                <Box color="text.secondary">
+                    <p style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: "19vw", overflow: "hidden" }} title={chat.lastMessage.body}>
+                        {chat.lastMessage.body}
+                    </p>
+                </Box>
             </Box>
             <Box
                 sx={{
