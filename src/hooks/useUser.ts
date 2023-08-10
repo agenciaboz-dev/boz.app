@@ -33,5 +33,10 @@ export const useUser = () => {
         })
     }
 
-    return { user, login, drawer }
+    const logout = () => {
+        setUser(null)
+        drawer.close()
+    }
+
+    return { user, drawer, login, logout }
 }
