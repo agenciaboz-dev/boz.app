@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import { useUser } from "../hooks/useUser"
 import { useDarkMode } from "../hooks/useDarkMode"
 import { useColors } from "../hooks/useColors"
+import logo from "../assets/logo.png"
 
 interface HeaderProps {
     user: User
@@ -47,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
                 <IconButton color={"secondary"} sx={iconButtonStyle}>
                     <MenuIcon sx={iconStyle} />
                 </IconButton>
-                <p>Agência Boz</p>
+                <img src={logo} alt="boz" style={{ width: "3.5vw" }} />
             </Box>
 
             <Box sx={{ flex: 1 }}>
