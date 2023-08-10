@@ -11,9 +11,9 @@ export const ModeToggler: React.FC<ModeTogglerProps> = ({}) => {
 
     return (
         <Box sx={{ marginTop: "auto", position: "absolute", alignItems: "center", padding: "1vw", top: "0", right: "0" }}>
-            <LightModeIcon color={darkMode ? "disabled" : "primary"} />
+            <LightModeIcon color={darkMode ? "disabled" : "secondary"} />
             <Switch checked={darkMode} onChange={() => toogleDarkMode()} />
-            <DarkModeIcon color={darkMode ? "primary" : "disabled"} />
+            <DarkModeIcon color={darkMode ? "secondary" : "disabled"} />
         </Box>
     )
 }
