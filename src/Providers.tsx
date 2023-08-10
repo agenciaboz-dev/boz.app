@@ -15,17 +15,17 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
     return (
         <SnackbarProvider>
             <ConfirmDialogProvider>
-                <UserProvider>
-                    <MenuProvider>
-                        <IoProvider>
+                <IoProvider>
+                    <UserProvider>
+                        <MenuProvider>
                             <MenuDrawer />
                             <UserDrawer />
                             <Snackbar />
                             <ConfirmDialog />
                             {children}
-                        </IoProvider>
-                    </MenuProvider>
-                </UserProvider>
+                        </MenuProvider>
+                    </UserProvider>
+                </IoProvider>
             </ConfirmDialogProvider>
         </SnackbarProvider>
     )
