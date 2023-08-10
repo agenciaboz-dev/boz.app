@@ -4,18 +4,15 @@ import { Form, Formik } from "formik"
 import logo from "../assets/logo.png"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
-import { useApi } from "../hooks/useApi"
-import { useSnackbar } from "burgos-snackbar"
 import { useUser } from "../hooks/useUser"
 import { useDarkMode } from "../hooks/useDarkMode"
 import { useColors } from "../hooks/useColors"
+import { ModeToggler } from "../components/ModeToggler"
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
     const { login } = useUser()
-    const { darkMode } = useDarkMode()
-    const colors = useColors()
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -34,7 +31,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
     return (
         <Box
             sx={{
-                backgroundColor: darkMode ? "background.default" : "primary.main",
+                backgroundColor: "background.paper",
                 width: "100vw",
                 height: "100vh",
                 justifyContent: "center",
@@ -51,7 +48,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                             sx={{
                                 padding: "3vw",
                                 width: "30vw",
-                                backgroundColor: darkMode ? colors.background : "secondary.main",
+                                backgroundColor: "background.default",
                                 borderRadius: "2.5vw",
                                 flexDirection: "column",
                                 gap: "1vw",
@@ -99,6 +96,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                     </Form>
                 )}
             </Formik>
+            <ModeToggler />
         </Box>
     )
 }
