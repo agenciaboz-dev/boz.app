@@ -33,6 +33,10 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
     }
 
     useEffect(() => {
+        console.log({ info })
+    }, [info])
+
+    useEffect(() => {
         console.log({ chats })
     }, [chats])
 
@@ -47,7 +51,6 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
         })
 
         io.on("zap:ready", (data) => {
-            console.log(data)
             setConnected(true)
             setInfo(data.info)
             setChats(data.chats)
