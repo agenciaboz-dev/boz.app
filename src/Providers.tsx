@@ -6,6 +6,7 @@ import { UserProvider } from './contexts/userContext'
 import { UserDrawer } from "./components/UserDrawer"
 import { MenuProvider } from "./contexts/menuContext"
 import { MenuDrawer } from "./components/MenuDrawer"
+import { ZapProvider } from "./contexts/zapContext"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -17,13 +18,15 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
             <ConfirmDialogProvider>
                 <IoProvider>
                     <UserProvider>
-                        <MenuProvider>
-                            <MenuDrawer />
-                            <UserDrawer />
-                            <Snackbar />
-                            <ConfirmDialog />
-                            {children}
-                        </MenuProvider>
+                        <ZapProvider>
+                            <MenuProvider>
+                                <MenuDrawer />
+                                <UserDrawer />
+                                <Snackbar />
+                                <ConfirmDialog />
+                                {children}
+                            </MenuProvider>
+                        </ZapProvider>
                     </UserProvider>
                 </IoProvider>
             </ConfirmDialogProvider>

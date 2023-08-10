@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box } from "@mui/material"
 import { Header } from "../components/Header"
+import { backgroundStyle } from "../style/background"
 
 interface HomeProps {
     user: User
@@ -8,7 +9,7 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ user }) => {
     return (
-        <Box sx={{ flexDirection: "column", width: "100%", height: "100vh", backgroundColor: "background.default" }}>
+        <Box sx={backgroundStyle}>
             <Header user={user} />
         </Box>
     )
