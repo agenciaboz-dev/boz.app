@@ -38,7 +38,7 @@ export const Chat: React.FC<ChatProps> = ({ chat }) => {
                     <Box
                         color={"secondary.main"}
                         sx={{
-                            bgcolor: "primary.main",
+                            bgcolor: "warning.main",
                             borderRadius: "1vw",
                             padding: "0.3vw",
                             fontSize: "0.7vw",
