@@ -8,12 +8,14 @@ import { useApi } from "../hooks/useApi"
 import { useSnackbar } from "burgos-snackbar"
 import { useUser } from "../hooks/useUser"
 import { useDarkMode } from "../hooks/useDarkMode"
+import { useColors } from "../hooks/useColors"
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
     const { login } = useUser()
     const { darkMode } = useDarkMode()
+    const colors = useColors()
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -49,7 +51,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                             sx={{
                                 padding: "3vw",
                                 width: "30vw",
-                                backgroundColor: darkMode ? "secondary.main" : "secondary.main",
+                                backgroundColor: darkMode ? colors.background : "secondary.main",
                                 borderRadius: "2.5vw",
                                 flexDirection: "column",
                                 gap: "1vw",
