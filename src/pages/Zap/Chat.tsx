@@ -8,13 +8,14 @@ interface ChatProps {
 export const Chat: React.FC<ChatProps> = ({ chat }) => {
     return (
         <Paper elevation={3} sx={{ padding: "1vw", backgroundColor: "background.default", alignItems: "center", gap: "1vw", height: "5vw" }}>
-            <Avatar src={chat.profilePic} />
+            <Avatar src={chat.profilePic} sx={{ width: "3vw", height: "3vw" }} />
             <Box
                 sx={{
                     flexDirection: "column",
                     justifyContent: "space-between",
                     height: "100%",
                     overflow: "hidden",
+                    color: "primary.main",
                 }}
             >
                 <p style={{ fontWeight: "bold" }}>{chat.name}</p>
@@ -29,6 +30,7 @@ export const Chat: React.FC<ChatProps> = ({ chat }) => {
                     flexDirection: "column",
                     justifyContent: "space-between",
                     height: "100%",
+                    color: "primary.main",
                 }}
             >
                 <p>{new Date(chat.timestamp * 1000).toLocaleTimeString("pt-br", { hour12: false, hour: "2-digit", minute: "2-digit" })}</p>
