@@ -8,6 +8,7 @@ import { useDarkMode } from "../hooks/useDarkMode"
 import { useColors } from "../hooks/useColors"
 import logo from "../assets/logo.png"
 import { useMenu } from "../hooks/useMenu"
+import { textFieldStyle } from "../style/textfield"
 
 interface HeaderProps {
     user: User
@@ -55,9 +56,9 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
 
             <Box sx={{ flex: 1 }}>
                 <TextField
-                    label="pesquisar"
+                    placeholder="pesquisar"
                     color={"secondary"}
-                    sx={{ color: darkMode ? colors.text.primary : "secondary.main" }}
+                    sx={textFieldStyle}
                     InputProps={{
                         color: "secondary",
                         sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw" },

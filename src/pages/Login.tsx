@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, CircularProgress, IconButton, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, IconButton, SxProps, TextField } from "@mui/material"
 import { Form, Formik } from "formik"
 import logo from "../assets/logo.png"
 import VisibilityIcon from "@mui/icons-material/Visibility"
@@ -8,6 +8,7 @@ import { useUser } from "../hooks/useUser"
 import { useDarkMode } from "../hooks/useDarkMode"
 import { useColors } from "../hooks/useColors"
 import { ModeToggler } from "../components/ModeToggler"
+import { textFieldStyle } from "../style/textfield"
 
 interface LoginProps {}
 
@@ -40,7 +41,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                 gap: "5vw",
             }}
         >
-            <img src={logo} alt="agência boz" style={{ aspectRatio: "2/1", width: "30vw" }} />
+            <img src={logo} alt="agência boz" style={{ aspectRatio: "2/1", width: "24vw" }} />
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form>
@@ -62,6 +63,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                                 placeholder="nome de usuário, email ou cpf"
                                 autoComplete="off"
                                 required
+                                sx={textFieldStyle}
                             />
                             <TextField
                                 label="senha"
@@ -71,6 +73,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                                 type={showPassword ? "text" : "password"}
                                 autoComplete="off"
                                 required
+                                sx={textFieldStyle}
                                 InputProps={{
                                     endAdornment: (
                                         <IconButton onClick={() => setShowPassword(!showPassword)} color="primary">
