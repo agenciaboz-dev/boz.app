@@ -29,7 +29,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
             </Box>
             <Box sx={{ flexDirection: "column", height: "80%" }}>
                 {drawer.menus.map((menu) => (
-                    <MenuButton menu={menu} />
+                    <MenuButton menu={menu} key={menu.id} />
                 ))}
                 <MenuButton
                     menu={{ id: 0, name: "sair", path: "/login", icon: <LogoutIcon />, onClick: () => logout() }}
