@@ -37,6 +37,10 @@ export const useMuiTheme = () => {
                 success: {
                     main: colors.success,
                 },
+
+                warning: {
+                    main: colors.warning,
+                },
             },
         })
     }, [darkMode])

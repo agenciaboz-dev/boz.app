@@ -5,10 +5,12 @@ export const useColors = () => {
 
     return {
         primary: darkMode ? "#8CDCFE" : "#00AFEF",
-        secondary: darkMode ? "#0078D4" : "#ffffff",
+        secondary: darkMode ? "#ffffff" : "#ffffff",
         terciary: darkMode ? "#D9D9D9" : "#1F1F1F",
 
         success: "#34A853",
+
+        warning: darkMode ? "#ffa726" : "#ffb74d",
 
         background: {
             primary: darkMode ? "#1F1F1F" : "#ffffff",
