@@ -25,12 +25,13 @@ export const useMuiTheme = () => {
                 },
 
                 background: {
-                    default: colors.backgroundDark,
-                    paper: colors.backgroundDark,
+                    default: colors.background.primary,
+                    paper: colors.background.secondary,
                 },
 
                 text: {
                     primary: colors.text.primary,
+                    secondary: colors.text.secondary,
                 },
             },
         })
