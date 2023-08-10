@@ -12,7 +12,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
         <ReactRoutes>
             <Route index element={<Home user={user} />} />
             <Route path="/*" element={<Home user={user} />} />
-            <Route path="/home/*" element={<Home user={user} />} />
+            <Route path="*" element={<Home user={user} />} />
         </ReactRoutes>
     ) : (
         <ReactRoutes>
