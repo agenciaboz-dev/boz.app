@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Box, IconButton, SxProps, TextField } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
@@ -13,14 +13,16 @@ import { Avatar } from "./Avatar"
 
 interface HeaderProps {
     user: User
+    onSearch?: (result: string) => void
 }
 
-export const Header: React.FC<HeaderProps> = ({ user }) => {
+export const Header: React.FC<HeaderProps> = ({ user, onSearch }) => {
     const userDrawer = useUser().drawer
     const menuDrawer = useMenu().drawer
 
     const { darkMode } = useDarkMode()
-    const colors = useColors()
+
+    const [searchValue, setSearchValue] = useState("")
 
     const iconButtonStyle: SxProps = {
         width: "4vw",
@@ -35,6 +37,15 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
         color: "secondary.main",
         fontWeight: "bold",
     }
+
+    const handleSearch = (value: string) => {
+        setSearchValue(value)
+    }
+
+    useEffect(() => {
+        console.log(searchValue)
+        if (onSearch) onSearch(searchValue)
+    }, [searchValue])
 
     return (
         <Box
@@ -57,6 +68,8 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
 
             <Box sx={{ flex: 1 }}>
                 <TextField
+                    value={searchValue}
+                    onChange={(event) => handleSearch(event.target.value)}
                     placeholder="pesquisar"
                     color={"secondary"}
                     sx={textFieldStyle}
