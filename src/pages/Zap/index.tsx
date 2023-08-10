@@ -39,7 +39,19 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
         <Box sx={backgroundStyle}>
             <Header user={user} onSearch={handleSearch} />
             {client?.connected ? (
-                <Box sx={{ flexDirection: "column", padding: "2vw", height: "90vh", overflowY: "auto", gap: "1vw", color: "primary.main" }}>
+                <Box
+                    sx={{
+                        flexDirection: "column",
+                        padding: "2vw",
+                        height: "90vh",
+                        overflowY: "auto",
+                        gap: "1vw",
+                        color: "primary.main",
+                        "::-webkit-scrollbar-thumb": {
+                            backgroundColor: "primary.main",
+                        },
+                    }}
+                >
                     <p style={{ fontWeight: "bold" }}>{client.info.pushname}</p>
                     {chats && <Chats chats={chats} />}
                 </Box>
