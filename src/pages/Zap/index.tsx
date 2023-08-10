@@ -5,6 +5,7 @@ import { Header } from "../../components/Header"
 import { useZap } from "../../hooks/useZap"
 import { QrCode } from "./QrCode"
 import { useIo } from "../../hooks/useIo"
+import { Chats } from "./Chats"
 
 interface ZapProps {
     user: User
@@ -22,9 +23,10 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
     return (
         <Box sx={backgroundStyle}>
             <Header user={user} />
-            {client ? (
-                <Box sx={{ flexDirection: "column" }}>
-                    <p>zap</p>
+            {client?.connected ? (
+                <Box sx={{ flexDirection: "column", padding: "2vw", height: "90vh", overflowY: "auto", gap: "1vw", color: "primary.main" }}>
+                    <p style={{ fontWeight: "bold" }}>{client.info.pushname}</p>
+                    <Chats chats={client.chats} />
                 </Box>
             ) : (
                 <QrCode qrcode={qrcode} />

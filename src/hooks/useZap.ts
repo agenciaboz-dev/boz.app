@@ -5,5 +5,5 @@ export const useZap = () => {
     const zapContext = useContext(ZapContext)
     const { qrcode, client } = zapContext
 
-    return { qrcode }
+    return { qrcode, client }
 }
