@@ -1,8 +1,9 @@
 import React from "react"
-import { Avatar, Box, Drawer, MenuItem, SxProps } from "@mui/material"
+import { Box, Drawer, MenuItem, SxProps } from "@mui/material"
 import { useUser } from "../hooks/useUser"
 import { backdropStyle } from "../style/backdrop"
 import { ModeToggler } from "./ModeToggler"
+import { Avatar } from "./Avatar"
 
 interface UserDrawerProps {}
 
@@ -22,15 +23,12 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
             <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
-                <Avatar
-                    src={`https://app.agenciaboz.com.br:4105/${user?.id}`}
-                    sx={{ width: "10vw", height: "10vw", color: "primary.main", backgroundColor: "background.default" }}
-                />
+                <Avatar user={user} size="10vw" />
                 <p style={{ fontWeight: "bold" }}>{user?.name}</p>
             </Box>
             <Box sx={{ flexDirection: "column" }}></Box>
 
-            <ModeToggler />
+            <ModeToggler bottom={0} right="6vw" />
         </Drawer>
     )
 }

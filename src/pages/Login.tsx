@@ -99,7 +99,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                     </Form>
                 )}
             </Formik>
-            <ModeToggler />
+            <ModeToggler top={0} right={0} />
         </Box>
     )
 }
