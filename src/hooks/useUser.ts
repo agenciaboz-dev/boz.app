@@ -3,14 +3,16 @@ import UserContext from '../contexts/userContext'
 import { useApi } from "./useApi"
 import { useSnackbar } from "burgos-snackbar"
 import { useIo } from "./useIo"
+import { useNavigate } from "react-router-dom"
 
 export const useUser = () => {
     const api = useApi()
     const { snackbar } = useSnackbar()
     const io = useIo()
+    const navigate = useNavigate()
 
     const userContext = useContext(UserContext)
-    const { user, setUser, connected, list, connectedList } = userContext
+    const { user, setUser, connected, list, connectedList, setList } = userContext
 
     const drawer = {
         open: userContext.drawer.open,
@@ -44,5 +46,16 @@ export const useUser = () => {
         drawer.close()
     }
 
-    return { user, drawer, login, logout, connected, list, connectedList }
+    const remove = (user: User, setDeleting: (value: boolean) => void) => {
+        setDeleting(true)
+        api.user.delete({
+            data: user,
+            callback: () => {
+                navigate("/admin/users")
+            },
+            finallyCallback: () => setDeleting(false),
+        })
+    }
+
+    return { user, drawer, login, logout, connected, list, connectedList, remove }
 }

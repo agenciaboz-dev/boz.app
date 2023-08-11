@@ -132,9 +132,9 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
 
                                 <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
                                     <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>
-                                        {user.name}
+                                        {values.name}
                                     </p>
-                                    <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{user.username}</p>
+                                    <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{values.username}</p>
                                 </Box>
 
                                 <Box
