@@ -4,6 +4,7 @@ import {
     Button,
     Checkbox,
     CircularProgress,
+    IconButton,
     ListItemText,
     MenuItem,
     OutlinedInput,
@@ -23,7 +24,7 @@ import ClearIcon from "@mui/icons-material/Clear"
 import { Tag } from "../../../components/Tag"
 import colors from "../../../style/colors"
 import { textFieldStyle } from "../../../style/textfield"
-
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos"
 interface NewUserProps {
     user: User
 }
@@ -109,7 +110,7 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                     padding: "8vw 3vw",
                                     flexDirection: "column",
                                     alignItems: "center",
-                                    gap: "2vw",
+                                    gap: "1.5vw",
                                     //borderRadius: "0.2vw 0 0 0.2vw ",
                                     borderRadius: "0.2vw 0 0 2vw ",
                                 }}
@@ -139,12 +140,12 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 <Box
                                     sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}
                                 >
-                                    <Tag color={colors.primary} title="Admin"></Tag>
-                                    <Tag color={colors.primary} title="Planejamento"></Tag>
-                                    <Tag color={colors.primary} title="Dev"></Tag>
+                                    <Tag variant="" style="0.7vw" name="Admin"></Tag>
+                                    <Tag variant="" style="0.7vw" name="Planejamento"></Tag>
+                                    <Tag variant="" style="0.7vw" name="Dev"></Tag>
                                 </Box>
                             </Paper>
-                            <Box sx={{ width: "73%", height: "100%", padding: "2vw", gap: "2vw" }}>
+                            <Box sx={{ width: "75%", height: "100%", padding: "2vw", gap: "2vw" }}>
                                 <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
                                     <TextField
                                         label="nome"
@@ -224,28 +225,19 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 </Box>
                             </Box>
                         </Paper>
-                        <Button
-                            variant="contained"
-                            color="secondary"
+                        <IconButton
                             sx={{
-                                color: "primary.main",
                                 fontWeight: "bold",
-                                position: "absolute",
-                                bottom: "3vw",
+                                position: "fixed",
+                                bottom: "34vw",
                                 left: "3vw",
-                                borderRadius: "50%",
-                                width: "5vw",
-                                height: "5vw",
-                                zIndex: 10,
+
+                                alignSelf: "flex-start",
                             }}
                             onClick={() => navigate("/admin/users")}
                         >
-                            {loading ? (
-                                <CircularProgress sx={{ color: "secondary.main", width: "100%", height: "100%" }} />
-                            ) : (
-                                <ClearIcon sx={{ width: "100%", height: "100%" }} />
-                            )}
-                        </Button>
+                            <ArrowBackIosIcon color="secondary"></ArrowBackIosIcon>
+                        </IconButton>
 
                         <Button
                             type="submit"
@@ -256,15 +248,13 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 position: "fixed",
                                 bottom: "3vw",
                                 right: "3vw",
-                                borderRadius: "50%",
-                                width: "5vw",
-                                height: "5vw",
+                                padding: "0.6vw 2.3vw",
                             }}
                         >
                             {loading ? (
                                 <CircularProgress sx={{ color: "secondary.main", width: "100%", height: "100%" }} />
                             ) : (
-                                <CheckIcon sx={{ width: "100%", height: "100%" }} />
+                                <p>Salvar</p>
                             )}
                         </Button>
                     </Form>
