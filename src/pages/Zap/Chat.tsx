@@ -1,6 +1,7 @@
 import React from "react"
 import { Avatar, Badge, Box, Paper } from "@mui/material"
 import { useZap } from "../../hooks/useZap"
+import { useFormatMessageTime } from "../../hooks/useFormatMessageTime"
 
 interface ChatProps {
     chat: Chat
@@ -9,6 +10,7 @@ interface ChatProps {
 
 export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
     const { drawer } = useZap()
+    const formatTime = useFormatMessageTime()
 
     const handleClick = () => {
         drawer.toogle()
@@ -29,11 +31,16 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     height: "100%",
                     overflow: "hidden",
                     color: "primary.main",
+                    width: "13vw",
+                    fontSize: "0.8vw",
                 }}
             >
-                <p style={{ fontWeight: "bold" }}>{chat.name}</p>
+                <p style={{ fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{chat.name}</p>
                 <Box color="text.secondary">
-                    <p style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: "19vw", overflow: "hidden" }} title={chat.lastMessage.body}>
+                    <p
+                        style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: "19vw", overflow: "hidden", fontSize: "0.8vw" }}
+                        title={chat.lastMessage.body}
+                    >
                         {chat.lastMessage.body}
                     </p>
                 </Box>
@@ -48,7 +55,7 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     color: "primary.main",
                 }}
             >
-                <p>{new Date(chat.timestamp * 1000).toLocaleTimeString("pt-br", { hour12: false, hour: "2-digit", minute: "2-digit" })}</p>
+                <p style={{ fontSize: "0.6vw" }}>{formatTime(new Date(chat.timestamp * 1000))}</p>
                 {!!chat.unreadCount && (
                     <Box
                         color={"secondary.main"}

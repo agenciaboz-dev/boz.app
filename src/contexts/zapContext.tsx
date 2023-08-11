@@ -61,6 +61,8 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
                 const prevChat = prevChats.find((item) => item.id._serialized == chat.id._serialized) as Chat
 
                 const messages = prevChat.messages || []
+                // const exists = messages.find(message => message.id._serialized == chat.lastMessage.id._serialized)
+                // if (!exists)
                 messages.push(chat.lastMessage)
 
                 return [

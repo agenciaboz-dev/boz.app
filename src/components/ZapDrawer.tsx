@@ -6,6 +6,7 @@ import { textFieldStyle } from "../style/textfield"
 import { Form, Formik, FormikHelpers } from "formik"
 import SendIcon from "@mui/icons-material/Send"
 import { Message } from "./Message"
+import { useIo } from "../hooks/useIo"
 
 interface ZapDrawerProps {
     chat?: Chat
@@ -18,6 +19,7 @@ const AlwaysScrollToBottom = () => {
 }
 
 export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
+    const io = useIo()
     const { drawer } = useZap()
 
     const handleClose = () => {
@@ -30,8 +32,8 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
             message: string
         }>
     ) => void = ({ message }, bag) => {
-        console.log(message)
         bag.resetForm()
+        io.emit("message:new", { chat, message })
     }
 
     return (
