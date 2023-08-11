@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import React from "react"
+import { useLocalStorage } from "../hooks/useLocalStorage"
 
 interface DarkModeContextValue {
     value: boolean
@@ -16,15 +17,17 @@ const DarkModeContext = createContext<DarkModeContextValue>({} as DarkModeContex
 export default DarkModeContext
 
 export const DarkModeProvider: React.FC<DarkModeProviderProps> = ({ children }) => {
-    const [value, setValue] = useState<boolean>(false)
+    const storage = useLocalStorage()
+    const [value, setValue] = useState<boolean>(storage.get("boz:darkmode"))
 
     const toogleDarkMode = () => {
         setValue(!value)
     }
 
-    // useEffect(() => {
-    //     setTimeout(() => toogleDarkMode(), 100)
-    // }, [value])
+    useEffect(() => {
+        storage.set("boz:darkmode", value)
+        // setTimeout(() => toogleDarkMode(), 100)
+    }, [value])
 
     return <DarkModeContext.Provider value={{ value, setValue, toogleDarkMode }}>{children}</DarkModeContext.Provider>
 }
