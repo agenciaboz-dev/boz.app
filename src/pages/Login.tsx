@@ -13,10 +13,18 @@ import { textFieldStyle } from "../style/textfield"
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
+    const colors = useColors()
     const { login } = useUser()
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
+
+    const webkitbg = {
+        "& .MuiInputBase-input.MuiOutlinedInput-input:-webkit-autofill": {
+            "-webkit-box-shadow": ` 0 0 0 100px ${colors.background.primary} inset`,
+            borderRadius: "inherit",
+        },
+    }
 
     const initialValues: LoginForm = {
         login: "",
@@ -63,7 +71,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                                 placeholder="nome de usuário, email ou cpf"
                                 autoComplete="off"
                                 required
-                                sx={textFieldStyle}
+                                sx={{ ...textFieldStyle, ...webkitbg }}
                             />
                             <TextField
                                 label="senha"
@@ -73,7 +81,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                                 type={showPassword ? "text" : "password"}
                                 autoComplete="off"
                                 required
-                                sx={textFieldStyle}
+                                sx={{ ...textFieldStyle, ...webkitbg }}
                                 InputProps={{
                                     endAdornment: (
                                         <IconButton onClick={() => setShowPassword(!showPassword)} color="primary">
