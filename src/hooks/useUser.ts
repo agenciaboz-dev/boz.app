@@ -27,6 +27,8 @@ export const useUser = () => {
                 if (user) {
                     setUser(user)
                     io.emit("client:sync", user)
+                    io.emit("zap:sync")
+
                     snackbar({ severity: "success", text: "logado" })
                 } else {
                     snackbar({ severity: "error", text: "não foi possível fazer login" })

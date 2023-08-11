@@ -4,7 +4,6 @@ import { backgroundStyle } from "../../style/background"
 import { Header } from "../../components/Header"
 import { useZap } from "../../hooks/useZap"
 import { QrCode } from "./QrCode"
-import { useIo } from "../../hooks/useIo"
 import { Chats } from "./Chats"
 import { ChatsSkeletons } from "./ChatsSkeletons"
 
@@ -13,7 +12,6 @@ interface ZapProps {
 }
 
 export const Zap: React.FC<ZapProps> = ({ user }) => {
-    const io = useIo()
     const { client, qrcode, loading } = useZap()
 
     const [chats, setChats] = useState<Chat[]>([])
@@ -30,11 +28,6 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
             setChats(client.chats)
         }
     }, [client?.chats])
-
-    useEffect(() => {
-        io.emit("zap:sync")
-        console.log(!!qrcode)
-    }, [])
 
     return (
         <Box sx={backgroundStyle}>
