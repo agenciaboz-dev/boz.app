@@ -53,6 +53,13 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
 
     useEffect(() => {
         console.log({ chats })
+        io.on("chat:sync", (chat: Chat) => {
+            setChats((prevChats) => [...prevChats.filter((item) => item.id.user !== chat.id.user), chat])
+        })
+
+        return () => {
+            io.off("chat:sync")
+        }
     }, [chats])
 
     useEffect(() => {
@@ -66,10 +73,15 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
         })
 
         io.on("zap:ready", (data) => {
+            const chats = data.chats as Chat[]
             setConnected(true)
             setInfo(data.info)
             setChats(data.chats)
             setLoading(false)
+
+            chats.map((chat) => {
+                io.emit("chat:sync", chat)
+            })
         })
 
         io.on("zap:loading", (info: Info) => {

@@ -27,6 +27,7 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
 
     const handleChatClick = (chat: Chat) => {
         setCurrentChat(chat)
+        console.log(chat)
     }
 
     useEffect(() => {

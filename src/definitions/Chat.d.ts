@@ -14,7 +14,8 @@ declare interface Chat {
     lastMessage: Message
     groupMetadata?: Group
 
-    profilePic: string
+    profilePic?: string
+    messages?: Message[]
 }
 
 declare interface Message {

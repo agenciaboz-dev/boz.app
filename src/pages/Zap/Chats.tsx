@@ -10,9 +10,11 @@ interface ChatsProps {
 export const Chats: React.FC<ChatsProps> = ({ chats, onChatClick }) => {
     return (
         <Box sx={{ flexDirection: "column", gap: "1vw", width: "30%" }}>
-            {chats.map((chat) => (
-                <Chat key={chat.id.user} chat={chat} onChatClick={onChatClick} />
-            ))}
+            {chats
+                .sort((a, b) => b.timestamp - a.timestamp)
+                .map((chat) => (
+                    <Chat key={chat.id.user} chat={chat} onChatClick={onChatClick} />
+                ))}
         </Box>
     )
 }
