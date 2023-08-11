@@ -3,7 +3,7 @@ import { Avatar, Box, Drawer, IconButton, TextField } from "@mui/material"
 import { useZap } from "../hooks/useZap"
 import { backdropStyle } from "../style/backdrop"
 import { textFieldStyle } from "../style/textfield"
-import { Form, Formik } from "formik"
+import { Form, Formik, FormikHelpers } from "formik"
 import SendIcon from "@mui/icons-material/Send"
 
 interface ZapDrawerProps {
@@ -17,8 +17,14 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
         drawer.close()
     }
 
-    const handleMessageSubmit = ({ message }: { message: string }) => {
+    const handleMessageSubmit: (
+        { message }: { message: string },
+        bag: FormikHelpers<{
+            message: string
+        }>
+    ) => void = ({ message }, bag) => {
         console.log(message)
+        bag.resetForm()
     }
 
     return (
@@ -68,6 +74,7 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
                                 value={values.message}
                                 onChange={handleChange}
                                 sx={textFieldStyle}
+                                autoComplete="off"
                                 InputProps={{
                                     sx: { color: "primary.main", bgcolor: "background.default" },
                                     endAdornment: (
