@@ -56,7 +56,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                             }}
                         >
                             <TextField
-                                label="usuário"
+                                label="login"
                                 name="login"
                                 value={values.login}
                                 onChange={handleChange}
