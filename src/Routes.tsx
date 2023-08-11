@@ -5,6 +5,7 @@ import { useUser } from "./hooks/useUser"
 import { WildCard } from "./pages/WildCard"
 import { Zap } from "./pages/Zap"
 import { Admin } from "./pages/Admin"
+import { UpdateUsers } from "./pages/Admin/UpdateUsers"
 
 interface RoutesProps {}
 
@@ -17,6 +18,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
             <Route path="/zap" element={<Zap user={user} />} />
             <Route path="/admin/*" element={<Admin user={user} />} />
             <Route path="*" element={<WildCard />} />
+            
         </ReactRoutes>
     ) : (
         <ReactRoutes>
