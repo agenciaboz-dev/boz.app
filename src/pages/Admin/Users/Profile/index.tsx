@@ -1,21 +1,22 @@
 import React from "react"
-import { Box, Paper, TextField } from "@mui/material"
+import { Box, Button, IconButton, Paper, TextField } from "@mui/material"
 import colors from "../../../../style/colors"
 import { Avatar } from "../../../../components/Avatar"
 import { Tag } from "../../../../components/Tag"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { WildCard } from "../../../WildCard"
 import { useUser } from "../../../../hooks/useUser"
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 
 interface UpdateUsersProps {
     user: User
 }
 
 export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
-    const username = useParams().username
     const { list } = useUser()
+    const username = useParams().username
     const profile = list.find((item) => item.username == username)
-    console.log(list)
+    const navigate = useNavigate()
 
     return profile ? (
         <Box sx={{ width: "100%", height: "80.2%", padding: "2vw 3vw" }}>
@@ -29,10 +30,14 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                         flexDirection: "column",
                         alignItems: "center",
                         gap: "2vw",
-                        //borderRadius: "0.2vw 0 0 0.2vw ",
                         borderRadius: "0.2vw 0 0 2vw ",
+                        position: "relative",
                     }}
                 >
+                    <IconButton sx={{ position: "absolute", top: "1vw", left: "1vw" }} color="secondary" onClick={() => navigate("/admin/users")}>
+                        <ArrowBackIosNewIcon />
+                    </IconButton>
+
                     <Avatar size={"12vw"} user={profile} />
                     <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
                         <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>{profile.name}</p>
@@ -52,6 +57,13 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                     <Box sx={{ width: "50%", height: "100%", flexDirection: "column", gap: "1vw" }}>
                         <TextField label="Login" disabled></TextField>
                         <TextField label="Nome"></TextField>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ marginTop: "auto", width: "10vw", alignSelf: "flex-end", color: "secondary.main", fontWeight: "bold" }}
+                        >
+                            salvar
+                        </Button>
                     </Box>
                 </Box>
             </Paper>
