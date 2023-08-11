@@ -7,6 +7,7 @@ interface UserContextValue {
     setUser: (user: User | null) => void
 
     list: User[]
+    setList: (users: User[]) => void
     connectedList: User[]
 
     connected: boolean
@@ -71,10 +72,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             setList([...list.filter((item) => item.id != user.id), user])
         })
 
+        io.on("user:delete", (user) => {
+            setList(list.filter((item) => item.id != user.id))
+        })
+
         return () => {
             io.off("user:sync")
             io.off("user:new")
             io.off("user:new:success")
+            io.off("user:delete")
         }
     }, [list])
 
@@ -104,5 +110,5 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         }
     }, [user])
 
-    return <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList }}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList, setList }}>{children}</UserContext.Provider>
 }
