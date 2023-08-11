@@ -9,6 +9,8 @@ declare interface User {
 
     department: Department
     roles: Role[]
+
+    connected?: boolean
 }
 
 interface LoginForm {

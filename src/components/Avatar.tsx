@@ -12,14 +12,15 @@ interface AvatarProps {
 
 export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small }) => {
     const { getProfilePic } = useImageUrl()
-    const { connected } = useUser()
+    const { connectedList } = useUser()
+    const connected = connectedList.find((item) => item.id == user.id)
 
     const dotSize = small ? "1vw" : "2vw"
 
     return (
         <Badge
-            badgeContent={""}
-            color={connected ? "success" : "error"}
+            badgeContent={connected ? "" : 0}
+            color={"success"}
             sx={{ width: size, height: size }}
             overlap="circular"
             componentsProps={{ badge: { style: { minWidth: 0, width: dotSize, height: dotSize, borderRadius: "50%" } } }}

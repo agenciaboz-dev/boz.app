@@ -3,7 +3,7 @@ import DepartmentsContext from "../contexts/departmentsContext"
 
 export const useDepartments = () => {
     const departmentsContext = useContext(DepartmentsContext)
-    const { departments, roles } = departmentsContext
+    const { departments, roles, loading } = departmentsContext
 
-    return { departments, roles }
+    return { departments, roles, loading }
 }
