@@ -8,6 +8,7 @@ import { selectMenuStyle } from "../../../style/selectMenuStyle"
 import { useIo } from "../../../hooks/useIo"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "burgos-snackbar"
+import ClearIcon from "@mui/icons-material/Clear"
 
 interface NewUserProps {
     user: User
@@ -143,6 +144,27 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 </Select>
                             </Box>
                         </Box>
+
+                        <Button
+                            variant="outlined"
+                            sx={{
+                                color: "primary.main",
+                                fontWeight: "bold",
+                                position: "fixed",
+                                bottom: "2vw",
+                                left: "2vw",
+                                borderRadius: "50%",
+                                width: "5vw",
+                                height: "5vw",
+                            }}
+                            onClick={() => navigate("/admin/users")}
+                        >
+                            {loading ? (
+                                <CircularProgress sx={{ color: "secondary.main", width: "100%", height: "100%" }} />
+                            ) : (
+                                <ClearIcon sx={{ width: "100%", height: "100%" }} />
+                            )}
+                        </Button>
 
                         <Button
                             type="submit"
