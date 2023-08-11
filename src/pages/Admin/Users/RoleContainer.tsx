@@ -1,7 +1,8 @@
 import React from "react"
-import { Badge, Box, MenuItem, Paper } from "@mui/material"
+import { Badge, Box, MenuItem, Paper, Skeleton } from "@mui/material"
 import { Avatar } from "../../../components/Avatar"
 import { useNavigate } from "react-router-dom"
+import { useArray } from "burgos-array"
 
 interface RoleContainerProps {
     department: Department
@@ -27,6 +28,18 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department }) => {
                     </MenuItem>
                 ))}
             </Paper>
+        </Box>
+    )
+}
+
+export const RoleSkeletons = () => {
+    const skeletons = useArray().newArray(3)
+
+    return (
+        <Box sx={{ gap: "1vw" }}>
+            {skeletons.map((index) => (
+                <Skeleton key={index} variant="rounded" animation="wave" sx={{ height: "50vw", width: "30vw" }} />
+            ))}
         </Box>
     )
 }
