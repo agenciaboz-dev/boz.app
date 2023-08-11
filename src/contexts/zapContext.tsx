@@ -52,13 +52,27 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
     }, [info])
 
     useEffect(() => {
-        console.log({ chats })
         io.on("chat:sync", (chat: Chat) => {
             setChats((prevChats) => [...prevChats.filter((item) => item.id.user !== chat.id.user), chat])
         })
 
+        io.on("message:new", (chat: Chat) => {
+            setChats((prevChats) => {
+                const prevChat = prevChats.find((item) => item.id._serialized == chat.id._serialized) as Chat
+
+                const messages = prevChat.messages || []
+                messages.push(chat.lastMessage)
+
+                return [
+                    ...prevChats.filter((item) => item.id.user !== chat.id.user),
+                    { ...chat, messages: messages, profilePic: prevChat.profilePic },
+                ]
+            })
+        })
+
         return () => {
             io.off("chat:sync")
+            io.off("message:new")
         }
     }, [chats])
 
