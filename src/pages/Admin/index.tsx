@@ -26,7 +26,7 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
     return (
         <Box sx={{ flexDirection: "column", width: "100vw", height: "100vh", bgcolor: "background.default" }}>
             <Header user={user} />
-            <Tabs value={tab} onChange={(_, id) => handleTabChange(id)}>
+            <Tabs value={tab} onChange={(_, id) => handleTabChange(id)} centered variant="fullWidth">
                 {tabs.map((tab) => {
                     const Icon = () => tab.icon
                     return <Tab key={tab.id} label={tab.name} value={tab.id} sx={tabStyle} icon={<Icon />} />
