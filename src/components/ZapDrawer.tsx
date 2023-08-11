@@ -1,13 +1,20 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { Avatar, Box, Drawer, IconButton, TextField } from "@mui/material"
 import { useZap } from "../hooks/useZap"
 import { backdropStyle } from "../style/backdrop"
 import { textFieldStyle } from "../style/textfield"
 import { Form, Formik, FormikHelpers } from "formik"
 import SendIcon from "@mui/icons-material/Send"
+import { Message } from "./Message"
 
 interface ZapDrawerProps {
     chat?: Chat
+}
+
+const AlwaysScrollToBottom = () => {
+    const elementRef = useRef<HTMLDivElement>(null)
+    useEffect(() => elementRef.current?.scrollIntoView())
+    return <div ref={elementRef} />
 }
 
 export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
@@ -61,9 +68,18 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
                         borderRadius: "1.5vw",
                         padding: "2vw",
                         color: "text.secondary",
+                        flexDirection: "column",
+                        gap: "0.25vw",
+
+                        "::-webkit-scrollbar-thumb": {
+                            backgroundColor: "primary.main",
+                        },
                     }}
                 >
-                    a
+                    {chat?.messages?.map((message) => (
+                        <Message key={message.id.remote} message={message} />
+                    ))}
+                    <AlwaysScrollToBottom />
                 </Box>
                 <Formik initialValues={{ message: "" }} onSubmit={handleMessageSubmit}>
                     {({ values, handleChange }) => (
