@@ -6,6 +6,8 @@ interface UserContextValue {
     user: User | null
     setUser: (user: User | null) => void
 
+    list: User[]
+
     connected: boolean
 
     drawer: {
@@ -26,6 +28,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const io = useIo()
 
     const [user, setUser] = useState<User | null>(null)
+    const [list, setList] = useState<User[]>([])
     const [openDrawer, setOpenDrawer] = useState(false)
     const [connected, setConnected] = useState(false)
 
@@ -33,6 +36,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         open: openDrawer,
         setOpen: setOpenDrawer,
     }
+
+    useEffect(() => {
+        console.log({ list })
+    }, [list])
 
     useEffect(() => {
         console.log({ user })
@@ -47,8 +54,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
                 setConnected(false)
             })
 
-            io.on("client:sync", () => {
+            io.on("client:sync", (users: User[]) => {
                 setConnected(true)
+                setList(users)
             })
         }
 
@@ -59,5 +67,5 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         }
     }, [user])
 
-    return <UserContext.Provider value={{ user, setUser, drawer, connected }}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{ user, setUser, drawer, connected, list }}>{children}</UserContext.Provider>
 }
