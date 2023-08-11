@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Checkbox, CircularProgress, ListItemText, MenuItem, OutlinedInput, Select, TextField } from "@mui/material"
+import {
+    Box,
+    Button,
+    Checkbox,
+    CircularProgress,
+    ListItemText,
+    MenuItem,
+    OutlinedInput,
+    Paper,
+    Select,
+    TextField,
+} from "@mui/material"
 import { Form, Formik } from "formik"
 import CheckIcon from "@mui/icons-material/Check"
 import { Avatar } from "@files-ui/react"
@@ -9,6 +20,9 @@ import { useIo } from "../../../hooks/useIo"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "burgos-snackbar"
 import ClearIcon from "@mui/icons-material/Clear"
+import { Tag } from "../../../components/Tag"
+import colors from "../../../style/colors"
+import { textFieldStyle } from "../../../style/textfield"
 
 interface NewUserProps {
     user: User
@@ -79,83 +93,150 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
     }, [])
 
     return (
-        <Box sx={{ padding: "2vw", justifyContent: "space-between", width: "100vw" }}>
+        <Box sx={{ width: "100%", height: "80.2%", padding: "2vw " }}>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form>
-                        <Avatar
-                            src={image}
-                            onChange={(file) => setImage(file)}
-                            smartImgFit={"orientation"}
-                            changeLabel="trocar a imagem"
-                            emptyLabel="enviar imagem"
-                            // style={{ width: "100%", height: "30vw" }}
-                            style={{
-                                width: "20vw",
-                                height: "20vw",
-                                borderRadius: "20vw",
-                                fontSize: "2.5vw",
-                            }}
-                        />
-                        <Box sx={{ gap: "1vw", width: "74vw" }}>
-                            <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
-                                <TextField label="nome" name="name" value={values.name} onChange={handleChange} />
-                                <TextField label="e-mail" name="email" value={values.email} onChange={handleChange} />
-                                <TextField label="nome de usuário" name="username" value={values.username} onChange={handleChange} />
-                                <TextField label="cpf" name="cpf" value={values.cpf} onChange={handleChange} />
-                                <TextField label="data de nascimento" name="birth" value={values.birth} onChange={handleChange} />
-                            </Box>
-                            <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
-                                <TextField
-                                    label="departamento"
-                                    name="department"
-                                    value={values.department}
-                                    onChange={handleChange}
-                                    select
-                                    SelectProps={{
-                                        MenuProps: {
-                                            sx: selectMenuStyle,
-                                        },
+                        <Paper
+                            elevation={3}
+                            sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: colors.background, width: "100%" }}
+                        >
+                            <Paper
+                                elevation={3}
+                                sx={{
+                                    // backgroundColor: colors.secondary,
+                                    width: "25%",
+                                    padding: "8vw 3vw",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    gap: "2vw",
+                                    //borderRadius: "0.2vw 0 0 0.2vw ",
+                                    borderRadius: "0.2vw 0 0 2vw ",
+                                }}
+                            >
+                                <Avatar
+                                    src={image}
+                                    onChange={(file) => setImage(file)}
+                                    smartImgFit={"orientation"}
+                                    changeLabel="trocar a imagem"
+                                    emptyLabel="enviar imagem"
+                                    // style={{ width: "100%", height: "30vw" }}
+                                    style={{
+                                        width: "12vw",
+                                        height: "12vw",
+                                        borderRadius: "20vw",
+                                        fontSize: "1.0vw",
                                     }}
-                                >
-                                    <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
-                                    {departments.map((department) => (
-                                        <MenuItem key={department.id} value={department.id}>
-                                            {department.name}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                />
 
-                                <Select
-                                    name="roles"
-                                    multiple
-                                    value={selectedRoles}
-                                    onChange={(_, child) => handleRoleSelect(child)}
-                                    input={<OutlinedInput label="funções" />}
-                                    renderValue={(selected) => selected.map((role) => role.name).join(", ")}
-                                    MenuProps={{ sx: selectMenuStyle }}
+                                <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
+                                    <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>
+                                        {user.name}
+                                    </p>
+                                    <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{user.username}</p>
+                                </Box>
+
+                                <Box
+                                    sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}
                                 >
-                                    {roles.map((role) => (
-                                        <MenuItem key={role.id} value={role.id}>
-                                            <Checkbox checked={selectedRoles.includes(role)} />
-                                            <ListItemText primary={role.name} />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                    <Tag color={colors.primary} title="Admin"></Tag>
+                                    <Tag color={colors.primary} title="Planejamento"></Tag>
+                                    <Tag color={colors.primary} title="Dev"></Tag>
+                                </Box>
+                            </Paper>
+                            <Box sx={{ width: "73%", height: "100%", padding: "2vw", gap: "2vw" }}>
+                                <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
+                                    <TextField
+                                        label="nome"
+                                        name="name"
+                                        value={values.name}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                    />
+                                    <TextField
+                                        label="e-mail"
+                                        name="email"
+                                        value={values.email}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                    />
+                                    <TextField
+                                        label="nome de usuário"
+                                        name="username"
+                                        value={values.username}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                    />
+                                    <TextField
+                                        label="cpf"
+                                        name="cpf"
+                                        value={values.cpf}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                    />
+                                    <TextField
+                                        label="data de nascimento"
+                                        name="birth"
+                                        value={values.birth}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                    />
+                                </Box>
+                                <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
+                                    <TextField
+                                        label="departamento"
+                                        name="department"
+                                        value={values.department}
+                                        onChange={handleChange}
+                                        select
+                                        sx={textFieldStyle}
+                                        SelectProps={{
+                                            MenuProps: {
+                                                sx: selectMenuStyle,
+                                            },
+                                        }}
+                                    >
+                                        <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
+                                        {departments.map((department) => (
+                                            <MenuItem key={department.id} value={department.id}>
+                                                {department.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+
+                                    <Select
+                                        name="roles"
+                                        multiple
+                                        value={selectedRoles}
+                                        onChange={(_, child) => handleRoleSelect(child)}
+                                        input={<OutlinedInput label="funções" />}
+                                        renderValue={(selected) => selected.map((role) => role.name).join(", ")}
+                                        MenuProps={{ sx: selectMenuStyle }}
+                                        sx={textFieldStyle}
+                                    >
+                                        {roles.map((role) => (
+                                            <MenuItem key={role.id} value={role.id}>
+                                                <Checkbox checked={selectedRoles.includes(role)} />
+                                                <ListItemText primary={role.name} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </Box>
                             </Box>
-                        </Box>
-
+                        </Paper>
                         <Button
-                            variant="outlined"
+                            variant="contained"
+                            color="secondary"
                             sx={{
                                 color: "primary.main",
                                 fontWeight: "bold",
-                                position: "fixed",
-                                bottom: "2vw",
-                                left: "2vw",
+                                position: "absolute",
+                                bottom: "3vw",
+                                left: "3vw",
                                 borderRadius: "50%",
                                 width: "5vw",
                                 height: "5vw",
+                                zIndex: 10,
                             }}
                             onClick={() => navigate("/admin/users")}
                         >
@@ -173,8 +254,8 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 color: "secondary.main",
                                 fontWeight: "bold",
                                 position: "fixed",
-                                bottom: "2vw",
-                                right: "2vw",
+                                bottom: "3vw",
+                                right: "3vw",
                                 borderRadius: "50%",
                                 width: "5vw",
                                 height: "5vw",

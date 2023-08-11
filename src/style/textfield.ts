@@ -27,4 +27,7 @@ export const textFieldStyle: SxProps = {
             borderColor: "secondary.main",
         },
     },
+    "& .MuiInputBase-root": {
+        borderRadius: "0 1vw 0vw 1vw",
+    },
 }
