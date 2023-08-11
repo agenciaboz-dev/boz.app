@@ -97,10 +97,7 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form>
-                        <Paper
-                            elevation={3}
-                            sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: colors.background, width: "100%" }}
-                        >
+                        <Paper elevation={3} sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: colors.background, width: "100%" }}>
                             <Paper
                                 elevation={3}
                                 sx={{
@@ -130,15 +127,11 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 />
 
                                 <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
-                                    <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>
-                                        {user.name}
-                                    </p>
-                                    <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{user.username}</p>
+                                    <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>{values.name}</p>
+                                    <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{values.username}</p>
                                 </Box>
 
-                                <Box
-                                    sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}
-                                >
+                                <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}>
                                     <Tag color={colors.primary} title="Admin"></Tag>
                                     <Tag color={colors.primary} title="Planejamento"></Tag>
                                     <Tag color={colors.primary} title="Dev"></Tag>
@@ -146,20 +139,8 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                             </Paper>
                             <Box sx={{ width: "73%", height: "100%", padding: "2vw", gap: "2vw" }}>
                                 <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
-                                    <TextField
-                                        label="nome"
-                                        name="name"
-                                        value={values.name}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                    />
-                                    <TextField
-                                        label="e-mail"
-                                        name="email"
-                                        value={values.email}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                    />
+                                    <TextField label="nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} />
+                                    <TextField label="e-mail" name="email" value={values.email} onChange={handleChange} sx={textFieldStyle} />
                                     <TextField
                                         label="nome de usuário"
                                         name="username"
@@ -167,13 +148,7 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                         onChange={handleChange}
                                         sx={textFieldStyle}
                                     />
-                                    <TextField
-                                        label="cpf"
-                                        name="cpf"
-                                        value={values.cpf}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                    />
+                                    <TextField label="cpf" name="cpf" value={values.cpf} onChange={handleChange} sx={textFieldStyle} />
                                     <TextField
                                         label="data de nascimento"
                                         name="birth"

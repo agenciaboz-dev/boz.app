@@ -19,11 +19,11 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
 
     return profile ? (
         <Box sx={{ width: "100%", height: "80.2%", padding: "2vw 3vw" }}>
-            <Paper elevation={3} sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: colors.background, width: "100%" }}>
+            <Paper elevation={3} sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: "background.default", width: "100%" }}>
                 <Paper
                     elevation={3}
                     sx={{
-                        // backgroundColor: colors.secondary,
+                        backgroundColor: "background.paper",
                         width: "25%",
                         padding: "8vw 3vw",
                         flexDirection: "column",
