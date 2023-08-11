@@ -24,7 +24,8 @@ import ClearIcon from "@mui/icons-material/Clear"
 import { Tag } from "../../../components/Tag"
 import colors from "../../../style/colors"
 import { textFieldStyle } from "../../../style/textfield"
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos"
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
+
 interface NewUserProps {
     user: User
 }
@@ -113,8 +114,16 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                     gap: "1.5vw",
                                     //borderRadius: "0.2vw 0 0 0.2vw ",
                                     borderRadius: "0.2vw 0 0 2vw ",
+                                    position: "relative",
                                 }}
                             >
+                                <IconButton
+                                    sx={{ position: "absolute", top: "1vw", left: "1vw" }}
+                                    color="secondary"
+                                    onClick={() => navigate("/admin/users")}
+                                >
+                                    <ArrowBackIosNewIcon />
+                                </IconButton>
                                 <Avatar
                                     src={image}
                                     onChange={(file) => setImage(file)}
@@ -148,44 +157,45 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                             <Box sx={{ width: "75%", height: "100%", padding: "2vw", gap: "2vw" }}>
                                 <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
                                     <TextField
-                                        label="nome"
+                                        label="Nome"
                                         name="name"
                                         value={values.name}
                                         onChange={handleChange}
                                         sx={textFieldStyle}
                                     />
                                     <TextField
-                                        label="e-mail"
-                                        name="email"
-                                        value={values.email}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                    />
-                                    <TextField
-                                        label="nome de usuário"
-                                        name="username"
-                                        value={values.username}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                    />
-                                    <TextField
-                                        label="cpf"
+                                        label="CPF"
                                         name="cpf"
                                         value={values.cpf}
                                         onChange={handleChange}
                                         sx={textFieldStyle}
                                     />
+
                                     <TextField
-                                        label="data de nascimento"
+                                        label="Data de nascimento"
                                         name="birth"
                                         value={values.birth}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                    />
+                                    <TextField
+                                        label="E-mail"
+                                        name="email"
+                                        value={values.email}
                                         onChange={handleChange}
                                         sx={textFieldStyle}
                                     />
                                 </Box>
                                 <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
                                     <TextField
-                                        label="departamento"
+                                        label="Nome de usuário"
+                                        name="username"
+                                        value={values.username}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                    />
+                                    <TextField
+                                        label="Departamento"
                                         name="department"
                                         value={values.department}
                                         onChange={handleChange}
@@ -225,19 +235,6 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 </Box>
                             </Box>
                         </Paper>
-                        <IconButton
-                            sx={{
-                                fontWeight: "bold",
-                                position: "fixed",
-                                bottom: "34vw",
-                                left: "3vw",
-
-                                alignSelf: "flex-start",
-                            }}
-                            onClick={() => navigate("/admin/users")}
-                        >
-                            <ArrowBackIosIcon color="secondary"></ArrowBackIosIcon>
-                        </IconButton>
 
                         <Button
                             type="submit"
@@ -246,13 +243,14 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 color: "secondary.main",
                                 fontWeight: "bold",
                                 position: "fixed",
-                                bottom: "3vw",
+                                bottom: "3.2vw",
                                 right: "3vw",
                                 padding: "0.6vw 2.3vw",
+                                width: "10vw",
                             }}
                         >
                             {loading ? (
-                                <CircularProgress sx={{ color: "secondary.main", width: "100%", height: "100%" }} />
+                                <CircularProgress sx={{ color: "secondary.main", width: "1vw", height: "1vw" }} />
                             ) : (
                                 <p>Salvar</p>
                             )}

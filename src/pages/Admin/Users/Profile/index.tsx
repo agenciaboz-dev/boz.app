@@ -51,7 +51,11 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                         position: "relative",
                     }}
                 >
-                    <IconButton sx={{ position: "absolute", top: "1vw", left: "1vw" }} color="secondary" onClick={() => navigate("/admin/users")}>
+                    <IconButton
+                        sx={{ position: "absolute", top: "1vw", left: "1vw" }}
+                        color="secondary"
+                        onClick={() => navigate("/admin/users")}
+                    >
                         <ArrowBackIosNewIcon />
                     </IconButton>
 
@@ -61,9 +65,9 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                         <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{profile.username}</p>
                     </Box>
                     <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}>
-                        <Tag color={colors.primary} title="Admin"></Tag>
-                        <Tag color={colors.primary} title="Planejamento"></Tag>
-                        <Tag color={colors.primary} title="Dev"></Tag>
+                        <Tag variant="" style="0.7vw" name="Admin"></Tag>
+                        <Tag variant="" style="0.7vw" name="Planejamento"></Tag>
+                        <Tag variant="" style="0.7vw" name="Dev"></Tag>
                     </Box>
                 </Paper>
                 <Box sx={{ width: "73%", height: "100%", padding: "2vw", gap: "2vw" }}>
@@ -83,7 +87,11 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                             >
                                 {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForeverIcon />}
                             </Button>
-                            <Button type="submit" variant="contained" sx={{ color: "secondary.main", fontWeight: "bold", width: "10vw" }}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ color: "secondary.main", fontWeight: "bold", width: "10vw" }}
+                            >
                                 salvar
                             </Button>
                         </Box>
