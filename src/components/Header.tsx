@@ -14,9 +14,10 @@ import { Avatar } from "./Avatar"
 interface HeaderProps {
     user: User
     onSearch?: (result: string) => void
+    disabledSearch?: boolean
 }
 
-export const Header: React.FC<HeaderProps> = ({ user, onSearch }) => {
+export const Header: React.FC<HeaderProps> = ({ user, onSearch, disabledSearch }) => {
     const userDrawer = useUser().drawer
     const menuDrawer = useMenu().drawer
 
@@ -81,6 +82,7 @@ export const Header: React.FC<HeaderProps> = ({ user, onSearch }) => {
                     InputLabelProps={{ color: "secondary" }}
                     variant="standard"
                     autoComplete="off"
+                    disabled={disabledSearch}
                 />
             </Box>
 

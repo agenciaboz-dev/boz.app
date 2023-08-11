@@ -4,6 +4,7 @@ import { useIo } from "../hooks/useIo"
 
 interface DepartmentsContextValue {
     departments: Department[]
+    roles: Role[]
 }
 
 interface DepartmentsProviderProps {
@@ -17,6 +18,11 @@ export default DepartmentsContext
 export const DepartmentsProvider: React.FC<DepartmentsProviderProps> = ({ children }) => {
     const io = useIo()
     const [departments, setDepartments] = useState<Department[]>([])
+    const [roles, setRoles] = useState<Role[]>([])
+
+    useEffect(() => {
+        console.log({ roles })
+    }, [roles])
 
     useEffect(() => {
         console.log({ departments })
@@ -27,10 +33,15 @@ export const DepartmentsProvider: React.FC<DepartmentsProviderProps> = ({ childr
             setDepartments(departments)
         })
 
+        io.on("roles:sync", (roles: Role[]) => {
+            setRoles(roles)
+        })
+
         return () => {
             io.off("departments:sync")
+            io.off("roles:sync")
         }
     }, [])
 
-    return <DepartmentsContext.Provider value={{ departments }}>{children}</DepartmentsContext.Provider>
+    return <DepartmentsContext.Provider value={{ departments, roles }}>{children}</DepartmentsContext.Provider>
 }

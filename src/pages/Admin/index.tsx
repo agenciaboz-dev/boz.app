@@ -34,7 +34,8 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
                 })}
             </Tabs>
             <Routes>
-                <Route index element={<Users />} />
+                <Route index element={<Users user={user} />} />
+                <Route path="/users/*" element={<Users user={user} />} />
                 <Route path="/update" element={<UpdateUsers user={user} />} />
             </Routes>
         </Box>
