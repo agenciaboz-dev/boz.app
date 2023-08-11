@@ -7,6 +7,11 @@ interface ZapContextValue {
 
     qrcode: string
     loading: boolean
+
+    drawer: {
+        open: boolean
+        setOpen: (open: boolean) => void
+    }
 }
 
 interface ZapProviderProps {
@@ -23,14 +28,24 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
     const [qrcode, setQrcode] = useState("")
     const [chats, setChats] = useState<Chat[]>([])
     const [info, setInfo] = useState<any>()
+    const [openDrawer, setOpenDrawer] = useState(false)
 
     const [connected, setConnected] = useState(false)
+
+    const drawer = {
+        open: openDrawer,
+        setOpen: setOpenDrawer,
+    }
 
     const client: Zap = {
         chats,
         info,
         connected,
     }
+
+    useEffect(() => {
+        console.log({ zapDrawer: openDrawer })
+    }, [openDrawer])
 
     useEffect(() => {
         console.log({ info })
@@ -76,5 +91,5 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
         }
     }, [])
 
-    return <ZapContext.Provider value={{ qrcode, client, loading }}>{children}</ZapContext.Provider>
+    return <ZapContext.Provider value={{ qrcode, client, loading, drawer }}>{children}</ZapContext.Provider>
 }

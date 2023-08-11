@@ -5,5 +5,11 @@ export const useZap = () => {
     const zapContext = useContext(ZapContext)
     const { qrcode, client, loading } = zapContext
 
-    return { qrcode, client, loading }
+    const drawer = {
+        open: zapContext.drawer.open,
+        toogle: () => zapContext.drawer.setOpen(!zapContext.drawer.open),
+        close: () => zapContext.drawer.setOpen(false),
+    }
+
+    return { qrcode, client, loading, drawer }
 }

@@ -4,13 +4,14 @@ import { Chat } from "./Chat"
 
 interface ChatsProps {
     chats: Chat[]
+    onChatClick: (chat: Chat) => void
 }
 
-export const Chats: React.FC<ChatsProps> = ({ chats }) => {
+export const Chats: React.FC<ChatsProps> = ({ chats, onChatClick }) => {
     return (
         <Box sx={{ flexDirection: "column", gap: "1vw", width: "30%" }}>
             {chats.map((chat) => (
-                <Chat key={chat.id.user} chat={chat} />
+                <Chat key={chat.id.user} chat={chat} onChatClick={onChatClick} />
             ))}
         </Box>
     )

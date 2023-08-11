@@ -13,6 +13,7 @@ export const textFieldStyle: SxProps = {
 
     "& .MuiOutlinedInput-root": {
         "& fieldset": {
+            // bgcolor: "background.default",
             // borderColor: "primary.main",
         },
     },

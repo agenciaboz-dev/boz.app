@@ -1,13 +1,26 @@
 import React from "react"
 import { Avatar, Badge, Box, Paper } from "@mui/material"
+import { useZap } from "../../hooks/useZap"
 
 interface ChatProps {
     chat: Chat
+    onChatClick: (chat: Chat) => void
 }
 
-export const Chat: React.FC<ChatProps> = ({ chat }) => {
+export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
+    const { drawer } = useZap()
+
+    const handleClick = () => {
+        drawer.toogle()
+        onChatClick(chat)
+    }
+
     return (
-        <Paper elevation={3} sx={{ padding: "1vw", backgroundColor: "background.default", alignItems: "center", gap: "1vw", height: "5vw" }}>
+        <Paper
+            elevation={3}
+            sx={{ padding: "1vw", backgroundColor: "background.default", alignItems: "center", gap: "1vw", height: "5vw" }}
+            onClick={handleClick}
+        >
             <Avatar src={chat.profilePic} sx={{ width: "3vw", height: "3vw" }} />
             <Box
                 sx={{
