@@ -7,6 +7,7 @@ interface UserContextValue {
     setUser: (user: User | null) => void
 
     list: User[]
+    connectedList: User[]
 
     connected: boolean
 
@@ -29,6 +30,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
     const [user, setUser] = useState<User | null>(null)
     const [list, setList] = useState<User[]>([])
+    const [connectedList, setconnectedList] = useState<User[]>([])
     const [openDrawer, setOpenDrawer] = useState(false)
     const [connected, setConnected] = useState(false)
 
@@ -38,7 +40,42 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
 
     useEffect(() => {
+        console.log({ connectedList })
+        io.on("user:connect", (user) => {
+            console.log(`connected: ${user.username}`)
+            setconnectedList([...connectedList, user])
+        })
+
+        io.on("user:disconnect", (user) => {
+            console.log(`disconnected: ${user.username}`)
+            setconnectedList(connectedList.filter((item) => item.id != user.id))
+        })
+
+        return () => {
+            io.off("user:connect")
+            io.off("user:disconnect")
+        }
+    }, [connectedList])
+
+    useEffect(() => {
         console.log({ list })
+        io.on("user:new:success", (user) => {
+            setList([...list, user])
+        })
+
+        io.on("user:new", (user) => {
+            setList([...list, user])
+        })
+
+        io.on("user:sync", (user) => {
+            setList([...list.filter((item) => item.id != user.id), user])
+        })
+
+        return () => {
+            io.off("user:sync")
+            io.off("user:new")
+            io.off("user:new:success")
+        }
     }, [list])
 
     useEffect(() => {
@@ -58,24 +95,14 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
                 setConnected(true)
                 setList(users)
             })
-
-            io.on("user:new:success", (user) => {
-                setList([...list, user])
-            })
-
-            io.on("user:new", (user) => {
-                setList([...list, user])
-            })
         }
 
         return () => {
             io.off("connect")
             io.off("disconnect")
             io.off("client:sync")
-            io.off("user:new")
-            io.off("user:new:success")
         }
     }, [user])
 
-    return <UserContext.Provider value={{ user, setUser, drawer, connected, list }}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList }}>{children}</UserContext.Provider>
 }

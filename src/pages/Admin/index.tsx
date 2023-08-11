@@ -5,7 +5,6 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import { Users } from "./Users"
 import { tabStyle } from "../../style/tab"
 import { useAdminTabs } from "../../hooks/useAdminTabs"
-import { UpdateUsers } from "./UpdateUsers"
 
 interface AdminProps {
     user: User
@@ -36,7 +35,6 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
             <Routes>
                 <Route index element={<Users user={user} />} />
                 <Route path="/users/*" element={<Users user={user} />} />
-                <Route path="/update" element={<UpdateUsers user={user} />} />
             </Routes>
         </Box>
     )

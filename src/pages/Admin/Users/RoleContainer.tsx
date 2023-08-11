@@ -13,14 +13,15 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department }) => {
         <Box sx={{ flexDirection: "column", gap: "1vw", color: "primary.main", width: "30vw" }}>
             <p style={{ fontWeight: "bold" }}>{department.name}</p>
 
-            <Paper
-                sx={{ flexDirection: "column", bgcolor: "background.default" }}
-                onClick={() => {
-                    navigate("/admin/update")
-                }}
-            >
+            <Paper sx={{ flexDirection: "column", bgcolor: "background.default" }}>
                 {department.users.map((user) => (
-                    <MenuItem key={user.id} sx={{ alignItems: "center", gap: "1vw", color: "text.secondary" }}>
+                    <MenuItem
+                        key={user.id}
+                        sx={{ alignItems: "center", gap: "1vw", color: "text.secondary" }}
+                        onClick={() => {
+                            navigate(`/admin/users/${user.username}`)
+                        }}
+                    >
                         <Avatar size={"3vw"} small user={user} />
                         <p style={{ fontWeight: "bold" }}>{user.name}</p>
                     </MenuItem>

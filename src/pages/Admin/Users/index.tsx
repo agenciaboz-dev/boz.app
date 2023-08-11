@@ -5,6 +5,7 @@ import { NewButton } from "../../../components/NewButton"
 import { useDepartments } from "../../../hooks/useDepartments"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { NewUser } from "./NewUser"
+import { Profile } from "./Profile"
 
 interface UsersProps {
     user: User
@@ -33,6 +34,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                 }
             />
             <Route path="/new" element={<NewUser user={user} />} />
+            <Route path="/:username" element={<Profile user={user} />} />
         </Routes>
     )
 }
