@@ -2,6 +2,9 @@ import HomeIcon from "@mui/icons-material/Home"
 import WhatsAppIcon from "@mui/icons-material/WhatsApp"
 import FormatListNumberedRtlIcon from "@mui/icons-material/FormatListNumberedRtl"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
+import SettingsIcon from "@mui/icons-material/Settings"
+
 import { useNavigate } from "react-router-dom"
 
 export const useMenuList = () => {
@@ -30,11 +33,25 @@ export const useMenuList = () => {
             onClick: () => navigate("/tasks"),
         },
         {
-            id: 2,
+            id: 4,
             name: "agenda",
             path: "/agenda",
             icon: <CalendarMonthIcon />,
             onClick: () => navigate("/agenda"),
+        },
+        {
+            id: 5,
+            name: "configurações",
+            path: "/settings",
+            icon: <SettingsIcon />,
+            onClick: () => navigate("/settings"),
+        },
+        {
+            id: 6,
+            name: "administração",
+            path: "/admin",
+            icon: <AdminPanelSettingsIcon />,
+            onClick: () => navigate("/admin"),
         },
     ]
 
