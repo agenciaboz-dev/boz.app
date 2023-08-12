@@ -79,7 +79,7 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
                     }}
                 >
                     {chat?.messages?.map((message) => (
-                        <Message key={message.id.remote} message={message} />
+                        <Message key={message.id._serialized} message={message} />
                     ))}
                     <AlwaysScrollToBottom />
                 </Box>
