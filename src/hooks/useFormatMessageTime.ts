@@ -26,7 +26,7 @@ export const useFormatMessageTime = () => {
 
     const format = (date: Date) => {
         // @ts-ignore
-        return `${date.toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })} - ${days[date.getDay()]}, ${date.getDate()} de ${
+        return `${date.toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })} - ${days[date.getDay() + 1]}, ${date.getDate()} de ${
             // @ts-ignore
             months[date.getMonth() + 1]
         } de ${date.getFullYear()}`
