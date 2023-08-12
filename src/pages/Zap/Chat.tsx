@@ -39,9 +39,9 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                 <Box color="text.secondary">
                     <p
                         style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: "19vw", overflow: "hidden", fontSize: "0.8vw" }}
-                        title={chat.lastMessage.body}
+                        title={chat.lastMessage?.body}
                     >
-                        {chat.lastMessage.body}
+                        {chat.lastMessage?.body}
                     </p>
                 </Box>
             </Box>
