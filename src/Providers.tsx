@@ -11,6 +11,7 @@ import { DepartmentsProvider } from "./contexts/departmentsContext"
 import { ConfirmDialog } from "./components/ConfirmDialog"
 import { PictureModalProvider } from "./contexts/pictureModalContext"
 import { PictureModal } from "./components/PictureModal"
+import { SearchProvider } from "./contexts/searchContext"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -20,24 +21,26 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
     return (
         <SnackbarProvider>
             <ConfirmDialogProvider>
-                <IoProvider>
-                    <UserProvider>
-                        <DepartmentsProvider>
-                            <ZapProvider>
-                                <MenuProvider>
-                                    <PictureModalProvider>
-                                        <PictureModal />
-                                        <MenuDrawer />
-                                        <UserDrawer />
-                                        <Snackbar />
-                                        <ConfirmDialog />
-                                        {children}
-                                    </PictureModalProvider>
-                                </MenuProvider>
-                            </ZapProvider>
-                        </DepartmentsProvider>
-                    </UserProvider>
-                </IoProvider>
+                <SearchProvider>
+                    <IoProvider>
+                        <UserProvider>
+                            <DepartmentsProvider>
+                                <ZapProvider>
+                                    <MenuProvider>
+                                        <PictureModalProvider>
+                                            <PictureModal />
+                                            <MenuDrawer />
+                                            <UserDrawer />
+                                            <Snackbar />
+                                            <ConfirmDialog />
+                                            {children}
+                                        </PictureModalProvider>
+                                    </MenuProvider>
+                                </ZapProvider>
+                            </DepartmentsProvider>
+                        </UserProvider>
+                    </IoProvider>
+                </SearchProvider>
             </ConfirmDialogProvider>
         </SnackbarProvider>
     )

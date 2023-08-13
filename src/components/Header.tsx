@@ -10,18 +10,19 @@ import logo from "../assets/logo.png"
 import { useMenu } from "../hooks/useMenu"
 import { textFieldStyle } from "../style/textfield"
 import { Avatar } from "./Avatar"
+import { useSearch } from "../hooks/useSearch"
 
 interface HeaderProps {
     user: User
-    onSearch?: (result: string) => void
     disabledSearch?: boolean
 }
 
-export const Header: React.FC<HeaderProps> = ({ user, onSearch, disabledSearch }) => {
+export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
     const userDrawer = useUser().drawer
     const menuDrawer = useMenu().drawer
 
     const { darkMode } = useDarkMode()
+    const { onSearch } = useSearch()
 
     const [searchValue, setSearchValue] = useState("")
 
@@ -44,9 +45,8 @@ export const Header: React.FC<HeaderProps> = ({ user, onSearch, disabledSearch }
     }
 
     useEffect(() => {
-        console.log(searchValue)
         if (onSearch) onSearch(searchValue)
-    }, [searchValue])
+    }, [searchValue, onSearch])
 
     return (
         <Box

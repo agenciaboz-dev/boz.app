@@ -7,6 +7,7 @@ import { QrCode } from "./QrCode"
 import { Chats } from "./Chats"
 import { ChatsSkeletons } from "./ChatsSkeletons"
 import { ZapDrawer } from "../../components/ZapDrawer"
+import { useSearch } from "../../hooks/useSearch"
 
 interface ZapProps {
     user: User
@@ -14,6 +15,7 @@ interface ZapProps {
 
 export const Zap: React.FC<ZapProps> = ({ user }) => {
     const { client, qrcode, loading } = useZap()
+    const { setOnSearch } = useSearch()
 
     const [chats, setChats] = useState<Chat[]>([])
     const [currentChat, setCurrentChat] = useState<Chat>()
@@ -36,9 +38,13 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
         }
     }, [client?.chats])
 
+    useEffect(() => {
+        setOnSearch(() => handleSearch)
+    }, [])
+
     return (
         <Box sx={backgroundStyle}>
-            <Header user={user} onSearch={handleSearch} />
+            <Header user={user} />
             {client?.connected ? (
                 <Box
                     sx={{

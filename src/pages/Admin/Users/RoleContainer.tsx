@@ -6,16 +6,19 @@ import { useArray } from "burgos-array"
 
 interface RoleContainerProps {
     department: Department
+    users: User[]
 }
 
-export const RoleContainer: React.FC<RoleContainerProps> = ({ department }) => {
+export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users }) => {
     const navigate = useNavigate()
+    const userList = users.filter(user => user.department.id == department.id)
+
     return (
         <Box sx={{ flexDirection: "column", gap: "1vw", color: "primary.main", width: "30vw" }}>
             <p style={{ fontWeight: "bold" }}>{department.name}</p>
 
             <Paper sx={{ flexDirection: "column", bgcolor: "background.default" }}>
-                {department.users.map((user) => (
+                {userList.map((user) => (
                     <MenuItem
                         key={user.id}
                         sx={{ alignItems: "center", gap: "1vw", color: "text.secondary" }}
