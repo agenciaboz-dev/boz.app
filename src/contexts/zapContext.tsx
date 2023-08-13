@@ -12,6 +12,9 @@ interface ZapContextValue {
         open: boolean
         setOpen: (open: boolean) => void
     }
+
+    currentChat: Chat | undefined
+    setCurrentChat: (value: Chat) => void
 }
 
 interface ZapProviderProps {
@@ -29,6 +32,7 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
     const [chats, setChats] = useState<Chat[]>([])
     const [info, setInfo] = useState<any>()
     const [openDrawer, setOpenDrawer] = useState(false)
+    const [currentChat, setCurrentChat] = useState<Chat>()
 
     const [connected, setConnected] = useState(false)
 
@@ -53,22 +57,24 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
 
     useEffect(() => {
         io.on("chat:sync", (chat: Chat) => {
-            setChats((prevChats) => [...prevChats.filter((item) => item.id.user !== chat.id.user), chat])
+            setChats((prevChats) => {
+                if (currentChat?.id._serialized == chat.id._serialized) {
+                    setCurrentChat(chat)
+                }
+
+                return [...prevChats.filter((item) => item.id.user !== chat.id.user), chat]
+            })
         })
 
-        io.on("message:new", (chat: Chat) => {
+        io.on("message:new", (data: { chat: Chat; message: Message }) => {
             setChats((prevChats) => {
-                const prevChat = prevChats.find((item) => item.id._serialized == chat.id._serialized) as Chat
+                const prevChat = prevChats.find((item) => item.id._serialized == data.chat.id._serialized) as Chat
+                const updatedChat = { ...prevChat, messages: [...(prevChat.messages || []), data.message], lastMessage: data.message }
+                if (currentChat?.id._serialized == prevChat.id._serialized) {
+                    setCurrentChat(updatedChat)
+                }
 
-                const messages = prevChat.messages || []
-                // const exists = messages.find(message => message.id._serialized == chat.lastMessage.id._serialized)
-                // if (!exists)
-                messages.push(chat.lastMessage)
-
-                return [
-                    ...prevChats.filter((item) => item.id.user !== chat.id.user),
-                    { ...chat, messages: messages, profilePic: prevChat.profilePic },
-                ]
+                return [...prevChats.filter((item) => item.id._serialized !== data.chat.id._serialized), updatedChat]
             })
         })
 
@@ -119,5 +125,5 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
         }
     }, [])
 
-    return <ZapContext.Provider value={{ qrcode, client, loading, drawer }}>{children}</ZapContext.Provider>
+    return <ZapContext.Provider value={{ qrcode, client, loading, drawer, currentChat, setCurrentChat }}>{children}</ZapContext.Provider>
 }

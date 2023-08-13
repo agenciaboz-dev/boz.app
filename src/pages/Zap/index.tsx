@@ -14,11 +14,10 @@ interface ZapProps {
 }
 
 export const Zap: React.FC<ZapProps> = ({ user }) => {
-    const { client, qrcode, loading } = useZap()
+    const { client, qrcode, loading, setCurrentChat, currentChat } = useZap()
     const { setOnSearch } = useSearch()
 
     const [chats, setChats] = useState<Chat[]>([])
-    const [currentChat, setCurrentChat] = useState<Chat>()
 
     const handleSearch = (value: string) => {
         if (client) {
@@ -39,7 +38,6 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
         }
     }, [client?.chats])
 
-
     return (
         <Box sx={backgroundStyle}>
             <Header user={user} />
@@ -59,7 +57,7 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
                 >
                     <p style={{ fontWeight: "bold" }}>{client.info.pushname}</p>
                     {loading ? <ChatsSkeletons /> : <Chats chats={chats} onChatClick={handleChatClick} />}
-                    <ZapDrawer chat={currentChat} />
+                    <ZapDrawer />
                 </Box>
             ) : (
                 <QrCode qrcode={qrcode} />

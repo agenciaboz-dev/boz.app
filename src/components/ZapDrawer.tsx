@@ -9,9 +9,7 @@ import { Message } from "./Message"
 import { useIo } from "../hooks/useIo"
 import { usePictureModal } from "../hooks/usePictureModal"
 
-interface ZapDrawerProps {
-    chat?: Chat
-}
+interface ZapDrawerProps {}
 
 const AlwaysScrollToBottom = () => {
     const elementRef = useRef<HTMLDivElement>(null)
@@ -19,10 +17,10 @@ const AlwaysScrollToBottom = () => {
     return <div ref={elementRef} />
 }
 
-export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
+export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
     const io = useIo()
     const picture = usePictureModal()
-    const { drawer } = useZap()
+    const { drawer, currentChat: chat } = useZap()
 
     const handleClose = () => {
         drawer.close()

@@ -24,9 +24,5 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         setPlaceholder(placeholder)
     }
 
-    React.useEffect(() => {
-        console.log({ onSearch })
-    }, [onSearch])
-
     return <SearchContext.Provider value={{ onSearch, setOnSearch: onSearchChange, placeholder }}>{children}</SearchContext.Provider>
 }
