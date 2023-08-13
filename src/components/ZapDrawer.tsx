@@ -71,7 +71,7 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
                         height: "80vh",
                         bgcolor: "background.default",
                         overflowY: "auto",
-                        borderRadius: "1.5vw",
+                        borderRadius: "0 1.5vw 0 1.5vw",
                         padding: "2vw",
                         color: "text.secondary",
                         flexDirection: "column",
