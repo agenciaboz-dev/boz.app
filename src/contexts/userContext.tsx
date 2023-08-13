@@ -7,7 +7,8 @@ interface UserContextValue {
     setUser: (user: User | null) => void
 
     list: User[]
-    setList: (users: User[]) => void
+    addUser: (user: User) => void
+
     connectedList: User[]
 
     connected: boolean
@@ -40,6 +41,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         setOpen: setOpenDrawer,
     }
 
+    const addUser = (user: User) => {
+        setList((prevList) => [...prevList, user])
+    }
+
     useEffect(() => {
         console.log({ connectedList })
         io.on("user:connect", (user) => {
@@ -60,26 +65,22 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
     useEffect(() => {
         console.log({ list })
-        io.on("user:new:success", (user) => {
-            setList([...list, user])
-        })
 
         io.on("user:new", (user) => {
-            setList([...list, user])
+            addUser(user)
         })
 
         io.on("user:sync", (user) => {
-            setList([...list.filter((item) => item.id != user.id), user])
+            setList((prevList) => [...prevList.filter((item) => item.id != user.id), user])
         })
 
         io.on("user:delete", (user) => {
-            setList(list.filter((item) => item.id != user.id))
+            setList((prevList) => prevList.filter((item) => item.id != user.id))
         })
 
         return () => {
             io.off("user:sync")
             io.off("user:new")
-            io.off("user:new:success")
             io.off("user:delete")
         }
     }, [list])
@@ -110,5 +111,5 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         }
     }, [user])
 
-    return <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList, setList }}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList, addUser }}>{children}</UserContext.Provider>
 }

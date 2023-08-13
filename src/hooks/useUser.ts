@@ -7,12 +7,12 @@ import { useNavigate } from "react-router-dom"
 
 export const useUser = () => {
     const api = useApi()
-    const { snackbar } = useSnackbar()
     const io = useIo()
     const navigate = useNavigate()
+    const { snackbar } = useSnackbar()
 
     const userContext = useContext(UserContext)
-    const { user, setUser, connected, list, connectedList, setList } = userContext
+    const { user, setUser, connected, list, connectedList, addUser } = userContext
 
     const drawer = {
         open: userContext.drawer.open,
@@ -52,10 +52,11 @@ export const useUser = () => {
             data: user,
             callback: () => {
                 navigate("/admin/users")
+                snackbar({ severity: "warning", text: "usuario deletado" })
             },
             finallyCallback: () => setDeleting(false),
         })
     }
 
-    return { user, drawer, login, logout, connected, list, connectedList, remove }
+    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser }
 }
