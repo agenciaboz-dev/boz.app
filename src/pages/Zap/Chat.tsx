@@ -38,7 +38,7 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
             }}
             onClick={handleClick}
         >
-            <Avatar src={chat.profilePic} sx={{ width: "3vw", height: "3vw" }} />
+            <Avatar src={chat.profilePic} sx={{ width: "3vw", height: "3vw", bgcolor: "primary.main" }} />
             <Box
                 sx={{
                     flexDirection: "column",

@@ -57,7 +57,7 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
                 }}
             >
                 <Box sx={{ gap: "2vw", alignItems: "center", height: "5vh" }}>
-                    <Avatar src={chat?.profilePic} sx={{ width: "3vw", height: "3vw" }} />
+                    <Avatar src={chat?.profilePic} sx={{ width: "3vw", height: "3vw", bgcolor: "primary.main" }} />
                     <p style={{ fontWeight: "bold" }}>{chat?.name}</p>
                 </Box>
 
