@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Badge, Box, Paper } from "@mui/material"
+import { Avatar, Badge, Box, MenuItem, Paper } from "@mui/material"
 import { useZap } from "../../hooks/useZap"
 import { useFormatMessageTime } from "../../hooks/useFormatMessageTime"
 
@@ -18,9 +18,24 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
     }
 
     return (
-        <Paper
-            elevation={3}
-            sx={{ padding: "1vw", backgroundColor: "background.default", alignItems: "center", gap: "1vw", height: "5vw" }}
+        <MenuItem
+            // elevation={3}
+            sx={{
+                padding: "1vw",
+                backgroundColor: "background.default",
+                alignItems: "center",
+                gap: "1vw",
+                height: "5vw",
+                cursor: "pointer",
+                borderRadius: "0.5vw",
+                borderBottom: "2px solid",
+                // borderRight: "1px solid",
+                // boxShadow: "0px 5px 7px rgba(0, 0, 0, 0.2)",
+
+                "&:hover": {
+                    // outline: "2px solid",
+                },
+            }}
             onClick={handleClick}
         >
             <Avatar src={chat.profilePic} sx={{ width: "3vw", height: "3vw" }} />
@@ -74,6 +89,6 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     </Box>
                 )}
             </Box>
-        </Paper>
+        </MenuItem>
     )
 }
