@@ -11,6 +11,7 @@ import { useMenu } from "../hooks/useMenu"
 import { textFieldStyle } from "../style/textfield"
 import { Avatar } from "./Avatar"
 import { useSearch } from "../hooks/useSearch"
+import ClearIcon from "@mui/icons-material/Clear"
 
 interface HeaderProps {
     user: User
@@ -78,6 +79,11 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                         color: "secondary",
                         sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw" },
                         startAdornment: <SearchIcon />,
+                        endAdornment: (
+                            <IconButton color="secondary" onClick={() => setSearchValue("")}>
+                                <ClearIcon />
+                            </IconButton>
+                        ),
                     }}
                     InputLabelProps={{ color: "secondary" }}
                     variant="standard"
