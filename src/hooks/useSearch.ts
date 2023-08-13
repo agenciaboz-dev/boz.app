@@ -3,7 +3,7 @@ import SearchContext from "../contexts/searchContext"
 
 export const useSearch = () => {
     const searchContext = useContext(SearchContext)
-    const { onSearch, setOnSearch } = searchContext
+    const { onSearch, setOnSearch, placeholder } = searchContext
 
-    return { onSearch, setOnSearch }
+    return { onSearch, setOnSearch, placeholder }
 }

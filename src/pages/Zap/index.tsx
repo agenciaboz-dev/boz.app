@@ -39,7 +39,7 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
     }, [client?.chats])
 
     useEffect(() => {
-        setOnSearch(() => handleSearch)
+        setOnSearch(() => handleSearch, "conversas")
     }, [])
 
     return (

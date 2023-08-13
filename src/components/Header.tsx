@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
     const menuDrawer = useMenu().drawer
 
     const { darkMode } = useDarkMode()
-    const { onSearch } = useSearch()
+    const { onSearch, placeholder } = useSearch()
 
     const [searchValue, setSearchValue] = useState("")
 
@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                 <TextField
                     value={searchValue}
                     onChange={(event) => handleSearch(event.target.value)}
-                    placeholder="pesquisar"
+                    placeholder={`pesquisar ${placeholder}`}
                     color={"secondary"}
                     sx={textFieldStyle}
                     InputProps={{

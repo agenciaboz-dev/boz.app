@@ -36,7 +36,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
     }, [list])
 
     useEffect(() => {
-        setOnSearch(() => handleSearch)
+        setOnSearch(() => handleSearch, "usuários")
     })
 
     return (
