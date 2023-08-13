@@ -227,7 +227,7 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 width: "10vw",
                             }}
                         >
-                            {loading ? <CircularProgress sx={{ color: "secondary.main", width: "1vw", height: "1vw" }} /> : <p>Salvar</p>}
+                            {loading ? <CircularProgress size="1.5rem" sx={{ color: "secondary.main" }} /> : <p>Salvar</p>}
                         </Button>
                     </Form>
                 )}
