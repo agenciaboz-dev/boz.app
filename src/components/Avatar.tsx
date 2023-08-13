@@ -2,6 +2,7 @@ import React from "react"
 import { Badge, Avatar as MuiAvatar, SxProps } from "@mui/material"
 import { useUser } from "../hooks/useUser"
 import { useImageUrl } from "../hooks/useImageUrl"
+import { usePictureModal } from "../hooks/usePictureModal"
 
 interface AvatarProps {
     user: User
@@ -13,7 +14,9 @@ interface AvatarProps {
 export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small }) => {
     const { getProfilePic } = useImageUrl()
     const { connectedList } = useUser()
+    const picture = usePictureModal()
     const connected = connectedList.find((item) => item.id == user.id)
+    const url = getProfilePic(user)
 
     const dotSize = small ? "1vw" : "2vw"
 
@@ -26,14 +29,16 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small }) => {
             componentsProps={{ badge: { style: { minWidth: 0, width: dotSize, height: dotSize, borderRadius: "50%" } } }}
         >
             <MuiAvatar
-                src={getProfilePic(user)}
+                src={url}
                 sx={{
                     color: "primary.main",
                     backgroundColor: "background.default",
                     width: size,
                     height: size,
+                    cursor: "pointer",
                     ...sx,
                 }}
+                onClick={() => picture.open(url)}
             />
         </Badge>
     )

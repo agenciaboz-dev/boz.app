@@ -7,6 +7,7 @@ import { Form, Formik, FormikHelpers } from "formik"
 import SendIcon from "@mui/icons-material/Send"
 import { Message } from "./Message"
 import { useIo } from "../hooks/useIo"
+import { usePictureModal } from "../hooks/usePictureModal"
 
 interface ZapDrawerProps {
     chat?: Chat
@@ -20,6 +21,7 @@ const AlwaysScrollToBottom = () => {
 
 export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
     const io = useIo()
+    const picture = usePictureModal()
     const { drawer } = useZap()
 
     const handleClose = () => {
@@ -57,7 +59,11 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({ chat }) => {
                 }}
             >
                 <Box sx={{ gap: "2vw", alignItems: "center", height: "5vh" }}>
-                    <Avatar src={chat?.profilePic} sx={{ width: "3vw", height: "3vw", bgcolor: "primary.main" }} />
+                    <Avatar
+                        src={chat?.profilePic}
+                        sx={{ width: "3vw", height: "3vw", bgcolor: "primary.main", cursor: "pointer" }}
+                        onClick={() => picture.open(chat?.profilePic || "")}
+                    />
                     <p style={{ fontWeight: "bold" }}>{chat?.name}</p>
                 </Box>
 

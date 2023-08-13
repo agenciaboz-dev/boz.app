@@ -2,6 +2,7 @@ import React from "react"
 import { Avatar, Badge, Box, MenuItem, Paper } from "@mui/material"
 import { useZap } from "../../hooks/useZap"
 import { useFormatMessageTime } from "../../hooks/useFormatMessageTime"
+import { usePictureModal } from "../../hooks/usePictureModal"
 
 interface ChatProps {
     chat: Chat
@@ -9,8 +10,9 @@ interface ChatProps {
 }
 
 export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
-    const { drawer } = useZap()
     const formatTime = useFormatMessageTime()
+    const picture = usePictureModal()
+    const { drawer } = useZap()
 
     const handleClick = () => {
         drawer.toogle()
@@ -38,7 +40,11 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
             }}
             onClick={handleClick}
         >
-            <Avatar src={chat.profilePic} sx={{ width: "3vw", height: "3vw", bgcolor: "primary.main" }} />
+            <Avatar
+                src={chat.profilePic}
+                sx={{ width: "3vw", height: "3vw", bgcolor: "primary.main" }}
+                onClick={() => picture.open(chat?.profilePic || "")}
+            />
             <Box
                 sx={{
                     flexDirection: "column",

@@ -9,6 +9,8 @@ import { MenuDrawer } from "./components/MenuDrawer"
 import { ZapProvider } from "./contexts/zapContext"
 import { DepartmentsProvider } from "./contexts/departmentsContext"
 import { ConfirmDialog } from "./components/ConfirmDialog"
+import { PictureModalProvider } from "./contexts/pictureModalContext"
+import { PictureModal } from "./components/PictureModal"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -23,11 +25,14 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                         <DepartmentsProvider>
                             <ZapProvider>
                                 <MenuProvider>
-                                    <MenuDrawer />
-                                    <UserDrawer />
-                                    <Snackbar />
-                                    <ConfirmDialog />
-                                    {children}
+                                    <PictureModalProvider>
+                                        <PictureModal />
+                                        <MenuDrawer />
+                                        <UserDrawer />
+                                        <Snackbar />
+                                        <ConfirmDialog />
+                                        {children}
+                                    </PictureModalProvider>
                                 </MenuProvider>
                             </ZapProvider>
                         </DepartmentsProvider>
