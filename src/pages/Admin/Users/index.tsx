@@ -33,11 +33,8 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
 
     useEffect(() => {
         setUserList(list)
-    }, [list])
-
-    useEffect(() => {
         setOnSearch(() => handleSearch, "usuários")
-    })
+    }, [list])
 
     return (
         <Routes>

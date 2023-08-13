@@ -35,12 +35,10 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
     useEffect(() => {
         if (client?.chats) {
             setChats(client.chats)
+            setOnSearch(() => handleSearch, "conversas")
         }
     }, [client?.chats])
 
-    useEffect(() => {
-        setOnSearch(() => handleSearch, "conversas")
-    }, [])
 
     return (
         <Box sx={backgroundStyle}>
