@@ -9,9 +9,10 @@ interface AvatarProps {
     sx?: SxProps
     small?: boolean
     size: string | number
+    noClickModal?: boolean
 }
 
-export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small }) => {
+export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickModal }) => {
     const { getProfilePic } = useImageUrl()
     const { connectedList } = useUser()
     const picture = usePictureModal()
@@ -38,7 +39,7 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small }) => {
                     cursor: "pointer",
                     ...sx,
                 }}
-                onClick={() => picture.open(url)}
+                onClick={() => (noClickModal ? {} : picture.open(url))}
             />
         </Badge>
     )
