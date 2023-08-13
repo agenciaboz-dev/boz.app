@@ -1,3 +1,6 @@
+type Months = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 11 | 12
+type Days = 1 | 2 | 3 | 4 | 5 | 6 | 7
+
 export const useFormatMessageTime = () => {
     const months = {
         [1]: "Jan",
@@ -25,12 +28,14 @@ export const useFormatMessageTime = () => {
     }
 
     const format = (date: Date) => {
-        if (!date.getDay()) return "" 
+        const weekDay = (date.getDay() + 1) as Days
+        const day = date.getDate()
+        const month = (date.getMonth() + 1) as Months
 
-        // @ts-ignore
-        return `${date.toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })} - ${days[date.getDay() + 1]}, ${date.getDate()} de ${
-            // @ts-ignore
-            months[date.getMonth() + 1]
+        if (!day) return ""
+
+        return `${date.toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })} - ${days[weekDay]}, ${day} de ${
+            months[month]
         } de ${date.getFullYear()}`
     }
 
