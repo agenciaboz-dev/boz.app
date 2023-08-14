@@ -1,15 +1,16 @@
 import React from "react"
-import { Box, alpha, darken, lighten } from "@mui/material"
+import { Box, SxProps, alpha, darken, lighten } from "@mui/material"
 import { useColors } from "../hooks/useColors"
 import { useDarkMode } from "../hooks/useDarkMode"
 
 interface TagProps {
     name: string
+    sx?: SxProps
     fontSize?: string
     variant?: string
 }
 
-export const Tag: React.FC<TagProps> = ({ name, fontSize, variant = "default" }) => {
+export const Tag: React.FC<TagProps> = ({ name, fontSize, sx, variant = "default" }) => {
     const colors = useColors()
     const { darkMode } = useDarkMode()
 
@@ -25,6 +26,7 @@ export const Tag: React.FC<TagProps> = ({ name, fontSize, variant = "default" })
                 color: colors.secondary,
                 justifyContent: "center",
                 alignItems: "center",
+                ...sx,
             }}
         >
             {name}
