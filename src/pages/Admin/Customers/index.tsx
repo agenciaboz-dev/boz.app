@@ -5,6 +5,7 @@ import { NewButton } from "../../../components/NewButton"
 import AddIcon from "@mui/icons-material/Add"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { NewCustomer } from "./NewCustomer"
+import { CustomerList } from "./CustomerList"
 
 interface CustomersProps {
     user: User
@@ -24,6 +25,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                 height: "100%",
                 bgcolor: "background.default",
                 padding: "2vw",
+                gap: "2vw",
             }}
         >
             <Routes>
@@ -38,6 +40,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                                 icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
                             />
                             <Services />
+                            <CustomerList />
                         </>
                     }
                 />
