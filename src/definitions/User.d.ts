@@ -24,6 +24,7 @@ interface UserForm {
     name: string
 
     cpf: string
+    phone: string
     birth: string
     department: number
     role: number

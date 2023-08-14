@@ -48,6 +48,7 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
         email: "",
         username: "",
         cpf: "",
+        phone: "",
         birth: "",
         department: 0,
         role: 0,
@@ -188,6 +189,13 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                         />
                                     </Box>
                                     <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
+                                        <TextField
+                                            label="Telefone"
+                                            name="phone"
+                                            value={values.phone}
+                                            onChange={handleChange}
+                                            sx={textFieldStyle}
+                                        />
                                         <TextField
                                             label="E-mail"
                                             name="email"

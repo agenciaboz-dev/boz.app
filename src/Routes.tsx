@@ -5,7 +5,6 @@ import { useUser } from "./hooks/useUser"
 import { WildCard } from "./pages/WildCard"
 import { Zap } from "./pages/Zap"
 import { Admin } from "./pages/Admin"
-import { UpdateUsers } from "./pages/Admin/UpdateUsers"
 
 interface RoutesProps {}
 
