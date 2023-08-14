@@ -27,6 +27,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { useUser } from "../../../hooks/useUser"
 import { TaiTextField } from "../../../components/TaiTextField"
 import MaskedInput from "../../../components/MaskedInput"
+import { Edit } from "../../../components/Edit"
 
 interface NewUserProps {
     user: User
@@ -159,117 +160,7 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                     <Tag variant="" style="0.7vw" name="Dev"></Tag>
                                 </Box>
                             </Paper>
-                            <Box sx={{ width: "75%", height: "100%", padding: "2vw", gap: "2vw", flexDirection: "column" }}>
-                                <Box sx={{ flexDirection: "column", gap: "0.2vw" }}>
-                                    <p style={{ fontWeight: "bolder" }}>Informações Pessoais</p>
-                                    <hr style={{}} />
-                                </Box>
-
-                                <Box sx={{ gap: "1vw" }}>
-                                    <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
-                                        <TextField
-                                            label="Nome"
-                                            name="name"
-                                            value={values.name}
-                                            onChange={handleChange}
-                                            sx={textFieldStyle}
-                                        />
-                                        <TextField
-                                            label="CPF"
-                                            name="cpf"
-                                            value={values.cpf}
-                                            onChange={handleChange}
-                                            sx={textFieldStyle}
-                                            InputProps={{
-                                                inputComponent: MaskedInput,
-                                                inputProps: { mask: "000.000.000-00" },
-                                            }}
-                                        />
-                                        <TextField
-                                            label="Data de nascimento"
-                                            name="birth"
-                                            value={values.birth}
-                                            onChange={handleChange}
-                                            sx={textFieldStyle}
-                                            InputProps={{
-                                                inputComponent: MaskedInput,
-                                                inputProps: { mask: "00/00/0000" },
-                                            }}
-                                        />
-                                    </Box>
-                                    <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
-                                        <TextField
-                                            label="Telefone"
-                                            name="phone"
-                                            value={values.phone}
-                                            onChange={handleChange}
-                                            sx={textFieldStyle}
-                                            InputProps={{
-                                                inputComponent: MaskedInput,
-                                                inputProps: { mask: "(00) 0 0000-0000" },
-                                            }}
-                                        />
-                                        <TextField
-                                            label="E-mail"
-                                            name="email"
-                                            value={values.email}
-                                            onChange={handleChange}
-                                            sx={textFieldStyle}
-                                        />
-                                        <TextField
-                                            label="Nome de usuário"
-                                            name="username"
-                                            value={values.username}
-                                            onChange={handleChange}
-                                            sx={textFieldStyle}
-                                        />
-                                    </Box>
-                                </Box>
-                                <Box sx={{ flexDirection: "column", gap: "0.2vw" }}>
-                                    <p style={{ fontWeight: "bolder" }}>Setor</p>
-                                    <hr style={{}} />
-                                </Box>
-                                <Box sx={{ flexDirection: "column", gap: "1vw" }}>
-                                    <TextField
-                                        label="Departamento"
-                                        name="department"
-                                        value={values.department}
-                                        onChange={handleChange}
-                                        select
-                                        sx={textFieldStyle}
-                                        SelectProps={{
-                                            MenuProps: {
-                                                sx: selectMenuStyle,
-                                            },
-                                        }}
-                                    >
-                                        <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
-                                        {departments.map((department) => (
-                                            <MenuItem key={department.id} value={department.id}>
-                                                {department.name}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-
-                                    <Select
-                                        name="roles"
-                                        multiple
-                                        value={selectedRoles}
-                                        onChange={(_, child) => handleRoleSelect(child)}
-                                        input={<OutlinedInput label="funções" />}
-                                        renderValue={(selected) => selected.map((role) => role.name).join(", ")}
-                                        MenuProps={{ sx: selectMenuStyle }}
-                                        sx={textFieldStyle}
-                                    >
-                                        {roles.map((role) => (
-                                            <MenuItem key={role.id} value={role.id}>
-                                                <Checkbox checked={selectedRoles.includes(role)} />
-                                                <ListItemText primary={role.name} />
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </Box>
-                            </Box>
+                            <Edit user={user} />
                         </Paper>
 
                         <Button

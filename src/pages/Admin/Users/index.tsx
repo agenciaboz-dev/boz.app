@@ -61,7 +61,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                 }
             />
             <Route path="/new" element={<NewUser user={user} />} />
-            <Route path="/:username" element={<Profile user={user} />} />
+            <Route path="/:username" element={<Profile user={user} editingMode={false} />} />
         </Routes>
     )
 }

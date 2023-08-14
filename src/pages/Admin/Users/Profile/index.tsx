@@ -18,14 +18,18 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen"
 import DateRangeIcon from "@mui/icons-material/DateRange"
 import TextFieldsOutlinedIcon from "@mui/icons-material/TextFieldsOutlined"
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined"
+import { Edit } from "../../../../components/Edit"
+
 interface UpdateUsersProps {
     user: User
+    editingMode: boolean
 }
 
-export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
+export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
     const { list, remove } = useUser()
     const { confirm } = useConfirmDialog()
     const [value, setValue] = useState(1)
+    const [isEditing, setEditingMode] = useState(editingMode)
 
     const username = useParams().username
     const profile = list.find((item) => item.username == username)
@@ -40,6 +44,15 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue)
     }
+
+    const handleEditing = () => {
+        if (isEditing) {
+            setEditingMode(false)
+        } else {
+            setEditingMode(true)
+        }
+    }
+
     const handleDelete = () => {
         if (deleting) return
         if (!profile) return
@@ -87,89 +100,89 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                     </Box>
                 </Paper>
 
-                <Box sx={{ width: "75%", height: "100%", padding: "3vw", gap: "4vw", flexDirection: "column" }}>
-                    <Box sx={{ flexDirection: "column", gap: "2vw" }}>
-                        <Box sx={{ width: "100%", flexDirection: "column", gap: "0.5vw" }}>
-                            <p style={{ fontWeight: "bolder" }}>Informações Pessoais</p>
-                            <hr style={{}} />
-                        </Box>
-                        <Box sx={{ flexDirection: "row", gap: "1vw" }}>
-                            <Box sx={{ flexDirection: "column", gap: "1vw", width: "50%" }}>
-                                <Box sx={style_icon}>
-                                    <TextFieldsOutlinedIcon fontSize="small" />
-                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
-                                        Nome Completo:<span style={{ fontWeight: "500" }}> {profile.name}</span>
-                                    </p>
+                {!isEditing ? (
+                    <Box sx={{ width: "75%", height: "100%", padding: "3vw", gap: "4vw", flexDirection: "column" }}>
+                        <Box sx={{ flexDirection: "column", gap: "2vw" }}>
+                            <Box sx={{ width: "100%", flexDirection: "column", gap: "0.5vw" }}>
+                                <p style={{ fontWeight: "bolder" }}>Informações Pessoais</p>
+                                <hr style={{}} />
+                            </Box>
+                            <Box sx={{ flexDirection: "row", gap: "1vw" }}>
+                                <Box sx={{ flexDirection: "column", gap: "1vw", width: "50%" }}>
+                                    <Box sx={style_icon}>
+                                        <TextFieldsOutlinedIcon fontSize="small" />
+                                        <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                            Nome Completo:<span style={{ fontWeight: "500" }}> {profile.name}</span>
+                                        </p>
+                                    </Box>
+                                    <Box sx={style_icon}>
+                                        <FolderOpenIcon fontSize="small" />
+                                        <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                            CPF:<span style={{ fontWeight: "500" }}> {profile.cpf}</span>
+                                        </p>
+                                    </Box>
+                                    <Box sx={style_icon}>
+                                        <DateRangeIcon fontSize="small" />
+                                        <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                            Data de Nascimento:<span style={{ fontWeight: "500" }}> {profile.birth}</span>
+                                        </p>
+                                    </Box>
                                 </Box>
-                                <Box sx={style_icon}>
-                                    <FolderOpenIcon fontSize="small" />
-                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
-                                        CPF:<span style={{ fontWeight: "500" }}> {profile.cpf}</span>
-                                    </p>
-                                </Box>
-                                <Box sx={style_icon}>
-                                    <DateRangeIcon fontSize="small" />
-                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
-                                        Data de Nascimento:<span style={{ fontWeight: "500" }}> {profile.birth}</span>
-                                    </p>
+                                <Box sx={{ flexDirection: "column", gap: "1vw", width: "50%" }}>
+                                    <Box sx={style_icon}>
+                                        <PhoneIcon fontSize="small" />
+                                        <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                            Telefone:<span style={{ fontWeight: "500" }}> (41) 9 9275-2905</span>
+                                        </p>
+                                    </Box>
+                                    <Box sx={style_icon}>
+                                        <MailOutlineIcon fontSize="small" />
+                                        <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                            E-mail:<span style={{ fontWeight: "500" }}> {profile.email}</span>
+                                        </p>
+                                    </Box>
+                                    <Box sx={style_icon}>
+                                        <PermIdentityIcon fontSize="small" />
+                                        <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                            Username:<span style={{ fontWeight: "500" }}> @{profile.username}</span>
+                                        </p>
+                                    </Box>
                                 </Box>
                             </Box>
-                            <Box sx={{ flexDirection: "column", gap: "1vw", width: "50%" }}>
-                                <Box sx={style_icon}>
-                                    <PhoneIcon fontSize="small" />
+                        </Box>
+                        <Box sx={{ flexDirection: "column", gap: "2vw" }}>
+                            <Box sx={{ width: "100%", flexDirection: "column", gap: "0.5vw" }}>
+                                <p style={{ fontWeight: "bolder" }}>Setor</p>
+                                <hr />
+                            </Box>
+                            <Box sx={{ flexDirection: "row", gap: "1vw" }}>
+                                <Box sx={{ ...style_icon, width: "50%" }}>
+                                    <WorkOutlineOutlinedIcon fontSize="small" />
                                     <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
-                                        Telefone:<span style={{ fontWeight: "500" }}> (41) 9 9275-2905</span>
+                                        Departamento:<span style={{ fontWeight: "500" }}> Tecnologia</span>
                                     </p>
                                 </Box>
-                                <Box sx={style_icon}>
-                                    <MailOutlineIcon fontSize="small" />
-                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
-                                        E-mail:<span style={{ fontWeight: "500" }}> {profile.email}</span>
-                                    </p>
-                                </Box>
-                                <Box sx={style_icon}>
+                                <Box sx={{ ...style_icon, width: "50%" }}>
                                     <PermIdentityIcon fontSize="small" />
                                     <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
-                                        Username:<span style={{ fontWeight: "500" }}> @{profile.username}</span>
+                                        Subáreas:
+                                        <span style={{ fontWeight: "500" }}> </span>
                                     </p>
+                                    <Tag name="Design" variant="" style="0.7vw" />
+                                    <Tag name="Programação" variant="" style="0.7vw" />
+                                    <Tag name="Atendimento" variant="" style="0.7vw" />
                                 </Box>
                             </Box>
                         </Box>
-                    </Box>
-                    <Box sx={{ flexDirection: "column", gap: "2vw" }}>
-                        <Box sx={{ width: "100%", flexDirection: "column", gap: "0.5vw" }}>
-                            <p style={{ fontWeight: "bolder" }}>Setor</p>
-                            <hr />
-                        </Box>
-                        <Box sx={{ flexDirection: "row", gap: "1vw" }}>
-                            <Box sx={{ ...style_icon, width: "50%" }}>
-                                <WorkOutlineOutlinedIcon fontSize="small" />
-                                <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
-                                    Departamento:<span style={{ fontWeight: "500" }}> Tecnologia</span>
-                                </p>
-                            </Box>
-                            <Box sx={{ ...style_icon, width: "50%" }}>
-                                <PermIdentityIcon fontSize="small" />
-                                <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
-                                    Subáreas:
-                                    <span style={{ fontWeight: "500" }}> </span>
-                                </p>
-                                <Tag name="Design" variant="" style="0.7vw" />
-                                <Tag name="Programação" variant="" style="0.7vw" />
-                                <Tag name="Atendimento" variant="" style="0.7vw" />
-                            </Box>
-                        </Box>
-                    </Box>
-                    {/* {user.username == "luiz" && ( */}
-                    <NewButton
-                        onClick={() => {}}
-                        bottom={"3vw"}
-                        right={"4vw"}
-                        icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
-                    />
-                    {/* )} */}
+                        {/* {user.username == "luiz" && ( */}
+                        <NewButton
+                            onClick={handleEditing}
+                            bottom={"3vw"}
+                            right={"4vw"}
+                            icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
+                        />
 
-                    {/* <Box sx={{ width: "50%", height: "100%", flexDirection: "column", gap: "1vw" }}>
+                        {/* <Box sx={{ width: "50%", height: "100%", flexDirection: "column", gap: "1vw" }}>
                         <Box sx={{ marginTop: "auto", alignSelf: "flex-end", gap: "1vw" }}>
                             <Button
                                 variant="outlined"
@@ -188,7 +201,10 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                             </Button>
                         </Box>
                     </Box> */}
-                </Box>
+                    </Box>
+                ) : (
+                    <Edit user={user} profile={profile} />
+                )}
             </Paper>
         </Box>
     ) : (
