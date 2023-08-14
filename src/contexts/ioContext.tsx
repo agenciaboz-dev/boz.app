@@ -2,6 +2,7 @@ import { useSnackbar } from "burgos-snackbar"
 import { createContext, useEffect } from "react"
 import React from "react"
 import { Socket, io as ioSocket } from "socket.io-client"
+import { url } from "../api/backend"
 
 interface IoContextValue {
     io: Socket
@@ -16,7 +17,7 @@ const IoContext = createContext<IoContextValue>({} as IoContextValue)
 export default IoContext
 
 // const io = ioSocket("ws://localhost:4105")
-const io = ioSocket("wss://app.agenciaboz.com.br:4105")
+const io = ioSocket(`ws${url}`)
 
 export const IoProvider: React.FC<IoProviderProps> = ({ children }) => {
     const { snackbar } = useSnackbar()
