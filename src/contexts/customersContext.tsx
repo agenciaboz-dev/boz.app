@@ -49,8 +49,13 @@ export const CustomersProvider: React.FC<CustomersProviderProps> = ({ children }
             setCustomers((customers) => [...customers, data])
         })
 
+        io.on("customer:update", (data: Customer) => {
+            setCustomers((customers) => [...customers.filter((customer) => customer.id != data.id), data])
+        })
+
         return () => {
             io.off("customer:new")
+            io.off("customer:update")
         }
     }, [customers])
 

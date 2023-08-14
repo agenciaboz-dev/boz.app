@@ -52,6 +52,12 @@ export const useApi = () => {
                 .catch((error) => defaultError(error, options.errorCallback))
                 .finally(() => defaultFinally(options.finallyCallback))
         },
+        toggleStatus: (options: ApiOptions) => {
+            api.post("/customer/toggleStatus", options.data)
+                .then((response) => options.callback(response))
+                .catch((error) => defaultError(error, options.errorCallback))
+                .finally(() => defaultFinally(options.finallyCallback))
+        },
     }
 
     return { user, service, customer }
