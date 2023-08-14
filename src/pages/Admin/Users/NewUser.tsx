@@ -21,13 +21,13 @@ import { useIo } from "../../../hooks/useIo"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "burgos-snackbar"
 import { Tag } from "../../../components/Tag"
-import colors from "../../../style/colors"
 import { textFieldStyle } from "../../../style/textfield"
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { useUser } from "../../../hooks/useUser"
 import { TaiTextField } from "../../../components/TaiTextField"
 import MaskedInput from "../../../components/MaskedInput"
 import { Edit } from "../../../components/Edit"
+import { useColors } from "../../../hooks/useColors"
 
 interface NewUserProps {
     user: User
@@ -36,6 +36,7 @@ interface NewUserProps {
 export const NewUser: React.FC<NewUserProps> = ({ user }) => {
     const io = useIo()
     const navigate = useNavigate()
+    const colors = useColors()
 
     const { departments, roles } = useDepartments()
     const { snackbar } = useSnackbar()
@@ -105,10 +106,7 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form>
-                        <Paper
-                            elevation={3}
-                            sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: colors.background, width: "100%" }}
-                        >
+                        <Paper elevation={3} sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: colors.background.primary, width: "100%" }}>
                             <Paper
                                 elevation={3}
                                 sx={{
@@ -146,15 +144,11 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 />
 
                                 <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
-                                    <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>
-                                        {values.name}
-                                    </p>
+                                    <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>{values.name}</p>
                                     <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{values.username}</p>
                                 </Box>
 
-                                <Box
-                                    sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}
-                                >
+                                <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}>
                                     <Tag variant="" style="0.7vw" name="Admin"></Tag>
                                     <Tag variant="" style="0.7vw" name="Planejamento"></Tag>
                                     <Tag variant="" style="0.7vw" name="Dev"></Tag>
