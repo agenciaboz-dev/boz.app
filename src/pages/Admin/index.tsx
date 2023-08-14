@@ -25,7 +25,7 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
     }
 
     return (
-        <Box sx={{ flexDirection: "column", width: "100vw", height: "100vh", bgcolor: "background.default" }}>
+        <Box sx={{ flexDirection: "column", width: "100vw", height: "100vh", bgcolor: "background.default", overflow: "hidden" }}>
             <Header user={user} />
             <Tabs value={tab} onChange={(_, id) => handleTabChange(id)} centered variant="fullWidth">
                 {tabs.map((tab) => {

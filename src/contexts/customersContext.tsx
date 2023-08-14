@@ -45,6 +45,16 @@ export const CustomersProvider: React.FC<CustomersProviderProps> = ({ children }
     }, [services])
 
     useEffect(() => {
+        io.on("customer:new", (data: Customer) => {
+            setCustomers((customers) => [...customers, data])
+        })
+
+        return () => {
+            io.off("customer:new")
+        }
+    }, [customers])
+
+    useEffect(() => {
         io.on("customers:sync", (data: Customer[]) => {
             setCustomers(data)
         })
