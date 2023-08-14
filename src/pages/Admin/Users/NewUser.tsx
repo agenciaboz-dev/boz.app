@@ -26,6 +26,7 @@ import { textFieldStyle } from "../../../style/textfield"
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { useUser } from "../../../hooks/useUser"
 import { TaiTextField } from "../../../components/TaiTextField"
+import MaskedInput from "../../../components/MaskedInput"
 
 interface NewUserProps {
     user: User
@@ -49,7 +50,7 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
         username: "",
         cpf: "",
         phone: "",
-        birth: "",
+        birth: new Date(user?.birth || 0).toLocaleDateString("pt-br") || "",
         department: 0,
         role: 0,
     }
@@ -179,6 +180,10 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                             value={values.cpf}
                                             onChange={handleChange}
                                             sx={textFieldStyle}
+                                            InputProps={{
+                                                inputComponent: MaskedInput,
+                                                inputProps: { mask: "000.000.000-00" },
+                                            }}
                                         />
                                         <TextField
                                             label="Data de nascimento"
@@ -186,6 +191,10 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                             value={values.birth}
                                             onChange={handleChange}
                                             sx={textFieldStyle}
+                                            InputProps={{
+                                                inputComponent: MaskedInput,
+                                                inputProps: { mask: "00/00/0000" },
+                                            }}
                                         />
                                     </Box>
                                     <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
@@ -195,6 +204,10 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                             value={values.phone}
                                             onChange={handleChange}
                                             sx={textFieldStyle}
+                                            InputProps={{
+                                                inputComponent: MaskedInput,
+                                                inputProps: { mask: "(00) 0 0000-0000" },
+                                            }}
                                         />
                                         <TextField
                                             label="E-mail"
