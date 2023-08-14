@@ -80,11 +80,7 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
                         position: "relative",
                     }}
                 >
-                    <IconButton
-                        sx={{ position: "absolute", top: "1vw", left: "1vw" }}
-                        color="secondary"
-                        onClick={() => navigate("/admin/users")}
-                    >
+                    <IconButton sx={{ position: "absolute", top: "1vw", left: "1vw" }} color="secondary" onClick={() => navigate("/admin/users")}>
                         <ArrowBackIosNewIcon />
                     </IconButton>
 
@@ -94,9 +90,9 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
                         <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{profile.username}</p>
                     </Box>
                     <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}>
-                        <Tag variant="" style="0.7vw" name="Admin"></Tag>
-                        <Tag variant="" style="0.7vw" name="Planejamento"></Tag>
-                        <Tag variant="" style="0.7vw" name="Dev"></Tag>
+                        <Tag variant="" fontSize="0.7vw" name="Admin"></Tag>
+                        <Tag variant="" fontSize="0.7vw" name="Planejamento"></Tag>
+                        <Tag variant="" fontSize="0.7vw" name="Dev"></Tag>
                     </Box>
                 </Paper>
 
@@ -168,9 +164,9 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
                                         Subáreas:
                                         <span style={{ fontWeight: "500" }}> </span>
                                     </p>
-                                    <Tag name="Design" variant="" style="0.7vw" />
-                                    <Tag name="Programação" variant="" style="0.7vw" />
-                                    <Tag name="Atendimento" variant="" style="0.7vw" />
+                                    <Tag name="Design" variant="" fontSize="0.7vw" />
+                                    <Tag name="Programação" variant="" fontSize="0.7vw" />
+                                    <Tag name="Atendimento" variant="" fontSize="0.7vw" />
                                 </Box>
                             </Box>
                         </Box>

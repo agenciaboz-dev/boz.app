@@ -149,9 +149,9 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 </Box>
 
                                 <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}>
-                                    <Tag variant="" style="0.7vw" name="Admin"></Tag>
-                                    <Tag variant="" style="0.7vw" name="Planejamento"></Tag>
-                                    <Tag variant="" style="0.7vw" name="Dev"></Tag>
+                                    <Tag variant="" fontSize="0.7vw" name="Admin"></Tag>
+                                    <Tag variant="" fontSize="0.7vw" name="Planejamento"></Tag>
+                                    <Tag variant="" fontSize="0.7vw" name="Dev"></Tag>
                                 </Box>
                             </Paper>
                             <Edit user={user} />
