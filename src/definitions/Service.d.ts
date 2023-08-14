@@ -3,3 +3,8 @@ declare interface Service {
     name: string
     tag: string
 }
+
+declare interface ServiceForm {
+    name: string
+    tag: string
+}

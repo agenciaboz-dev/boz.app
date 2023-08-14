@@ -36,5 +36,14 @@ export const useApi = () => {
         },
     }
 
-    return { user }
+    const service = {
+        new: (options: ApiOptions) => {
+            api.post("/customer/service/new", options.data)
+                .then((response) => options.callback(response))
+                .catch((error) => defaultError(error, options.errorCallback))
+                .finally(() => defaultFinally(options.finallyCallback))
+        },
+    }
+
+    return { user, service }
 }

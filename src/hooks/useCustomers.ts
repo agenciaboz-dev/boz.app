@@ -3,7 +3,7 @@ import CustomersContext from "../contexts/customersContext"
 
 export const useCustomers = () => {
     const customersContext = useContext(CustomersContext)
-    const { customers, services } = customersContext
+    const { customers, services, serviceModal } = customersContext
 
-    return { customers, services }
+    return { customers, services, serviceModal }
 }
