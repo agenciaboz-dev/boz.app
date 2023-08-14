@@ -160,12 +160,14 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                             </Box>
                         </Box>
                     </Box>
+                    {/* {user.username == "luiz" && ( */}
                     <NewButton
                         onClick={() => {}}
                         bottom={"3vw"}
                         right={"4vw"}
                         icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
                     />
+                    {/* )} */}
 
                     {/* <Box sx={{ width: "50%", height: "100%", flexDirection: "column", gap: "1vw" }}>
                         <Box sx={{ marginTop: "auto", alignSelf: "flex-end", gap: "1vw" }}>
