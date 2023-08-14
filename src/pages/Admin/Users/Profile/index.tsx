@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, CircularProgress, IconButton, Paper, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, IconButton, Paper, TextField, SxProps } from "@mui/material"
 import colors from "../../../../style/colors"
 import { Avatar } from "../../../../components/Avatar"
 import { Tag } from "../../../../components/Tag"
@@ -9,7 +9,15 @@ import { useUser } from "../../../../hooks/useUser"
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import { useConfirmDialog } from "burgos-confirm"
-
+import ModeEditIcon from "@mui/icons-material/ModeEdit"
+import { NewButton } from "../../../../components/NewButton"
+import MailOutlineIcon from "@mui/icons-material/MailOutline"
+import PhoneIcon from "@mui/icons-material/Phone"
+import PermIdentityIcon from "@mui/icons-material/PermIdentity"
+import FolderOpenIcon from "@mui/icons-material/FolderOpen"
+import DateRangeIcon from "@mui/icons-material/DateRange"
+import TextFieldsOutlinedIcon from "@mui/icons-material/TextFieldsOutlined"
+import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined"
 interface UpdateUsersProps {
     user: User
 }
@@ -17,13 +25,21 @@ interface UpdateUsersProps {
 export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
     const { list, remove } = useUser()
     const { confirm } = useConfirmDialog()
+    const [value, setValue] = useState(1)
 
     const username = useParams().username
     const profile = list.find((item) => item.username == username)
     const navigate = useNavigate()
 
+    const style_icon: SxProps = {
+        gap: "0.4vw",
+        alignItems: "center",
+    }
     const [deleting, setDeleting] = useState(false)
 
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue)
+    }
     const handleDelete = () => {
         if (deleting) return
         if (!profile) return
@@ -70,14 +86,88 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                         <Tag variant="" style="0.7vw" name="Dev"></Tag>
                     </Box>
                 </Paper>
-                <Box sx={{ width: "73%", height: "100%", padding: "2vw", gap: "2vw" }}>
-                    <Box sx={{ width: "50%", height: "100%", flexDirection: "column", gap: "1vw" }}>
-                        <TextField label="Login" disabled></TextField>
-                        <TextField label="Nome"></TextField>
+
+                <Box sx={{ width: "75%", height: "100%", padding: "3vw", gap: "4vw", flexDirection: "column" }}>
+                    <Box sx={{ flexDirection: "column", gap: "2vw" }}>
+                        <Box sx={{ width: "100%", flexDirection: "column", gap: "0.5vw" }}>
+                            <p style={{ fontWeight: "bolder" }}>Informações Pessoais</p>
+                            <hr style={{}} />
+                        </Box>
+                        <Box sx={{ flexDirection: "row", gap: "1vw" }}>
+                            <Box sx={{ flexDirection: "column", gap: "1vw", width: "50%" }}>
+                                <Box sx={style_icon}>
+                                    <TextFieldsOutlinedIcon fontSize="small" />
+                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                        Nome Completo:<span style={{ fontWeight: "500" }}> {profile.name}</span>
+                                    </p>
+                                </Box>
+                                <Box sx={style_icon}>
+                                    <FolderOpenIcon fontSize="small" />
+                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                        CPF:<span style={{ fontWeight: "500" }}> {profile.cpf}</span>
+                                    </p>
+                                </Box>
+                                <Box sx={style_icon}>
+                                    <DateRangeIcon fontSize="small" />
+                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                        Data de Nascimento:<span style={{ fontWeight: "500" }}> {profile.birth}</span>
+                                    </p>
+                                </Box>
+                            </Box>
+                            <Box sx={{ flexDirection: "column", gap: "1vw", width: "50%" }}>
+                                <Box sx={style_icon}>
+                                    <PhoneIcon fontSize="small" />
+                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                        Telefone:<span style={{ fontWeight: "500" }}> (41) 9 9275-2905</span>
+                                    </p>
+                                </Box>
+                                <Box sx={style_icon}>
+                                    <MailOutlineIcon fontSize="small" />
+                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                        E-mail:<span style={{ fontWeight: "500" }}> {profile.email}</span>
+                                    </p>
+                                </Box>
+                                <Box sx={style_icon}>
+                                    <PermIdentityIcon fontSize="small" />
+                                    <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                        Username:<span style={{ fontWeight: "500" }}> @{profile.username}</span>
+                                    </p>
+                                </Box>
+                            </Box>
+                        </Box>
                     </Box>
-                    <Box sx={{ width: "50%", height: "100%", flexDirection: "column", gap: "1vw" }}>
-                        <TextField label="Login" disabled></TextField>
-                        <TextField label="Nome"></TextField>
+                    <Box sx={{ flexDirection: "column", gap: "2vw" }}>
+                        <Box sx={{ width: "100%", flexDirection: "column", gap: "0.5vw" }}>
+                            <p style={{ fontWeight: "bolder" }}>Setor</p>
+                            <hr />
+                        </Box>
+                        <Box sx={{ flexDirection: "row", gap: "1vw" }}>
+                            <Box sx={{ ...style_icon, width: "50%" }}>
+                                <WorkOutlineOutlinedIcon fontSize="small" />
+                                <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                    Departamento:<span style={{ fontWeight: "500" }}> Tecnologia</span>
+                                </p>
+                            </Box>
+                            <Box sx={{ ...style_icon, width: "50%" }}>
+                                <PermIdentityIcon fontSize="small" />
+                                <p style={{ fontWeight: "700", fontSize: "1vw", color: "gray" }}>
+                                    Subáreas:
+                                    <span style={{ fontWeight: "500" }}> </span>
+                                </p>
+                                <Tag name="Design" variant="" style="0.7vw" />
+                                <Tag name="Programação" variant="" style="0.7vw" />
+                                <Tag name="Atendimento" variant="" style="0.7vw" />
+                            </Box>
+                        </Box>
+                    </Box>
+                    <NewButton
+                        onClick={() => {}}
+                        bottom={"3vw"}
+                        right={"4vw"}
+                        icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
+                    />
+
+                    {/* <Box sx={{ width: "50%", height: "100%", flexDirection: "column", gap: "1vw" }}>
                         <Box sx={{ marginTop: "auto", alignSelf: "flex-end", gap: "1vw" }}>
                             <Button
                                 variant="outlined"
@@ -95,7 +185,7 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user }) => {
                                 salvar
                             </Button>
                         </Box>
-                    </Box>
+                    </Box> */}
                 </Box>
             </Paper>
         </Box>

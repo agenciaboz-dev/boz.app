@@ -4,6 +4,7 @@ import { useDarkMode } from "../hooks/useDarkMode"
 export const textFieldStyle: SxProps = {
     "& .MuiInputLabel-root": {
         color: "grey",
+        fontSize: "0.9vw",
     },
 
     // não funciona
@@ -30,5 +31,6 @@ export const textFieldStyle: SxProps = {
     },
     "& .MuiInputBase-root": {
         borderRadius: "0 1vw 0vw 1vw",
+        height: "3vw",
     },
 }

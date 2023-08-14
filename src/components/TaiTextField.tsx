@@ -3,9 +3,16 @@ import { Box, TextField } from "@mui/material"
 import { textFieldStyle } from "../style/textfield"
 import { useColors } from "../hooks/useColors"
 
-interface TaiTextFieldProps {}
+interface TaiTextFieldProps {
+    label: string
+    name: string
+    value: any
+    onChange: () => {}
+    placeholder?: string
+    required: boolean
+}
 
-export const TaiTextField: React.FC<TaiTextFieldProps> = ({}) => {
+export const TaiTextField: React.FC<TaiTextFieldProps> = ({ label, name, value, onChange, placeholder, required }) => {
     const colors = useColors()
 
     const webkitbg = {
@@ -15,5 +22,16 @@ export const TaiTextField: React.FC<TaiTextFieldProps> = ({}) => {
         },
     }
 
-    return <TextField sx={{ ...textFieldStyle, ...webkitbg }} />
+    return (
+        <TextField
+            label={label}
+            name={name}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            autoComplete="off"
+            required={required}
+            sx={{ ...textFieldStyle, ...webkitbg }}
+        />
+    )
 }

@@ -20,12 +20,12 @@ import { selectMenuStyle } from "../../../style/selectMenuStyle"
 import { useIo } from "../../../hooks/useIo"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "burgos-snackbar"
-import ClearIcon from "@mui/icons-material/Clear"
 import { Tag } from "../../../components/Tag"
 import colors from "../../../style/colors"
 import { textFieldStyle } from "../../../style/textfield"
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { useUser } from "../../../hooks/useUser"
+import { TaiTextField } from "../../../components/TaiTextField"
 
 interface NewUserProps {
     user: User
@@ -102,7 +102,10 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form>
-                        <Paper elevation={3} sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: colors.background, width: "100%" }}>
+                        <Paper
+                            elevation={3}
+                            sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: colors.background, width: "100%" }}
+                        >
                             <Paper
                                 elevation={3}
                                 sx={{
@@ -140,38 +143,72 @@ export const NewUser: React.FC<NewUserProps> = ({ user }) => {
                                 />
 
                                 <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
-                                    <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>{values.name}</p>
+                                    <p style={{ fontWeight: "600", fontSize: "1.3vw", color: colors.secondary }}>
+                                        {values.name}
+                                    </p>
                                     <p style={{ fontSize: "1.0vw", color: colors.secondary }}>@{values.username}</p>
                                 </Box>
 
-                                <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}>
+                                <Box
+                                    sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}
+                                >
                                     <Tag variant="" style="0.7vw" name="Admin"></Tag>
                                     <Tag variant="" style="0.7vw" name="Planejamento"></Tag>
                                     <Tag variant="" style="0.7vw" name="Dev"></Tag>
                                 </Box>
                             </Paper>
-                            <Box sx={{ width: "75%", height: "100%", padding: "2vw", gap: "2vw" }}>
-                                <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
-                                    <TextField label="Nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} />
-                                    <TextField label="CPF" name="cpf" value={values.cpf} onChange={handleChange} sx={textFieldStyle} />
-
-                                    <TextField
-                                        label="Data de nascimento"
-                                        name="birth"
-                                        value={values.birth}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                    />
-                                    <TextField label="E-mail" name="email" value={values.email} onChange={handleChange} sx={textFieldStyle} />
+                            <Box sx={{ width: "75%", height: "100%", padding: "2vw", gap: "2vw", flexDirection: "column" }}>
+                                <Box sx={{ flexDirection: "column", gap: "0.2vw" }}>
+                                    <p style={{ fontWeight: "bolder" }}>Informações Pessoais</p>
+                                    <hr style={{}} />
                                 </Box>
-                                <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
-                                    <TextField
-                                        label="Nome de usuário"
-                                        name="username"
-                                        value={values.username}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                    />
+
+                                <Box sx={{ gap: "1vw" }}>
+                                    <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
+                                        <TextField
+                                            label="Nome"
+                                            name="name"
+                                            value={values.name}
+                                            onChange={handleChange}
+                                            sx={textFieldStyle}
+                                        />
+                                        <TextField
+                                            label="CPF"
+                                            name="cpf"
+                                            value={values.cpf}
+                                            onChange={handleChange}
+                                            sx={textFieldStyle}
+                                        />
+                                        <TextField
+                                            label="Data de nascimento"
+                                            name="birth"
+                                            value={values.birth}
+                                            onChange={handleChange}
+                                            sx={textFieldStyle}
+                                        />
+                                    </Box>
+                                    <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
+                                        <TextField
+                                            label="E-mail"
+                                            name="email"
+                                            value={values.email}
+                                            onChange={handleChange}
+                                            sx={textFieldStyle}
+                                        />
+                                        <TextField
+                                            label="Nome de usuário"
+                                            name="username"
+                                            value={values.username}
+                                            onChange={handleChange}
+                                            sx={textFieldStyle}
+                                        />
+                                    </Box>
+                                </Box>
+                                <Box sx={{ flexDirection: "column", gap: "0.2vw" }}>
+                                    <p style={{ fontWeight: "bolder" }}>Setor</p>
+                                    <hr style={{}} />
+                                </Box>
+                                <Box sx={{ flexDirection: "column", gap: "1vw" }}>
                                     <TextField
                                         label="Departamento"
                                         name="department"

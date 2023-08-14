@@ -8,6 +8,7 @@ import { NewUser } from "./NewUser"
 import { Profile } from "./Profile"
 import { useSearch } from "../../../hooks/useSearch"
 import { useUser } from "../../../hooks/useUser"
+import AddIcon from "@mui/icons-material/Add"
 
 interface UsersProps {
     user: User
@@ -42,12 +43,19 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                 index
                 element={
                     <Box sx={{ padding: "2vw", width: "100%", gap: "1vw" }}>
-                        <NewButton onClick={handleNewUserClick} bottom={"2vw"} right={"2vw"} />
+                        <NewButton
+                            onClick={handleNewUserClick}
+                            bottom={"2vw"}
+                            right={"2vw"}
+                            icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
+                        />
 
                         {loading ? (
                             <RoleSkeletons />
                         ) : (
-                            departments.map((department) => <RoleContainer key={department.id} department={department} users={userList} />)
+                            departments.map((department) => (
+                                <RoleContainer key={department.id} department={department} users={userList} />
+                            ))
                         )}
                     </Box>
                 }
