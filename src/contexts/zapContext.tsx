@@ -67,6 +67,7 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
         })
 
         io.on("message:new", (data: { chat: Chat; message: Message }) => {
+            console.log(data.message)
             setChats((prevChats) => {
                 const prevChat = prevChats.find((item) => item.id._serialized == data.chat.id._serialized) as Chat
                 const updatedChat: Chat = {
@@ -88,7 +89,7 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
             io.off("chat:sync")
             io.off("message:new")
         }
-    }, [chats])
+    }, [chats, currentChat])
 
     useEffect(() => {
         console.log({ qrcode })
