@@ -25,21 +25,25 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
             PaperProps={{ sx: { width: "22vw", backgroundColor: "background.paper" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
-            <Box
-                sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }}
-                color={"secondary.main"}
-            >
+            <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"secondary.main"}>
                 <Avatar user={user!} size="10vw" />
                 <p style={{ fontWeight: "bold" }}>{user?.name}</p>
-                <p
-                    style={{ fontSize: "1.0vw", color: colors.secondary, cursor: "pointer" }}
+                <Box
+                    sx={{
+                        fontSize: "1.0vw",
+                        color: colors.secondary,
+                        cursor: "pointer",
+                        "&:hover": {
+                            textDecoration: "underline",
+                        },
+                    }}
                     onClick={() => {
                         navigate(`/profile`)
                         handleClose()
                     }}
                 >
                     @{user?.username}
-                </p>
+                </Box>
             </Box>
             <Box sx={{ flexDirection: "column" }}></Box>
 
