@@ -4,7 +4,7 @@ import { useDarkMode } from "../hooks/useDarkMode"
 export const textFieldStyle: SxProps = {
     "& .MuiInputLabel-root": {
         color: "grey",
-        fontSize: "0.9vw",
+        // fontSize: "0.9vw",
     },
 
     // não funciona
