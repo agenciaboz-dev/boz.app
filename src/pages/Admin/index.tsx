@@ -44,7 +44,7 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
             </Tabs>
             <Routes>
                 <Route index element={<Users user={user} />} />
-                <Route path="/*" element={<Users user={user} />} />
+                {/* <Route path="/*" element={<Users user={user} />} /> */}
                 <Route path="/users/*" element={<Users user={user} />} />
                 <Route path="/customers/*" element={<Customers user={user} />} />
             </Routes>
