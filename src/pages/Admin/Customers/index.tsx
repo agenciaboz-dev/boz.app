@@ -26,7 +26,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                 width: "100%",
                 height: "100%",
                 bgcolor: "background.default",
-                padding: "3vw 4vw",
+                padding: "2vw",
                 gap: "2vw",
             }}
         >
