@@ -6,6 +6,7 @@ import { Users } from "./Users"
 import { tabStyle } from "../../style/tab"
 import { useAdminTabs } from "../../hooks/useAdminTabs"
 import { Customers } from "./Customers"
+import { Profile } from "./Users/Profile"
 
 interface AdminProps {
     user: User
@@ -25,7 +26,15 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
     }
 
     return (
-        <Box sx={{ flexDirection: "column", width: "100vw", height: "100vh", bgcolor: "background.default", overflow: "hidden" }}>
+        <Box
+            sx={{
+                flexDirection: "column",
+                width: "100vw",
+                height: "100vh",
+                bgcolor: "background.default",
+                overflow: "hidden",
+            }}
+        >
             <Header user={user} />
             <Tabs value={tab} onChange={(_, id) => handleTabChange(id)} centered variant="fullWidth">
                 {tabs.map((tab) => {
@@ -35,6 +44,7 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
             </Tabs>
             <Routes>
                 <Route index element={<Users user={user} />} />
+                <Route path="/*" element={<Users user={user} />} />
                 <Route path="/users/*" element={<Users user={user} />} />
                 <Route path="/customers/*" element={<Customers user={user} />} />
             </Routes>
