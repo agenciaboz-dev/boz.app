@@ -6,6 +6,18 @@ interface DepartmentsContextValue {
     departments: Department[]
     roles: Role[]
     loading: boolean
+
+    deparmentModal: {
+        isOpen: boolean
+        close: () => void
+        open: () => void
+    }
+
+    roleModal: {
+        isOpen: boolean
+        close: () => void
+        open: () => void
+    }
 }
 
 interface DepartmentsProviderProps {
@@ -21,6 +33,20 @@ export const DepartmentsProvider: React.FC<DepartmentsProviderProps> = ({ childr
     const [departments, setDepartments] = useState<Department[]>([])
     const [roles, setRoles] = useState<Role[]>([])
     const [loading, setLoading] = useState(true)
+    const [openDepartmentModal, setOpenDepartmentModal] = useState(false)
+    const [openRoleModal, setOpenRoleModal] = useState(false)
+
+    const deparmentModal = {
+        isOpen: openDepartmentModal,
+        close: () => setOpenDepartmentModal(false),
+        open: () => setOpenDepartmentModal(true),
+    }
+
+    const roleModal = {
+        isOpen: openRoleModal,
+        close: () => setOpenRoleModal(false),
+        open: () => setOpenRoleModal(true),
+    }
 
     const addDepartment = (department: Department) => {
         setDepartments((prevList) => [...prevList.filter((item) => item.id != department.id), department])
@@ -67,5 +93,5 @@ export const DepartmentsProvider: React.FC<DepartmentsProviderProps> = ({ childr
         }
     }, [])
 
-    return <DepartmentsContext.Provider value={{ departments, roles, loading }}>{children}</DepartmentsContext.Provider>
+    return <DepartmentsContext.Provider value={{ departments, roles, loading, deparmentModal, roleModal }}>{children}</DepartmentsContext.Provider>
 }

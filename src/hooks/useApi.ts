@@ -68,5 +68,23 @@ export const useApi = () => {
         },
     }
 
-    return { user, service, customer }
+    const department = {
+        new: (options: ApiOptions) => {
+            api.post("/department/new", options.data)
+                .then((response) => options.callback(response))
+                .catch((error) => defaultError(error, options.errorCallback))
+                .finally(() => defaultFinally(options.finallyCallback))
+        },
+
+        role: {
+            new: (options: ApiOptions) => {
+                api.post("/department/role/new", options.data)
+                    .then((response) => options.callback(response))
+                    .catch((error) => defaultError(error, options.errorCallback))
+                    .finally(() => defaultFinally(options.finallyCallback))
+            },
+        },
+    }
+
+    return { user, service, customer, department }
 }
