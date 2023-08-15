@@ -87,6 +87,7 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                             fontSize: "0.7vw",
                             fontWeight: "bold",
                             minWidth: "1.5vw",
+                            height: "1.5vw",
                             justifyContent: "center",
                             alignItems: "center",
                         }}
