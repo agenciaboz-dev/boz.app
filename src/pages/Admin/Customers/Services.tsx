@@ -10,8 +10,8 @@ export const Services: React.FC<ServicesProps> = ({}) => {
     const { services, serviceModal } = useCustomers()
 
     return (
-        <Paper elevation={0} sx={{ gap: "1vw", bgcolor: "background.default", flexDirection: "column", padding: "0vw 4vw" }}>
-            <p style={{ fontWeight: "bold", fontSize: "1.2vw" }}>Serviços</p>
+        <Paper sx={{ gap: "1vw", bgcolor: "background.default", flexDirection: "column", padding: "1vw" }}>
+            <p style={{ fontWeight: "bold" }}>Serviços</p>
             <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
                 {services.map((service) => (
                     <Tag key={service.id} name={service.tag} fontSize="0.8vw" />
