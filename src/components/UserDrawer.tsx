@@ -34,7 +34,8 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                 <p
                     style={{ fontSize: "1.0vw", color: colors.secondary, cursor: "pointer" }}
                     onClick={() => {
-                        navigate(`admin/users/${user?.username}`)
+                        navigate(`/profile`)
+                        handleClose()
                     }}
                 >
                     @{user?.username}

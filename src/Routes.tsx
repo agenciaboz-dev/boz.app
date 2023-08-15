@@ -6,6 +6,7 @@ import { WildCard } from "./pages/WildCard"
 import { Zap } from "./pages/Zap"
 import { Admin } from "./pages/Admin"
 import { Customers } from "./pages/Customers"
+import { Profile } from "./pages/Profile"
 
 interface RoutesProps {}
 
@@ -15,6 +16,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
     return user ? (
         <ReactRoutes>
             <Route index element={<Home user={user} />} />
+            <Route path="/profile/:username?" element={<Profile user={user} />} />
             <Route path="/zap" element={<Zap user={user} />} />
             <Route path="/customers/*" element={<Customers user={user} />} />
             <Route path="/admin/*" element={<Admin user={user} />} />

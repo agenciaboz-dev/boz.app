@@ -6,6 +6,7 @@ declare interface User {
     name: string
     cpf: string
     birth: string
+    phone: string
 
     department: Department
     roles: Role[]
@@ -26,6 +27,5 @@ interface UserForm {
     cpf: string
     phone: string
     birth: string
-    department: number
-    role: number
+    departmentId: number
 }

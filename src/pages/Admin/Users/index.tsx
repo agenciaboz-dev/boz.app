@@ -5,10 +5,10 @@ import { NewButton } from "../../../components/NewButton"
 import { useDepartments } from "../../../hooks/useDepartments"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { NewUser } from "./NewUser"
-import { Profile } from "./Profile"
 import { useSearch } from "../../../hooks/useSearch"
 import { useUser } from "../../../hooks/useUser"
 import AddIcon from "@mui/icons-material/Add"
+import { Profile } from "../../Profile"
 
 interface UsersProps {
     user: User
@@ -53,15 +53,13 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                         {loading ? (
                             <RoleSkeletons />
                         ) : (
-                            departments.map((department) => (
-                                <RoleContainer key={department.id} department={department} users={userList} />
-                            ))
+                            departments.map((department) => <RoleContainer key={department.id} department={department} users={userList} />)
                         )}
                     </Box>
                 }
             />
-            <Route path="/new" element={<Profile user={user} variant="new" />} />
-            <Route path="/:username" element={<Profile user={user} />} />
+            <Route path="/new" element={<Profile user={user} createOnly admin />} />
+            <Route path="/:username" element={<Profile user={user} admin />} />
         </Routes>
     )
 }

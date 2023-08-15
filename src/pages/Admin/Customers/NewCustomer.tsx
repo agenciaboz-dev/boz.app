@@ -1,18 +1,5 @@
 import React, { useState } from "react"
-import {
-    Box,
-    Button,
-    Checkbox,
-    CircularProgress,
-    ListItemText,
-    MenuItem,
-    OutlinedInput,
-    Paper,
-    Select,
-    TextField,
-    Avatar,
-    alpha,
-} from "@mui/material"
+import { Box, Button, Checkbox, CircularProgress, ListItemText, MenuItem, OutlinedInput, Paper, Select, TextField, alpha } from "@mui/material"
 import { Form, Formik } from "formik"
 import { selectMenuStyle } from "../../../style/selectMenuStyle"
 import { textFieldStyle } from "../../../style/textfield"
@@ -20,6 +7,7 @@ import { useCustomers } from "../../../hooks/useCustomers"
 import { useApi } from "../../../hooks/useApi"
 import { useNavigate } from "react-router-dom"
 import { useColors } from "../../../hooks/useColors"
+import { Avatar } from "@files-ui/react"
 interface NewCustomerProps {}
 
 export const NewCustomer: React.FC<NewCustomerProps> = ({}) => {
@@ -31,6 +19,7 @@ export const NewCustomer: React.FC<NewCustomerProps> = ({}) => {
 
     const [selectedServices, setSelectedServices] = useState<Service[]>([])
     const [loading, setLoading] = useState(false)
+    const [image, setImage] = useState<File>()
 
     const initialValues: CustomerForm = {
         name: "",
@@ -70,9 +59,7 @@ export const NewCustomer: React.FC<NewCustomerProps> = ({}) => {
 
     return (
         <Box sx={{ padding: "0vw 0vw", flexDirection: "column" }}>
-            <Box
-                sx={{ backgroundColor: "background.paper", borderRadius: "0.3vw 3vw 0 3vw", height: "75%", width: "100%" }}
-            ></Box>
+            <Box sx={{ backgroundColor: "background.paper", borderRadius: "0.3vw 3vw 0 3vw", height: "75%", width: "100%" }}></Box>
             <Paper
                 elevation={0}
                 sx={{
@@ -101,13 +88,16 @@ export const NewCustomer: React.FC<NewCustomerProps> = ({}) => {
                     }}
                 >
                     <Avatar
-                        src={""}
-                        variant="rounded"
-                        sx={{
+                        src={image}
+                        onChange={(file) => setImage(file)}
+                        smartImgFit={"orientation"}
+                        changeLabel="trocar a imagem"
+                        emptyLabel="enviar imagem"
+                        // style={{ width: "100%", height: "30vw" }}
+                        style={{
                             width: "21vw",
                             height: "21vw",
-                            // position: "fixed",
-                            // top: "15vw",
+                            fontSize: "1.0vw",
                         }}
                     />
                     <Box sx={{ flexDirection: "column", width: "62%", gap: "4.9vw", height: "100%" }}>
@@ -122,13 +112,7 @@ export const NewCustomer: React.FC<NewCustomerProps> = ({}) => {
                                             height: "100%",
                                         }}
                                     >
-                                        <TextField
-                                            label="Nome"
-                                            name="name"
-                                            value={values.name}
-                                            onChange={handleChange}
-                                            sx={textFieldStyle}
-                                        />
+                                        <TextField label="Nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} />
                                         <TextField
                                             label="Recomendações"
                                             name="recomendations"

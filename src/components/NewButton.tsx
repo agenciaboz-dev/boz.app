@@ -17,7 +17,7 @@ export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, 
         <Button
             sx={{
                 borderRadius: "50%",
-                position: "fixed",
+                position: "absolute",
                 top,
                 left,
                 bottom,
