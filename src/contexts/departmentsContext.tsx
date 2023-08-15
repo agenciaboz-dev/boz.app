@@ -22,12 +22,32 @@ export const DepartmentsProvider: React.FC<DepartmentsProviderProps> = ({ childr
     const [roles, setRoles] = useState<Role[]>([])
     const [loading, setLoading] = useState(true)
 
+    const addDepartment = (department: Department) => {
+        setDepartments((prevList) => [...prevList.filter((item) => item.id != department.id), department])
+    }
+
+    const addRole = (role: Role) => {
+        setRoles((prevList) => [...prevList.filter((item) => item.id != role.id), role])
+    }
+
     useEffect(() => {
-        console.log({ roles })
+        io.on("role:new", (data: Role) => {
+            addRole(data)
+        })
+
+        return () => {
+            io.off("role:new")
+        }
     }, [roles])
 
     useEffect(() => {
-        console.log({ departments })
+        io.on("department:new", (data: Department) => {
+            addDepartment(data)
+        })
+
+        return () => {
+            io.off("department:new")
+        }
     }, [departments])
 
     useEffect(() => {
