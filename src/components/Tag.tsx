@@ -8,9 +8,10 @@ interface TagProps {
     sx?: SxProps
     fontSize?: string
     variant?: string
+    color?: string
 }
 
-export const Tag: React.FC<TagProps> = ({ name, fontSize, sx, variant = "default" }) => {
+export const Tag: React.FC<TagProps> = ({ name, fontSize, sx, color, variant = "default" }) => {
     const colors = useColors()
     const { darkMode } = useDarkMode()
 
@@ -19,8 +20,7 @@ export const Tag: React.FC<TagProps> = ({ name, fontSize, sx, variant = "default
             sx={{
                 fontSize: `${fontSize}`,
                 width: "max-content",
-                backgroundColor: darkMode ? darken(colors.primary, 0.4) : lighten(colors.primary, 0.4),
-                //backgroundColor: `${colors[variant]}`,
+                backgroundColor: color || (darkMode ? darken(colors.primary, 0.4) : lighten(colors.primary, 0.4)),
                 borderRadius: "7vw",
                 padding: "0.5vw",
                 color: colors.secondary,
