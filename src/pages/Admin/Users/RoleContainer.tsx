@@ -1,9 +1,8 @@
 import React from "react"
-import { Badge, Box, MenuItem, Paper, Skeleton } from "@mui/material"
-import { Avatar } from "../../../components/Avatar"
-import { useNavigate } from "react-router-dom"
+import { Box, Paper, Skeleton } from "@mui/material"
 import { useArray } from "burgos-array"
-import { Tag } from "../../../components/Tag"
+import { useUser } from "../../../hooks/useUser"
+import { UserCard } from "./UserCard"
 
 interface RoleContainerProps {
     department: Department
@@ -11,31 +10,22 @@ interface RoleContainerProps {
 }
 
 export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users }) => {
-    const navigate = useNavigate()
     const userList = users.filter((user) => user.department.id == department.id)
+    const { connectedList } = useUser()
+
+    const connectedUsers = userList.filter((user) => connectedList.map((item) => item.id).includes(user.id))
+    const nonConnectedUsers = userList.filter((user) => !connectedList.map((item) => item.id).includes(user.id))
 
     return (
         <Box sx={{ flexDirection: "column", gap: "1vw", color: "primary.main", width: "30vw" }}>
             <p style={{ fontWeight: "bold" }}>{department.name}</p>
 
             <Paper sx={{ flexDirection: "column", bgcolor: "background.default" }}>
-                {userList.map((user) => (
-                    <MenuItem
-                        key={user.id}
-                        sx={{ alignItems: "center", gap: "1vw", color: "text.secondary" }}
-                        onClick={() => {
-                            navigate(`/admin/users/${user.username}`)
-                        }}
-                    >
-                        <Avatar size={"3vw"} small user={user} />
-                        <p style={{ fontWeight: "bold" }}>{user.name}</p>
-
-                        <Box sx={{ marginLeft: "auto", gap: "0.2vw" }}>
-                            {user.roles.map((role) => (
-                                <Tag key={role.id} name={role.tag} sx={{ fontSize: "0.75vw", padding: "0.2vw 0.4vw", borderRadius: "0.75vw" }} />
-                            ))}
-                        </Box>
-                    </MenuItem>
+                {connectedUsers.map((user) => (
+                    <UserCard key={user.id} user={user} />
+                ))}
+                {nonConnectedUsers.map((user) => (
+                    <UserCard key={user.id} user={user} />
                 ))}
             </Paper>
         </Box>
