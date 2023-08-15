@@ -66,6 +66,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     useEffect(() => {
         console.log({ list })
 
+        io.on("user:update", (user) => {
+            addUser(user)
+        })
+
         io.on("user:new", (user) => {
             addUser(user)
         })
@@ -80,6 +84,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
         return () => {
             io.off("user:sync")
+            io.off("user:update")
             io.off("user:new")
             io.off("user:delete")
         }
