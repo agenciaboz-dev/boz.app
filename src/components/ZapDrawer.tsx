@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react"
-import { Avatar, Box, Drawer, IconButton, TextField } from "@mui/material"
+import React, { useEffect, useRef, useState } from "react"
+import { Avatar, Box, Drawer, IconButton, TextField, Checkbox } from "@mui/material"
 import { useZap } from "../hooks/useZap"
 import { backdropStyle } from "../style/backdrop"
 import { textFieldStyle } from "../style/textfield"
@@ -8,6 +8,8 @@ import SendIcon from "@mui/icons-material/Send"
 import { Message } from "./Message"
 import { useIo } from "../hooks/useIo"
 import { usePictureModal } from "../hooks/usePictureModal"
+import { useLocalStorage } from "../hooks/useLocalStorage"
+import { useUser } from "../hooks/useUser"
 
 interface ZapDrawerProps {}
 
@@ -20,10 +22,20 @@ const AlwaysScrollToBottom = () => {
 export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
     const io = useIo()
     const picture = usePictureModal()
+    const localStorage = useLocalStorage()
+
     const { drawer, currentChat: chat } = useZap()
+    const { user, firstname } = useUser()
+
+    const [sign, setSign] = useState(!!localStorage.get("boz:zap:sign"))
 
     const handleClose = () => {
         drawer.close()
+    }
+
+    const handleSignCheckbox = (checked: boolean) => {
+        setSign(checked)
+        localStorage.set("boz:zap:sign", checked)
     }
 
     const handleMessageSubmit: (
@@ -31,8 +43,14 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
         bag: FormikHelpers<{
             message: string
         }>
-    ) => void = ({ message }, bag) => {
+    ) => void = (data, bag) => {
         bag.resetForm()
+        let message = data.message
+        if (sign) {
+            message += "\n\n"
+            message += `${firstname} - ${user?.department.name}`
+        }
+
         io.emit("message:new", { chat, message })
     }
 
@@ -99,6 +117,9 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
                                 autoComplete="off"
                                 InputProps={{
                                     sx: { color: "primary.main", bgcolor: "background.default" },
+                                    startAdornment: (
+                                        <Checkbox title="assinar mensagem" checked={sign} onChange={(_, checked) => handleSignCheckbox(checked)} />
+                                    ),
                                     endAdornment: (
                                         <IconButton color="primary" type="submit">
                                             <SendIcon />

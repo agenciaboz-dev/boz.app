@@ -24,7 +24,7 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
                 bgcolor: message.fromMe ? primary : secondary,
             }}
         >
-            <p style={{ wordBreak: "break-all" }}>{message.body}</p>
+            <p style={{ wordBreak: "break-all", whiteSpace: "pre-line" }}>{message.body}</p>
             <p style={{ fontSize: "0.6vw" }}>{formatTime(new Date(message.timestamp * 1000))}</p>
         </Box>
     )
