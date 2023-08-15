@@ -26,20 +26,9 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
     }, [])
 
     return (
-        <Paper
-            elevation={0}
-            sx={{
-                borderRadius: "0.3vw 3vw 0",
-                backgroundColor: "background.default",
-                width: "100%",
-                height: "20vw",
-                flexDirection: "column",
-                padding: "1vw 4vw",
-                gap: "1vw",
-            }}
-        >
-            <p style={{ fontWeight: "bold", fontSize: "1.2vw" }}>Clientes</p>
-            <Box sx={{ flexDirection: "column", gap: "1vw", width: "100%" }}>
+        <Paper sx={{ bgcolor: "background.default", flexDirection: "column", padding: "1vw", gap: "1vw" }}>
+            <p style={{ fontWeight: "bold" }}>Clientes</p>
+            <Box sx={{ justifyContent: "space-between", flexWrap: "wrap", width: "100%", gap: "1vw" }}>
                 {customerList
                     .sort((a, b) => a.id - b.id)
                     .map((customer) => (
