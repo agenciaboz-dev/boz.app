@@ -42,7 +42,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
 
     const addUser = (user: User) => {
-        setList((prevList) => [...prevList, user])
+        setList((prevList) => [...prevList.filter((item) => item.id != user.id), user])
     }
 
     useEffect(() => {

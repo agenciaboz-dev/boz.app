@@ -1,6 +1,18 @@
-import React, { useState } from "react"
-import { Box, Button, CircularProgress, IconButton, Paper, TextField, SxProps } from "@mui/material"
-import colors from "../../../../style/colors"
+import React, { useState, useEffect } from "react"
+import {
+    Box,
+    Button,
+    CircularProgress,
+    IconButton,
+    Paper,
+    TextField,
+    SxProps,
+    Select,
+    MenuItem,
+    Checkbox,
+    ListItemText,
+    OutlinedInput,
+} from "@mui/material"
 import { Avatar } from "../../../../components/Avatar"
 import { Tag } from "../../../../components/Tag"
 import { useNavigate, useParams } from "react-router-dom"
@@ -18,18 +30,25 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen"
 import DateRangeIcon from "@mui/icons-material/DateRange"
 import TextFieldsOutlinedIcon from "@mui/icons-material/TextFieldsOutlined"
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined"
-import { Edit } from "../../../../components/Edit"
+import { textFieldStyle } from "../../../../style/textfield"
+import MaskedInput from "../../../../components/MaskedInput"
+import { Form, Formik } from "formik"
+import { useIo } from "../../../../hooks/useIo"
+import { useDepartments } from "../../../../hooks/useDepartments"
+import { useSnackbar } from "burgos-snackbar"
+import { selectMenuStyle } from "../../../../style/selectMenuStyle"
+import { useColors } from "../../../../hooks/useColors"
 
 interface UpdateUsersProps {
     user: User
-    editingMode: boolean
+    variant?: "default" | "new"
 }
 
-export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
+export const Profile: React.FC<UpdateUsersProps> = ({ user, variant = "default" }) => {
     const { list, remove } = useUser()
     const { confirm } = useConfirmDialog()
     const [value, setValue] = useState(1)
-    const [isEditing, setEditingMode] = useState(editingMode)
+    const [isEditing, setEditingMode] = useState(variant == "default" ? false : true)
 
     const username = useParams().username
     const profile = list.find((item) => item.username == username)
@@ -40,10 +59,6 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
         alignItems: "center",
     }
     const [deleting, setDeleting] = useState(false)
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue)
-    }
 
     const handleEditing = () => {
         if (isEditing) {
@@ -64,6 +79,99 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
         })
     }
 
+    const io = useIo()
+    const colors = useColors()
+
+    const { departments, roles } = useDepartments()
+    const { snackbar } = useSnackbar()
+    const { addUser } = useUser()
+
+    const [loading, setLoading] = useState(false)
+    const [image, setImage] = useState<File>()
+    const [selectedRoles, setSelectedRoles] = useState<Role[]>([])
+
+    const initialValues: UserForm = {
+        name: "",
+        email: "",
+        username: "",
+        cpf: "",
+        phone: "",
+        birth: new Date(user?.birth || 0).toLocaleDateString("pt-br") || "",
+        department: 0,
+        role: 0,
+    }
+
+    const handleRoleSelect = (child: any) => {
+        const id = child.props.value as Number
+        const role = roles.find((item) => item.id == id) as Role
+
+        if (selectedRoles.includes(role)) {
+            setSelectedRoles(selectedRoles.filter((item) => item.id != role.id))
+        } else {
+            setSelectedRoles([...selectedRoles, role])
+        }
+    }
+
+    const handleNewUser = (values: UserForm) => {
+        if (loading) return
+
+        const data = {
+            ...values,
+            departmentId: values.department,
+            roles: selectedRoles,
+            image,
+        }
+
+        setLoading(true)
+        io.emit("user:new", data)
+    }
+    const handleUpdateUser = (values: UserForm) => {
+        if (loading) return
+
+        const data = {
+            ...values,
+            departmentId: values.department,
+            roles: selectedRoles,
+            image,
+        }
+
+        setLoading(true)
+        io.emit("user:update", data)
+    }
+
+    useEffect(() => {
+        io.on("user:new:success", (user) => {
+            addUser(user)
+            setLoading(false)
+            navigate("/admin/users")
+            snackbar({ severity: "success", text: "usuário criado" })
+        })
+
+        io.on("user:new:failed", () => {
+            setLoading(false)
+            snackbar({ severity: "error", text: "não criou" })
+        })
+
+        io.on("user:update:success", (user) => {
+            addUser(user)
+            setLoading(false)
+            navigate("/admin/users")
+            snackbar({ severity: "success", text: "usuário atualizado" })
+        })
+
+        io.on("user:update:failed", () => {
+            setLoading(false)
+            snackbar({ severity: "error", text: "não foi" })
+        })
+
+        return () => {
+            io.off("user:new:success")
+            io.off("user:new:failed")
+            io.off("user:update:failed")
+            io.off("user:update:success")
+        }
+    }, [])
+
     return profile ? (
         <Box sx={{ width: "100%", height: "80.2%", padding: "2vw 3vw" }}>
             <Paper elevation={3} sx={{ borderRadius: "0.3vw 3vw 0", backgroundColor: "background.default", width: "100%" }}>
@@ -80,7 +188,11 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
                         position: "relative",
                     }}
                 >
-                    <IconButton sx={{ position: "absolute", top: "1vw", left: "1vw" }} color="secondary" onClick={() => navigate("/admin/users")}>
+                    <IconButton
+                        sx={{ position: "absolute", top: "1vw", left: "1vw" }}
+                        color="secondary"
+                        onClick={() => (!isEditing ? navigate("/admin/users") : setEditingMode(false))}
+                    >
                         <ArrowBackIosNewIcon />
                     </IconButton>
 
@@ -199,7 +311,178 @@ export const Profile: React.FC<UpdateUsersProps> = ({ user, editingMode }) => {
                     </Box> */}
                     </Box>
                 ) : (
-                    <Edit user={user} profile={profile} />
+                    <Formik initialValues={initialValues} onSubmit={variant == "default" ? handleUpdateUser : handleNewUser}>
+                        {({ values, handleChange }) => (
+                            <Form>
+                                <Box
+                                    sx={{
+                                        width: "75%",
+                                        height: "100%",
+                                        padding: "3vw",
+                                        gap: "2vw",
+                                        flexDirection: "column",
+                                    }}
+                                >
+                                    <Box sx={{ flexDirection: "column", gap: "0.2vw" }}>
+                                        <p style={{ fontWeight: "bolder" }}>Informações Pessoais</p>
+                                        <hr style={{}} />
+                                    </Box>
+
+                                    <Box sx={{ gap: "1vw" }}>
+                                        <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
+                                            <TextField
+                                                label="Nome"
+                                                name="name"
+                                                value={values.name}
+                                                onChange={handleChange}
+                                                sx={textFieldStyle}
+                                                required
+                                            />
+                                            <TextField
+                                                label="CPF"
+                                                name="cpf"
+                                                value={values.cpf}
+                                                onChange={handleChange}
+                                                sx={textFieldStyle}
+                                                InputProps={{
+                                                    inputComponent: MaskedInput,
+                                                    inputProps: { mask: "000.000.000-00" },
+                                                }}
+                                                required
+                                            />
+                                            <TextField
+                                                label="Data de nascimento"
+                                                name="birth"
+                                                value={values.birth}
+                                                onChange={handleChange}
+                                                sx={textFieldStyle}
+                                                InputProps={{
+                                                    inputComponent: MaskedInput,
+                                                    inputProps: { mask: "00/00/0000" },
+                                                }}
+                                                required
+                                            />
+                                        </Box>
+                                        <Box sx={{ flexDirection: "column", gap: "1vw", flex: 1 }}>
+                                            <TextField
+                                                label="Telefone"
+                                                name="phone"
+                                                value={values.phone}
+                                                onChange={handleChange}
+                                                sx={textFieldStyle}
+                                                InputProps={{
+                                                    inputComponent: MaskedInput,
+                                                    inputProps: { mask: "(00) 0 0000-0000" },
+                                                }}
+                                                required
+                                            />
+                                            <TextField
+                                                label="E-mail"
+                                                name="email"
+                                                value={values.email}
+                                                onChange={handleChange}
+                                                sx={textFieldStyle}
+                                                required
+                                            />
+                                            <TextField
+                                                label="Nome de usuário"
+                                                name="username"
+                                                value={values.username}
+                                                onChange={handleChange}
+                                                sx={textFieldStyle}
+                                                required
+                                            />
+                                        </Box>
+                                    </Box>
+                                    <Box sx={{ flexDirection: "column", gap: "0.2vw" }}>
+                                        <p style={{ fontWeight: "bolder" }}>Setor</p>
+                                        <hr style={{}} />
+                                    </Box>
+                                    <Box sx={{ flexDirection: "column", gap: "1vw" }}>
+                                        <TextField
+                                            label="Departamento"
+                                            name="department"
+                                            value={values.department}
+                                            onChange={handleChange}
+                                            select
+                                            sx={textFieldStyle}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    sx: selectMenuStyle,
+                                                },
+                                            }}
+                                            required
+                                        >
+                                            <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
+                                            {departments.map((department) => (
+                                                <MenuItem key={department.id} value={department.id}>
+                                                    {department.name}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+
+                                        <Select
+                                            name="roles"
+                                            multiple
+                                            value={selectedRoles}
+                                            onChange={(_, child) => handleRoleSelect(child)}
+                                            input={<OutlinedInput label="funções" />}
+                                            renderValue={(selected) => selected.map((role) => role.name).join(", ")}
+                                            MenuProps={{ sx: selectMenuStyle }}
+                                            sx={textFieldStyle}
+                                        >
+                                            {roles.map((role) => (
+                                                <MenuItem key={role.id} value={role.id}>
+                                                    <Checkbox checked={selectedRoles.includes(role)} />
+                                                    <ListItemText primary={role.name} />
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </Box>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        marginTop: "auto",
+                                        alignSelf: "flex-end",
+                                        gap: "1vw",
+                                        flexDirection: "row",
+                                        position: "fixed",
+                                        bottom: "3.2vw",
+                                        right: "6vw",
+                                    }}
+                                >
+                                    <Button
+                                        variant="outlined"
+                                        sx={{ color: "error.main", fontWeight: "bold", minWidth: 0, padding: "0 0.5vw" }}
+                                        color="error"
+                                        onClick={handleDelete}
+                                    >
+                                        {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForeverIcon />}
+                                    </Button>
+
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        sx={{
+                                            color: "secondary.main",
+                                            fontWeight: "bold",
+                                            // position: "fixed",
+                                            // bottom: "3.2vw",
+                                            // right: "6vw",
+                                            padding: "0.6vw 2.3vw",
+                                            width: "10vw",
+                                        }}
+                                    >
+                                        {loading ? (
+                                            <CircularProgress size="1.5rem" sx={{ color: "secondary.main" }} />
+                                        ) : (
+                                            <p>{variant == "default" ? "Salvar" : "Adicionar"}</p>
+                                        )}
+                                    </Button>
+                                </Box>
+                            </Form>
+                        )}
+                    </Formik>
                 )}
             </Paper>
         </Box>
