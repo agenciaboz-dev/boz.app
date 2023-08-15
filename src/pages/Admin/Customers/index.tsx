@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { NewCustomer } from "./NewCustomer"
 import { CustomerList } from "./CustomerList"
+import { useCustomers } from "../../../hooks/useCustomers"
 
 interface CustomersProps {
     user: User
@@ -13,6 +14,7 @@ interface CustomersProps {
 
 export const Customers: React.FC<CustomersProps> = ({ user }) => {
     const navigate = useNavigate()
+
     const handleNewCustomer = () => {
         navigate("/admin/customers/new")
     }

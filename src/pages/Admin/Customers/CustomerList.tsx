@@ -1,38 +1,38 @@
-import React from "react"
-import { Box, MenuItem, Paper, Switch } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { Box, MenuItem, Paper } from "@mui/material"
 import { useCustomers } from "../../../hooks/useCustomers"
-import { Tag } from "../../../components/Tag"
-import { useApi } from "../../../hooks/useApi"
+import { CustomerContainer } from "../../../components/CustomerContainer"
+import { useSearch } from "../../../hooks/useSearch"
 
 interface CustomerListProps {}
 
 export const CustomerList: React.FC<CustomerListProps> = ({}) => {
-    const api = useApi()
     const { customers } = useCustomers()
+    const { setOnSearch } = useSearch()
 
-    const toggleCustomerStatus = (customer: Customer) => {
-        api.customer.toggleStatus({
-            data: customer,
-            callback: () => {},
-        })
+    const [customerList, setCustomerList] = useState(customers)
+
+    const handleSearch = (value: string) => {
+        const result = customers.filter((customer) => customer.name.toLowerCase().includes(value.toLowerCase()))
+        setCustomerList(result)
     }
+
+    useEffect(() => {
+        setCustomerList(customers)
+    }, [customers])
+
+    useEffect(() => {
+        setOnSearch(() => handleSearch, "clientes")
+    }, [])
 
     return (
         <Paper sx={{ bgcolor: "background.default", flexDirection: "column", padding: "1vw", gap: "1vw" }}>
-            <p>Clientes</p>
-            <Box sx={{ flexDirection: "column" }}>
-                {customers
+            <p style={{ fontWeight: "bold" }}>Clientes</p>
+            <Box sx={{ justifyContent: "space-between", flexWrap: "wrap", width: "100%" }}>
+                {customerList
                     .sort((a, b) => a.id - b.id)
                     .map((customer) => (
-                        <MenuItem key={customer.id}>
-                            <p>{customer.name}</p>
-                            <Box sx={{ alignItems: "center", marginLeft: "auto", gap: "0.5vw" }}>
-                                {customer.services.map((service) => (
-                                    <Tag key={service.id} name={service.tag} fontSize="0.8vw" />
-                                ))}
-                                <Switch color={"success"} checked={customer.active} onChange={() => toggleCustomerStatus(customer)} />
-                            </Box>
-                        </MenuItem>
+                        <CustomerContainer key={customer.id} customer={customer} />
                     ))}
             </Box>
         </Paper>
