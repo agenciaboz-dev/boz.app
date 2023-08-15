@@ -8,7 +8,7 @@ export const useMuiTheme = () => {
     const colors = useColors()
 
     const THEME = useMemo(() => {
-        console.log({ MuiDark: darkMode })
+        // console.log({ MuiDark: darkMode })
 
         return createTheme({
             typography: {
