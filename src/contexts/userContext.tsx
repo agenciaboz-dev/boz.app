@@ -107,12 +107,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
                 setConnected(true)
                 setList(users)
             })
+
+            io.on("connected:sync", (users: User[]) => {
+                setconnectedList(users)
+            })
         }
 
         return () => {
             io.off("connect")
             io.off("disconnect")
             io.off("client:sync")
+            io.off("connected:sync")
         }
     }, [user])
 
