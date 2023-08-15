@@ -30,6 +30,7 @@ export const PictureModal: React.FC<PictureModalProps> = ({}) => {
             onClose={handleClose}
             sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}
             BackdropProps={{ sx: backdropStyle }}
+            PaperProps={{ sx: { overflow: "hidden" } }}
         >
             <Avatar src={url} variant="rounded" sx={{ width: "40vw", height: "40vw", objectFit: "contain" }} />
         </Dialog>
