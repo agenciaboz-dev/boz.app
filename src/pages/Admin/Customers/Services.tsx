@@ -14,7 +14,7 @@ export const Services: React.FC<ServicesProps> = ({}) => {
             <p style={{ fontWeight: "bold" }}>Serviços</p>
             <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
                 {services.map((service) => (
-                    <Tag key={service.id} name={service.tag} fontSize="0.8vw" />
+                    <Tag key={service.id} name={service.tag} tooltip={service.name} fontSize="0.8vw" />
                 ))}
                 <IconButton color="primary" sx={{ width: "2vw", height: "2vw" }} onClick={() => serviceModal.open()}>
                     <AddIcon />

@@ -22,7 +22,12 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
 
             <Box sx={{ marginLeft: "auto", gap: "0.2vw" }}>
                 {user.roles.map((role) => (
-                    <Tag key={role.id} name={role.tag} sx={{ fontSize: "0.75vw", padding: "0.2vw 0.4vw", borderRadius: "0.75vw" }} />
+                    <Tag
+                        key={role.id}
+                        name={role.tag}
+                        tooltip={role.name}
+                        sx={{ fontSize: "0.75vw", padding: "0.2vw 0.4vw", borderRadius: "0.75vw" }}
+                    />
                 ))}
             </Box>
         </MenuItem>

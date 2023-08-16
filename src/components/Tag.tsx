@@ -5,18 +5,20 @@ import { useDarkMode } from "../hooks/useDarkMode"
 
 interface TagProps {
     name: string
+    tooltip: string
     sx?: SxProps
     fontSize?: string
     variant?: string
     color?: string
 }
 
-export const Tag: React.FC<TagProps> = ({ name, fontSize, sx, color, variant = "default" }) => {
+export const Tag: React.FC<TagProps> = ({ name, tooltip, fontSize, sx, color, variant = "default" }) => {
     const colors = useColors()
     const { darkMode } = useDarkMode()
 
     return (
         <Box
+            title={tooltip}
             sx={{
                 fontSize: `${fontSize}`,
                 width: "max-content",

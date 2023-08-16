@@ -73,7 +73,7 @@ export const Card: React.FC<CardProps> = ({ name, username, roles, user, image, 
                 )}
             </Box>
             <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}>
-                {roles && roles.map((role) => <Tag key={role.id} name={role.tag} sx={{ fontSize: "0.7vw" }} />)}
+                {roles && roles.map((role) => <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />)}
             </Box>
         </Paper>
     )

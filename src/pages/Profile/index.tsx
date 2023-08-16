@@ -237,7 +237,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                         value={
                                             <>
                                                 {profile?.roles?.map((role) => (
-                                                    <Tag key={role.id} name={role.tag} sx={{ fontSize: "0.7vw" }} />
+                                                    <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />
                                                 ))}
                                             </>
                                         }

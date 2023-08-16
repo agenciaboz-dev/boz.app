@@ -214,6 +214,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                                 <Tag
                                                     key={service.id}
                                                     name={service.tag}
+                                                    tooltip={service.name}
                                                     sx={{ fontSize: "0.7vw", padding: "0.25vw 0.5vw" }}
                                                     color={customer.active ? "" : theme.palette.error.main}
                                                 />

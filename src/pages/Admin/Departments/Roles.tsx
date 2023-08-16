@@ -14,7 +14,7 @@ export const Roles: React.FC<RolesProps> = ({}) => {
             <p style={{ fontWeight: "bold" }}>Funções</p>
             <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
                 {roles.map((role) => (
-                    <Tag key={role.id} name={role.tag} fontSize="0.8vw" />
+                    <Tag key={role.id} name={role.tag} tooltip={role.name} fontSize="0.8vw" />
                 ))}
                 <IconButton color="primary" sx={{ width: "2vw", height: "2vw" }} onClick={() => roleModal.open()}>
                     <AddIcon />
