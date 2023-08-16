@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Avatar, Box, SxProps } from "@mui/material"
 import { useImageUrl } from "../hooks/useImageUrl"
 import { useCustomers } from "../hooks/useCustomers"
+import { usePictureModal } from "../hooks/usePictureModal"
 
 interface CustomerAvatarProps {
     customer: Customer
@@ -10,7 +11,7 @@ interface CustomerAvatarProps {
 
 export const CustomerAvatar: React.FC<CustomerAvatarProps> = ({ customer, sx }) => {
     const { getCustomerPic } = useImageUrl()
-    const { customers } = useCustomers()
+    const { open } = usePictureModal()
 
     const [url, setUrl] = useState(getCustomerPic(customer))
 
@@ -18,5 +19,5 @@ export const CustomerAvatar: React.FC<CustomerAvatarProps> = ({ customer, sx }) 
         setUrl((url) => `${url}?timestamp=${new Date().getTime()}`)
     }, [customer])
 
-    return <Avatar src={url} imgProps={{ sx: { objectFit: "contain" } }} sx={sx} variant="rounded" />
+    return <Avatar src={url} imgProps={{ sx: { objectFit: "contain", cursor: "pointer" } }} sx={sx} variant="rounded" onClick={() => open(url)} />
 }

@@ -32,7 +32,12 @@ export const PictureModal: React.FC<PictureModalProps> = ({}) => {
             BackdropProps={{ sx: backdropStyle }}
             PaperProps={{ sx: { overflow: "hidden" } }}
         >
-            <Avatar src={url} variant="rounded" sx={{ width: "40vw", height: "40vw", objectFit: "contain" }} />
+            <Avatar
+                imgProps={{ sx: { objectFit: "contain" } }}
+                src={url}
+                variant="rounded"
+                sx={{ width: "40vw", height: "40vw", objectFit: "contain" }}
+            />
         </Dialog>
     )
 }
