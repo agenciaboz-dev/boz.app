@@ -4,6 +4,8 @@ import { Container } from "./UserComponents"
 import { textFieldStyle } from "../../style/textfield"
 import { selectMenuStyle } from "../../style/selectMenuStyle"
 import { useDepartments } from "../../hooks/useDepartments"
+import MaskedInput from "../../components/MaskedInput"
+import masks from "../../style/masks"
 
 interface UserFormProps {
     values: UserForm
@@ -36,8 +38,30 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
         <>
             <Container name="Informações Pessoais">
                 <TextField label="Nome" name="name" value={values.name} onChange={handleChange} sx={style} required />
-                <TextField label="Telefone" name="phone" value={values.phone} onChange={handleChange} sx={style} required />
-                <TextField label="CPF" name="cpf" value={values.cpf} onChange={handleChange} sx={style} required />
+                <TextField
+                    label="Telefone"
+                    name="phone"
+                    value={values.phone}
+                    onChange={handleChange}
+                    sx={style}
+                    required
+                    InputProps={{
+                        inputComponent: MaskedInput,
+                        inputProps: { mask: masks.phone },
+                    }}
+                />
+                <TextField
+                    label="CPF"
+                    name="cpf"
+                    value={values.cpf}
+                    onChange={handleChange}
+                    sx={style}
+                    required
+                    InputProps={{
+                        inputComponent: MaskedInput,
+                        inputProps: { mask: masks.cpf },
+                    }}
+                />
                 <TextField
                     label="Nome de usuário"
                     name="username"
@@ -48,7 +72,18 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     disabled={!createOnly}
                 />
                 <TextField label="E-mail" name="email" value={values.email} onChange={handleChange} sx={style} required />
-                <TextField label="Data de nascimento" name="birth" value={values.birth} onChange={handleChange} sx={style} required />
+                <TextField
+                    label="Data de nascimento"
+                    name="birth"
+                    value={values.birth}
+                    onChange={handleChange}
+                    sx={style}
+                    required
+                    InputProps={{
+                        inputComponent: MaskedInput,
+                        inputProps: { mask: masks.date },
+                    }}
+                />
             </Container>
 
             <Container name="Setor">
