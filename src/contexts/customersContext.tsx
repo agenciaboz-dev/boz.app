@@ -49,9 +49,14 @@ export const CustomersProvider: React.FC<CustomersProviderProps> = ({ children }
             setServices((services) => [...services.filter((item) => item.id != data.id), data])
         })
 
+        io.on("service:delete", (data: Service) => {
+            setServices((services) => [...services.filter((item) => item.id != data.id)])
+        })
+
         return () => {
             io.off("service:new")
             io.off("service:update")
+            io.off("service:delete")
         }
     }, [services])
 

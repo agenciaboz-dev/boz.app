@@ -6,6 +6,8 @@ import { Form, Formik } from "formik"
 import { useApi } from "../hooks/useApi"
 import { useSnackbar } from "burgos-snackbar"
 import { useIo } from "../hooks/useIo"
+import { DeleteForever } from "@mui/icons-material"
+import { useConfirmDialog } from "burgos-confirm"
 
 interface ServiceModalProps {}
 
@@ -16,8 +18,10 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({}) => {
     const { serviceModal, services } = useCustomers()
     const { isOpen, close, current: service } = serviceModal
     const { snackbar } = useSnackbar()
+    const { confirm } = useConfirmDialog()
 
     const [loading, setLoading] = useState(false)
+    const [deleting, setDeleting] = useState(false)
 
     const initialValues: ServiceForm = service || {
         name: "",
@@ -59,7 +63,26 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({}) => {
         close()
     }
 
+    const handleDelete = () => {
+        if (deleting) return
+        if (!service) return
+
+        confirm({
+            title: "atenção",
+            content: `tem certeza que deseja deletar ${service.name}? essa ação é irreversível`,
+            onConfirm: () => {
+                setDeleting(true)
+                io.emit("service:delete", service)
+            },
+        })
+    }
+
     useEffect(() => {
+        io.on("service:delete:success", () => {
+            setLoading(false)
+            handleClose()
+        })
+
         io.on("service:update:success", () => {
             setLoading(false)
             handleClose()
@@ -67,8 +90,9 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({}) => {
 
         return () => {
             io.off("service:update:success")
+            io.off("service:delete:success")
         }
-    }, [])
+    }, [service])
 
     return (
         <Dialog
@@ -87,7 +111,14 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({}) => {
                             <TextField label="tag" name="tag" value={values.tag} onChange={handleChange} variant="standard" sx={{}} required />
 
                             <Box sx={{ alignSelf: "flex-end", marginTop: "2vw", gap: "1vw" }}>
-                                <Button onClick={handleClose}>cancelar</Button>
+                                {service && (
+                                    <Button variant="outlined" color="error" sx={{ minWidth: 0, padding: "0 0.5vw" }} onClick={handleDelete}>
+                                        <DeleteForever />
+                                    </Button>
+                                )}
+                                <Button onClick={handleClose} variant="outlined">
+                                    cancelar
+                                </Button>
                                 <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
                                     {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "enviar"}
                                 </Button>
