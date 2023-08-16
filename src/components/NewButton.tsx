@@ -1,5 +1,6 @@
 import React from "react"
 import { Button } from "@mui/material"
+import zIndex from "@mui/material/styles/zIndex"
 
 interface NewButtonProps {
     onClick: () => void
@@ -25,6 +26,7 @@ export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, 
                 color: "secondary.main",
                 width: "3vw",
                 height: "4vw",
+                zIndex: 2,
             }}
             variant="contained"
             onClick={onClick}
