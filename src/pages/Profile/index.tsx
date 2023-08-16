@@ -157,7 +157,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                             setImage={setImage}
                                             editing
                                         />
-                                        <Box sx={wrapperStyle}>
+                                        <Box sx={{ ...wrapperStyle, gap: "2vw" }}>
                                             <UserForm
                                                 values={values}
                                                 handleChange={handleChange}
