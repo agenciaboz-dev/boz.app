@@ -64,14 +64,14 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "1vw",
-                gap: isMobile ? "4vw" : "2vw",
+                gap: "2vw",
             }}
         >
             <Box sx={containerStyle}>
                 <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => menuDrawer.toogle()}>
                     <MenuIcon sx={iconStyle} />
                 </IconButton>
-                <img src={logo} alt="boz" style={{ width: isMobile ? "12vw" : "3.5vw" }} />
+                <img src={logo} alt="boz" style={{ width: "3.5vw", display: isMobile ? "none" : "" }} />
             </Box>
 
             <Box sx={{ flex: 1 }}>
