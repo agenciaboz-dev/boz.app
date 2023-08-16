@@ -28,7 +28,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
             anchor={"right"}
             open={drawer.open}
             onClose={handleClose}
-            PaperProps={{ sx: { width: isMobile ? "60vw" : "22vw", backgroundColor: "background.paper" } }}
+            PaperProps={{ sx: { width: isMobile ? "80vw" : "22vw", backgroundColor: "background.paper" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
             <Box sx={{ padding: isMobile ? "6vw" : "2vw", flexDirection: "column", gap: isMobile ? "4vw" : "1vw", width: "100%", alignItems: "center" }} color={"secondary.main"}>

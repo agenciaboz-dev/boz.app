@@ -23,7 +23,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
             anchor={"left"}
             open={drawer.open}
             onClose={drawer.close}
-            PaperProps={{ sx: { width: isMobile ? "60vw" : "22vw", backgroundColor: "background.paper", paddingTop: isMobile ? "6vw" : "" } }}
+            PaperProps={{ sx: { width: isMobile ? "80vw" : "22vw", backgroundColor: "background.paper", paddingTop: isMobile ? "6vw" : "" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
             <Box sx={{ padding: isMobile ? "6vw" : "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
