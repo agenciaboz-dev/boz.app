@@ -34,6 +34,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 color: customer.active ? "primary.main" : "error.main",
                 gap: "1vw",
                 position: "relative",
+                // minHeight: "10vw",
             }}
         >
             <Switch
@@ -46,7 +47,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
             <Avatar sx={{ width: "5vw", height: "5vw" }} variant="rounded" />
             <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
                 <Box sx={{ gap: "1vw", alignItems: "center" }}>
-                    <p style={{ fontWeight: "bold", fontSize: "1vw" }}>{customer.name}</p>
+                    <p style={{ fontWeight: "bold", fontSize: "1vw", width: "15vw" }}>{customer.name}</p>
                     <p
                         style={{ fontSize: "0.7vw", textDecoration: "underline", cursor: "pointer" }}
                         onClick={() => {
