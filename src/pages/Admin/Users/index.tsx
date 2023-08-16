@@ -9,6 +9,7 @@ import { useSearch } from "../../../hooks/useSearch"
 import { useUser } from "../../../hooks/useUser"
 import AddIcon from "@mui/icons-material/Add"
 import { Profile } from "../../Profile"
+import normalize from "../../../tools/normalize"
 
 interface UsersProps {
     user: User
@@ -28,7 +29,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
     }
 
     const handleSearch = (value: string) => {
-        const result = list.filter((user) => user.name.toLowerCase().includes(value.toLowerCase()))
+        const result = list.filter((user) => normalize(user.name).includes(value))
         setUserList(result)
     }
 

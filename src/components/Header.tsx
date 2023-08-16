@@ -13,6 +13,7 @@ import { Avatar } from "./Avatar"
 import { useSearch } from "../hooks/useSearch"
 import ClearIcon from "@mui/icons-material/Clear"
 import { useMediaQuery } from 'react-responsive'
+import normalize from "../tools/normalize"
 
 interface HeaderProps {
     user: User
@@ -20,7 +21,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
-    const isMobile = useMediaQuery({maxWidth: 600})
+    const isMobile = useMediaQuery({ maxWidth: 600 })
 
     const userDrawer = useUser().drawer
     const menuDrawer = useMenu().drawer
@@ -31,13 +32,13 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
     const [searchValue, setSearchValue] = useState("")
 
     const iconButtonStyle: SxProps = {
-        width: isMobile ? '16vw' : '4vw',
-        height: isMobile ? '16vw' : '4vw',
+        width: isMobile ? "16vw" : "4vw",
+        height: isMobile ? "16vw" : "4vw",
     }
 
     const iconStyle: SxProps = {
         height: "100%",
-        width: "100%"
+        width: "100%",
     }
 
     const containerStyle: SxProps = {
@@ -52,7 +53,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
     }
 
     useEffect(() => {
-        if (onSearch) onSearch(searchValue)
+        if (onSearch) onSearch(normalize(searchValue))
     }, [searchValue, onSearch])
 
     return (
@@ -86,11 +87,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                         sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw" },
                         startAdornment: <SearchIcon />,
                         endAdornment: (
-                            <IconButton
-                            color="secondary"
-                            onClick={() => setSearchValue("")}
-                            style={{ padding: isMobile ? "0" : "" }}
-                            >
+                            <IconButton color="secondary" onClick={() => setSearchValue("")} style={{ padding: isMobile ? "0" : "" }}>
                                 <ClearIcon />
                             </IconButton>
                         ),

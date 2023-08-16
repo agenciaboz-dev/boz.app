@@ -3,6 +3,7 @@ import { Box, MenuItem, Paper } from "@mui/material"
 import { useCustomers } from "../../../hooks/useCustomers"
 import { CustomerContainer } from "../../../components/CustomerContainer"
 import { useSearch } from "../../../hooks/useSearch"
+import normalize from "../../../tools/normalize"
 
 interface CustomerListProps {}
 
@@ -13,7 +14,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
     const [customerList, setCustomerList] = useState(customers)
 
     const handleSearch = (value: string) => {
-        const result = customers.filter((customer) => customer.name.toLowerCase().includes(value.toLowerCase()))
+        const result = customers.filter((customer) => normalize(customer.name).includes(value))
         setCustomerList(result)
     }
 
