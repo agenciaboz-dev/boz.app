@@ -156,7 +156,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                         </>
                     ) : (
                         <>
-                            {!shouldEdit && (
+                            {shouldEdit && (
                                 <NewButton
                                     onClick={() => setIsEditing(true)}
                                     bottom={"6.8vw"}
