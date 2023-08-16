@@ -25,7 +25,6 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
             sx={{
                 flexDirection: "column",
                 width: "100%",
-                height: "100%",
                 bgcolor: "background.default",
                 padding: "2vw",
                 gap: "2vw",
@@ -43,7 +42,9 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                                 icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
                             />
                             <Services />
-                            <CustomerList />
+                            <Box sx={{ overflowY: "auto", height: "60vh", flexDirection: "column" }}>
+                                <CustomerList />
+                            </Box>
                         </>
                     }
                 />

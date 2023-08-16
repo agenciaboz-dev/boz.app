@@ -14,7 +14,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
     return (
         <Box sx={backgroundStyle}>
             <Header user={user} />
-            <Box sx={{ flexDirection: "column", padding: "2vw" }}>
+            <Box sx={{ flexDirection: "column", padding: "2vw", overflowY: "auto", height: "87vh" }}>
                 <Routes>
                     <Route index element={<CustomerList />} />
                     <Route path="/:id" element={<Profile />} />
