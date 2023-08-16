@@ -35,9 +35,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 width: "30vw",
                 // bgcolor: customer.active ? "background.default" : alpha(theme.palette.error.main, 0.25),
                 color: customer.active ? "primary.main" : "error.main",
-                gap: "1vw",
                 position: "relative",
-                // minHeight: "12vw",
             }}
         >
             <Switch
@@ -47,9 +45,9 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 sx={{ position: "absolute", right: "0.5vw", top: "0.5vw", pointerEvents: isAdmin() ? "" : "none" }}
             />
 
-            <CustomerAvatar customer={customer} sx={{ width: "5vw", height: "5vw" }} />
-            <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
+            <Box sx={{ flexDirection: "column", gap: "1.5vw", height: "vw" }}>
                 <Box sx={{ gap: "1vw", alignItems: "center" }}>
+                    <CustomerAvatar customer={customer} sx={{ width: "5vw", height: "5vw" }} />
                     <Box
                         sx={{
                             fontWeight: "bold",
@@ -65,17 +63,31 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                         {customer.name}
                     </Box>
                 </Box>
-                <p style={{ color: colors.text.secondary, fontSize: "0.75vw", width: "20vw" }}>{customer.recomendations}</p>
-                <Box sx={{ alignItems: "center", gap: "0.5vw", width: "20vw", flexWrap: "wrap" }}>
+                <Box sx={{ gap: "0.5vw", width: "28vw", flexWrap: "wrap", height: "5vw" }}>
                     {customer.services.map((service) => (
                         <Tag
                             key={service.id}
                             name={service.tag}
                             tooltip={service.name}
-                            sx={{ fontSize: "0.7vw", padding: "0.25vw 0.5vw" }}
+                            sx={{ fontSize: "0.7vw", padding: "0.5vw", height: "1.5vw" }}
                             color={customer.active ? "" : theme.palette.error.main}
                         />
                     ))}
+                </Box>
+                <Box
+                    sx={{
+                        height: "5vw",
+                        color: "text.secondary",
+                        fontSize: "0.75vw",
+                        width: "28vw",
+                        textAlign: "justify",
+                        whiteSpace: "pre-wrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                    }}
+                    title={customer.recomendations}
+                >
+                    {customer.recomendations}
                 </Box>
             </Box>
         </Box>
