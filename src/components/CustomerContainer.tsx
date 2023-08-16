@@ -47,15 +47,20 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
             <Avatar sx={{ width: "5vw", height: "5vw" }} variant="rounded" />
             <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
                 <Box sx={{ gap: "1vw", alignItems: "center" }}>
-                    <p style={{ fontWeight: "bold", fontSize: "1vw", width: "15vw" }}>{customer.name}</p>
-                    <p
-                        style={{ fontSize: "0.7vw", textDecoration: "underline", cursor: "pointer" }}
+                    <Box
+                        sx={{
+                            fontWeight: "bold",
+                            fontSize: "1vw",
+                            width: "20vw",
+                            cursor: "pointer",
+                            "&:hover": { textDecoration: "underline" },
+                        }}
                         onClick={() => {
                             navigate(`/customers/${customer.id}`)
                         }}
                     >
-                        Ver perfil
-                    </p>
+                        {customer.name}
+                    </Box>
                 </Box>
                 <p style={{ color: colors.text.secondary, fontSize: "0.75vw", width: "20vw" }}>{customer.recomendations}</p>
                 <Box sx={{ alignItems: "center", gap: "0.5vw", width: "20vw", flexWrap: "wrap" }}>
