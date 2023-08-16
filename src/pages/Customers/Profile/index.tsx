@@ -17,6 +17,9 @@ import { Tag } from "../../../components/Tag"
 import { useMuiTheme } from "../../../hooks/useMuiTheme"
 import { useIo } from "../../../hooks/useIo"
 import { useUser } from "../../../hooks/useUser"
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
+import { useConfirmDialog } from "burgos-confirm"
+import { useSnackbar } from "burgos-snackbar"
 
 interface ProfileProps {
     admin?: boolean
@@ -33,11 +36,15 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
 
     const { customers: list } = useCustomers()
     const { isAdmin } = useUser()
+    const { confirm } = useConfirmDialog()
+    const { snackbar } = useSnackbar()
 
     const [customer, setCustomer] = useState(createOnly ? undefined : id ? list.find((item) => item.id == Number(id)) : undefined)
     const [isEditing, setIsEditing] = useState(createOnly)
     const [selectedServices, setSelectedServices] = useState<Service[]>(customer?.services || [])
     const [loading, setLoading] = useState(false)
+    const [deleting, setDeleting] = useState(false)
+
     const [image, setImage] = useState<File>()
 
     const [initialValues, setInitialValues] = useState<CustomerForm>({
@@ -60,6 +67,20 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         alignItems: "center",
         width: "80%",
         height: "max-content",
+    }
+
+    const handleDelete = () => {
+        if (deleting) return
+        if (!customer) return
+
+        confirm({
+            title: "atenção",
+            content: `tem certeza que deseja deletar ${customer.name}? essa ação é irreversível`,
+            onConfirm: () => {
+                setDeleting(true)
+                io.emit("customer:delete", customer)
+            },
+        })
     }
 
     const handleSubmit = (values: CustomerForm) => {
@@ -87,6 +108,10 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
     }
 
     useEffect(() => {
+        io.on("customer:delete:success", () => {
+            navigate(-1)
+        })
+
         io.on("customer:update:success", (data: Customer) => {
             setLoading(false)
             setIsEditing(false)
@@ -97,7 +122,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         return () => {
             io.off("customer:update:success")
         }
-    }, [])
+    }, [customer])
 
     return (
         <Box
@@ -157,12 +182,21 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     ) : (
                         <>
                             {shouldEdit && (
-                                <NewButton
-                                    onClick={() => setIsEditing(true)}
-                                    bottom={"6.8vw"}
-                                    right={"12.5vw"}
-                                    icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
-                                />
+                                <>
+                                    <NewButton
+                                        onClick={handleDelete}
+                                        bottom={"6.8vw"}
+                                        right={"17.5vw"}
+                                        color="error"
+                                        icon={<DeleteForeverIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
+                                    />
+                                    <NewButton
+                                        onClick={() => setIsEditing(true)}
+                                        bottom={"6.8vw"}
+                                        right={"12.5vw"}
+                                        icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
+                                    />
+                                </>
                             )}
                             <Card image={image} setImage={setImage} />
                             <Box sx={{ flexDirection: "column", width: "62%", gap: "2vw", alignSelf: "start" }}>

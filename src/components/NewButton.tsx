@@ -1,5 +1,5 @@
 import React from "react"
-import { Button } from "@mui/material"
+import { AlertColor, Button } from "@mui/material"
 import zIndex from "@mui/material/styles/zIndex"
 
 interface NewButtonProps {
@@ -9,9 +9,10 @@ interface NewButtonProps {
     bottom?: string | number
     right?: string | number
     icon?: React.ReactElement
+    color?: AlertColor
 }
 
-export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, onClick, icon }) => {
+export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, onClick, icon, color }) => {
     const Icon = () => icon || <></>
 
     return (
@@ -29,6 +30,7 @@ export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, 
                 zIndex: 2,
             }}
             variant="contained"
+            color={color}
             onClick={onClick}
         >
             <Icon />
