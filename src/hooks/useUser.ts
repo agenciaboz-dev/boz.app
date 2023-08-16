@@ -22,6 +22,8 @@ export const useUser = () => {
 
     const firstname = user?.name.split(" ")[0] || ""
 
+    const isAdmin = () => user?.roles.map((role) => role.tag).includes("admin")
+
     const login = (values: LoginForm, setLoading: (value: boolean) => void) => {
         setLoading(true)
         api.user.login({
@@ -60,5 +62,5 @@ export const useUser = () => {
         })
     }
 
-    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname }
+    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname, isAdmin }
 }
