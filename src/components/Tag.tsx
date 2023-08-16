@@ -29,6 +29,15 @@ export const Tag: React.FC<TagProps> = ({ name, tooltip, fontSize, sx, color, on
                 color: colors.secondary,
                 justifyContent: "center",
                 alignItems: "center",
+
+                "&: hover": onClick
+                    ? {
+                          transition: "0.2s",
+                          cursor: "pointer",
+                          bgcolor: "primary.main",
+                      }
+                    : {},
+
                 ...sx,
             }}
             onClick={() => {
