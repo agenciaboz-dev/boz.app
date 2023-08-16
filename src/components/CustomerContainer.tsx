@@ -1,24 +1,21 @@
 import React from "react"
 import { Avatar, Box, Switch, alpha } from "@mui/material"
-import { useApi } from "../hooks/useApi"
 import { Tag } from "./Tag"
 import { useColors } from "../hooks/useColors"
 import { useMuiTheme } from "../hooks/useMuiTheme"
+import { useIo } from "../hooks/useIo"
 
 interface CustomerContainerProps {
     customer: Customer
 }
 
 export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }) => {
-    const api = useApi()
+    const io = useIo()
     const colors = useColors()
     const theme = useMuiTheme()
 
     const toggleCustomerStatus = (customer: Customer) => {
-        api.customer.toggleStatus({
-            data: customer,
-            callback: () => {},
-        })
+        io.emit("customer:update", { ...customer, active: !customer.active })
     }
 
     return (
