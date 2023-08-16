@@ -42,7 +42,11 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickMo
             color={color[connected?.status as ColorStatus]}
             sx={{ width: size, height: size }}
             overlap="circular"
-            componentsProps={{ badge: { style: { minWidth: 0, minHeight: 0, width: isMobile ? "4vw" : dotSize, height: isMobile ? "4vw" : dotSize, borderRadius: "50%" } } }}
+            componentsProps={{
+                badge: {
+                    style: { minWidth: 0, minHeight: 0, width: isMobile ? "4vw" : dotSize, height: isMobile ? "4vw" : dotSize, borderRadius: "50%" },
+                },
+            }}
         >
             <MuiAvatar
                 src={url}
@@ -54,6 +58,7 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickMo
                     cursor: "pointer",
                     ...sx,
                 }}
+                imgProps={{ sx: { objectFit: "contain" } }}
                 onClick={() => (noClickModal ? {} : picture.open(url))}
             />
         </Badge>

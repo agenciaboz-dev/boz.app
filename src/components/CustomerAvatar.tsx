@@ -18,5 +18,5 @@ export const CustomerAvatar: React.FC<CustomerAvatarProps> = ({ customer, sx }) 
         setUrl((url) => `${url}?timestamp=${new Date().getTime()}`)
     }, [customer])
 
-    return <Avatar src={url} sx={sx} variant="rounded" />
+    return <Avatar src={url} imgProps={{ sx: { objectFit: "contain" } }} sx={sx} variant="rounded" />
 }
