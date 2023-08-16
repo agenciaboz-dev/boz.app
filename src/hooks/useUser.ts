@@ -22,6 +22,15 @@ export const useUser = () => {
 
     const firstname = user?.name.split(" ")[0] || ""
 
+    const updateStatus = (status: number) => {
+        if (!user) return
+
+        const updatedUser = { ...user, status: user.status == status ? 1 : status }
+
+        setUser(updatedUser)
+        io.emit("user:status:update", updatedUser)
+    }
+
     const login = (values: LoginForm, setLoading: (value: boolean) => void) => {
         setLoading(true)
         api.user.login({
@@ -60,5 +69,5 @@ export const useUser = () => {
         })
     }
 
-    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname }
+    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname, updateStatus }
 }

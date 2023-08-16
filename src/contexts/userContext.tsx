@@ -45,11 +45,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         setList((prevList) => [...prevList.filter((item) => item.id != user.id), user])
     }
 
+    const addConnectedUser = (user: User) => {
+        setconnectedList((prevList) => [...prevList.filter((item) => item.id != user.id), user])
+    }
+
     useEffect(() => {
         console.log({ connectedList })
         io.on("user:connect", (user) => {
             console.log(`connected: ${user.username}`)
-            setconnectedList([...connectedList, user])
+            addConnectedUser(user)
         })
 
         io.on("user:disconnect", (user) => {
@@ -57,9 +61,14 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             setconnectedList(connectedList.filter((item) => item.id != user.id))
         })
 
+        io.on("user:status:update", (user) => {
+            addConnectedUser(user)
+        })
+
         return () => {
             io.off("user:connect")
             io.off("user:disconnect")
+            io.off("user:status:update")
         }
     }, [connectedList])
 
