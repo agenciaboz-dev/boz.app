@@ -28,6 +28,8 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                 bgcolor: "background.default",
                 padding: "2vw",
                 gap: "2vw",
+                overflowY: "auto",
+                height: "80vh",
             }}
         >
             <Routes>
@@ -42,9 +44,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                                 icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
                             />
                             <Services />
-                            <Box sx={{ overflowY: "auto", height: "60vh", flexDirection: "column" }}>
-                                <CustomerList />
-                            </Box>
+                            <CustomerList />
                         </>
                     }
                 />
