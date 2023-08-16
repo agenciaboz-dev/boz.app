@@ -15,6 +15,7 @@ import { useApi } from "../../../hooks/useApi"
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { Tag } from "../../../components/Tag"
 import { useMuiTheme } from "../../../hooks/useMuiTheme"
+import { useIo } from "../../../hooks/useIo"
 
 interface ProfileProps {
     //customer: Customer
@@ -28,14 +29,13 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
     const navigate = useNavigate()
     const id = useParams().id
     const theme = useMuiTheme()
+    const io = useIo()
 
     const { customers: list, services } = useCustomers()
 
-    const [customer, setCustomer] = useState(
-        createOnly ? undefined : id ? list.find((item) => item.id == Number(id)) : undefined
-    )
+    const [customer, setCustomer] = useState(createOnly ? undefined : id ? list.find((item) => item.id == Number(id)) : undefined)
     const [isEditing, setIsEditing] = useState(createOnly)
-    const [selectedServices, setSelectedServices] = useState<Service[]>([])
+    const [selectedServices, setSelectedServices] = useState<Service[]>(customer?.services || [])
     const [loading, setLoading] = useState(false)
     const [image, setImage] = useState<File>()
 
@@ -71,26 +71,32 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
             services: selectedServices,
         }
 
-        api.customer.new({
-            data,
-            callback: (response: { data: Customer }) => {
-                const customer = response.data
-                if (customer) navigate("/admin/customers")
-            },
-            finallyCallback: () => setLoading(false),
-        })
-    }
-
-    const handleServiceSelect = (child: any) => {
-        const id = child.props.value as Number
-        const service = services.find((item) => item.id == id) as Service
-
-        if (selectedServices.includes(service)) {
-            setSelectedServices(selectedServices.filter((item) => item.id != service.id))
+        if (createOnly) {
+            api.customer.new({
+                data,
+                callback: (response: { data: Customer }) => {
+                    const customer = response.data
+                    if (customer) navigate("/admin/customers")
+                },
+                finallyCallback: () => setLoading(false),
+            })
         } else {
-            setSelectedServices([...selectedServices, service])
+            io.emit("customer:update", data)
         }
     }
+
+    useEffect(() => {
+        io.on("customer:update:success", (data: Customer) => {
+            setLoading(false)
+            setIsEditing(false)
+            setCustomer(data)
+            setInitialValues(data)
+        })
+
+        return () => {
+            io.off("customer:update:success")
+        }
+    }, [])
 
     return (
         <Box
@@ -113,11 +119,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     paddingTop: "10vw",
                 }}
             >
-                <IconButton
-                    sx={{ position: "absolute", top: "7.8vw", left: "2.4vw" }}
-                    color="secondary"
-                    onClick={() => navigate("/admin/customers")}
-                >
+                <IconButton sx={{ position: "absolute", top: "7.8vw", left: "2.4vw" }} color="secondary" onClick={() => navigate("/admin/customers")}>
                     <ArrowBackIosNewIcon />
                 </IconButton>
                 <Box sx={wrapperStyle}>
@@ -138,18 +140,12 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                             <Box sx={{ gap: "1vw", justifyContent: "flex-end" }}>
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={() =>
-                                                        createOnly ? navigate("/admin/customers") : setIsEditing(false)
-                                                    }
+                                                    onClick={() => (createOnly ? navigate("/admin/customers") : setIsEditing(false))}
                                                 >
                                                     cancelar
                                                 </Button>
                                                 <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
-                                                    {loading ? (
-                                                        <CircularProgress size="1.5rem" color="secondary" />
-                                                    ) : (
-                                                        "enviar"
-                                                    )}
+                                                    {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "enviar"}
                                                 </Button>
                                             </Box>
                                         </Box>
@@ -175,11 +171,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                     <Box sx={{ flexDirection: "column", gap: "2vw" }}>
                                         <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
                                             <Data title="Nome Fantasia" value={customer?.name} icon={<BusinessIcon />} />
-                                            <Data
-                                                title="Recomendações"
-                                                value={customer?.recomendations}
-                                                icon={<NotesIcon />}
-                                            />
+                                            <Data title="Recomendações" value={customer?.recomendations} icon={<NotesIcon />} />
                                         </Box>
                                         <Box sx={{ flexDirection: "row", gap: "0.5vw" }}>
                                             {customer?.services.map((service) => (

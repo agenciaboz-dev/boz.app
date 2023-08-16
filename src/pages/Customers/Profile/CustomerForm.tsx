@@ -46,30 +46,32 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
             }}
         >
             <TextField label="Nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} />
+            <TextField label="Recomendações" name="recomendations" value={values.recomendations} onChange={handleChange} sx={textFieldStyle} />
             <TextField
-                label="Recomendações"
-                name="recomendations"
-                value={values.recomendations}
-                onChange={handleChange}
-                sx={textFieldStyle}
-            />
-            <Select
                 label="Serviços"
                 name="services"
-                multiple
-                value={selectedServices}
-                onChange={(_, child) => handleServiceSelect(child)}
-                input={<OutlinedInput label="serviços" sx={textFieldStyle} />}
-                renderValue={(selected) => selected.map((role) => role.name).join(", ")}
-                MenuProps={{ sx: selectMenuStyle }}
+                select
+                sx={textFieldStyle}
+                SelectProps={{
+                    MenuProps: {
+                        sx: selectMenuStyle,
+                    },
+                    value: selectedServices,
+                    onChange: (_, child) => handleServiceSelect(child),
+                    multiple: true,
+                    // @ts-ignore
+                    renderValue: (selected: Service[]) => selected.map((role) => role.name).join(", "),
+                }}
+                required
             >
+                <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
                 {services.map((service) => (
                     <MenuItem key={service.id} value={service.id}>
-                        <Checkbox checked={selectedServices.includes(service)} />
+                        <Checkbox checked={selectedServices.map((item) => item.id).includes(service.id)} />
                         <ListItemText primary={service.name} />
                     </MenuItem>
                 ))}
-            </Select>
+            </TextField>
         </Box>
     )
 }
