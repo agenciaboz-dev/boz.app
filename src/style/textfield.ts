@@ -34,7 +34,8 @@ export const textFieldStyle: SxProps = {
         height: "3vw",
 
         "@media (max-width: 600px)": {
-            height: "9vw",
+            borderRadius: "0 3vw 0vw 3vw",
+            height: "12vw",
         },
     },
 }
