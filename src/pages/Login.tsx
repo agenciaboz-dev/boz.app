@@ -8,10 +8,12 @@ import { useUser } from "../hooks/useUser"
 import { useColors } from "../hooks/useColors"
 import { ModeToggler } from "../components/ModeToggler"
 import { textFieldStyle } from "../style/textfield"
+import { useMediaQuery } from "react-responsive"
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
+    const isMobile = useMediaQuery({maxWidth: 600})
     const colors = useColors()
     const { login } = useUser()
 
@@ -45,21 +47,21 @@ export const Login: React.FC<LoginProps> = ({}) => {
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: "column",
-                gap: "5vw",
+                gap: isMobile ? "10vw" : "5vw",
             }}
         >
-            <img src={logo} alt="agência boz" style={{ aspectRatio: "2/1", width: "24vw" }} />
+            <img src={logo} alt="agência boz" style={{ aspectRatio: "2/1", width: isMobile ? "50vw" : "24vw" }} />
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form>
                         <Box
                             sx={{
-                                padding: "3vw",
-                                width: "30vw",
+                                padding: isMobile ? "6vw" : "3vw",
+                                width: isMobile ? "80vw" : "30vw",
                                 backgroundColor: "background.default",
-                                borderRadius: "2.5vw",
+                                borderRadius: isMobile ? "5vw" : "2.5vw",
                                 flexDirection: "column",
-                                gap: "1vw",
+                                gap: isMobile ? "4vw" : "1vw",
                             }}
                         >
                             <TextField

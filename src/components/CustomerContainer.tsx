@@ -3,6 +3,7 @@ import { Avatar, Box, Switch, alpha } from "@mui/material"
 import { Tag } from "./Tag"
 import { useColors } from "../hooks/useColors"
 import { useMuiTheme } from "../hooks/useMuiTheme"
+import { useUser } from "../hooks/useUser"
 import { useIo } from "../hooks/useIo"
 import { useNavigate } from "react-router-dom"
 
@@ -15,6 +16,8 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
     const colors = useColors()
     const theme = useMuiTheme()
     const navigate = useNavigate()
+
+    const { isAdmin } = useUser()
 
     const toggleCustomerStatus = (customer: Customer) => {
         io.emit("customer:update", { ...customer, active: !customer.active })
@@ -37,8 +40,9 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 color={"success"}
                 checked={customer.active}
                 onChange={() => toggleCustomerStatus(customer)}
-                sx={{ position: "absolute", right: "0.5vw", top: "0.5vw" }}
+                sx={{ position: "absolute", right: "0.5vw", top: "0.5vw", pointerEvents: isAdmin() ? "" : "none" }}
             />
+
             <Avatar sx={{ width: "5vw", height: "5vw" }} variant="rounded" />
             <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
                 <Box sx={{ gap: "1vw", alignItems: "center" }}>

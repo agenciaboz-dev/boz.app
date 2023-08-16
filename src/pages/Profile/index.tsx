@@ -108,6 +108,12 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
             addUser(user)
             setLoading(false)
             setIsEditing(false)
+            setInitialValues({
+                ...user,
+                birth: getDateString(user.birth, true),
+                departmentId: departments.find((item) => item.id == user.department.id),
+            })
+            setProfile(user)
             snackbar({ severity: "success", text: "usuário criado" })
         })
 
@@ -120,6 +126,11 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
             addUser(user)
             setLoading(false)
             setIsEditing(false)
+            setInitialValues({
+                ...user,
+                birth: getDateString(user.birth, true),
+                departmentId: departments.find((item) => item.id == user.department.id),
+            })
             snackbar({ severity: "success", text: "usuário atualizado" })
         })
 

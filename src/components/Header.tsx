@@ -12,6 +12,7 @@ import { textFieldStyle } from "../style/textfield"
 import { Avatar } from "./Avatar"
 import { useSearch } from "../hooks/useSearch"
 import ClearIcon from "@mui/icons-material/Clear"
+import { useMediaQuery } from 'react-responsive'
 
 interface HeaderProps {
     user: User
@@ -19,6 +20,8 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
+    const isMobile = useMediaQuery({maxWidth: 600})
+
     const userDrawer = useUser().drawer
     const menuDrawer = useMenu().drawer
 
@@ -28,11 +31,14 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
     const [searchValue, setSearchValue] = useState("")
 
     const iconButtonStyle: SxProps = {
-        width: "4vw",
-        height: "4vw",
+        width: isMobile ? '16vw' : '4vw',
+        height: isMobile ? '16vw' : '4vw',
     }
 
-    const iconStyle: SxProps = { height: "100%", width: "100%" }
+    const iconStyle: SxProps = {
+        height: "100%",
+        width: "100%"
+    }
 
     const containerStyle: SxProps = {
         gap: "1vw",
@@ -65,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                 <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => menuDrawer.toogle()}>
                     <MenuIcon sx={iconStyle} />
                 </IconButton>
-                <img src={logo} alt="boz" style={{ width: "3.5vw" }} />
+                <img src={logo} alt="boz" style={{ width: "3.5vw", display: isMobile ? "none" : "" }} />
             </Box>
 
             <Box sx={{ flex: 1 }}>
@@ -80,7 +86,11 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                         sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw" },
                         startAdornment: <SearchIcon />,
                         endAdornment: (
-                            <IconButton color="secondary" onClick={() => setSearchValue("")}>
+                            <IconButton
+                            color="secondary"
+                            onClick={() => setSearchValue("")}
+                            style={{ padding: isMobile ? "0" : "" }}
+                            >
                                 <ClearIcon />
                             </IconButton>
                         ),
@@ -93,7 +103,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
             </Box>
 
             <Box sx={containerStyle}>
-                <p>{user.name}</p>
+                <p style={{ display: isMobile ? "none" : "" }}>{user.name}</p>
                 <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => userDrawer.toogle()}>
                     <Avatar user={user} size={Number(iconStyle.width)} small noClickModal />
                 </IconButton>

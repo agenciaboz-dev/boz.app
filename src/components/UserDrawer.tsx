@@ -8,10 +8,12 @@ import colors from "../style/colors"
 import { useNavigate } from "react-router-dom"
 import DuoIcon from "@mui/icons-material/Duo"
 import ChairIcon from "@mui/icons-material/Chair"
+import { useMediaQuery } from "react-responsive"
 
 interface UserDrawerProps {}
 
 export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
+    const isMobile = useMediaQuery({ maxWidth: 600 })
     const { user, drawer, updateStatus } = useUser()
     const navigate = useNavigate()
 
@@ -26,18 +28,24 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
             anchor={"right"}
             open={drawer.open}
             onClose={handleClose}
-            PaperProps={{ sx: { width: "22vw", backgroundColor: "background.paper" } }}
+            PaperProps={{ sx: { width: isMobile ? "80vw" : "22vw", backgroundColor: "background.paper" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
             <Box
-                sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }}
+                sx={{
+                    padding: isMobile ? "6vw" : "2vw",
+                    flexDirection: "column",
+                    gap: isMobile ? "4vw" : "1vw",
+                    width: "100%",
+                    alignItems: "center",
+                }}
                 color={"secondary.main"}
             >
                 <Avatar user={user!} size="10vw" />
-                <p style={{ fontWeight: "bold" }}>{user?.name}</p>
+                <p style={{ fontWeight: "bold", textAlign: "center" }}>{user?.name}</p>
                 <Box
                     sx={{
-                        fontSize: "1.0vw",
+                        fontSize: isMobile ? "4vw" : "1.5vw",
                         color: colors.secondary,
                         cursor: "pointer",
                         "&:hover": {

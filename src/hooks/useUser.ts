@@ -22,6 +22,7 @@ export const useUser = () => {
 
     const firstname = user?.name.split(" ")[0] || ""
 
+    const isAdmin = () => user?.roles.map((role) => role.tag).includes("admin")
     const updateStatus = (status: number) => {
         if (!user) return
 
@@ -69,5 +70,5 @@ export const useUser = () => {
         })
     }
 
-    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname, updateStatus }
+    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname, updateStatus,isAdmin }
 }

@@ -7,10 +7,12 @@ import { useUser } from "../../hooks/useUser"
 import { useNavigate } from "react-router-dom"
 import { MenuButton } from "./MenuButton"
 import LogoutIcon from "@mui/icons-material/Logout"
+import { useMediaQuery } from "react-responsive"
 
 interface MenuDrawerProps {}
 
 export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
+    const isMobile = useMediaQuery({maxWidth: 600})
     const navigate = useNavigate()
 
     const { drawer } = useMenu()
@@ -21,10 +23,10 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
             anchor={"left"}
             open={drawer.open}
             onClose={drawer.close}
-            PaperProps={{ sx: { width: "22vw", backgroundColor: "background.paper" } }}
+            PaperProps={{ sx: { width: isMobile ? "80vw" : "22vw", backgroundColor: "background.paper", paddingTop: isMobile ? "6vw" : "" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
-            <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
+            <Box sx={{ padding: isMobile ? "6vw" : "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
                 <img src={logo} style={{ width: "10vw" }} />
             </Box>
             <Box sx={{ flexDirection: "column", height: "80%" }}>
