@@ -6,6 +6,7 @@ import { useMuiTheme } from "../hooks/useMuiTheme"
 import { useUser } from "../hooks/useUser"
 import { useIo } from "../hooks/useIo"
 import { useNavigate } from "react-router-dom"
+import { useImageUrl } from "../hooks/useImageUrl"
 
 interface CustomerContainerProps {
     customer: Customer
@@ -18,6 +19,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
     const navigate = useNavigate()
 
     const { isAdmin } = useUser()
+    const { getCustomerPic } = useImageUrl()
 
     const toggleCustomerStatus = (customer: Customer) => {
         io.emit("customer:update", { ...customer, active: !customer.active })
@@ -44,7 +46,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 sx={{ position: "absolute", right: "0.5vw", top: "0.5vw", pointerEvents: isAdmin() ? "" : "none" }}
             />
 
-            <Avatar sx={{ width: "5vw", height: "5vw" }} variant="rounded" />
+            <Avatar src={getCustomerPic(customer)} sx={{ width: "5vw", height: "5vw" }} variant="rounded" />
             <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
                 <Box sx={{ gap: "1vw", alignItems: "center" }}>
                     <Box

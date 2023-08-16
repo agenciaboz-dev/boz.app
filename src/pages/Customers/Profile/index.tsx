@@ -90,26 +90,23 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
 
         const data = {
             ...values,
+            image,
             services: selectedServices,
         }
 
-        if (createOnly) {
-            api.customer.new({
-                data,
-                callback: (response: { data: Customer }) => {
-                    const customer = response.data
-                    if (customer) navigate("/admin/customers")
-                },
-                finallyCallback: () => setLoading(false),
-            })
-        } else {
-            io.emit("customer:update", data)
-        }
+        io.emit(createOnly ? "customer:new" : "customer:update", data)
     }
 
     useEffect(() => {
         io.on("customer:delete:success", () => {
             navigate(-1)
+        })
+
+        io.on("customer:new:success", (data: Customer) => {
+            setLoading(false)
+            setIsEditing(false)
+            setCustomer(data)
+            setInitialValues(data)
         })
 
         io.on("customer:update:success", (data: Customer) => {
@@ -120,6 +117,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         })
 
         return () => {
+            io.off("customer:new:success")
             io.off("customer:update:success")
             io.off("customer:delete:success")
         }
@@ -199,7 +197,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                     />
                                 </>
                             )}
-                            <Card image={image} setImage={setImage} />
+                            <Card image={image} setImage={setImage} customer={customer} />
                             <Box sx={{ flexDirection: "column", width: "62%", gap: "2vw", alignSelf: "start" }}>
                                 <h1>{customer?.name}</h1>
                                 <Box sx={{ flexDirection: "column", width: "62%", gap: "vw" }}>

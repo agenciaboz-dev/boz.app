@@ -14,7 +14,7 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ customer, image, setImage, editing }) => {
     const colors = useColors()
-    const { getProfilePic } = useImageUrl()
+    const { getCustomerPic } = useImageUrl()
     const { darkMode } = useDarkMode()
 
     const skeletonColor = darkMode ? "" : lighten(colors.primary, 0.15)
@@ -24,7 +24,7 @@ export const Card: React.FC<CardProps> = ({ customer, image, setImage, editing }
             {editing ? (
                 setImage && (
                     <AvatarUpload
-                        src={image}
+                        src={image || (customer && getCustomerPic(customer))}
                         onChange={(file) => setImage(file)}
                         smartImgFit={"orientation"}
                         changeLabel="trocar a imagem"
@@ -39,7 +39,7 @@ export const Card: React.FC<CardProps> = ({ customer, image, setImage, editing }
                     />
                 )
             ) : (
-                <Avatar variant="rounded" sx={{ width: "21vw", height: "21vw", fontSize: "1.0vw" }} />
+                <Avatar src={customer && getCustomerPic(customer)} variant="rounded" sx={{ width: "21vw", height: "21vw", fontSize: "1.0vw" }} />
             )}
         </Box>
     )
