@@ -63,7 +63,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                         {customer.name}
                     </Box>
                 </Box>
-                <Box sx={{ gap: "0.5vw", width: "28vw", flexWrap: "wrap", height: "5vw" }}>
+                <Box sx={{ gap: "0.5vw", width: "28vw", flexWrap: "wrap", height: "4vw" }}>
                     {customer.services.map((service) => (
                         <Tag
                             key={service.id}
