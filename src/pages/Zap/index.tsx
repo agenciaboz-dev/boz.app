@@ -8,12 +8,15 @@ import { Chats } from "./Chats"
 import { ChatsSkeletons } from "./ChatsSkeletons"
 import { ZapDrawer } from "../../components/ZapDrawer"
 import { useSearch } from "../../hooks/useSearch"
+import { useMediaQuery } from "react-responsive"
 
 interface ZapProps {
     user: User
 }
 
 export const Zap: React.FC<ZapProps> = ({ user }) => {
+    const isMobile = useMediaQuery({maxWidth: 600})
+
     const { client, qrcode, loading, setCurrentChat, currentChat } = useZap()
     const { setOnSearch } = useSearch()
 
@@ -55,7 +58,7 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
                         },
                     }}
                 >
-                    <p style={{ fontWeight: "bold" }}>{client.info.pushname}</p>
+                    <p style={{ fontWeight: "bold", textAlign: isMobile ? "center" : "initial", padding: isMobile ? "4vw" : "" }}>{client.info.pushname}</p>
                     {loading ? <ChatsSkeletons /> : <Chats chats={chats} onChatClick={handleChatClick} />}
                     <ZapDrawer />
                 </Box>

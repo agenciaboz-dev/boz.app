@@ -3,6 +3,7 @@ import { Avatar, Badge, Box, MenuItem, Paper } from "@mui/material"
 import { useZap } from "../../hooks/useZap"
 import { useFormatMessageTime } from "../../hooks/useFormatMessageTime"
 import { usePictureModal } from "../../hooks/usePictureModal"
+import { useMediaQuery } from "react-responsive"
 
 interface ChatProps {
     chat: Chat
@@ -10,6 +11,7 @@ interface ChatProps {
 }
 
 export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
+    const isMobile = useMediaQuery({maxWidth: 600})
     const formatTime = useFormatMessageTime()
     const picture = usePictureModal()
     const { drawer } = useZap()
@@ -23,11 +25,11 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
         <MenuItem
             // elevation={3}
             sx={{
-                padding: "1vw",
+                padding: isMobile ? "2vw 0" : "1vw",
                 backgroundColor: "background.default",
                 alignItems: "center",
-                gap: "1vw",
-                height: "5vw",
+                gap: isMobile ? "3vw" : "1vw",
+                height: isMobile ? "20vw" : "5vw",
                 cursor: "pointer",
                 borderRadius: "0.5vw",
                 borderBottom: "2px solid",
@@ -42,24 +44,24 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
         >
             <Avatar
                 src={chat.profilePic}
-                sx={{ width: "3vw", height: "3vw", bgcolor: "primary.main" }}
+                sx={{ width: isMobile ? "12vw" : "3vw", height: isMobile ? "12vw" : "3vw", bgcolor: "primary.main" }}
                 onClick={() => picture.open(chat?.profilePic || "")}
             />
             <Box
                 sx={{
                     flexDirection: "column",
-                    justifyContent: "space-between",
+                    justifyContent: isMobile ? "center" : "space-between",
                     height: "100%",
                     overflow: "hidden",
                     color: "primary.main",
-                    width: "13vw",
-                    fontSize: "0.8vw",
+                    width: isMobile ? "100%" : "13vw",
+                    fontSize: isMobile ? "4vw" : "0.8vw",
                 }}
             >
                 <p style={{ fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{chat.name}</p>
                 <Box color="text.secondary">
                     <p
-                        style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: "19vw", overflow: "hidden", fontSize: "0.8vw" }}
+                        style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: isMobile ? "75vw" : "19vw", overflow: "hidden", fontSize: isMobile ? "4vw" : "0.8vw" }}
                         title={chat.lastMessage?.body}
                     >
                         {chat.lastMessage?.body}

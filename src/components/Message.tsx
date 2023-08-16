@@ -2,12 +2,14 @@ import React from "react"
 import { Box, alpha } from "@mui/material"
 import { useMuiTheme } from "../hooks/useMuiTheme"
 import { useFormatMessageTime } from "../hooks/useFormatMessageTime"
+import { useMediaQuery } from "react-responsive"
 
 interface MessageProps {
     message: Message
 }
 
 export const Message: React.FC<MessageProps> = ({ message }) => {
+    const isMobile = useMediaQuery({maxWidth: 600})
     const formatTime = useFormatMessageTime()
     const theme = useMuiTheme()
     const primary = alpha(theme.palette.primary.main, 0.5)
@@ -15,17 +17,17 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
     return (
         <Box
             sx={{
-                maxWidth: "75%",
-                padding: "0.75vw",
+                maxWidth: isMobile ? "90%" : "75%",
+                padding: isMobile ? "3vw" :"0.75vw",
                 flexDirection: "column",
                 alignSelf: message.fromMe ? "flex-end" : "flex-start",
                 textAlign: message.fromMe ? "end" : "start",
-                borderRadius: message.fromMe ? "1vw 1vw 0 1vw" : "1vw 1vw 1vw 0",
+                borderRadius: message.fromMe ? ( isMobile ? "3vw 3vw 0 3vw" : "1vw 1vw 0 1vw" ) : ( isMobile ? "3vw 3vw 3vw 0" : "1vw 1vw 1vw 0" ),
                 bgcolor: message.fromMe ? primary : secondary,
             }}
         >
             <p style={{ wordBreak: "break-all", whiteSpace: "pre-line" }}>{message.body}</p>
-            <p style={{ fontSize: "0.6vw" }}>{formatTime(new Date(message.timestamp * 1000))}</p>
+            <p style={{ fontSize: isMobile ? "3vw" : "0.6vw", marginTop: isMobile ? "2vw" : "" }}>{formatTime(new Date(message.timestamp * 1000))}</p>
         </Box>
     )
 }
