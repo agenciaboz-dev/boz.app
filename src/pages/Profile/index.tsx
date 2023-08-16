@@ -195,7 +195,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                             <Box sx={wrapperStyle}>
                                 <Container name="Informações Pessoais">
                                     <Data icon={<TextFieldsOutlinedIcon color="primary" />} title="Nome" value={profile?.name} />
-                                    <Data icon={<PhoneIcon color="primary" />} title="Telefone" value={"41984556795"} />
+                                    <Data icon={<PhoneIcon color="primary" />} title="Telefone" value={profile?.phone} />
                                     <Data icon={<FolderOpenIcon color="primary" />} title="CPF" value={profile?.cpf} />
                                     <Data icon={<MailOutlineIcon color="primary" />} title="E-mail" value={profile?.email} />
                                     <Data
