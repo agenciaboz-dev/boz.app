@@ -7,6 +7,7 @@ import { useUser } from "../hooks/useUser"
 import { useIo } from "../hooks/useIo"
 import { useNavigate } from "react-router-dom"
 import { useImageUrl } from "../hooks/useImageUrl"
+import { CustomerAvatar } from "./CustomerAvatar"
 
 interface CustomerContainerProps {
     customer: Customer
@@ -46,7 +47,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 sx={{ position: "absolute", right: "0.5vw", top: "0.5vw", pointerEvents: isAdmin() ? "" : "none" }}
             />
 
-            <Avatar src={getCustomerPic(customer)} sx={{ width: "5vw", height: "5vw" }} variant="rounded" />
+            <CustomerAvatar customer={customer} sx={{ width: "5vw", height: "5vw" }} />
             <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
                 <Box sx={{ gap: "1vw", alignItems: "center" }}>
                     <Box

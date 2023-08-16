@@ -153,7 +153,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                             <Formik initialValues={initialValues} enableReinitialize onSubmit={handleSubmit}>
                                 {({ values, handleChange }) => (
                                     <Form>
-                                        <Card image={image} setImage={setImage} editing />
+                                        <Card image={image} setImage={setImage} customer={customer} editing />
                                         <Box sx={{ flexDirection: "column", width: "62%", gap: "4.9vw" }}>
                                             <CustomerForm
                                                 values={values}
