@@ -108,6 +108,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
             addUser(user)
             setLoading(false)
             setIsEditing(false)
+            setProfile(user)
             snackbar({ severity: "success", text: "usuário criado" })
         })
 
