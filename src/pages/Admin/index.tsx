@@ -1,12 +1,11 @@
 import React, { useState } from "react"
 import { Box, Tab, Tabs } from "@mui/material"
 import { Header } from "../../components/Header"
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import { Users } from "./Users"
 import { tabStyle } from "../../style/tab"
 import { useAdminTabs } from "../../hooks/useAdminTabs"
 import { Customers } from "./Customers"
-import { Profile } from "./Users/Profile"
 import { Deparments } from "./Departments"
 
 interface AdminProps {
@@ -14,7 +13,6 @@ interface AdminProps {
 }
 
 export const Admin: React.FC<AdminProps> = ({ user }) => {
-    const navigate = useNavigate()
     const tabs = useAdminTabs()
     const path = useLocation().pathname
     const initialTab = tabs.find((item) => item.path == path.split("/admin")[1])

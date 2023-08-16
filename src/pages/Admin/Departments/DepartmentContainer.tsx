@@ -50,6 +50,7 @@ export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ depart
                 </IconButton>
             )}
             <Box
+                title={users.map((user) => user.name).toString()}
                 sx={{
                     padding: "0.5vw",
                     borderRadius: "50%",
