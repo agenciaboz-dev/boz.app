@@ -7,6 +7,7 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import { NewCustomer } from "./NewCustomer"
 import { CustomerList } from "./CustomerList"
 import { useCustomers } from "../../../hooks/useCustomers"
+import { Profile } from "../../Customers/Profile"
 
 interface CustomersProps {
     user: User
@@ -46,7 +47,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                         </>
                     }
                 />
-                <Route path="/new" element={<NewCustomer />} />
+                <Route path="/new" element={<Profile createOnly />} />
             </Routes>
         </Box>
     )

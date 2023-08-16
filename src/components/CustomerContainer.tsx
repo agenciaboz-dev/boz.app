@@ -4,6 +4,7 @@ import { Tag } from "./Tag"
 import { useColors } from "../hooks/useColors"
 import { useMuiTheme } from "../hooks/useMuiTheme"
 import { useIo } from "../hooks/useIo"
+import { useNavigate } from "react-router-dom"
 
 interface CustomerContainerProps {
     customer: Customer
@@ -13,6 +14,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
     const io = useIo()
     const colors = useColors()
     const theme = useMuiTheme()
+    const navigate = useNavigate()
 
     const toggleCustomerStatus = (customer: Customer) => {
         io.emit("customer:update", { ...customer, active: !customer.active })
@@ -41,6 +43,14 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
             <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
                 <Box sx={{ gap: "1vw", alignItems: "center" }}>
                     <p style={{ fontWeight: "bold", fontSize: "1vw" }}>{customer.name}</p>
+                    <p
+                        style={{ fontSize: "0.7vw", textDecoration: "underline", cursor: "pointer" }}
+                        onClick={() => {
+                            navigate(`/customers/${customer.id}`)
+                        }}
+                    >
+                        Ver perfil
+                    </p>
                 </Box>
                 <p style={{ color: colors.text.secondary, fontSize: "0.75vw", width: "20vw" }}>{customer.recomendations}</p>
                 <Box sx={{ alignItems: "center", gap: "0.5vw", width: "20vw", flexWrap: "wrap" }}>
