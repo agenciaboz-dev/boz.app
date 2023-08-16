@@ -67,7 +67,7 @@ export const Card: React.FC<CardProps> = ({ name, username, roles, user, image, 
                     <p style={{ fontWeight: "600", fontSize: "1.3vw", color: "secondary.main" }}>{name}</p>
                 )}
                 {!username ? (
-                    <Skeleton variant="rounded" animation="wave" sx={{ width: "10vw", height: "2vw", bgcolor: skeletonColor }} />
+                    <Skeleton variant="rounded" animation="wave" sx={{ width: "10vw", height: "1vw", bgcolor: skeletonColor }} />
                 ) : (
                     <p style={{ fontSize: "1.0vw", color: "secondary.main" }}>@{username}</p>
                 )}
