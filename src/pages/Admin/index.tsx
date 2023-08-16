@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Box, Tab, Tabs } from "@mui/material"
 import { Header } from "../../components/Header"
-import { Route, Routes, useNavigate } from "react-router-dom"
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import { Users } from "./Users"
 import { tabStyle } from "../../style/tab"
 import { useAdminTabs } from "../../hooks/useAdminTabs"
@@ -16,8 +16,10 @@ interface AdminProps {
 export const Admin: React.FC<AdminProps> = ({ user }) => {
     const navigate = useNavigate()
     const tabs = useAdminTabs()
+    const path = useLocation().pathname
+    const initialTab = tabs.find((item) => item.path == path.split("/admin")[1])
 
-    const [tab, setTab] = useState(1)
+    const [tab, setTab] = useState(initialTab?.id || 1)
 
     const handleTabChange = (id: number) => {
         setTab(id)
