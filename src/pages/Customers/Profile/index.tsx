@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Box, Paper, alpha, SxProps, Button, CircularProgress } from "@mui/material"
+import { Box, Paper, alpha, SxProps, Button, CircularProgress, IconButton } from "@mui/material"
 import { useColors } from "../../../hooks/useColors"
 import { Form, Formik } from "formik"
 import { CustomerForm } from "./CustomerForm"
@@ -12,6 +12,7 @@ import BusinessIcon from "@mui/icons-material/Business"
 import NotesIcon from "@mui/icons-material/Notes"
 import { useCustomers } from "../../../hooks/useCustomers"
 import { useApi } from "../../../hooks/useApi"
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 
 interface ProfileProps {
     //customer: Customer
@@ -109,6 +110,13 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     paddingTop: "10vw",
                 }}
             >
+                <IconButton
+                    sx={{ position: "absolute", top: "7.8vw", left: "2.4vw" }}
+                    color="secondary"
+                    onClick={() => navigate("/admin/customers")}
+                >
+                    <ArrowBackIosNewIcon />
+                </IconButton>
                 <Box sx={wrapperStyle}>
                     {isEditing ? (
                         <>
