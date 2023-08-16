@@ -121,6 +121,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
 
         return () => {
             io.off("customer:update:success")
+            io.off("customer:delete:success")
         }
     }, [customer])
 
