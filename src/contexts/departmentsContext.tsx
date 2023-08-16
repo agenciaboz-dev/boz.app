@@ -75,9 +75,14 @@ export const DepartmentsProvider: React.FC<DepartmentsProviderProps> = ({ childr
             addDepartment(data)
         })
 
+        io.on("department:delete", (data: Department) => {
+            setDepartments((prevList) => [...prevList.filter((item) => item.id != data.id)])
+        })
+
         return () => {
             io.off("department:new")
             io.off("department:update")
+            io.off("department:delete")
         }
     }, [departments])
 
