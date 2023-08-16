@@ -145,7 +145,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     paddingTop: "10vw",
                 }}
             >
-                <IconButton sx={{ position: "absolute", top: "7.8vw", left: "2.4vw" }} color="secondary" onClick={() => navigate("/admin/customers")}>
+                <IconButton sx={{ position: "absolute", top: "7.8vw", left: "2.4vw" }} color="secondary" onClick={() => navigate(-1)}>
                     <ArrowBackIosNewIcon />
                 </IconButton>
                 <Box sx={wrapperStyle}>
