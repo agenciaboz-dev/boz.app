@@ -39,7 +39,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                             <NewButton
                                 onClick={handleNewCustomer}
                                 bottom={"2vw"}
-                                right={"2vw"}
+                                right={"3vw"}
                                 icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
                             />
                             <Services />
