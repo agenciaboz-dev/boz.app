@@ -53,9 +53,11 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
                 <p style={{ fontWeight: "bold" }}>Departamentos</p>
 
                 <Box sx={{ gap: "2vw", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
-                    {departments.map((department) => (
-                        <DepartmentContainer key={department.id} department={department} />
-                    ))}
+                    {departments
+                        .sort((a, b) => a.id - b.id)
+                        .map((department) => (
+                            <DepartmentContainer key={department.id} department={department} />
+                        ))}
                     <Formik initialValues={{ name: "" }} onSubmit={handleNewDepartment}>
                         {({ values, handleChange }) => (
                             <Form>
