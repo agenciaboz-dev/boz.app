@@ -26,6 +26,8 @@ import { useSnackbar } from "burgos-snackbar"
 import { Container, Data } from "./UserComponents"
 import { UserForm } from "./UserForm"
 import { useDate } from "../../hooks/useDate"
+import { patternFormatter } from "react-number-format"
+import masks from "../../style/masks"
 
 interface ProfileProps {
     user: User
@@ -197,8 +199,16 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                             <Box sx={wrapperStyle}>
                                 <Container name="Informações Pessoais">
                                     <Data icon={<TextFieldsOutlinedIcon color="primary" />} title="Nome" value={profile?.name} />
-                                    <Data icon={<PhoneIcon color="primary" />} title="Telefone" value={profile?.phone} />
-                                    <Data icon={<FolderOpenIcon color="primary" />} title="CPF" value={profile?.cpf} />
+                                    <Data
+                                        icon={<PhoneIcon color="primary" />}
+                                        title="Telefone"
+                                        value={patternFormatter(profile?.phone || "", { format: masks.phone, patternChar: "0" })}
+                                    />
+                                    <Data
+                                        icon={<FolderOpenIcon color="primary" />}
+                                        title="CPF"
+                                        value={patternFormatter(profile?.cpf || "", { format: masks.cpf, patternChar: "0" })}
+                                    />
                                     <Data icon={<MailOutlineIcon color="primary" />} title="E-mail" value={profile?.email} />
                                     <Data
                                         icon={<DateRangeIcon color="primary" />}
