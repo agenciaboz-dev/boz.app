@@ -25,6 +25,7 @@ import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
 import { Container, Data } from "./UserComponents"
 import { UserForm } from "./UserForm"
+import { useDate } from "../../hooks/useDate"
 
 interface ProfileProps {
     user: User
@@ -42,6 +43,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     const { departments } = useDepartments()
     const { list, addUser } = useUser()
     const { snackbar } = useSnackbar()
+    const { getDateString } = useDate()
 
     const [profile, setProfile] = useState(createOnly ? undefined : username ? list.find((item) => item.username == username) : user)
     const [isEditing, setIsEditing] = useState(createOnly)
@@ -57,7 +59,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
             username: "",
             phone: "",
         }),
-        birth: new Date(profile?.birth || 0).toLocaleDateString("pt-br") || "",
+        birth: getDateString(profile?.birth, true) || "",
         departmentId: departments.find((item) => item.id == profile?.department?.id)?.id || 1,
     })
 
@@ -201,7 +203,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                     <Data
                                         icon={<DateRangeIcon color="primary" />}
                                         title="Data de nascimento"
-                                        value={new Date(profile?.birth || 0).toLocaleDateString("pt-br")}
+                                        value={getDateString(profile?.birth, true)}
                                     />
                                     <Data icon={<PermIdentityIcon color="primary" />} title="Nome de usuário" value={profile?.username} />
                                 </Container>
