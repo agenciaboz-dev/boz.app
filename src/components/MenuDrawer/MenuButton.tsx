@@ -17,7 +17,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ menu, sx }) => {
 
     const menuItemStyle: SxProps = {
         backgroundColor: active ? "secondary.main" : "",
-        color: active ? "primary.main" : "secondary.main",
+        color: active ? "background.paper" : "secondary.main",
         pointerEvents: active ? "none" : "auto",
         fontWeight: "bold",
         gap: "1vw",
