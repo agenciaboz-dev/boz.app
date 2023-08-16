@@ -42,7 +42,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
             <Route
                 index
                 element={
-                    <Box sx={{ padding: "2vw", width: "100%", gap: "1vw" }}>
+                    <Box sx={{ padding: "2vw", width: "100%", gap: "2vw", flexWrap: "wrap" }}>
                         <NewButton
                             onClick={handleNewUserClick}
                             bottom={"2vw"}
