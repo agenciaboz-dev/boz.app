@@ -10,7 +10,8 @@ interface CustomersContextValue {
     serviceModal: {
         isOpen: boolean
         close: () => void
-        open: () => void
+        open: (service?: Service) => void
+        current?: Service
     }
 }
 
@@ -27,20 +28,30 @@ export const CustomersProvider: React.FC<CustomersProviderProps> = ({ children }
     const [customers, setCustomers] = useState<Customer[]>([])
     const [services, setServices] = useState<Service[]>([])
     const [serviceModalOpen, setServiceModalOpen] = useState(false)
+    const [currentService, setCurrentService] = useState<Service>()
 
     const serviceModal = {
         isOpen: serviceModalOpen,
         close: () => setServiceModalOpen(false),
-        open: () => setServiceModalOpen(true),
+        open: (service?: Service) => {
+            setCurrentService(service)
+            setServiceModalOpen(true)
+        },
+        current: currentService,
     }
 
     useEffect(() => {
+        io.on("service:update", (data: Service) => {
+            setServices((services) => [...services.filter((item) => item.id != data.id), data])
+        })
+
         io.on("service:new", (data: Service) => {
-            setServices((services) => [...services, data])
+            setServices((services) => [...services.filter((item) => item.id != data.id), data])
         })
 
         return () => {
             io.off("service:new")
+            io.off("service:update")
         }
     }, [services])
 

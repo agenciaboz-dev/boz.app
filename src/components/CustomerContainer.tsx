@@ -37,7 +37,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 color: customer.active ? "primary.main" : "error.main",
                 gap: "1vw",
                 position: "relative",
-                // minHeight: "10vw",
+                // minHeight: "12vw",
             }}
         >
             <Switch

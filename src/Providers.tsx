@@ -13,7 +13,7 @@ import { PictureModalProvider } from "./contexts/pictureModalContext"
 import { PictureModal } from "./components/PictureModal"
 import { SearchProvider } from "./contexts/searchContext"
 import { CustomersProvider } from "./contexts/customersContext"
-import { NewServiceModal } from "./components/NewServiceModal"
+import { ServiceModal } from "./components/ServiceModal"
 import { RoleModal } from "./components/RoleModal"
 
 interface ProvidersProps {
@@ -33,7 +33,7 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                         <MenuProvider>
                                             <PictureModalProvider>
                                                 <RoleModal />
-                                                <NewServiceModal />
+                                                <ServiceModal />
                                                 <PictureModal />
                                                 <MenuDrawer />
                                                 <UserDrawer />

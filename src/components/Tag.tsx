@@ -10,9 +10,10 @@ interface TagProps {
     fontSize?: string
     variant?: string
     color?: string
+    onClick?: () => void
 }
 
-export const Tag: React.FC<TagProps> = ({ name, tooltip, fontSize, sx, color, variant = "default" }) => {
+export const Tag: React.FC<TagProps> = ({ name, tooltip, fontSize, sx, color, onClick, variant = "default" }) => {
     const colors = useColors()
     const { darkMode } = useDarkMode()
 
@@ -29,6 +30,9 @@ export const Tag: React.FC<TagProps> = ({ name, tooltip, fontSize, sx, color, va
                 justifyContent: "center",
                 alignItems: "center",
                 ...sx,
+            }}
+            onClick={() => {
+                if (onClick) onClick()
             }}
         >
             {name}

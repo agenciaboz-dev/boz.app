@@ -1,23 +1,25 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box, Button, CircularProgress, Dialog, DialogTitle, TextField } from "@mui/material"
 import { useCustomers } from "../hooks/useCustomers"
 import { backdropStyle } from "../style/backdrop"
 import { Form, Formik } from "formik"
 import { useApi } from "../hooks/useApi"
 import { useSnackbar } from "burgos-snackbar"
+import { useIo } from "../hooks/useIo"
 
-interface NewServiceModalProps {}
+interface ServiceModalProps {}
 
-export const NewServiceModal: React.FC<NewServiceModalProps> = ({}) => {
+export const ServiceModal: React.FC<ServiceModalProps> = ({}) => {
+    const io = useIo()
     const api = useApi()
 
     const { serviceModal, services } = useCustomers()
-    const { isOpen, close } = serviceModal
+    const { isOpen, close, current: service } = serviceModal
     const { snackbar } = useSnackbar()
 
     const [loading, setLoading] = useState(false)
 
-    const initialValues: ServiceForm = {
+    const initialValues: ServiceForm = service || {
         name: "",
         tag: "",
     }
@@ -40,9 +42,33 @@ export const NewServiceModal: React.FC<NewServiceModalProps> = ({}) => {
         })
     }
 
+    const updateService = (values: ServiceForm) => {
+        if (loading) return
+        if (!service) return
+        if (services.find((service) => service.tag == values.tag) && values.tag != service.tag) {
+            snackbar({ severity: "error", text: "Serviço já cadastrado" })
+            return
+        }
+
+        setLoading(true)
+        const updatedService: Service = { ...service, ...values }
+        io.emit("service:update", updatedService)
+    }
+
     const handleClose = () => {
         close()
     }
+
+    useEffect(() => {
+        io.on("service:update:success", () => {
+            setLoading(false)
+            handleClose()
+        })
+
+        return () => {
+            io.off("service:update:success")
+        }
+    }, [])
 
     return (
         <Dialog
@@ -52,9 +78,9 @@ export const NewServiceModal: React.FC<NewServiceModalProps> = ({}) => {
             BackdropProps={{ sx: backdropStyle }}
             PaperProps={{ sx: { bgcolor: "background.default" } }}
         >
-            <DialogTitle>Novo serviço</DialogTitle>
+            <DialogTitle>{service ? "atualizar serviço" : "Novo serviço"}</DialogTitle>
             <Box sx={{ flexDirection: "column", padding: "2vw", width: "30vw", paddingTop: 0 }}>
-                <Formik initialValues={initialValues} onSubmit={handleNewService}>
+                <Formik initialValues={initialValues} onSubmit={service ? updateService : handleNewService} enableReinitialize>
                     {({ values, handleChange }) => (
                         <Form>
                             <TextField label="nome" name="name" value={values.name} onChange={handleChange} variant="standard" sx={{}} required />

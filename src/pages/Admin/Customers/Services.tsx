@@ -13,9 +13,11 @@ export const Services: React.FC<ServicesProps> = ({}) => {
         <Paper sx={{ gap: "1vw", bgcolor: "background.default", flexDirection: "column", padding: "1vw" }}>
             <p style={{ fontWeight: "bold" }}>Serviços</p>
             <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
-                {services.map((service) => (
-                    <Tag key={service.id} name={service.tag} tooltip={service.name} fontSize="0.8vw" />
-                ))}
+                {services
+                    .sort((a, b) => a.id - b.id)
+                    .map((service) => (
+                        <Tag key={service.id} name={service.tag} tooltip={service.name} fontSize="0.8vw" onClick={() => serviceModal.open(service)} />
+                    ))}
                 <IconButton color="primary" sx={{ width: "2vw", height: "2vw" }} onClick={() => serviceModal.open()}>
                     <AddIcon />
                 </IconButton>
