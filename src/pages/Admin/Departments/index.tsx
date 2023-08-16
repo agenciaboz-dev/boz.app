@@ -57,7 +57,7 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
             <Paper sx={{ gap: "1vw", bgcolor: "background.default", padding: "1vw", flexDirection: "column" }}>
                 <p style={{ fontWeight: "bold" }}>Departamentos</p>
 
-                <Box sx={{ gap: "2vw", alignItems: "center", justifyContent: "space-between" }}>
+                <Box sx={{ gap: "2vw", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
                     {departments.map((department) => {
                         const users = list.filter((user) => user.department.id == department.id)
                         return (
