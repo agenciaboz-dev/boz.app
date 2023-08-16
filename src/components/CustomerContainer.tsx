@@ -4,6 +4,7 @@ import { useApi } from "../hooks/useApi"
 import { Tag } from "./Tag"
 import { useColors } from "../hooks/useColors"
 import { useMuiTheme } from "../hooks/useMuiTheme"
+import { useUser } from "../hooks/useUser"
 
 interface CustomerContainerProps {
     customer: Customer
@@ -13,6 +14,8 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
     const api = useApi()
     const colors = useColors()
     const theme = useMuiTheme()
+
+    const { isAdmin } = useUser()
 
     const toggleCustomerStatus = (customer: Customer) => {
         api.customer.toggleStatus({
@@ -38,8 +41,9 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 color={"success"}
                 checked={customer.active}
                 onChange={() => toggleCustomerStatus(customer)}
-                sx={{ position: "absolute", right: "0.5vw", top: "0.5vw" }}
+                sx={{ position: "absolute", right: "0.5vw", top: "0.5vw", pointerEvents: isAdmin() ? "" : "none" }}
             />
+
             <Avatar sx={{ width: "5vw", height: "5vw" }} variant="rounded" />
             <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
                 <Box sx={{ gap: "1vw", alignItems: "center" }}>
