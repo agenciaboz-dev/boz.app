@@ -5,11 +5,13 @@ import { backdropStyle } from "../style/backdrop"
 import { textFieldStyle } from "../style/textfield"
 import { Form, Formik, FormikHelpers } from "formik"
 import SendIcon from "@mui/icons-material/Send"
+import CancelIcon from '@mui/icons-material/Cancel';
 import { Message } from "./Message"
 import { useIo } from "../hooks/useIo"
 import { usePictureModal } from "../hooks/usePictureModal"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { useUser } from "../hooks/useUser"
+import { useMediaQuery } from "react-responsive"
 
 interface ZapDrawerProps {}
 
@@ -20,6 +22,8 @@ const AlwaysScrollToBottom = () => {
 }
 
 export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
+    const isMobile = useMediaQuery({maxWidth: 600})
+
     const io = useIo()
     const picture = usePictureModal()
     const localStorage = useLocalStorage()
@@ -56,10 +60,10 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
 
     return (
         <Drawer
-            anchor={"right"}
+            anchor={ isMobile ? "top" : "right"}
             open={drawer.open}
             onClose={handleClose}
-            PaperProps={{ sx: { width: "50vw", backgroundColor: "background.default" } }}
+            PaperProps={{ sx: { width: isMobile ? "100vw" : "50vw", backgroundColor: "background.default" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
             <Box
@@ -74,13 +78,16 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
                     overflow: "hidden",
                 }}
             >
-                <Box sx={{ gap: "2vw", alignItems: "center", height: "5vh" }}>
+                <Box sx={{ gap: "2vw", alignItems: "center", height: isMobile ? "7vh" : "5vh", padding: isMobile ? "2vw" : "" }}>
                     <Avatar
                         src={chat?.profilePic}
-                        sx={{ width: "3vw", height: "3vw", bgcolor: "primary.main", cursor: "pointer" }}
+                        sx={{ width: isMobile ? "12vw" : "3vw", height: isMobile ? "12vw" : "3vw", bgcolor: "primary.main", cursor: "pointer" }}
                         onClick={() => picture.open(chat?.profilePic || "")}
                     />
                     <p style={{ fontWeight: "bold" }}>{chat?.name}</p>
+                    <IconButton sx={{ color: "white", marginLeft: "auto", padding: isMobile ? "0" : "" }} onClick={() => handleClose()}>
+                        <CancelIcon />
+                    </IconButton>
                 </Box>
 
                 <Box
@@ -89,11 +96,11 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
                         height: "80vh",
                         bgcolor: "background.default",
                         overflowY: "auto",
-                        borderRadius: "0 1.5vw 0 1.5vw",
+                        borderRadius: isMobile ? "0 3vw 0 3vw" : "0 1.5vw 0 1.5vw",
                         padding: "2vw",
                         color: "text.secondary",
                         flexDirection: "column",
-                        gap: "0.25vw",
+                        gap: isMobile ? "2.5vw" : "0.25vw",
 
                         "::-webkit-scrollbar-thumb": {
                             backgroundColor: "primary.main",

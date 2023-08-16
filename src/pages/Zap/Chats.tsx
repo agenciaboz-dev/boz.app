@@ -1,6 +1,7 @@
 import React from "react"
 import { Box, Paper } from "@mui/material"
 import { Chat } from "./Chat"
+import { useMediaQuery } from "react-responsive"
 
 interface ChatsProps {
     chats: Chat[]
@@ -8,8 +9,10 @@ interface ChatsProps {
 }
 
 export const Chats: React.FC<ChatsProps> = ({ chats, onChatClick }) => {
+    const isMobile = useMediaQuery({maxWidth: 600})
+
     return (
-        <Box sx={{ flexDirection: "column", gap: "0.1vw", width: "30%" }}>
+        <Box sx={{ flexDirection: "column", gap: "0.1vw", width: isMobile ? "100%" : "30%" }}>
             {chats
                 .sort((a, b) => b.lastMessage?.timestamp - a.lastMessage?.timestamp)
                 .map((chat) => (
