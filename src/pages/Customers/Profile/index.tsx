@@ -13,6 +13,8 @@ import NotesIcon from "@mui/icons-material/Notes"
 import { useCustomers } from "../../../hooks/useCustomers"
 import { useApi } from "../../../hooks/useApi"
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
+import { Tag } from "../../../components/Tag"
+import { useMuiTheme } from "../../../hooks/useMuiTheme"
 
 interface ProfileProps {
     //customer: Customer
@@ -25,6 +27,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
     const colors = useColors()
     const navigate = useNavigate()
     const id = useParams().id
+    const theme = useMuiTheme()
 
     const { customers: list, services } = useCustomers()
 
@@ -167,10 +170,28 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                             <Card image={image} setImage={setImage} />
                             <Box sx={{ flexDirection: "column", width: "62%", gap: "2vw", alignSelf: "start" }}>
                                 <h1>{customer?.name}</h1>
-                                <Box sx={{ flexDirection: "column", width: "62%", gap: "0.4vw" }}>
+                                <Box sx={{ flexDirection: "column", width: "62%", gap: "vw" }}>
                                     <Container name="Informações da Empresa" children />
-                                    <Data title="Nome Fantasia" value={customer?.name} icon={<BusinessIcon />} />
-                                    <Data title="Recomendações" value={customer?.recomendations} icon={<NotesIcon />} />
+                                    <Box sx={{ flexDirection: "column", gap: "2vw" }}>
+                                        <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
+                                            <Data title="Nome Fantasia" value={customer?.name} icon={<BusinessIcon />} />
+                                            <Data
+                                                title="Recomendações"
+                                                value={customer?.recomendations}
+                                                icon={<NotesIcon />}
+                                            />
+                                        </Box>
+                                        <Box sx={{ flexDirection: "row", gap: "0.5vw" }}>
+                                            {customer?.services.map((service) => (
+                                                <Tag
+                                                    key={service.id}
+                                                    name={service.tag}
+                                                    sx={{ fontSize: "0.7vw", padding: "0.25vw 0.5vw" }}
+                                                    color={customer.active ? "" : theme.palette.error.main}
+                                                />
+                                            ))}
+                                        </Box>
+                                    </Box>
                                 </Box>
                             </Box>
                         </>

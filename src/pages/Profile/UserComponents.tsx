@@ -2,7 +2,12 @@ import React from "react"
 import { Box, Skeleton, lighten } from "@mui/material"
 import { useColors } from "../../hooks/useColors"
 
-export const Data: React.FC<{ icon: React.ReactElement; title: string; value: React.ReactNode }> = ({ icon, title, value }) => {
+export const Data: React.FC<{
+    icon: React.ReactElement
+    title: string
+    value: React.ReactNode
+    style?: CSSStyleDeclaration
+}> = ({ icon, title, value }) => {
     const Icon = () => icon
     const colors = useColors()
     const color = lighten(colors.text.secondary, 0.35)
