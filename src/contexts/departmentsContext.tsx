@@ -71,8 +71,13 @@ export const DepartmentsProvider: React.FC<DepartmentsProviderProps> = ({ childr
             addDepartment(data)
         })
 
+        io.on("department:update", (data: Department) => {
+            addDepartment(data)
+        })
+
         return () => {
             io.off("department:new")
+            io.off("department:update")
         }
     }, [departments])
 

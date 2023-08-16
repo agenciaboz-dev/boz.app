@@ -3,14 +3,12 @@ import { Box, CircularProgress, IconButton, Paper, TextField, darken, lighten } 
 import { backgroundStyle } from "../../../style/background"
 import { Roles } from "./Roles"
 import { useDepartments } from "../../../hooks/useDepartments"
-import { useUser } from "../../../hooks/useUser"
-import { useColors } from "../../../hooks/useColors"
-import { useDarkMode } from "../../../hooks/useDarkMode"
 import { Form, Formik, FormikHelpers } from "formik"
 import { textFieldStyle } from "../../../style/textfield"
 import AddIcon from "@mui/icons-material/Add"
 import { useApi } from "../../../hooks/useApi"
 import { useSnackbar } from "burgos-snackbar"
+import { DepartmentContainer } from "./DepartmentContainer"
 
 interface DeparmentsProps {
     user: User
@@ -21,12 +19,9 @@ interface FormValues {
 }
 
 export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
-    const colors = useColors()
     const api = useApi()
 
     const { departments } = useDepartments()
-    const { list } = useUser()
-    const { darkMode } = useDarkMode()
     const { snackbar } = useSnackbar()
 
     const [loading, setLoading] = useState(false)
@@ -58,39 +53,9 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
                 <p style={{ fontWeight: "bold" }}>Departamentos</p>
 
                 <Box sx={{ gap: "2vw", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
-                    {departments.map((department) => {
-                        const users = list.filter((user) => user.department.id == department.id)
-                        return (
-                            <Box
-                                key={department.id}
-                                sx={{
-                                    width: "21.5vw",
-                                    borderRadius: "1vw",
-                                    borderBottom: "2px solid",
-                                    padding: "1vw",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                }}
-                            >
-                                {department.name}
-                                <Box
-                                    sx={{
-                                        padding: "0.5vw",
-                                        borderRadius: "50%",
-                                        fontSize: "0.7vw",
-                                        minWidth: "1.5vw",
-                                        height: "1.5vw",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        color: "secondary.main",
-                                        bgcolor: darkMode ? darken(colors.primary, 0.5) : lighten(colors.primary, 0.4),
-                                    }}
-                                >
-                                    {users.length}
-                                </Box>
-                            </Box>
-                        )
-                    })}
+                    {departments.map((department) => (
+                        <DepartmentContainer key={department.id} department={department} />
+                    ))}
                     <Formik initialValues={{ name: "" }} onSubmit={handleNewDepartment}>
                         {({ values, handleChange }) => (
                             <Form>
