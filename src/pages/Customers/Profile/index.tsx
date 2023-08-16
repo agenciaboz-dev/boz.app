@@ -16,9 +16,9 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { Tag } from "../../../components/Tag"
 import { useMuiTheme } from "../../../hooks/useMuiTheme"
 import { useIo } from "../../../hooks/useIo"
+import { useUser } from "../../../hooks/useUser"
 
 interface ProfileProps {
-    //customer: Customer
     admin?: boolean
     createOnly?: boolean
 }
@@ -31,7 +31,8 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
     const theme = useMuiTheme()
     const io = useIo()
 
-    const { customers: list, services } = useCustomers()
+    const { customers: list } = useCustomers()
+    const { isAdmin } = useUser()
 
     const [customer, setCustomer] = useState(createOnly ? undefined : id ? list.find((item) => item.id == Number(id)) : undefined)
     const [isEditing, setIsEditing] = useState(createOnly)
@@ -46,7 +47,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         }),
     })
 
-    const shouldEdit = admin
+    const shouldEdit = isAdmin() || admin
 
     const wrapperStyle: SxProps = {
         flexDirection: "row",
