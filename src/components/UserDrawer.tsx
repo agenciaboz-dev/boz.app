@@ -1,17 +1,21 @@
 import React from "react"
-import { Box, Drawer, MenuItem, SxProps } from "@mui/material"
+import { Box, Drawer, MenuItem, Switch, SxProps } from "@mui/material"
 import { useUser } from "../hooks/useUser"
 import { backdropStyle } from "../style/backdrop"
 import { ModeToggler } from "./ModeToggler"
 import { Avatar } from "./Avatar"
 import colors from "../style/colors"
 import { useNavigate } from "react-router-dom"
+import DuoIcon from "@mui/icons-material/Duo"
+import ChairIcon from "@mui/icons-material/Chair"
 
 interface UserDrawerProps {}
 
 export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
-    const { user, drawer } = useUser()
+    const { user, drawer, updateStatus } = useUser()
     const navigate = useNavigate()
+
+    const switchWrapperStyle: SxProps = { flexDirection: "column", color: "secondary.main", alignItems: "center" }
 
     const handleClose = () => {
         drawer.close()
@@ -45,7 +49,22 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                     @{user?.username}
                 </Box>
             </Box>
-            <Box sx={{ flexDirection: "column" }}></Box>
+            <Box sx={{ justifyContent: "space-evenly" }}>
+                <Box sx={switchWrapperStyle}>
+                    Reunião
+                    <Switch color="error" checked={user?.status == 2} onChange={() => updateStatus(2)} icon={<DuoIcon />} checkedIcon={<DuoIcon />} />
+                </Box>
+                <Box sx={switchWrapperStyle}>
+                    Pausa
+                    <Switch
+                        color="warning"
+                        checked={user?.status == 3}
+                        onChange={() => updateStatus(3)}
+                        icon={<ChairIcon />}
+                        checkedIcon={<ChairIcon />}
+                    />
+                </Box>
+            </Box>
 
             <ModeToggler bottom={0} right="6vw" />
         </Drawer>

@@ -25,6 +25,9 @@ import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
 import { Container, Data } from "./UserComponents"
 import { UserForm } from "./UserForm"
+import { useDate } from "../../hooks/useDate"
+import { patternFormatter } from "react-number-format"
+import masks from "../../style/masks"
 
 interface ProfileProps {
     user: User
@@ -42,6 +45,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     const { departments } = useDepartments()
     const { list, addUser } = useUser()
     const { snackbar } = useSnackbar()
+    const { getDateString } = useDate()
 
     const [profile, setProfile] = useState(createOnly ? undefined : username ? list.find((item) => item.username == username) : user)
     const [isEditing, setIsEditing] = useState(createOnly)
@@ -57,7 +61,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
             username: "",
             phone: "",
         }),
-        birth: new Date(profile?.birth || 0).toLocaleDateString("pt-br") || "",
+        birth: getDateString(profile?.birth, true) || "",
         departmentId: departments.find((item) => item.id == profile?.department?.id)?.id || 1,
     })
 
@@ -157,7 +161,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                             setImage={setImage}
                                             editing
                                         />
-                                        <Box sx={wrapperStyle}>
+                                        <Box sx={{ ...wrapperStyle, gap: "2vw" }}>
                                             <UserForm
                                                 values={values}
                                                 handleChange={handleChange}
@@ -195,13 +199,21 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                             <Box sx={wrapperStyle}>
                                 <Container name="Informações Pessoais">
                                     <Data icon={<TextFieldsOutlinedIcon color="primary" />} title="Nome" value={profile?.name} />
-                                    <Data icon={<PhoneIcon color="primary" />} title="Telefone" value={"41984556795"} />
-                                    <Data icon={<FolderOpenIcon color="primary" />} title="CPF" value={profile?.cpf} />
+                                    <Data
+                                        icon={<PhoneIcon color="primary" />}
+                                        title="Telefone"
+                                        value={patternFormatter(profile?.phone || "", { format: masks.phone, patternChar: "0" })}
+                                    />
+                                    <Data
+                                        icon={<FolderOpenIcon color="primary" />}
+                                        title="CPF"
+                                        value={patternFormatter(profile?.cpf || "", { format: masks.cpf, patternChar: "0" })}
+                                    />
                                     <Data icon={<MailOutlineIcon color="primary" />} title="E-mail" value={profile?.email} />
                                     <Data
                                         icon={<DateRangeIcon color="primary" />}
                                         title="Data de nascimento"
-                                        value={new Date(profile?.birth || 0).toLocaleDateString("pt-br")}
+                                        value={getDateString(profile?.birth, true)}
                                     />
                                     <Data icon={<PermIdentityIcon color="primary" />} title="Nome de usuário" value={profile?.username} />
                                 </Container>

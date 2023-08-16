@@ -7,6 +7,7 @@ declare interface User {
     cpf: string
     birth: string
     phone: string
+    status: number
 
     department: Department
     roles: Role[]
