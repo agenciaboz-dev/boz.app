@@ -54,7 +54,7 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
             <Container name="Setor">
                 <TextField
                     label="Departamento"
-                    name="department"
+                    name="departmentId"
                     value={values.departmentId}
                     onChange={handleChange}
                     select
