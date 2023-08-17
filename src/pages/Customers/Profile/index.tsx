@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Box, Paper, alpha, SxProps, Button, CircularProgress, IconButton } from "@mui/material"
+import { Box, Paper, alpha, SxProps, Button, CircularProgress, IconButton, lighten } from "@mui/material"
 import { useColors } from "../../../hooks/useColors"
 import { Form, Formik } from "formik"
 import { CustomerForm } from "./CustomerForm"
@@ -34,12 +34,16 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
     const theme = useMuiTheme()
     const io = useIo()
 
+    const color = lighten(colors.text.secondary, 0.35)
+
     const { customers: list } = useCustomers()
     const { isAdmin } = useUser()
     const { confirm } = useConfirmDialog()
     const { snackbar } = useSnackbar()
 
-    const [customer, setCustomer] = useState(createOnly ? undefined : id ? list.find((item) => item.id == Number(id)) : undefined)
+    const [customer, setCustomer] = useState(
+        createOnly ? undefined : id ? list.find((item) => item.id == Number(id)) : undefined
+    )
     const [isEditing, setIsEditing] = useState(createOnly)
     const [selectedServices, setSelectedServices] = useState<Service[]>(customer?.services || [])
     const [loading, setLoading] = useState(false)
@@ -144,7 +148,11 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     paddingTop: "10vw",
                 }}
             >
-                <IconButton sx={{ position: "absolute", top: "7.8vw", left: "2.4vw" }} color="secondary" onClick={() => navigate(-1)}>
+                <IconButton
+                    sx={{ position: "absolute", top: "7.8vw", left: "2.4vw" }}
+                    color="secondary"
+                    onClick={() => navigate(-1)}
+                >
                     <ArrowBackIosNewIcon />
                 </IconButton>
                 <Box sx={wrapperStyle}>
@@ -165,12 +173,18 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                             <Box sx={{ gap: "1vw", justifyContent: "flex-end" }}>
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={() => (createOnly ? navigate("/admin/customers") : setIsEditing(false))}
+                                                    onClick={() =>
+                                                        createOnly ? navigate("/admin/customers") : setIsEditing(false)
+                                                    }
                                                 >
                                                     cancelar
                                                 </Button>
                                                 <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
-                                                    {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "enviar"}
+                                                    {loading ? (
+                                                        <CircularProgress size="1.5rem" color="secondary" />
+                                                    ) : (
+                                                        "enviar"
+                                                    )}
                                                 </Button>
                                             </Box>
                                         </Box>
@@ -187,25 +201,34 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                         bottom={"6.8vw"}
                                         right={"17.5vw"}
                                         color="error"
-                                        icon={<DeleteForeverIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
+                                        icon={
+                                            <DeleteForeverIcon
+                                                sx={{ width: "100%", height: "100%", color: colors.secondary }}
+                                            />
+                                        }
                                     />
                                     <NewButton
                                         onClick={() => setIsEditing(true)}
                                         bottom={"6.8vw"}
                                         right={"12.5vw"}
-                                        icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
+                                        icon={
+                                            <ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />
+                                        }
                                     />
                                 </>
                             )}
                             <Card image={image} setImage={setImage} customer={customer} />
                             <Box sx={{ flexDirection: "column", width: "62%", gap: "2vw", alignSelf: "start" }}>
                                 <h1>{customer?.name}</h1>
-                                <Box sx={{ flexDirection: "column", width: "62%", gap: "vw" }}>
+                                <Box sx={{ flexDirection: "column", width: "100%", gap: "vw" }}>
                                     <Container name="Informações da Empresa" children />
-                                    <Box sx={{ flexDirection: "column", gap: "2vw" }}>
-                                        <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
+                                    <Box sx={{ flexDirection: "column", gap: "2vw", width: "100%" }}>
+                                        <Box sx={{ flexDirection: "column", gap: "0.5vw", width: "100%" }}>
                                             <Data title="Nome Fantasia" value={customer?.name} icon={<BusinessIcon />} />
-                                            <Data title="Recomendações" value={customer?.recomendations} icon={<NotesIcon />} />
+                                            <Data title="Recomendações" value={" "} icon={<NotesIcon />} />
+                                            <p style={{ color, width: "100%", textAlign: "justify" }}>
+                                                {customer?.recomendations}
+                                            </p>
                                         </Box>
                                         <Box sx={{ flexDirection: "row", gap: "0.5vw" }}>
                                             {customer?.services.map((service) => (

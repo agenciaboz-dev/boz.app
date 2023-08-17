@@ -3,6 +3,7 @@ import { Box, TextField, Select, OutlinedInput, MenuItem, ListItemText, Checkbox
 import { useCustomers } from "../../../hooks/useCustomers"
 import { textFieldStyle } from "../../../style/textfield"
 import { selectMenuStyle } from "../../../style/selectMenuStyle"
+import { TaiTextField } from "../../../components/TaiTextField"
 interface CustomerFormProps {
     values: CustomerForm
     handleChange: {
@@ -45,8 +46,14 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                 height: "100%",
             }}
         >
-            <TextField label="Nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} />
-            <TextField label="Recomendações" name="recomendations" value={values.recomendations} onChange={handleChange} sx={textFieldStyle} />
+            <TaiTextField label="Nome" name="name" value={values.name} onChange={handleChange} required={true} />
+            <TaiTextField
+                label="Recomendações"
+                name="recomendations"
+                value={values.recomendations}
+                onChange={handleChange}
+                required={false}
+            />
             <TextField
                 label="Serviços"
                 name="services"

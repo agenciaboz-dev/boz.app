@@ -1,10 +1,11 @@
 import { SxProps } from "@mui/material"
 import { useDarkMode } from "../hooks/useDarkMode"
 
+
 export const textFieldStyle: SxProps = {
     "& .MuiInputLabel-root": {
         color: "grey",
-        // fontSize: "0.9vw",
+        fontSize: "0.8vw",
     },
 
     // não funciona
@@ -17,6 +18,7 @@ export const textFieldStyle: SxProps = {
             // bgcolor: "background.default",
             // borderColor: "primary.main",
         },
+        fontSize: "1vw",
     },
 
     "& .MuiInput-root": {
@@ -37,5 +39,9 @@ export const textFieldStyle: SxProps = {
             borderRadius: "0 3vw 0vw 3vw",
             height: "12vw",
         },
+    },
+
+    "& .MuiInputLabel-shrink": {
+        fontSize: "1vw", // Tamanho da fonte do label quando dentro do input
     },
 }

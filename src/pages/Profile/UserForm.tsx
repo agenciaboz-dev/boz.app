@@ -6,12 +6,15 @@ import { selectMenuStyle } from "../../style/selectMenuStyle"
 import { useDepartments } from "../../hooks/useDepartments"
 import MaskedInput from "../../components/MaskedInput"
 import masks from "../../style/masks"
+import { TaiTextField } from "../../components/TaiTextField"
 
 interface UserFormProps {
     values: UserForm
     handleChange: {
         (e: React.ChangeEvent<any>): void
-        <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any> ? void : (e: string | React.ChangeEvent<any>) => void
+        <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any>
+            ? void
+            : (e: string | React.ChangeEvent<any>) => void
     }
     selectedRoles: Role[]
     setSelectedRoles: (roles: Role[]) => void
@@ -21,7 +24,7 @@ interface UserFormProps {
 export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, selectedRoles, setSelectedRoles, createOnly }) => {
     const { departments, roles } = useDepartments()
 
-    const style: SxProps = { ...textFieldStyle, width: "49%" }
+    const style: SxProps = { width: "49%" }
 
     const handleRoleSelect = (child: any) => {
         const id = child.props.value as Number
@@ -37,47 +40,54 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
     return (
         <>
             <Container name="Informações Pessoais">
-                <TextField label="Nome" name="name" value={values.name} onChange={handleChange} sx={style} required />
-                <TextField
+                <TaiTextField label="Nome" name="name" value={values.name} onChange={handleChange} style={style} required />
+                <TaiTextField
                     label="Telefone"
                     name="phone"
                     value={values.phone}
                     onChange={handleChange}
-                    sx={style}
+                    style={style}
                     required
                     InputProps={{
                         inputComponent: MaskedInput,
                         inputProps: { mask: masks.phone },
                     }}
                 />
-                <TextField
+                <TaiTextField
                     label="CPF"
                     name="cpf"
                     value={values.cpf}
                     onChange={handleChange}
-                    sx={style}
+                    style={style}
                     required
                     InputProps={{
                         inputComponent: MaskedInput,
                         inputProps: { mask: masks.cpf },
                     }}
                 />
-                <TextField
+                <TaiTextField
                     label="Nome de usuário"
                     name="username"
                     value={values.username}
                     onChange={handleChange}
-                    sx={style}
+                    style={style}
                     required
                     disabled={!createOnly}
                 />
-                <TextField label="E-mail" name="email" value={values.email} onChange={handleChange} sx={style} required />
-                <TextField
+                <TaiTextField
+                    label="E-mail"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    style={style}
+                    required
+                />
+                <TaiTextField
                     label="Data de nascimento"
                     name="birth"
                     value={values.birth}
                     onChange={handleChange}
-                    sx={style}
+                    style={style}
                     required
                     InputProps={{
                         inputComponent: MaskedInput,
