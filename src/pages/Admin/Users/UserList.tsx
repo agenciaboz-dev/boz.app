@@ -25,6 +25,7 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
 
                 "::-webkit-scrollbar-thumb": {
                     bgcolor: "primary.main",
+                    borderRadius: "1vw",
                 },
             }}
         >
