@@ -114,7 +114,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
             </Box>
 
             <Box sx={containerStyle}>
-                <p style={{ display: isMobile ? "none" : "" }}>{user.name}</p>
+                <p style={{ display: isMobile ? "none" : "" }}>{user.name.split(" ")[0]}</p>
                 <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => userDrawer.toogle()}>
                     <Avatar user={user} size={Number(iconStyle.width)} small noClickModal />
                 </IconButton>
