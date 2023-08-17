@@ -17,6 +17,10 @@ interface UserContextValue {
         open: boolean
         setOpen: (open: boolean) => void
     }
+
+    logs: {
+        status: StatusLog[]
+    }
 }
 
 interface UserProviderProps {
@@ -35,10 +39,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [connectedList, setconnectedList] = useState<User[]>([])
     const [openDrawer, setOpenDrawer] = useState(false)
     const [connected, setConnected] = useState(false)
+    const [statusLogs, setStatusLogs] = useState<StatusLog[]>([])
 
     const drawer = {
         open: openDrawer,
         setOpen: setOpenDrawer,
+    }
+
+    const logs = {
+        status: statusLogs,
     }
 
     const addUser = (user: User) => {
@@ -48,6 +57,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const addConnectedUser = (user: User) => {
         setconnectedList((prevList) => [...prevList.filter((item) => item.id != user.id), user])
     }
+
+    useEffect(() => {
+        console.log({ statusLogs })
+        io.on("log:status:new", (log: StatusLog) => {
+            setStatusLogs((prevLogs) => [...prevLogs.filter((item) => item.id != log.id), log])
+        })
+
+        return () => {
+            io.off("log:status:new")
+        }
+    }, [statusLogs])
 
     useEffect(() => {
         console.log({ connectedList })
@@ -120,6 +140,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             io.on("connected:sync", (users: User[]) => {
                 setconnectedList(users)
             })
+
+            io.on("log:status:sync", (logs: StatusLog[]) => {
+                setStatusLogs(logs)
+            })
         }
 
         return () => {
@@ -127,8 +151,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             io.off("disconnect")
             io.off("client:sync")
             io.off("connected:sync")
+            io.off("log:status:sync")
         }
     }, [user])
 
-    return <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList, addUser }}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList, addUser, logs }}>{children}</UserContext.Provider>
 }

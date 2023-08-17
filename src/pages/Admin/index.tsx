@@ -7,6 +7,7 @@ import { tabStyle } from "../../style/tab"
 import { useAdminTabs } from "../../hooks/useAdminTabs"
 import { Customers } from "./Customers"
 import { Deparments } from "./Departments"
+import { Stats } from "./Stats"
 
 interface AdminProps {
     user: User
@@ -48,6 +49,7 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
                 <Route path="/users/*" element={<Users user={user} />} />
                 <Route path="/customers/*" element={<Customers user={user} />} />
                 <Route path="/departments/*" element={<Deparments user={user} />} />
+                <Route path="/stats/*" element={<Stats user={user} />} />
             </Routes>
         </Box>
     )

@@ -12,7 +12,7 @@ export const useUser = () => {
     const { snackbar } = useSnackbar()
 
     const userContext = useContext(UserContext)
-    const { user, setUser, connected, list, connectedList, addUser } = userContext
+    const { user, setUser, connected, list, connectedList, addUser, logs } = userContext
 
     const drawer = {
         open: userContext.drawer.open,
@@ -71,5 +71,5 @@ export const useUser = () => {
         })
     }
 
-    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname, updateStatus, isAdmin }
+    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname, updateStatus, isAdmin, logs }
 }
