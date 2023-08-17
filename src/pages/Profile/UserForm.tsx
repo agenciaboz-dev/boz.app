@@ -1,4 +1,4 @@
-import React, from "react"
+import React from "react"
 import { Box, Checkbox, ListItemText, MenuItem, SxProps, TextField } from "@mui/material"
 import { Container } from "./UserComponents"
 import { textFieldStyle } from "../../style/textfield"
@@ -34,8 +34,6 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
             setSelectedRoles([...selectedRoles, role])
         }
     }
-
-    
 
     return (
         <>
