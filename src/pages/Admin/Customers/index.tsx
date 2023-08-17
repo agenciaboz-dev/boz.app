@@ -17,7 +17,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
     const navigate = useNavigate()
 
     const handleNewCustomer = () => {
-        navigate("/admin/customers/new")
+        navigate("/customers/new")
     }
 
     return (
@@ -48,7 +48,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                         </>
                     }
                 />
-                <Route path="/new" element={<Profile createOnly />} />
+                {/* <Route path="/new" element={<Profile createOnly />} /> */}
             </Routes>
         </Box>
     )

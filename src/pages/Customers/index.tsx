@@ -18,6 +18,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                 <Routes>
                     <Route index element={<CustomerList />} />
                     <Route path="/:id" element={<Profile />} />
+                    <Route path="/new" element={<Profile createOnly />} />
                 </Routes>
             </Box>
         </Box>

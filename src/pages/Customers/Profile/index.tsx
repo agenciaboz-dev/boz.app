@@ -65,7 +65,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         gap: "5vw",
         padding: "3vw",
         backgroundColor: "background.default",
-        boxShadow: `0px 2px 35px ${alpha(colors.text.secondary, 0.3)}`,
+        boxShadow: `0px 2px 35px ${alpha(colors.text.secondary, 0.2)}`,
         borderRadius: "0.5vw",
         alignSelf: "center",
         alignItems: "center",
