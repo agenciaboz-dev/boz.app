@@ -1,4 +1,4 @@
-import React from "react"
+import React, from "react"
 import { Box, Checkbox, ListItemText, MenuItem, SxProps, TextField } from "@mui/material"
 import { Container } from "./UserComponents"
 import { textFieldStyle } from "../../style/textfield"
@@ -12,9 +12,7 @@ interface UserFormProps {
     values: UserForm
     handleChange: {
         (e: React.ChangeEvent<any>): void
-        <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any>
-            ? void
-            : (e: string | React.ChangeEvent<any>) => void
+        <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any> ? void : (e: string | React.ChangeEvent<any>) => void
     }
     selectedRoles: Role[]
     setSelectedRoles: (roles: Role[]) => void
@@ -36,6 +34,8 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
             setSelectedRoles([...selectedRoles, role])
         }
     }
+
+    
 
     return (
         <>
@@ -74,14 +74,7 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     required
                     disabled={!createOnly}
                 />
-                <TaiTextField
-                    label="E-mail"
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                    style={style}
-                    required
-                />
+                <TaiTextField label="E-mail" name="email" value={values.email} onChange={handleChange} style={style} required />
                 <TaiTextField
                     label="Data de nascimento"
                     name="birth"

@@ -82,6 +82,24 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     }
 
     useEffect(() => {
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                if (isEditing) {
+                    setIsEditing(false)
+                } else {
+                    navigate(-1)
+                }
+            }
+        }
+
+        window.addEventListener("keydown", onKeyDown)
+
+        return () => {
+            window.removeEventListener("keydown", onKeyDown)
+        }
+    }, [isEditing])
+
+    useEffect(() => {
         const user = list.find((item) => item.id == profile?.id)
         if (user) {
             setProfile(user)
