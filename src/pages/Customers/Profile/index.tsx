@@ -198,8 +198,8 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                 <>
                                     <NewButton
                                         onClick={handleDelete}
-                                        bottom={"6vw"}
-                                        right={"22.0vw"}
+                                        bottom={"4.5vw"}
+                                        right={"18.0vw"}
                                         color="error"
                                         icon={
                                             <DeleteForeverIcon
@@ -213,8 +213,8 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                     />
                                     <NewButton
                                         onClick={() => setIsEditing(true)}
-                                        bottom={"6vw"}
-                                        right={"17.0vw"}
+                                        bottom={"4.5vw"}
+                                        right={"13.0vw"}
                                         icon={
                                             <ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />
                                         }
@@ -244,7 +244,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                             <Box
                                                 sx={{
                                                     width: "100%",
-                                                    height: "12.5vw",
+                                                    height: "13.5vw",
                                                     overflowY: "auto",
                                                     paddingRight: "0.8vw",
                                                     scrollbarColor: "red",
