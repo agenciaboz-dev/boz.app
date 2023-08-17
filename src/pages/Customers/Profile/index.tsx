@@ -70,7 +70,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         alignSelf: "center",
         alignItems: "center",
         width: "80%",
-        height: "max-content",
+        height: "38vw",
     }
 
     const handleDelete = () => {
@@ -145,7 +145,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     height: "28vw",
                     maxHeight: "50vw",
                     gap: "1vw",
-                    paddingTop: "10vw",
+                    paddingTop: "2vw",
                 }}
             >
                 <IconButton
@@ -162,7 +162,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                 {({ values, handleChange }) => (
                                     <Form>
                                         <Card image={image} setImage={setImage} customer={customer} editing />
-                                        <Box sx={{ flexDirection: "column", width: "62%", gap: "4.9vw" }}>
+                                        <Box sx={{ flexDirection: "column", width: "57%", gap: "4.9vw" }}>
                                             <CustomerForm
                                                 values={values}
                                                 handleChange={handleChange}
@@ -218,18 +218,11 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                 </>
                             )}
                             <Card image={image} setImage={setImage} customer={customer} />
-                            <Box sx={{ flexDirection: "column", width: "62%", gap: "2vw", alignSelf: "start" }}>
+                            <Box sx={{ flexDirection: "column", width: "55%", gap: "2vw", alignSelf: "start" }}>
                                 <h1>{customer?.name}</h1>
                                 <Box sx={{ flexDirection: "column", width: "100%", gap: "vw" }}>
                                     <Container name="Informações da Empresa" children />
                                     <Box sx={{ flexDirection: "column", gap: "2vw", width: "100%" }}>
-                                        <Box sx={{ flexDirection: "column", gap: "0.5vw", width: "100%" }}>
-                                            <Data title="Nome Fantasia" value={customer?.name} icon={<BusinessIcon />} />
-                                            <Data title="Recomendações" value={" "} icon={<NotesIcon />} />
-                                            <p style={{ color, width: "100%", textAlign: "justify" }}>
-                                                {customer?.recomendations}
-                                            </p>
-                                        </Box>
                                         <Box sx={{ flexDirection: "row", gap: "0.5vw" }}>
                                             {customer?.services.map((service) => (
                                                 <Tag
@@ -240,6 +233,39 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                                     color={customer.active ? "" : theme.palette.error.main}
                                                 />
                                             ))}
+                                        </Box>
+                                        <Box sx={{ flexDirection: "column", gap: "0.5vw", width: "100%" }}>
+                                            <Data title="Nome" value={customer?.name} icon={<BusinessIcon />} />
+                                            <Data title="Recomendações" value={" "} icon={<NotesIcon />} />
+                                            <Box
+                                                sx={{
+                                                    width: "100%",
+                                                    maxHeight: "15.5vw",
+                                                    overflowY: "auto",
+                                                    paddingRight: "0.8vw",
+                                                    scrollbarColor: "red",
+                                                    scrollbarWidth: "5vw",
+
+                                                    "&::-webkit-scrollbar-thumb": {
+                                                        backgroundColor: "#888" /* Cor do rastreador */,
+                                                        borderRadius: "10px" /* Borda arredondada do rastreador */,
+                                                    },
+
+                                                    /* Estilizando o rastreador quando estiver passando o mouse */
+                                                    "&::-webkit-scrollbar-thumb:hover": {
+                                                        backgroundColor: "#555" /* Cor do rastreador ao passar o mouse */,
+                                                    },
+
+                                                    /* Estilizando o rastreador quando estiver ativo (arrastando) */
+                                                    "&::-webkit-scrollbar-thumb:active": {
+                                                        backgroundColor: "#333" /* Cor do rastreador quando arrastado */,
+                                                    },
+                                                }}
+                                            >
+                                                <p style={{ color, width: "100%", textAlign: "justify" }}>
+                                                    {customer?.recomendations}
+                                                </p>
+                                            </Box>
                                         </Box>
                                     </Box>
                                 </Box>

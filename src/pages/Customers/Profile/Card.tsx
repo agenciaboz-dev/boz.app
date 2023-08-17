@@ -32,14 +32,16 @@ export const Card: React.FC<CardProps> = ({ customer, image, setImage, editing }
                           emptyLabel="Enviar Imagem"
                           // style={{ width: "100%", height: "30vw" }}
                           style={{
-                              width: "21vw",
-                              height: "21vw",
+                              width: "25vw",
+                              height: "25vw",
                               borderRadius: "0.3vw",
                               fontSize: "1.2vw",
                           }}
                       />
                   )
-                : customer && <CustomerAvatar customer={customer} sx={{ width: "21vw", height: "21vw", fontSize: "1.0vw" }} />}
+                : customer && (
+                      <CustomerAvatar customer={customer} sx={{ width: "25vw", height: "25vw", fontSize: "1.0vw" }} />
+                  )}
         </Box>
     )
 }
