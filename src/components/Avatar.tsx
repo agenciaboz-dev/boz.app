@@ -34,7 +34,7 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickMo
 
     useEffect(() => {
         setUrl((url) => `${url}?timestamp=${new Date().getTime()}`)
-    }, [list])
+    }, [user])
 
     return (
         <Badge
