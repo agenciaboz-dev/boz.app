@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Box } from "@mui/material"
+import { Box, Paper } from "@mui/material"
 import { RoleContainer, RoleSkeletons } from "./RoleContainer"
 import { NewButton } from "../../../components/NewButton"
 import { useDepartments } from "../../../hooks/useDepartments"
@@ -10,6 +10,7 @@ import AddIcon from "@mui/icons-material/Add"
 import { Profile } from "../../Profile"
 import normalize from "../../../tools/normalize"
 import { UserList } from "./UserList"
+import { backgroundStyle } from "../../../style/background"
 
 interface UsersProps {
     user: User
@@ -42,7 +43,17 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
             <Route
                 index
                 element={
-                    <Box sx={{ padding: "2vw", width: "100%", gap: "2vw", flexWrap: "wrap" }}>
+                    <Paper
+                        elevation={2}
+                        sx={{
+                            padding: "2vw",
+                            //width: "100%",
+                            gap: "2vw",
+                            flexWrap: "wrap",
+                            backgroundColor: "background.default",
+                            margin: "2vw 2vw 0 2vw",
+                        }}
+                    >
                         <NewButton
                             onClick={handleNewUserClick}
                             bottom={"2vw"}
@@ -51,7 +62,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                         />
 
                         <UserList list={userList} />
-                    </Box>
+                    </Paper>
                 }
             />
             <Route path="/new" element={<Profile user={user} createOnly admin />} />

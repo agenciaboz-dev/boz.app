@@ -17,17 +17,27 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
     const nonConnectedUsers = userList.filter((user) => !connectedList.map((item) => item.id).includes(user.id))
 
     return (
-        <Box sx={{ flexDirection: "column", gap: "1vw", color: "primary.main", width: "30vw" }}>
+        <Box
+            sx={{
+                flexDirection: "column",
+                gap: "1.3vw",
+                color: "primary.main",
+                width: "29.3vw",
+                borderBottom: "2px solid",
+                borderRadius: "0.5vw",
+                padding: "0.5vw",
+            }}
+        >
             <p style={{ fontWeight: "bold" }}>{department.name}</p>
 
-            <Paper sx={{ flexDirection: "column", bgcolor: "background.default" }}>
+            <Box sx={{ flexDirection: "column", bgcolor: "background.default" }}>
                 {connectedUsers.map((user) => (
                     <UserCard key={user.id} user={user} />
                 ))}
                 {nonConnectedUsers.map((user) => (
                     <UserCard key={user.id} user={user} />
                 ))}
-            </Paper>
+            </Box>
         </Box>
     )
 }

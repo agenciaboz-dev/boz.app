@@ -18,17 +18,18 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
             }}
         >
             <Avatar size={"3vw"} small user={user} />
-            <p style={{ fontWeight: "bold" }}>{user.name}</p>
-
-            <Box sx={{ marginLeft: "auto", gap: "0.2vw" }}>
-                {user.roles.map((role) => (
-                    <Tag
-                        key={role.id}
-                        name={role.tag}
-                        tooltip={role.name}
-                        sx={{ fontSize: "0.75vw", padding: "0.2vw 0.4vw", borderRadius: "0.75vw" }}
-                    />
-                ))}
+            <Box sx={{ flexDirection: "column", justifyContent: "flex-start" }}>
+                <p style={{ fontWeight: "bold" }}>{user.name}</p>
+                <Box sx={{ gap: "0.2vw" }}>
+                    {user.roles.map((role) => (
+                        <Tag
+                            key={role.id}
+                            name={role.tag}
+                            tooltip={role.name}
+                            sx={{ fontSize: "0.7vw", padding: "0.2vw 0.4vw", borderRadius: "0.75vw" }}
+                        />
+                    ))}
+                </Box>
             </Box>
         </MenuItem>
     )
