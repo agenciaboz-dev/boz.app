@@ -70,7 +70,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         alignSelf: "center",
         alignItems: "center",
         width: "80%",
-        height: "38vw",
+        height: "36vw",
     }
 
     const handleDelete = () => {
@@ -142,14 +142,14 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     backgroundColor: "background.paper",
                     width: "100%",
                     flexDirection: "column",
-                    height: "28vw",
+                    height: "27vw",
                     maxHeight: "50vw",
                     gap: "1vw",
-                    paddingTop: "2vw",
+                    paddingTop: "0vw",
                 }}
             >
                 <IconButton
-                    sx={{ position: "absolute", top: "7.8vw", left: "2.4vw" }}
+                    sx={{ position: "relative", top: "1vw", right: "46vw" }}
                     color="secondary"
                     onClick={() => navigate(-1)}
                 >
@@ -198,19 +198,23 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                 <>
                                     <NewButton
                                         onClick={handleDelete}
-                                        bottom={"6.8vw"}
-                                        right={"17.5vw"}
+                                        bottom={"6vw"}
+                                        right={"22.0vw"}
                                         color="error"
                                         icon={
                                             <DeleteForeverIcon
-                                                sx={{ width: "100%", height: "100%", color: colors.secondary }}
+                                                sx={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    color: colors.secondary,
+                                                }}
                                             />
                                         }
                                     />
                                     <NewButton
                                         onClick={() => setIsEditing(true)}
-                                        bottom={"6.8vw"}
-                                        right={"12.5vw"}
+                                        bottom={"6vw"}
+                                        right={"17.0vw"}
                                         icon={
                                             <ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />
                                         }
