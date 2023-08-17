@@ -55,6 +55,20 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
     useEffect(() => {
         if (onSearch) onSearch(normalize(searchValue))
     }, [searchValue, onSearch])
+    
+    useEffect(() => {
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setSearchValue("")
+            }
+        }
+
+        window.addEventListener("keydown", onKeyDown)
+
+        return () => {
+            window.removeEventListener("keydown", onKeyDown)
+        }
+    }, [])
 
     return (
         <Box
