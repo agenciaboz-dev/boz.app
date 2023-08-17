@@ -4,12 +4,12 @@ import { RoleContainer, RoleSkeletons } from "./RoleContainer"
 import { NewButton } from "../../../components/NewButton"
 import { useDepartments } from "../../../hooks/useDepartments"
 import { Route, Routes, useNavigate } from "react-router-dom"
-import { NewUser } from "./NewUser"
 import { useSearch } from "../../../hooks/useSearch"
 import { useUser } from "../../../hooks/useUser"
 import AddIcon from "@mui/icons-material/Add"
 import { Profile } from "../../Profile"
 import normalize from "../../../tools/normalize"
+import { UserList } from "./UserList"
 
 interface UsersProps {
     user: User
@@ -18,7 +18,6 @@ interface UsersProps {
 export const Users: React.FC<UsersProps> = ({ user }) => {
     const navigate = useNavigate()
 
-    const { departments, loading } = useDepartments()
     const { setOnSearch } = useSearch()
     const { list } = useUser()
 
@@ -51,11 +50,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                             icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
                         />
 
-                        {loading ? (
-                            <RoleSkeletons />
-                        ) : (
-                            departments.map((department) => <RoleContainer key={department.id} department={department} users={userList} />)
-                        )}
+                        <UserList list={userList} />
                     </Box>
                 }
             />
