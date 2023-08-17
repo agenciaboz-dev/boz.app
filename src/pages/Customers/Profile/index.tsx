@@ -105,7 +105,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
-                if (isEditing) {
+                if (isEditing && customer) {
                     setIsEditing(false)
                 } else {
                     navigate(-1)
