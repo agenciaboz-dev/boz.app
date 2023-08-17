@@ -23,7 +23,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
         >
             <Avatar size={"3vw"} small user={user} />
 
-            <Box sx={{ flexDirection: "column", fontSize: "0.8vw", height: "100%", gap: "0.3vw", color: "text.secondary" }}>
+            <Box sx={{ flexDirection: "column", fontSize: "0.9vw", height: "100%", gap: "0.3vw", color: "text.secondary" }}>
                 <Box
                     sx={{
                         fontWeight: "bold",
