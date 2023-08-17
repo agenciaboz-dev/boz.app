@@ -20,6 +20,7 @@
     "burgos-confirm": "^1.2.2",
     "burgos-masks": "^1.0.45",
     "burgos-snackbar": "^2.1.0",
+    "file-saver": "^2.0.5",
     "formik": "^2.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,6 +32,7 @@
     "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

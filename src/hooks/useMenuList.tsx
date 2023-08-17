@@ -57,10 +57,10 @@ export const useMenuList = () => {
         },
         {
             id: 7,
-            name: "Configurações",
-            path: "/settings",
+            name: "Ferramentas",
+            path: "/tools",
             icon: <SettingsIcon />,
-            onClick: () => navigate("/settings"),
+            onClick: () => navigate("/tools"),
         },
         {
             id: 8,
