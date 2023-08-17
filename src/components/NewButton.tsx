@@ -25,7 +25,7 @@ export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, 
                 bottom,
                 right,
                 color: "secondary.main",
-                width: "3vw",
+                width: "4vw",
                 height: "4vw",
                 zIndex: 2,
             }}
