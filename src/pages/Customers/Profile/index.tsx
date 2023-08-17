@@ -198,8 +198,8 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                 <>
                                     <NewButton
                                         onClick={handleDelete}
-                                        bottom={"6vw"}
-                                        right={"22.0vw"}
+                                        bottom={"4.5vw"}
+                                        right={"18.0vw"}
                                         color="error"
                                         icon={
                                             <DeleteForeverIcon
@@ -213,8 +213,8 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                     />
                                     <NewButton
                                         onClick={() => setIsEditing(true)}
-                                        bottom={"6vw"}
-                                        right={"17.0vw"}
+                                        bottom={"4.5vw"}
+                                        right={"13.0vw"}
                                         icon={
                                             <ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />
                                         }
@@ -222,11 +222,11 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                 </>
                             )}
                             <Card image={image} setImage={setImage} customer={customer} />
-                            <Box sx={{ flexDirection: "column", width: "55%", gap: "2vw", alignSelf: "start" }}>
+                            <Box sx={{ flexDirection: "column", width: "55%", gap: "1vw", alignSelf: "start" }}>
                                 <h1>{customer?.name}</h1>
-                                <Box sx={{ flexDirection: "column", width: "100%", gap: "vw" }}>
+                                <Box sx={{ flexDirection: "column", width: "100%", gap: "0vw" }}>
                                     <Container name="Informações da Empresa" children />
-                                    <Box sx={{ flexDirection: "column", gap: "2vw", width: "100%" }}>
+                                    <Box sx={{ flexDirection: "column", gap: "1vw", width: "100%" }}>
                                         <Box sx={{ flexDirection: "row", gap: "0.5vw" }}>
                                             {customer?.services.map((service) => (
                                                 <Tag
@@ -244,11 +244,12 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                             <Box
                                                 sx={{
                                                     width: "100%",
-                                                    maxHeight: "15.5vw",
+                                                    height: "13.5vw",
                                                     overflowY: "auto",
-                                                    paddingRight: "0.8vw",
+                                                    paddingRight: "0.5vw",
                                                     scrollbarColor: "red",
                                                     scrollbarWidth: "5vw",
+                                                    backgroundColor: "red",
 
                                                     "&::-webkit-scrollbar-thumb": {
                                                         backgroundColor: "#888" /* Cor do rastreador */,
