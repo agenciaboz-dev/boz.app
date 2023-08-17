@@ -19,7 +19,7 @@ export const StatusLogs: React.FC<StatusLogsProps> = ({ logs }) => {
                 fontWeight: "bold",
                 fontSize: "1vw",
                 gap: "0.5vw",
-                maxHeight: "80vh",
+                maxHeight: "75vh",
                 overflowY: "auto",
                 bgcolor: "background.default",
             }}
