@@ -20,17 +20,16 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
         <Box
             sx={{
                 flexDirection: "column",
-                gap: "1.3vw",
+                gap: "1vw",
                 color: "primary.main",
-                width: "29.3vw",
-                borderBottom: "2px solid",
+                width: "20vw",
                 borderRadius: "0.5vw",
                 padding: "0.5vw",
             }}
         >
-            <p style={{ fontWeight: "bold" }}>{department.name}</p>
+            <p style={{ fontWeight: "bold", fontSize: "1vw" }}>{department.name}</p>
 
-            <Box sx={{ flexDirection: "column", bgcolor: "background.default" }}>
+            <Box sx={{ flexDirection: "column", bgcolor: "background.default", gap: "0.5vw" }}>
                 {connectedUsers.map((user) => (
                     <UserCard key={user.id} user={user} />
                 ))}

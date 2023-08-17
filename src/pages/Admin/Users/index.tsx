@@ -44,14 +44,15 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                 index
                 element={
                     <Paper
-                        elevation={2}
+                        elevation={0}
                         sx={{
-                            padding: "2vw",
+                            padding: "1vw",
                             //width: "100%",
                             gap: "2vw",
                             flexWrap: "wrap",
                             backgroundColor: "background.default",
                             margin: "2vw 2vw 0 2vw",
+                            height: "75vh",
                         }}
                     >
                         <NewButton
