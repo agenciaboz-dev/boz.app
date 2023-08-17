@@ -71,6 +71,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         alignItems: "center",
         width: "80%",
         height: "36vw",
+        position: "relative",
     }
 
     const handleDelete = () => {
@@ -144,15 +145,11 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     flexDirection: "column",
                     height: "27vw",
                     maxHeight: "50vw",
-                    gap: "1vw",
-                    paddingTop: "0vw",
+                    position: "relative",
+                    padding: "1vw",
                 }}
             >
-                <IconButton
-                    sx={{ position: "relative", top: "1vw", right: "46vw" }}
-                    color="secondary"
-                    onClick={() => navigate(-1)}
-                >
+                <IconButton sx={{ alignSelf: "flex-start" }} color="secondary" onClick={() => navigate(-1)}>
                     <ArrowBackIosNewIcon />
                 </IconButton>
                 <Box sx={wrapperStyle}>
@@ -198,8 +195,8 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                 <>
                                     <NewButton
                                         onClick={handleDelete}
-                                        bottom={"4.5vw"}
-                                        right={"18.0vw"}
+                                        bottom={"1.5vw"}
+                                        right={"6.2vw"}
                                         color="error"
                                         icon={
                                             <DeleteForeverIcon
@@ -213,8 +210,8 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                     />
                                     <NewButton
                                         onClick={() => setIsEditing(true)}
-                                        bottom={"4.5vw"}
-                                        right={"13.0vw"}
+                                        bottom={"1.5vw"}
+                                        right={"1.5vw"}
                                         icon={
                                             <ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />
                                         }
@@ -244,7 +241,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                             <Box
                                                 sx={{
                                                     width: "100%",
-                                                    height: "13.5vw",
+                                                    height: "13.0vw",
                                                     overflowY: "auto",
                                                     paddingRight: "0.8vw",
                                                     scrollbarColor: "red",
