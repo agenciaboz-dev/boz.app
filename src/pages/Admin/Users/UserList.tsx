@@ -22,6 +22,7 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
                 height: "100%",
                 width: "100%",
                 overflowX: "auto",
+                overflowY: "hidden",
 
                 "::-webkit-scrollbar-thumb": {
                     bgcolor: "primary.main",

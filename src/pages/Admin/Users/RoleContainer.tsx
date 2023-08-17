@@ -25,11 +25,12 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
                 width: "20vw",
                 borderRadius: "0.5vw",
                 padding: "0.5vw",
+                paddingBottom: "3vw",
             }}
         >
             <p style={{ fontWeight: "bold", fontSize: "1vw" }}>{department.name}</p>
 
-            <Box sx={{ flexDirection: "column", bgcolor: "background.default", gap: "0.5vw" }}>
+            <Box sx={{ flexDirection: "column", bgcolor: "background.default", gap: "0.5vw", height: "100%", overflowY: "auto" }}>
                 {connectedUsers.map((user) => (
                     <UserCard key={user.id} user={user} />
                 ))}
