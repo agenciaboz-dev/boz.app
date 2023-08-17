@@ -70,6 +70,20 @@ export const DepartmentForm: React.FC<DepartmentFormProps> = ({ department, fini
         }
     }, [department])
 
+    useEffect(() => {
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                finish()
+            }
+        }
+
+        window.addEventListener("keydown", onKeyDown)
+
+        return () => {
+            window.removeEventListener("keydown", onKeyDown)
+        }
+    }, [])
+
     return (
         <Formik initialValues={{ name: department.name }} onSubmit={handleSubmit}>
             {({ values, handleChange }) => (
