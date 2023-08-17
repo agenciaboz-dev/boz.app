@@ -28,6 +28,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
                     sx={{
                         fontWeight: "bold",
                         cursor: "pointer",
+
                         "&:hover": {
                             textDecoration: "underline",
                         },
@@ -36,7 +37,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
                         navigate(`/admin/users/${user.username}`)
                     }}
                 >
-                    {user.name}
+                    {user.name.split(" ")[0]}
                 </Box>
                 <Box sx={{ gap: "0.2vw", flexWrap: "wrap", width: "15vw" }}>
                     {user.roles.map((role) => (
