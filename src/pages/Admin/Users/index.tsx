@@ -46,7 +46,6 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                     <Paper
                         elevation={0}
                         sx={{
-                            padding: "1vw",
                             //width: "100%",
                             gap: "2vw",
                             flexWrap: "wrap",
