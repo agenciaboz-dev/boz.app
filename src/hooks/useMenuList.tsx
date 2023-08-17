@@ -5,6 +5,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
 import SettingsIcon from "@mui/icons-material/Settings"
 import Groups3Icon from "@mui/icons-material/Groups3"
+import BusinessIcon from "@mui/icons-material/Business"
 
 import { useNavigate } from "react-router-dom"
 
@@ -35,27 +36,34 @@ export const useMenuList = () => {
         },
         {
             id: 4,
-            name: "Clientes",
-            path: "/customers",
+            name: "Coleguinhas",
+            path: "/users",
             icon: <Groups3Icon />,
-            onClick: () => navigate("/customers"),
+            onClick: () => navigate("/users"),
         },
         {
             id: 5,
+            name: "Clientes",
+            path: "/customers",
+            icon: <BusinessIcon />,
+            onClick: () => navigate("/customers"),
+        },
+        {
+            id: 6,
             name: "Agenda",
             path: "/agenda",
             icon: <CalendarMonthIcon />,
             onClick: () => navigate("/agenda"),
         },
         {
-            id: 6,
+            id: 7,
             name: "Configurações",
             path: "/settings",
             icon: <SettingsIcon />,
             onClick: () => navigate("/settings"),
         },
         {
-            id: 7,
+            id: 8,
             name: "Administração",
             path: "/admin",
             icon: <AdminPanelSettingsIcon />,

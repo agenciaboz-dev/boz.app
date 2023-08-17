@@ -7,6 +7,7 @@ import { Zap } from "./pages/Zap"
 import { Admin } from "./pages/Admin"
 import { Customers } from "./pages/Customers"
 import { Profile } from "./pages/Profile"
+import { Users } from "./pages/Users"
 
 interface RoutesProps {}
 
@@ -19,6 +20,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
             <Route path="/profile/:username?" element={<Profile user={user} />} />
             <Route path="/zap" element={<Zap user={user} />} />
             <Route path="/customers/*" element={<Customers user={user} />} />
+            <Route path="/users/*" element={<Users user={user} />} />
             <Route path="/admin/*" element={<Admin user={user} />} />
             <Route path="*" element={<WildCard />} />
         </ReactRoutes>
