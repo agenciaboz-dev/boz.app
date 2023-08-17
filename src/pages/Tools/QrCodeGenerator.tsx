@@ -59,7 +59,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                 {({ values, handleChange }) => (
                     <Form>
                         <Box sx={{ gap: "1vw" }}>
-                            <Box sx={{ flexDirection: "column", gap: "1vw", width: "20vw" }}>
+                            <Box sx={{ flexDirection: "column", gap: "1vw", width: "30vw" }}>
                                 <TextField label="nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} required />
                                 <TextField
                                     label="código"
@@ -68,6 +68,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                                     onChange={handleChange}
                                     sx={textFieldStyle}
                                     required
+                                    autoComplete="off"
                                 />
                                 <TextField
                                     label="cliente"
