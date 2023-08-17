@@ -13,7 +13,16 @@ const Circle: React.FC<{ status: number }> = ({ status }) => {
 export const StatusLogs: React.FC<StatusLogsProps> = ({ logs }) => {
     return (
         <Paper
-            sx={{ flexDirection: "column", padding: "1vw", fontWeight: "bold", fontSize: "1vw", gap: "0.5vw", maxHeight: "80vh", overflowY: "auto" }}
+            sx={{
+                flexDirection: "column",
+                padding: "1vw",
+                fontWeight: "bold",
+                fontSize: "1vw",
+                gap: "0.5vw",
+                maxHeight: "80vh",
+                overflowY: "auto",
+                bgcolor: "background.default",
+            }}
         >
             Atividade
             {logs.map((log) => (
