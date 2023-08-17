@@ -6,7 +6,7 @@ interface StatusLogsProps {
 }
 
 const Circle: React.FC<{ status: number }> = ({ status }) => {
-    const color = ["text.secondary", "success.main", "warning.main", "error.main"]
+    const color = ["text.secondary", "success.main", "error.main", "warning.main"]
     return <Box sx={{ width: "0.75vw", height: "0.75vw", borderRadius: "50%", bgcolor: color[status] }}></Box>
 }
 
