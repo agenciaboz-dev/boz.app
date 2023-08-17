@@ -222,11 +222,11 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                 </>
                             )}
                             <Card image={image} setImage={setImage} customer={customer} />
-                            <Box sx={{ flexDirection: "column", width: "55%", gap: "2vw", alignSelf: "start" }}>
+                            <Box sx={{ flexDirection: "column", width: "55%", gap: "1vw", alignSelf: "start" }}>
                                 <h1>{customer?.name}</h1>
                                 <Box sx={{ flexDirection: "column", width: "100%", gap: "vw" }}>
                                     <Container name="Informações da Empresa" children />
-                                    <Box sx={{ flexDirection: "column", gap: "2vw", width: "100%" }}>
+                                    <Box sx={{ flexDirection: "column", gap: "0.5vw", width: "100%" }}>
                                         <Box sx={{ flexDirection: "row", gap: "0.5vw" }}>
                                             {customer?.services.map((service) => (
                                                 <Tag
@@ -244,12 +244,11 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                             <Box
                                                 sx={{
                                                     width: "100%",
-                                                    maxHeight: "15.5vw",
+                                                    height: "12.5vw",
                                                     overflowY: "auto",
                                                     paddingRight: "0.8vw",
                                                     scrollbarColor: "red",
                                                     scrollbarWidth: "5vw",
-
                                                     "&::-webkit-scrollbar-thumb": {
                                                         backgroundColor: "#888" /* Cor do rastreador */,
                                                         borderRadius: "10px" /* Borda arredondada do rastreador */,
