@@ -68,39 +68,24 @@ export const Card: React.FC<CardProps> = ({ name, username, phone, email, roles,
                     />
                 )
             ) : !user ? (
-                <Skeleton
-                    variant="circular"
-                    animation="wave"
-                    sx={{ width: "12vw", height: "12vw", bgcolor: skeletonColor }}
-                />
+                <Skeleton variant="circular" animation="wave" sx={{ width: "12vw", height: "12vw", bgcolor: skeletonColor }} />
             ) : (
                 <Avatar size={"12vw"} user={user} />
             )}
             <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
                 {!name ? (
-                    <Skeleton
-                        variant="rounded"
-                        animation="wave"
-                        sx={{ width: "15vw", height: "2vw", bgcolor: skeletonColor }}
-                    />
+                    <Skeleton variant="rounded" animation="wave" sx={{ width: "15vw", height: "2vw", bgcolor: skeletonColor }} />
                 ) : (
                     <p style={{ fontWeight: "600", fontSize: "1.3vw", color: "secondary.main" }}>{name}</p>
                 )}
                 {!username ? (
-                    <Skeleton
-                        variant="rounded"
-                        animation="wave"
-                        sx={{ width: "10vw", height: "1vw", bgcolor: skeletonColor }}
-                    />
+                    <Skeleton variant="rounded" animation="wave" sx={{ width: "10vw", height: "1vw", bgcolor: skeletonColor }} />
                 ) : (
                     <p style={{ fontSize: "1.0vw", color: "secondary.main" }}>@{username}</p>
                 )}
             </Box>
-            <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.6vw", whiteSpace: "pre-wrap" }}>
-                {roles &&
-                    roles.map((role) => (
-                        <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />
-                    ))}
+            <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.5vw", flexWrap: "wrap" }}>
+                {roles && roles.map((role) => <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />)}
             </Box>
 
             {!editing && (
