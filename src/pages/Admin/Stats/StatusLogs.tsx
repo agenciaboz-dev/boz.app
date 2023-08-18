@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Collapse, IconButton } from "@mui/material"
+import { Box, Collapse, IconButton, SxProps } from "@mui/material"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { useUser } from "../../../hooks/useUser"
 import { Avatar } from "../../../components/Avatar"
@@ -26,10 +26,10 @@ const Status: React.FC<{ status: number }> = ({ status }) => {
     )
 }
 
-const UserAvatar: React.FC<{ user: User }> = ({ user }) => (
+export const UserAvatar: React.FC<{ user: User; avatarSize?: string }> = ({ user, avatarSize }) => (
     <Box sx={{ gap: "1vw", alignItems: "center", color: "text.secondary", fontSize: "1vw" }}>
-        <Avatar user={user} size={"2.5vw"} small />
-        {user.name}
+        <Avatar user={user} size={avatarSize || "2.5vw"} small />
+        {user.name.split(" ")[0]}
     </Box>
 )
 

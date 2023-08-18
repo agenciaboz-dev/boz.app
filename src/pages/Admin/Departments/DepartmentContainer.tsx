@@ -5,6 +5,7 @@ import { useDarkMode } from "../../../hooks/useDarkMode"
 import { useColors } from "../../../hooks/useColors"
 import { useUser } from "../../../hooks/useUser"
 import { DepartmentForm } from "./DepartmentForm"
+import { UsersToolip } from "../../Profile/UsersTooltip"
 
 interface DepartmentContainerProps {
     department: Department
@@ -49,22 +50,24 @@ export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ depart
                     <EditIcon />
                 </IconButton>
             )}
-            <Box
-                title={users.map((user) => user.name).toString()}
-                sx={{
-                    padding: "0.5vw",
-                    borderRadius: "50%",
-                    fontSize: "0.7vw",
-                    minWidth: "1.5vw",
-                    height: "1.5vw",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "secondary.main",
-                    bgcolor: darkMode ? darken(colors.primary, 0.5) : lighten(colors.primary, 0.4),
-                }}
-            >
-                {users.length}
-            </Box>
+            <UsersToolip users={users}>
+                <Box
+                    sx={{
+                        padding: "0.5vw",
+                        cursor: "default",
+                        borderRadius: "50%",
+                        fontSize: "0.7vw",
+                        minWidth: "1.5vw",
+                        height: "1.5vw",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        color: "secondary.main",
+                        bgcolor: darkMode ? darken(colors.primary, 0.5) : lighten(colors.primary, 0.4),
+                    }}
+                >
+                    {users.length}
+                </Box>
+            </UsersToolip>
         </Box>
     )
 }
