@@ -4,6 +4,7 @@ declare interface Customer {
     recomendations: string
     active: boolean
     services: Service[]
+    qrcodes: QrCode[]
 }
 
 declare interface CustomerForm {

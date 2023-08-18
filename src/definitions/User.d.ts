@@ -11,6 +11,7 @@ declare interface User {
 
     department: Department
     roles: Role[]
+    qrcodes: QrCode[]
 
     connected?: boolean
 }
