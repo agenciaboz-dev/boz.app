@@ -13,7 +13,7 @@ export const Stats: React.FC<StatsProps> = ({ user }) => {
 
     return (
         <Box sx={{ padding: "2vw" }}>
-            <StatusLogs logs={logs.status} />
+            <StatusLogs logs={logs.status.sort((a, b) => b.id - a.id)} />
         </Box>
     )
 }
