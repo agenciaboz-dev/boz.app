@@ -82,7 +82,7 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
                 </IconButton>
             </Box>
             <Collapse in={open} unmountOnExit>
-                <Box sx={{ borderBottom: "2px solid", borderRadius: "0.5vw", color: "primary.main", width: "25vw" }}>
+                <Box sx={{ borderBottom: "2px solid", borderRadius: "0.5vw", color: "primary.main", width: "25vw", flexDirection: "column" }}>
                     <DataTable
                         pagination
                         paginationComponentOptions={{
@@ -103,6 +103,7 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
                             headRow: { style: { backgroundColor: colors.background.primary, fontSize: "0.8vw" } },
                             table: { style: { backgroundColor: colors.background.primary } },
                             rows: { style: { cursor: "pointer", backgroundColor: colors.background.primary, fontSize: "0.8vw" } },
+                            pagination: { style: { backgroundColor: colors.background.primary, fontSize: "0.6vw" } },
                         }}
                     />
                 </Box>
@@ -118,7 +119,7 @@ export const StatusLogs: React.FC<StatusLogsProps> = ({ logs }) => {
     const nonConnectedUsers = list.filter((user) => !connectedList.map((item) => item.id).includes(user.id))
 
     return (
-        <Box sx={{ flexDirection: "column", gap: "1vw", color: "primary.main", fontWeight: "bold", height: "75vh", overflowY: "auto" }}>
+        <Box sx={{ flexDirection: "column", gap: "1vw", color: "primary.main", fontWeight: "bold", height: "85vh", overflowY: "auto" }}>
             Log de atividade
             {connectedUsers.map((user) => (
                 <UserContainer key={user.id} user={user} logs={logs.filter((log) => log.user.id == user.id)} />

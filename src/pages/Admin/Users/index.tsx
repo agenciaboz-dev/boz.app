@@ -51,7 +51,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                             flexWrap: "wrap",
                             backgroundColor: "background.default",
                             margin: "2vw 2vw 0 2vw",
-                            height: "75vh",
+                            height: "85vh",
                         }}
                     >
                         <NewButton
