@@ -42,12 +42,25 @@ export const useFormatMessageTime = () => {
             months[month]
         } de ${date.getFullYear()}`
     }
-
+    
     const mobileFormat = (date: Date) => {
+        const now = new Date();
+        
+        const diffInDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 3600 * 24));
+        const weekDay = (date.getDay() + 1) as Days;
+        const day = date.getDate();
+        const month = (date.getMonth() + 1) as Months;
+    
+        if (diffInDays === 0) {
+            return `${date.toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })}`;
+        } else if (diffInDays <= 5) {
+            return `${days[weekDay]}`;
+        } else {
+            return `${months[month]}/${date.getFullYear()}`;
+        }
+    }    
 
-    }
-
-    return format
+    return isMobile ? mobileFormat : format
 }
 
 // sexta, 08 de agosto de 2023
