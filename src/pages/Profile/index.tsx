@@ -15,6 +15,8 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen"
 import DateRangeIcon from "@mui/icons-material/DateRange"
 import TextFieldsOutlinedIcon from "@mui/icons-material/TextFieldsOutlined"
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined"
+import InstagramIcon from "@mui/icons-material/Instagram"
+import WhatsAppIcon from "@mui/icons-material/WhatsApp"
 import { Tag } from "../../components/Tag"
 import { useUser } from "../../hooks/useUser"
 import { NewButton } from "../../components/NewButton"
@@ -47,7 +49,9 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     const { snackbar } = useSnackbar()
     const { getDateString } = useDate()
 
-    const [profile, setProfile] = useState(createOnly ? undefined : username ? list.find((item) => item.username == username) : user)
+    const [profile, setProfile] = useState(
+        createOnly ? undefined : username ? list.find((item) => item.username == username) : user
+    )
     const [isEditing, setIsEditing] = useState(createOnly)
     const [image, setImage] = useState<File>()
     const [selectedRoles, setSelectedRoles] = useState<Role[]>(profile?.roles || [])
@@ -61,13 +65,15 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
             username: "",
             phone: "",
         }),
+        instagram: "",
+        github: "",
         birth: getDateString(profile?.birth, true) || "",
         departmentId: departments.find((item) => item.id == profile?.department?.id)?.id || 1,
     })
 
     const shouldEdit = !!(user.id == profile?.id) || admin
 
-    const wrapperStyle: SxProps = { flexDirection: "column", gap: "3vw", padding: "3vw", flex: 1 }
+    const wrapperStyle: SxProps = { flexDirection: "column", gap: "1vw", padding: "3vw", flex: 1 }
 
     const handleSubmit = (values: UserForm) => {
         const data = {
@@ -80,6 +86,12 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
         setLoading(true)
         io.emit(createOnly ? "user:new" : "user:update", data)
     }
+
+    const containsElement = (department: string | undefined, search: string) => {
+        return department === search
+    }
+    const filterDevTag = containsElement(profile?.department.name, "Tecnologia")
+    //console.log(filterDevTag)
 
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
@@ -171,9 +183,19 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
             <Box sx={{ padding: "2vw", height: "82%" }}>
                 <Paper
                     elevation={3}
-                    sx={{ width: "100%", height: "100%", bgcolor: "background.default", borderRadius: "0 3vw 0", position: "relative" }}
+                    sx={{
+                        width: "100%",
+                        height: "100%",
+                        bgcolor: "background.default",
+                        borderRadius: "0 3vw 0",
+                        position: "relative",
+                    }}
                 >
-                    <IconButton sx={{ position: "absolute", top: "1vw", left: "1vw" }} color="secondary" onClick={() => navigate(-1)}>
+                    <IconButton
+                        sx={{ position: "absolute", top: "1vw", left: "1vw" }}
+                        color="secondary"
+                        onClick={() => navigate(-1)}
+                    >
                         <ArrowBackIosNewIcon />
                     </IconButton>
                     {isEditing ? (
@@ -201,12 +223,18 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                             <Box sx={{ alignSelf: "end", gap: "1vw" }}>
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={() => (createOnly ? navigate("/admin/users") : setIsEditing(false))}
+                                                    onClick={() =>
+                                                        createOnly ? navigate("/admin/users") : setIsEditing(false)
+                                                    }
                                                 >
                                                     Cancelar
                                                 </Button>
                                                 <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
-                                                    {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "salvar"}
+                                                    {loading ? (
+                                                        <CircularProgress size="1.5rem" color="secondary" />
+                                                    ) : (
+                                                        "salvar"
+                                                    )}
                                                 </Button>
                                             </Box>
                                         </Box>
@@ -224,14 +252,29 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                     icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
                                 />
                             )}
-                            <Card name={profile?.name} username={profile?.username} roles={profile?.roles} user={profile} />
+                            <Card
+                                name={profile?.name}
+                                username={profile?.username}
+                                email={profile?.email}
+                                phone={profile?.phone}
+                                roles={profile?.roles}
+                                user={profile}
+                                dev={filterDevTag}
+                            />
                             <Box sx={wrapperStyle}>
                                 <Container name="Informações Pessoais">
-                                    <Data icon={<TextFieldsOutlinedIcon color="primary" />} title="Nome" value={profile?.name} />
                                     <Data
-                                        icon={<PhoneIcon color="primary" />}
+                                        icon={<TextFieldsOutlinedIcon color="primary" />}
+                                        title="Nome"
+                                        value={profile?.name}
+                                    />
+                                    <Data
+                                        icon={<WhatsAppIcon color="primary" />}
                                         title="Telefone"
-                                        value={patternFormatter(profile?.phone || "", { format: masks.phone, patternChar: "0" })}
+                                        value={patternFormatter(profile?.phone || "", {
+                                            format: masks.phone,
+                                            patternChar: "0",
+                                        })}
                                     />
                                     <Data
                                         icon={<FolderOpenIcon color="primary" />}
@@ -244,18 +287,37 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                         title="Data de nascimento"
                                         value={getDateString(profile?.birth, true)}
                                     />
-                                    <Data icon={<PermIdentityIcon color="primary" />} title="Nome de usuário" value={profile?.username} />
+                                    <Data
+                                        icon={<PermIdentityIcon color="primary" />}
+                                        title="Nome de usuário"
+                                        value={profile?.username}
+                                    />
                                 </Container>
-
+                                <Container name="Redes Sociais">
+                                    <Data
+                                        icon={<InstagramIcon color="primary" />}
+                                        title="Instagram"
+                                        value={`@${profile?.username}`}
+                                    />
+                                </Container>
                                 <Container name="Setor">
-                                    <Data icon={<WorkOutlineOutlinedIcon color="primary" />} title="Departamento" value={profile?.department?.name} />
+                                    <Data
+                                        icon={<WorkOutlineOutlinedIcon color="primary" />}
+                                        title="Departamento"
+                                        value={profile?.department?.name}
+                                    />
                                     <Data
                                         icon={<PermIdentityIcon color="primary" />}
                                         title="Funções"
                                         value={
                                             <>
                                                 {profile?.roles?.map((role) => (
-                                                    <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />
+                                                    <Tag
+                                                        key={role.id}
+                                                        name={role.tag}
+                                                        tooltip={role.name}
+                                                        sx={{ fontSize: "0.7vw" }}
+                                                    />
                                                 ))}
                                             </>
                                         }

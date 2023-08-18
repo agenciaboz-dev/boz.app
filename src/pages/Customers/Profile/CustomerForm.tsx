@@ -42,7 +42,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
             sx={{
                 flexDirection: "column",
                 width: "100%",
-                gap: "2vw",
+                gap: "0.7vw",
                 height: "100%",
             }}
         >
@@ -79,6 +79,14 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     </MenuItem>
                 ))}
             </TextField>
+            <TaiTextField
+                label="Instagram"
+                name="instagram"
+                value={values.instagram}
+                onChange={handleChange}
+                required={false}
+            />
+            <TaiTextField label="Website" name="website" value={values.website} onChange={handleChange} required={false} />
         </Box>
     )
 }
