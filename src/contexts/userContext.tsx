@@ -85,10 +85,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             addConnectedUser(user)
         })
 
+        io.on("user:delete", (user) => {
+            setconnectedList((prevList) => prevList.filter((item) => item.id != user.id))
+        })
+
         return () => {
             io.off("user:connect")
             io.off("user:disconnect")
             io.off("user:status:update")
+            io.off("user:delete")
         }
     }, [connectedList])
 

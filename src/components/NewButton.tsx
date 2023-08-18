@@ -1,5 +1,5 @@
 import React from "react"
-import { AlertColor, Button } from "@mui/material"
+import { AlertColor, Button, CircularProgress } from "@mui/material"
 import zIndex from "@mui/material/styles/zIndex"
 
 interface NewButtonProps {
@@ -10,9 +10,10 @@ interface NewButtonProps {
     right?: string | number
     icon?: React.ReactElement
     color?: AlertColor
+    loading?: boolean
 }
 
-export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, onClick, icon, color }) => {
+export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, onClick, icon, color, loading }) => {
     const Icon = () => icon || <></>
 
     return (
@@ -28,12 +29,14 @@ export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, 
                 width: "4vw",
                 height: "4vw",
                 zIndex: 2,
+                justifyContent: "center",
+                alignItems: "center",
             }}
             variant="contained"
             color={color}
             onClick={onClick}
         >
-            <Icon />
+            {loading ? <CircularProgress color={"secondary"} size="1.5rem" /> : <Icon />}
         </Button>
     )
 }
