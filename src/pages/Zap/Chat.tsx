@@ -54,14 +54,14 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     height: "100%",
                     overflow: "hidden",
                     color: "primary.main",
-                    width: isMobile ? "100%" : "13vw",
+                    width: isMobile ? "66vw" : "13vw",
                     fontSize: isMobile ? "4vw" : "0.8vw",
                 }}
             >
                 <p style={{ fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{chat.name}</p>
                 <Box color="text.secondary">
                     <p
-                        style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: isMobile ? "75vw" : "19vw", overflow: "hidden", fontSize: isMobile ? "4vw" : "0.8vw" }}
+                        style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", width: isMobile ? "100%" : "19vw", overflow: "hidden", fontSize: isMobile ? "4vw" : "0.8vw" }}
                         title={chat.lastMessage?.body}
                     >
                         {chat.lastMessage?.body}
@@ -73,23 +73,23 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     marginLeft: "auto",
                     alignItems: "flex-end",
                     flexDirection: "column",
-                    justifyContent: "space-between",
+                    justifyContent: isMobile ? "center" : "space-between",
                     height: "100%",
                     color: "primary.main",
                 }}
             >
-                <p style={{ fontSize: "0.6vw" }}>{formatTime(new Date(chat.lastMessage?.timestamp * 1000))}</p>
+                <p style={{ display: isMobile ? "none" : "", fontSize: "0.6vw" }}>{formatTime(new Date(chat.lastMessage?.timestamp * 1000))}</p>
                 {!!chat.unreadCount && (
                     <Box
                         color={"secondary.main"}
                         sx={{
                             bgcolor: "warning.main",
-                            borderRadius: "1vw",
+                            borderRadius: "50%",
                             padding: "0.3vw",
-                            fontSize: "0.7vw",
+                            fontSize: isMobile ? "4vw" : "0.7vw",
                             fontWeight: "bold",
-                            minWidth: "1.5vw",
-                            height: "1.5vw",
+                            minWidth: isMobile ? "8vw" : "1.5vw",
+                            height: isMobile ? "8vw" : "1.5vw",
                             justifyContent: "center",
                             alignItems: "center",
                         }}
