@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, SxProps, alpha, darken, lighten } from "@mui/material"
+import { Box, SxProps, Tooltip, alpha, darken, lighten } from "@mui/material"
 import { useColors } from "../hooks/useColors"
 import { useDarkMode } from "../hooks/useDarkMode"
 
@@ -18,33 +18,35 @@ export const Tag: React.FC<TagProps> = ({ name, tooltip, fontSize, sx, color, on
     const { darkMode } = useDarkMode()
 
     return (
-        <Box
-            title={tooltip}
-            sx={{
-                fontSize: `${fontSize}`,
-                width: "max-content",
-                backgroundColor: color || (darkMode ? darken(colors.primary, 0.4) : lighten(colors.primary, 0.4)),
-                borderRadius: "7vw",
-                padding: "0.5vw",
-                color: colors.secondary,
-                justifyContent: "center",
-                alignItems: "center",
+        <Tooltip title={tooltip} enterDelay={0} placement="bottom-start">
+            <Box
+                sx={{
+                    fontSize: `${fontSize}`,
+                    width: "max-content",
+                    backgroundColor: color || (darkMode ? darken(colors.primary, 0.4) : lighten(colors.primary, 0.4)),
+                    borderRadius: "7vw",
+                    padding: "0.5vw",
+                    color: colors.secondary,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    cursor: "default",
 
-                "&: hover": onClick
-                    ? {
-                          transition: "0.2s",
-                          cursor: "pointer",
-                          bgcolor: "primary.main",
-                      }
-                    : {},
+                    "&: hover": onClick
+                        ? {
+                              transition: "0.2s",
+                              cursor: "pointer",
+                              bgcolor: "primary.main",
+                          }
+                        : {},
 
-                ...sx,
-            }}
-            onClick={() => {
-                if (onClick) onClick()
-            }}
-        >
-            {name}
-        </Box>
+                    ...sx,
+                }}
+                onClick={() => {
+                    if (onClick) onClick()
+                }}
+            >
+                {name}
+            </Box>
+        </Tooltip>
     )
 }
