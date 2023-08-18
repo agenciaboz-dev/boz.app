@@ -41,7 +41,7 @@ export const Card: React.FC<CardProps> = ({ name, username, phone, email, roles,
             elevation={3}
             sx={{
                 width: "25%",
-                padding: "6.5vw 3vw",
+                padding: "7vw 3vw",
                 flexDirection: "column",
                 alignItems: "center",
                 gap: "1.5vw",
@@ -104,13 +104,13 @@ export const Card: React.FC<CardProps> = ({ name, username, phone, email, roles,
             </Box>
 
             {!editing && (
-                <Box sx={{ gap: "0.9vw", paddingTop: "5vw" }}>
+                <Box sx={{ gap: "0.9vw", paddingTop: "4vw" }}>
                     <Tooltip title={username}>
-                        <InstagramIcon color="primary" onClick={handleInstagramClick} />
+                        <InstagramIcon color="secondary" onClick={handleInstagramClick} />
                     </Tooltip>
                     {dev && (
                         <Tooltip title={username}>
-                            <GitHubIcon color="primary" onClick={handleGithubClick} />
+                            <GitHubIcon color="secondary" onClick={handleGithubClick} />
                         </Tooltip>
                     )}
                 </Box>
