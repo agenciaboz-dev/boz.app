@@ -9,6 +9,7 @@ import BusinessIcon from "@mui/icons-material/Business"
 import CategoryIcon from "@mui/icons-material/Category"
 import BarChartIcon from "@mui/icons-material/BarChart"
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner"
+import { FileDownload } from "@mui/icons-material"
 
 import { useNavigate } from "react-router-dom"
 
@@ -110,6 +111,16 @@ export const useMenuList = () => {
                     onClick: () => navigate("/admin/stats"),
                 },
             ],
+        },
+        {
+            id: 9,
+            icon: <FileDownload />,
+            name: "Baixar",
+            path: "/download",
+            onClick: () =>
+                window
+                    .open("https://github.com/agenciaboz-dev/boz.electron/releases/download/windows/boz.electron-1.0.0-setup.exe", "_blank")
+                    ?.focus(),
         },
     ]
 
