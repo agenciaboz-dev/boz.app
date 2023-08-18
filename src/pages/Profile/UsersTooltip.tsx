@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Tooltip } from "@mui/material"
+import { Box, Paper, Tooltip } from "@mui/material"
 import { UserAvatar } from "../Admin/Stats/StatusLogs"
 
 interface UsersToolipProps {
@@ -12,12 +12,13 @@ export const UsersToolip: React.FC<UsersToolipProps> = ({ children, users }) => 
         <Tooltip
             placement="bottom-start"
             enterDelay={0}
+            componentsProps={{ tooltip: { sx: { bgcolor: "background.default", padding: 0 } } }}
             title={
-                <Box sx={{ flexDirection: "column", gap: "0.3vw" }}>
+                <Paper sx={{ flexDirection: "column", gap: "0.3vw", bgcolor: "background.default", padding: "0.5vw", color: "text.secondary" }}>
                     {users.map((user) => (
                         <UserAvatar user={user} avatarSize="2vw" />
                     ))}
-                </Box>
+                </Paper>
             }
         >
             {children}
