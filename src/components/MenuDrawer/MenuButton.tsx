@@ -26,6 +26,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ menu, sx }) => {
             color: active ? (menu.submenus ? "secondary.main" : "background.paper") : "secondary.main",
             pointerEvents: active ? (menu.submenus ? "auto" : "none") : "auto",
             fontWeight: "bold",
+            fontSize: "1vw",
             gap: "1vw",
             ...sx,
         }
@@ -57,7 +58,11 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ menu, sx }) => {
                         const Icon = () => menu.icon
 
                         return (
-                            <MenuItem key={menu.id} sx={{ ...buildStyle(active, menu), paddingLeft: "3vw" }} onClick={() => handleMenuClick(menu)}>
+                            <MenuItem
+                                key={menu.id}
+                                sx={{ ...buildStyle(active, menu), paddingLeft: "3vw", fontSize: "0.85vw" }}
+                                onClick={() => handleMenuClick(menu)}
+                            >
                                 <Icon />
                                 {menu.name}
                             </MenuItem>
