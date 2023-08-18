@@ -10,4 +10,6 @@ declare interface Customer {
 declare interface CustomerForm {
     name: string
     recomendations: string
+    instagram?: string
+    website?: string
 }

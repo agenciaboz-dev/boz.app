@@ -20,6 +20,8 @@ import { useUser } from "../../../hooks/useUser"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import { useConfirmDialog } from "burgos-confirm"
 import { useSnackbar } from "burgos-snackbar"
+import InstagramIcon from "@mui/icons-material/Instagram"
+import LanguageIcon from "@mui/icons-material/Language"
 
 interface ProfileProps {
     admin?: boolean
@@ -56,6 +58,8 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
             name: "",
             recomendations: "",
         }),
+        instagram: "",
+        website: "",
     })
 
     const shouldEdit = isAdmin() || admin
@@ -253,13 +257,17 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                                 />
                                             ))}
                                         </Box>
+
+                                        <Data title="Instagram" value={`@username`} icon={<InstagramIcon />} />
+                                        <Data title="Website" value={"https://site.com.br"} icon={<LanguageIcon />} />
+
                                         <Box sx={{ flexDirection: "column", gap: "0.5vw", width: "100%" }}>
                                             <Data title="Nome" value={customer?.name} icon={<BusinessIcon />} />
                                             <Data title="Recomendações" value={" "} icon={<NotesIcon />} />
                                             <Box
                                                 sx={{
                                                     width: "100%",
-                                                    height: "13.0vw",
+                                                    height: "10.0vw",
                                                     overflowY: "auto",
                                                     paddingRight: "0.8vw",
                                                     scrollbarColor: "red",
