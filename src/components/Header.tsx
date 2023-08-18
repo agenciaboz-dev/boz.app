@@ -21,7 +21,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
-    const isMobile = useMediaQuery({ orientation: "portrait" })
+    const isMobile = useMediaQuery('orientation: "portrait"')
 
     const userDrawer = useUser().drawer
     const menuDrawer = useMenu().drawer

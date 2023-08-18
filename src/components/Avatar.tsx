@@ -16,7 +16,7 @@ interface AvatarProps {
 type ColorStatus = 1 | 2 | 3
 
 export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickModal }) => {
-    const isMobile = useMediaQuery({ orientation: "portrait" })
+    const isMobile = useMediaQuery('orientation: "portrait"')
     const { getProfilePic } = useImageUrl()
     const { connectedList, list } = useUser()
     const picture = usePictureModal()
