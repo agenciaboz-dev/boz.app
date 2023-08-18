@@ -11,7 +11,7 @@ interface ChatProps {
 }
 
 export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const formatTime = useFormatMessageTime()
     const picture = usePictureModal()
     const { drawer } = useZap()
@@ -54,7 +54,7 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     height: "100%",
                     overflow: "hidden",
                     color: "primary.main",
-                    width: isMobile ? "66vw" : "13vw",
+                    width: isMobile ? "60vw" : "13vw",
                     fontSize: isMobile ? "4vw" : "0.8vw",
                 }}
             >
@@ -78,7 +78,7 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     color: "primary.main",
                 }}
             >
-                <p style={{ fontSize: "0.6vw" }}>{formatTime(new Date(chat.lastMessage?.timestamp * 1000))}</p>
+                <p style={{ fontSize: isMobile ? "3.5vw" : "0.6vw" }}>{formatTime(new Date(chat.lastMessage?.timestamp * 1000))}</p>
                 {!!chat.unreadCount && (
                     <Box
                         color={"secondary.main"}

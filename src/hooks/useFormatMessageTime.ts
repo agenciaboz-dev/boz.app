@@ -4,7 +4,7 @@ type Months = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 11 | 12
 type Days = 1 | 2 | 3 | 4 | 5 | 6 | 7
 
 export const useFormatMessageTime = () => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
 
     const months = {
         [1]: "Jan",
@@ -42,12 +42,25 @@ export const useFormatMessageTime = () => {
             months[month]
         } de ${date.getFullYear()}`
     }
-
+    
     const mobileFormat = (date: Date) => {
+        const now = new Date();
         
-    }
+        const diffInDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 3600 * 24));
+        const weekDay = (date.getDay() + 1) as Days;
+        const day = date.getDate();
+        const month = (date.getMonth() + 1) as Months;
+    
+        if (diffInDays === 0) {
+            return `${date.toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })}`;
+        } else if (diffInDays <= 5) {
+            return `${days[weekDay]}`;
+        } else {
+            return `${months[month]}/${date.getFullYear()}`;
+        }
+    }    
 
-    return format
+    return isMobile ? mobileFormat : format
 }
 
 // sexta, 08 de agosto de 2023

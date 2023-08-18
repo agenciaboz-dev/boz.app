@@ -12,7 +12,7 @@ import { useMediaQuery } from "@mui/material"
 interface MenuDrawerProps {}
 
 export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const navigate = useNavigate()
 
     const { drawer } = useMenu()

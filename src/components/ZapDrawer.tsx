@@ -22,7 +22,7 @@ const AlwaysScrollToBottom = () => {
 }
 
 export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
 
     const io = useIo()
     const picture = usePictureModal()
@@ -68,6 +68,7 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
         >
             <Box
                 sx={{
+                    justifyContent: isMobile ? "flex-end" : "center", 
                     width: "100%",
                     bgcolor: "background.paper",
                     height: "100vh",

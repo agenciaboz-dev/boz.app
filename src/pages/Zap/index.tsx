@@ -16,7 +16,7 @@ interface ZapProps {
 }
 
 export const Zap: React.FC<ZapProps> = ({ user }) => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
 
     const { client, qrcode, loading, setCurrentChat, currentChat } = useZap()
     const { setOnSearch } = useSearch()

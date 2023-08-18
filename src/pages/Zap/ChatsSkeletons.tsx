@@ -6,7 +6,7 @@ import { useMediaQuery } from "@mui/material"
 interface ChatsSkeletonsProps {}
 
 export const ChatsSkeletons: React.FC<ChatsSkeletonsProps> = ({}) => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const skeletons = useArray().newArray(10)
 
     return (

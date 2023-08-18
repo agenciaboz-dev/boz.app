@@ -181,7 +181,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     return (
         <Box sx={backgroundStyle}>
             {!admin && <Header user={user} disabledSearch />}
-            <Box sx={{ padding: "2vw", height: "82%" }}>
+            <Box sx={{ padding: "2vw", height: "80%" }}>
                 <Paper
                     elevation={3}
                     sx={{
@@ -274,7 +274,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                 user={profile}
                                 dev={filterDevTag}
                             />
-                            <Box sx={wrapperStyle}>
+                            <Box sx={{ ...wrapperStyle, padding: "3vw", gap: "3vw" }}>
                                 <Container name="Informações Pessoais">
                                     <Data
                                         icon={<TextFieldsOutlinedIcon color="primary" />}
