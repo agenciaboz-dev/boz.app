@@ -13,7 +13,7 @@ import { useMediaQuery } from "@mui/material"
 interface UserDrawerProps {}
 
 export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const { user, drawer, updateStatus } = useUser()
     const navigate = useNavigate()
 

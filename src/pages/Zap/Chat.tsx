@@ -11,7 +11,7 @@ interface ChatProps {
 }
 
 export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const formatTime = useFormatMessageTime()
     const picture = usePictureModal()
     const { drawer } = useZap()

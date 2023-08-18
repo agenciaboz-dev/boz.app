@@ -4,7 +4,7 @@ type Months = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 11 | 12
 type Days = 1 | 2 | 3 | 4 | 5 | 6 | 7
 
 export const useFormatMessageTime = () => {
-    const isMobile = useMediaQuery('orientation: "portrait"')
+    const isMobile = useMediaQuery('(orientation: portrait)')
 
     const months = {
         [1]: "Jan",
@@ -44,7 +44,7 @@ export const useFormatMessageTime = () => {
     }
 
     const mobileFormat = (date: Date) => {
-        
+
     }
 
     return format
