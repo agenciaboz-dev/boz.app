@@ -36,7 +36,7 @@ export const PictureModal: React.FC<PictureModalProps> = ({}) => {
                 imgProps={{ sx: { objectFit: "contain" } }}
                 src={url}
                 variant="rounded"
-                sx={{ width: "40vw", height: "40vw", objectFit: "contain" }}
+                sx={{ width: "40vw", height: "40vw", objectFit: "contain", color: "primary.main", backgroundColor: "background.default" }}
             />
         </Dialog>
     )
