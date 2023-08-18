@@ -30,6 +30,7 @@ import { UserForm } from "./UserForm"
 import { useDate } from "../../hooks/useDate"
 import { patternFormatter } from "react-number-format"
 import masks from "../../style/masks"
+import { scrollbar } from "../../style/scrollbar"
 
 interface ProfileProps {
     user: User
@@ -73,7 +74,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
 
     const shouldEdit = !!(user.id == profile?.id) || admin
 
-    const wrapperStyle: SxProps = { flexDirection: "column", gap: "1vw", padding: "3vw", flex: 1 }
+    const wrapperStyle: SxProps = { flexDirection: "column", gap: "1vw", padding: "3vw 1vw", flex: 1 }
 
     const handleSubmit = (values: UserForm) => {
         const data = {
@@ -213,14 +214,26 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                             editing
                                         />
                                         <Box sx={{ ...wrapperStyle, gap: "2vw" }}>
-                                            <UserForm
-                                                values={values}
-                                                handleChange={handleChange}
-                                                selectedRoles={selectedRoles}
-                                                setSelectedRoles={setSelectedRoles}
-                                                createOnly={createOnly}
-                                            />
-                                            <Box sx={{ alignSelf: "end", gap: "1vw" }}>
+                                            <Box
+                                                sx={{
+                                                    ...scrollbar,
+                                                    padding: "0 3.5vw",
+                                                    height: "90%",
+                                                    flexDirection: "column",
+                                                    overflowX: "none",
+                                                    gap: "1vw",
+                                                    paddingBottom: "2vw",
+                                                }}
+                                            >
+                                                <UserForm
+                                                    values={values}
+                                                    handleChange={handleChange}
+                                                    selectedRoles={selectedRoles}
+                                                    setSelectedRoles={setSelectedRoles}
+                                                    createOnly={createOnly}
+                                                />
+                                            </Box>
+                                            <Box sx={{ alignSelf: "end", gap: "1vw", paddingRight: "4vw" }}>
                                                 <Button
                                                     variant="outlined"
                                                     onClick={() =>

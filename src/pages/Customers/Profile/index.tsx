@@ -22,6 +22,7 @@ import { useConfirmDialog } from "burgos-confirm"
 import { useSnackbar } from "burgos-snackbar"
 import InstagramIcon from "@mui/icons-material/Instagram"
 import LanguageIcon from "@mui/icons-material/Language"
+import { scrollbar } from "../../../style/scrollbar"
 
 interface ProfileProps {
     admin?: boolean
@@ -266,26 +267,10 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                                             <Data title="Recomendações" value={" "} icon={<NotesIcon />} />
                                             <Box
                                                 sx={{
+                                                    ...scrollbar,
                                                     width: "100%",
                                                     height: "10.0vw",
-                                                    overflowY: "auto",
                                                     paddingRight: "0.8vw",
-                                                    scrollbarColor: "red",
-                                                    scrollbarWidth: "5vw",
-                                                    "&::-webkit-scrollbar-thumb": {
-                                                        backgroundColor: "#888" /* Cor do rastreador */,
-                                                        borderRadius: "10px" /* Borda arredondada do rastreador */,
-                                                    },
-
-                                                    /* Estilizando o rastreador quando estiver passando o mouse */
-                                                    "&::-webkit-scrollbar-thumb:hover": {
-                                                        backgroundColor: "#555" /* Cor do rastreador ao passar o mouse */,
-                                                    },
-
-                                                    /* Estilizando o rastreador quando estiver ativo (arrastando) */
-                                                    "&::-webkit-scrollbar-thumb:active": {
-                                                        backgroundColor: "#333" /* Cor do rastreador quando arrastado */,
-                                                    },
                                                 }}
                                             >
                                                 <p style={{ color, width: "100%", textAlign: "justify" }}>
