@@ -68,6 +68,7 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
         >
             <Box
                 sx={{
+                    justifyContent: isMobile ? "flex-end" : "center", 
                     width: "100%",
                     bgcolor: "background.paper",
                     height: "100vh",
