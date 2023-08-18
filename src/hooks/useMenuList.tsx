@@ -70,7 +70,7 @@ export const useMenuList = () => {
                     icon: <QrCodeScannerIcon />,
                     name: "Qr code",
                     path: "/qrcode",
-                    onClick: () => navigate("/qrcode"),
+                    onClick: () => navigate("/tools/qrcode"),
                 },
             ],
         },
