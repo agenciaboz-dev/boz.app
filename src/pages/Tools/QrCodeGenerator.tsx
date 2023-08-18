@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Box, Button, CircularProgress, IconButton, MenuItem, Paper, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, IconButton, MenuItem, Paper, TextField, useMediaQuery } from "@mui/material"
 import { QrCodeModal } from "../../components/QrcodeModal"
 import { Form, Formik } from "formik"
 import { saveAs } from "file-saver"
@@ -17,6 +17,7 @@ interface QrCodeGeneratorProps {
 }
 
 export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const ref = useRef<HTMLCanvasElement>(null)
     const io = useIo()
 
@@ -95,7 +96,8 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
     }, [])
 
     return (
-        <Box sx={{ padding: "2vw" }}>
+        <Box sx={{ padding: "2vw", flexDirection: "column", gap: "2vw" }}>
+            <h1>QR Code</h1>
             <Paper
                 sx={{
                     bgcolor: "background.default",
@@ -107,46 +109,13 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     fontWeight: "bold",
                 }}
             >
-                qr code
                 <Formik initialValues={initialQrCode} onSubmit={handleSubmit} enableReinitialize>
                     {({ values, handleChange }) => (
                         <Form>
-                            <Box sx={{ gap: "1vw" }}>
-                                <Box sx={{ flexDirection: "column", gap: "1vw", width: "30vw" }}>
+                            <Box sx={{ gap: "1vw", flexDirection: isMobile ? "column-reverse" : "" }}>
+                                <Box sx={{ flexDirection: "column", gap: "1vw", flex: "1" }}>
                                     <TextField
-                                        label="carregar código salvo"
-                                        value={loadedCode}
-                                        onChange={(event) => handleChangeInitialQrCode(event)}
-                                        select
-                                        sx={textFieldStyle}
-                                        SelectProps={{
-                                            MenuProps: {
-                                                sx: selectMenuStyle,
-                                            },
-                                        }}
-                                        required
-                                    >
-                                        <MenuItem value={0} sx={{}}>
-                                            <IconButton></IconButton>
-                                        </MenuItem>
-                                        {savedCodes.map((qrcode) => (
-                                            <MenuItem key={qrcode.id} value={qrcode.id}>
-                                                {qrcode.name} - {qrcode.customer.name}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                    <TextField label="nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} required />
-                                    <TextField
-                                        label="código"
-                                        name="code"
-                                        value={values.code}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                        required
-                                        autoComplete="off"
-                                    />
-                                    <TextField
-                                        label="cliente"
+                                        label="Cliente"
                                         name="customerId"
                                         value={values.customerId}
                                         onChange={handleChange}
@@ -166,13 +135,25 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                                             </MenuItem>
                                         ))}
                                     </TextField>
+                                    <TextField label="Nome do código" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} required />
+                                    <TextField
+                                        label="Código"
+                                        name="code"
+                                        value={values.code}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                        required
+                                        autoComplete="off"
+                                    />
 
                                     <Box sx={{ gap: "1vw", marginTop: "auto" }}>
-                                        <Button variant="outlined" fullWidth onClick={() => downloadImage(values)}>
+                                        <Button sx={{ gap: "0.25vw" }} variant="outlined" fullWidth onClick={() => downloadImage(values)}>
                                             <FileDownload color="primary" />
+                                            Baixar
                                         </Button>
-                                        <Button variant="outlined" fullWidth type="submit">
+                                        <Button sx={{ gap: "0.4vw" }} variant="outlined" fullWidth type="submit">
                                             {loading ? <CircularProgress size="1.5rem" color="primary" /> : <SaveIcon color="primary" />}
+                                            Salvar
                                         </Button>
                                     </Box>
                                 </Box>
@@ -181,6 +162,41 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                         </Form>
                     )}
                 </Formik>
+            </Paper>
+            <h2 style={{ color: "#555" }}>Carregar código salvo:</h2>
+            <Paper
+                sx={{
+                    bgcolor: "background.default",
+                    flexDirection: "column",
+                    gap: "1vw",
+                    padding: "1vw",
+                    borderBottom: "2px solid",
+                    borderRadius: "0.5vw",
+                    fontWeight: "bold",
+                }}
+            >
+                <TextField
+                    label="Selecione"
+                    value={loadedCode}
+                    onChange={(event) => handleChangeInitialQrCode(event)}
+                    select
+                    sx={textFieldStyle}
+                    SelectProps={{
+                        MenuProps: {
+                            sx: selectMenuStyle,
+                        },
+                    }}
+                    required
+                >
+                    <MenuItem value={0} sx={{}}>
+                        <IconButton></IconButton>
+                    </MenuItem>
+                    {savedCodes.map((qrcode) => (
+                        <MenuItem key={qrcode.id} value={qrcode.id}>
+                            {qrcode.name} - {qrcode.customer.name}
+                        </MenuItem>
+                    ))}
+                </TextField>
             </Paper>
         </Box>
     )
