@@ -29,7 +29,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                 padding: "2vw",
                 gap: "2vw",
                 overflowY: "auto",
-                height: "80vh",
+                height: "87vh",
             }}
         >
             <Routes>

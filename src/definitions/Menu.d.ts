@@ -3,5 +3,7 @@ declare interface Menu {
     name: string
     path: string
     icon: React.ReactElement
-    onClick: () => void
+    onClick: (data?: any) => void
+
+    submenus?: Menu[]
 }
