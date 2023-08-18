@@ -95,91 +95,93 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
     }, [])
 
     return (
-        <Paper
-            sx={{
-                bgcolor: "background.default",
-                flexDirection: "column",
-                gap: "1vw",
-                padding: "1vw",
-                borderBottom: "2px solid",
-                borderRadius: "0.5vw",
-                fontWeight: "bold",
-            }}
-        >
-            qr code
-            <Formik initialValues={initialQrCode} onSubmit={handleSubmit} enableReinitialize>
-                {({ values, handleChange }) => (
-                    <Form>
-                        <Box sx={{ gap: "1vw" }}>
-                            <Box sx={{ flexDirection: "column", gap: "1vw", width: "30vw" }}>
-                                <TextField
-                                    label="carregar código salvo"
-                                    value={loadedCode}
-                                    onChange={(event) => handleChangeInitialQrCode(event)}
-                                    select
-                                    sx={textFieldStyle}
-                                    SelectProps={{
-                                        MenuProps: {
-                                            sx: selectMenuStyle,
-                                        },
-                                    }}
-                                    required
-                                >
-                                    <MenuItem value={0} sx={{}}>
-                                        <IconButton></IconButton>
-                                    </MenuItem>
-                                    {savedCodes.map((qrcode) => (
-                                        <MenuItem key={qrcode.id} value={qrcode.id}>
-                                            {qrcode.name} - {qrcode.customer.name}
+        <Box sx={{ padding: "2vw" }}>
+            <Paper
+                sx={{
+                    bgcolor: "background.default",
+                    flexDirection: "column",
+                    gap: "1vw",
+                    padding: "1vw",
+                    borderBottom: "2px solid",
+                    borderRadius: "0.5vw",
+                    fontWeight: "bold",
+                }}
+            >
+                qr code
+                <Formik initialValues={initialQrCode} onSubmit={handleSubmit} enableReinitialize>
+                    {({ values, handleChange }) => (
+                        <Form>
+                            <Box sx={{ gap: "1vw" }}>
+                                <Box sx={{ flexDirection: "column", gap: "1vw", width: "30vw" }}>
+                                    <TextField
+                                        label="carregar código salvo"
+                                        value={loadedCode}
+                                        onChange={(event) => handleChangeInitialQrCode(event)}
+                                        select
+                                        sx={textFieldStyle}
+                                        SelectProps={{
+                                            MenuProps: {
+                                                sx: selectMenuStyle,
+                                            },
+                                        }}
+                                        required
+                                    >
+                                        <MenuItem value={0} sx={{}}>
+                                            <IconButton></IconButton>
                                         </MenuItem>
-                                    ))}
-                                </TextField>
-                                <TextField label="nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} required />
-                                <TextField
-                                    label="código"
-                                    name="code"
-                                    value={values.code}
-                                    onChange={handleChange}
-                                    sx={textFieldStyle}
-                                    required
-                                    autoComplete="off"
-                                />
-                                <TextField
-                                    label="cliente"
-                                    name="customerId"
-                                    value={values.customerId}
-                                    onChange={handleChange}
-                                    select
-                                    sx={textFieldStyle}
-                                    SelectProps={{
-                                        MenuProps: {
-                                            sx: selectMenuStyle,
-                                        },
-                                    }}
-                                    required
-                                >
-                                    <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
-                                    {customers.map((customer) => (
-                                        <MenuItem key={customer.id} value={customer.id}>
-                                            {customer.name}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                        {savedCodes.map((qrcode) => (
+                                            <MenuItem key={qrcode.id} value={qrcode.id}>
+                                                {qrcode.name} - {qrcode.customer.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                    <TextField label="nome" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} required />
+                                    <TextField
+                                        label="código"
+                                        name="code"
+                                        value={values.code}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                        required
+                                        autoComplete="off"
+                                    />
+                                    <TextField
+                                        label="cliente"
+                                        name="customerId"
+                                        value={values.customerId}
+                                        onChange={handleChange}
+                                        select
+                                        sx={textFieldStyle}
+                                        SelectProps={{
+                                            MenuProps: {
+                                                sx: selectMenuStyle,
+                                            },
+                                        }}
+                                        required
+                                    >
+                                        <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
+                                        {customers.map((customer) => (
+                                            <MenuItem key={customer.id} value={customer.id}>
+                                                {customer.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
 
-                                <Box sx={{ gap: "1vw", marginTop: "auto" }}>
-                                    <Button variant="outlined" fullWidth onClick={() => downloadImage(values)}>
-                                        <FileDownload color="primary" />
-                                    </Button>
-                                    <Button variant="outlined" fullWidth type="submit">
-                                        {loading ? <CircularProgress size="1.5rem" color="primary" /> : <SaveIcon color="primary" />}
-                                    </Button>
+                                    <Box sx={{ gap: "1vw", marginTop: "auto" }}>
+                                        <Button variant="outlined" fullWidth onClick={() => downloadImage(values)}>
+                                            <FileDownload color="primary" />
+                                        </Button>
+                                        <Button variant="outlined" fullWidth type="submit">
+                                            {loading ? <CircularProgress size="1.5rem" color="primary" /> : <SaveIcon color="primary" />}
+                                        </Button>
+                                    </Box>
                                 </Box>
+                                <QrCodeModal value={values.code} ref={ref} />
                             </Box>
-                            <QrCodeModal value={values.code} ref={ref} />
-                        </Box>
-                    </Form>
-                )}
-            </Formik>
-        </Paper>
+                        </Form>
+                    )}
+                </Formik>
+            </Paper>
+        </Box>
     )
 }

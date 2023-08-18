@@ -8,6 +8,7 @@ import Groups3Icon from "@mui/icons-material/Groups3"
 import BusinessIcon from "@mui/icons-material/Business"
 import CategoryIcon from "@mui/icons-material/Category"
 import BarChartIcon from "@mui/icons-material/BarChart"
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner"
 
 import { useNavigate } from "react-router-dom"
 
@@ -63,6 +64,15 @@ export const useMenuList = () => {
             path: "/tools",
             icon: <SettingsIcon />,
             onClick: () => navigate("/tools"),
+            submenus: [
+                {
+                    id: 1,
+                    icon: <QrCodeScannerIcon />,
+                    name: "Qr code",
+                    path: "/tools/qrcode",
+                    onClick: () => navigate("/tools/qrcode"),
+                },
+            ],
         },
         {
             id: 8,
