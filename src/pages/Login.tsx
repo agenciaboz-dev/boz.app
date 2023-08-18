@@ -50,7 +50,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                 gap: isMobile ? "10vw" : "5vw",
             }}
         >
-            <img src={logo} alt="agência boz" style={{ aspectRatio: "2/1", width: isMobile ? "50vw" : "24vw" }} />
+            <img src={logo} alt="agência boz" style={{ aspectRatio: "2/1", width: isMobile ? "70vw" : "24vw" }} />
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ values, handleChange }) => (
                     <Form>

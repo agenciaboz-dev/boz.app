@@ -6,6 +6,10 @@ export const textFieldStyle: SxProps = {
     "& .MuiInputLabel-root": {
         color: "grey",
         fontSize: "0.8vw",
+
+        "@media (max-width: 600px)": {
+            fontSize: "5vw",
+        },
     },
 
     // não funciona
@@ -19,6 +23,10 @@ export const textFieldStyle: SxProps = {
             // borderColor: "primary.main",
         },
         fontSize: "1vw",
+
+        "@media (max-width: 600px)": {
+            fontSize: "3.75vw",
+        },
     },
 
     "& .MuiInput-root": {
@@ -43,5 +51,9 @@ export const textFieldStyle: SxProps = {
 
     "& .MuiInputLabel-shrink": {
         fontSize: "1vw", // Tamanho da fonte do label quando dentro do input
+        
+        "@media (max-width: 600px)": {
+            fontSize: "4vw",
+        },
     },
 }
