@@ -38,7 +38,7 @@ export const TaiTextField: React.FC<TaiTextFieldProps> = ({
     const webkitbg: SxProps = {
         "& .MuiInputBase-input.MuiOutlinedInput-input:-webkit-autofill": {
             "-webkit-box-shadow": ` 0 0 0 100px ${colors.background.primary} inset`,
-            borderRadius: "inherit",
+            borderRadius: "initial",
         },
     }
 
