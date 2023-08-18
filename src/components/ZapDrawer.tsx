@@ -116,14 +116,14 @@ export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
                     {({ values, handleChange }) => (
                         <Form>
                             <TextField
-                                placeholder="envie uma mensagem"
+                                placeholder="Envie uma mensagem"
                                 name="message"
                                 value={values.message}
                                 onChange={handleChange}
                                 sx={textFieldStyle}
                                 autoComplete="off"
                                 InputProps={{
-                                    sx: { color: "primary.main", bgcolor: "background.default" },
+                                    sx: { color: "primary.main", bgcolor: "background.default", paddingLeft: "0", paddingRight: "0", },
                                     startAdornment: (
                                         <Checkbox title="assinar mensagem" checked={sign} onChange={(_, checked) => handleSignCheckbox(checked)} />
                                     ),

@@ -98,7 +98,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                     sx={textFieldStyle}
                     InputProps={{
                         color: "secondary",
-                        sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw" },
+                        sx: { color: darkMode ? "text.primary" : "secondary.main", gap: "0.5vw", fontSize: isMobile ? "4.5vw" : "" },
                         startAdornment: <SearchIcon />,
                         endAdornment: (
                             <IconButton color="secondary" onClick={() => setSearchValue("")} style={{ padding: isMobile ? "0" : "" }}>
