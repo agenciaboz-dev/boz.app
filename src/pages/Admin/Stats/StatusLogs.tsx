@@ -1,11 +1,12 @@
 import React, { useState } from "react"
-import { Box, Collapse, IconButton, SxProps } from "@mui/material"
+import { Box, Collapse, IconButton, SxProps, Tab, Tabs } from "@mui/material"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { useUser } from "../../../hooks/useUser"
 import { Avatar } from "../../../components/Avatar"
 import DataTable, { TableColumn } from "react-data-table-component"
 import { useColors } from "../../../hooks/useColors"
 import { useDarkMode } from "../../../hooks/useDarkMode"
+import { buildWorkedHours } from "./workedHours"
 
 interface StatusLogsProps {
     logs: StatusLog[]
@@ -36,8 +37,11 @@ export const UserAvatar: React.FC<{ user: User; avatarSize?: string }> = ({ user
 const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs }) => {
     const colors = useColors()
     const { darkMode } = useDarkMode()
+    // logs.sort((a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime())
+    const workedHours = buildWorkedHours(logs)
 
     const [open, setOpen] = useState(false)
+    const [renderHours, setRenderHours] = useState(0)
 
     const columns: TableColumn<StatusLog>[] = [
         {
@@ -83,6 +87,11 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
             </Box>
             <Collapse in={open} unmountOnExit>
                 <Box sx={{ borderBottom: "2px solid", borderRadius: "0.5vw", color: "primary.main", width: "25vw", flexDirection: "column" }}>
+                    <Tabs value={renderHours} onChange={(_, value) => setRenderHours(value)} variant="fullWidth">
+                        <Tab label="Lista" value={0} />
+                        <Tab label="Horas" value={1} />
+                    </Tabs>
+
                     <DataTable
                         pagination
                         paginationComponentOptions={{
@@ -92,9 +101,9 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
                             selectAllRowsItemText: "Todos",
                         }}
                         noDataComponent={<p>Nenhum registro</p>}
-                        columns={columns}
+                        columns={renderHours ? workedHours.columns : columns}
                         theme={darkMode ? "dark" : ""}
-                        data={logs}
+                        data={renderHours ? workedHours.data : logs}
                         highlightOnHover
                         fixedHeader
                         fixedHeaderScrollHeight={"38.1vw"}
