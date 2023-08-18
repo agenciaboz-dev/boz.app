@@ -28,7 +28,7 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
                 paddingBottom: "3vw",
             }}
         >
-            <p style={{ fontWeight: "bold", fontSize: "1vw" }}>{department.name}</p>
+            <Box sx={{ fontWeight: "bold", fontSize: "1vw" }}>{department.name}</Box>
 
             <Box sx={{ flexDirection: "column", bgcolor: "background.default", gap: "0.5vw", height: "100%", overflowY: "auto" }}>
                 {connectedUsers.map((user) => (
