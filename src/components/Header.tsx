@@ -12,7 +12,7 @@ import { textFieldStyle } from "../style/textfield"
 import { Avatar } from "./Avatar"
 import { useSearch } from "../hooks/useSearch"
 import ClearIcon from "@mui/icons-material/Clear"
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from "@mui/material"
 import normalize from "../tools/normalize"
 
 interface HeaderProps {
@@ -21,7 +21,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
-    const isMobile = useMediaQuery({ maxWidth: 600 })
+    const isMobile = useMediaQuery({ orientation: "portrait" })
 
     const userDrawer = useUser().drawer
     const menuDrawer = useMenu().drawer

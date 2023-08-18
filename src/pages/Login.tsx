@@ -8,12 +8,12 @@ import { useUser } from "../hooks/useUser"
 import { useColors } from "../hooks/useColors"
 import { ModeToggler } from "../components/ModeToggler"
 import { textFieldStyle } from "../style/textfield"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
-    const isMobile = useMediaQuery({maxWidth: 600})
+    const isMobile = useMediaQuery({orientation: "portrait"})
     const colors = useColors()
     const { login } = useUser()
 

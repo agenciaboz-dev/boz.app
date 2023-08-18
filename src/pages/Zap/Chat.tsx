@@ -3,7 +3,7 @@ import { Avatar, Badge, Box, MenuItem, Paper } from "@mui/material"
 import { useZap } from "../../hooks/useZap"
 import { useFormatMessageTime } from "../../hooks/useFormatMessageTime"
 import { usePictureModal } from "../../hooks/usePictureModal"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 
 interface ChatProps {
     chat: Chat
@@ -11,7 +11,7 @@ interface ChatProps {
 }
 
 export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
-    const isMobile = useMediaQuery({maxWidth: 600})
+    const isMobile = useMediaQuery({orientation: "portrait"})
     const formatTime = useFormatMessageTime()
     const picture = usePictureModal()
     const { drawer } = useZap()
@@ -73,12 +73,12 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     marginLeft: "auto",
                     alignItems: "flex-end",
                     flexDirection: "column",
-                    justifyContent: isMobile ? "center" : "space-between",
+                    justifyContent: isMobile ? "space-around" : "space-between",
                     height: "100%",
                     color: "primary.main",
                 }}
             >
-                <p style={{ display: isMobile ? "none" : "", fontSize: "0.6vw" }}>{formatTime(new Date(chat.lastMessage?.timestamp * 1000))}</p>
+                <p style={{ fontSize: "0.6vw" }}>{formatTime(new Date(chat.lastMessage?.timestamp * 1000))}</p>
                 {!!chat.unreadCount && (
                     <Box
                         color={"secondary.main"}

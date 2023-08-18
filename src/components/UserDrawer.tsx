@@ -8,12 +8,12 @@ import colors from "../style/colors"
 import { useNavigate } from "react-router-dom"
 import DuoIcon from "@mui/icons-material/Duo"
 import ChairIcon from "@mui/icons-material/Chair"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 
 interface UserDrawerProps {}
 
 export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
-    const isMobile = useMediaQuery({ maxWidth: 600 })
+    const isMobile = useMediaQuery({ orientation: "portrait" })
     const { user, drawer, updateStatus } = useUser()
     const navigate = useNavigate()
 

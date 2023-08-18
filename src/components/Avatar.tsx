@@ -3,7 +3,7 @@ import { AlertColor, Badge, Avatar as MuiAvatar, SxProps } from "@mui/material"
 import { useUser } from "../hooks/useUser"
 import { useImageUrl } from "../hooks/useImageUrl"
 import { usePictureModal } from "../hooks/usePictureModal"
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from "@mui/material"
 
 interface AvatarProps {
     user: User
@@ -16,7 +16,7 @@ interface AvatarProps {
 type ColorStatus = 1 | 2 | 3
 
 export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickModal }) => {
-    const isMobile = useMediaQuery({ maxWidth: 600 })
+    const isMobile = useMediaQuery({ orientation: "portrait" })
     const { getProfilePic } = useImageUrl()
     const { connectedList, list } = useUser()
     const picture = usePictureModal()

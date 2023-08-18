@@ -2,14 +2,14 @@ import React from "react"
 import { Box, alpha } from "@mui/material"
 import { useMuiTheme } from "../hooks/useMuiTheme"
 import { useFormatMessageTime } from "../hooks/useFormatMessageTime"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 
 interface MessageProps {
     message: Message
 }
 
 export const Message: React.FC<MessageProps> = ({ message }) => {
-    const isMobile = useMediaQuery({maxWidth: 600})
+    const isMobile = useMediaQuery({orientation: "portrait"})
     const formatTime = useFormatMessageTime()
     const theme = useMuiTheme()
     const primary = alpha(theme.palette.primary.main, 0.5)

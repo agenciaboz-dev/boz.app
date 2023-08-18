@@ -7,12 +7,12 @@ import { useUser } from "../../hooks/useUser"
 import { useNavigate } from "react-router-dom"
 import { MenuButton } from "./MenuButton"
 import LogoutIcon from "@mui/icons-material/Logout"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 
 interface MenuDrawerProps {}
 
 export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
-    const isMobile = useMediaQuery({maxWidth: 600})
+    const isMobile = useMediaQuery({orientation: "portrait"})
     const navigate = useNavigate()
 
     const { drawer } = useMenu()

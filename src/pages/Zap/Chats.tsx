@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, Paper } from "@mui/material"
 import { Chat } from "./Chat"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 
 interface ChatsProps {
     chats: Chat[]
@@ -9,7 +9,7 @@ interface ChatsProps {
 }
 
 export const Chats: React.FC<ChatsProps> = ({ chats, onChatClick }) => {
-    const isMobile = useMediaQuery({maxWidth: 600})
+    const isMobile = useMediaQuery({orientation: "portrait"})
 
     return (
         <Box sx={{ flexDirection: "column", gap: "0.1vw", width: isMobile ? "100%" : "30%" }}>
