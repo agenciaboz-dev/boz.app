@@ -29,5 +29,9 @@ interface UserForm {
     cpf: string
     phone: string
     birth: string
+
+    instagram: string
+    github?: string
+
     departmentId: number
 }

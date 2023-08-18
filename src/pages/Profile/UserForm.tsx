@@ -93,6 +93,22 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     required
                     disabled={!createOnly}
                 />
+                <TaiTextField
+                    label="Instagram"
+                    name="instagram"
+                    value={values.instagram}
+                    onChange={handleChange}
+                    style={style}
+                    required={false}
+                />
+                <TaiTextField
+                    label="Github"
+                    name="Github"
+                    value={values.github}
+                    onChange={handleChange}
+                    style={style}
+                    required={false}
+                />
             </Container>
 
             <Container name="Setor">

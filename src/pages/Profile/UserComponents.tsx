@@ -42,8 +42,8 @@ export const Title: React.FC<{ name: string }> = ({ name }) => {
 }
 
 export const Container: React.FC<{ children: React.ReactNode; name: string }> = ({ children, name }) => (
-    <Box sx={{ flexDirection: "column", gap: "2vw" }}>
+    <Box sx={{ flexDirection: "column", gap: "1vw" }}>
         <Title name={name} />
-        <Box sx={{ gap: "1vw", width: "100%", flexWrap: "wrap", justifyContent: "space-between" }}>{children}</Box>
+        <Box sx={{ gap: "0.7vw", width: "100%", flexWrap: "wrap", justifyContent: "space-between" }}>{children}</Box>
     </Box>
 )
