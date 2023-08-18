@@ -64,15 +64,14 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     }}
                 />
                 <TaiTextField
-                    label="Nome de usuário"
-                    name="username"
-                    value={values.username}
+                    label="E-mail"
+                    name="email"
+                    value={values.email}
                     onChange={handleChange}
                     style={style}
                     required
-                    disabled={!createOnly}
                 />
-                <TaiTextField label="E-mail" name="email" value={values.email} onChange={handleChange} style={style} required />
+
                 <TaiTextField
                     label="Data de nascimento"
                     name="birth"
@@ -84,6 +83,15 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                         inputComponent: MaskedInput,
                         inputProps: { mask: masks.date },
                     }}
+                />
+                <TaiTextField
+                    label="Nome de usuário"
+                    name="username"
+                    value={values.username}
+                    onChange={handleChange}
+                    style={style}
+                    required
+                    disabled={!createOnly}
                 />
             </Container>
 
