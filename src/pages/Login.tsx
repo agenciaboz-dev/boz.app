@@ -13,7 +13,7 @@ import { useMediaQuery } from "@mui/material"
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
-    const isMobile = useMediaQuery({orientation: "portrait"})
+    const isMobile = useMediaQuery('orientation: "portrait"')
     const colors = useColors()
     const { login } = useUser()
 

@@ -22,7 +22,7 @@ const AlwaysScrollToBottom = () => {
 }
 
 export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
-    const isMobile = useMediaQuery({orientation: "portrait"})
+    const isMobile = useMediaQuery('orientation: "portrait"')
 
     const io = useIo()
     const picture = usePictureModal()

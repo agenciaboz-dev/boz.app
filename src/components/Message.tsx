@@ -9,7 +9,7 @@ interface MessageProps {
 }
 
 export const Message: React.FC<MessageProps> = ({ message }) => {
-    const isMobile = useMediaQuery({orientation: "portrait"})
+    const isMobile = useMediaQuery('orientation: "portrait"')
     const formatTime = useFormatMessageTime()
     const theme = useMuiTheme()
     const primary = alpha(theme.palette.primary.main, 0.5)
