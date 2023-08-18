@@ -1,7 +1,6 @@
 import { SxProps } from "@mui/material"
 import { useDarkMode } from "../hooks/useDarkMode"
 
-
 export const textFieldStyle: SxProps = {
     "& .MuiInputLabel-root": {
         color: "grey",
