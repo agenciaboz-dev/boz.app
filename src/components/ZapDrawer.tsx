@@ -11,7 +11,7 @@ import { useIo } from "../hooks/useIo"
 import { usePictureModal } from "../hooks/usePictureModal"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { useUser } from "../hooks/useUser"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 
 interface ZapDrawerProps {}
 
@@ -22,7 +22,7 @@ const AlwaysScrollToBottom = () => {
 }
 
 export const ZapDrawer: React.FC<ZapDrawerProps> = ({}) => {
-    const isMobile = useMediaQuery({maxWidth: 600})
+    const isMobile = useMediaQuery('orientation: "portrait"')
 
     const io = useIo()
     const picture = usePictureModal()

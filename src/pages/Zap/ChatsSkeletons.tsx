@@ -1,12 +1,12 @@
 import React from "react"
 import { Box, Skeleton } from "@mui/material"
 import { useArray } from "burgos-array"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 
 interface ChatsSkeletonsProps {}
 
 export const ChatsSkeletons: React.FC<ChatsSkeletonsProps> = ({}) => {
-    const isMobile = useMediaQuery({maxWidth: 600})
+    const isMobile = useMediaQuery('orientation: "portrait"')
     const skeletons = useArray().newArray(10)
 
     return (

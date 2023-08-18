@@ -8,7 +8,7 @@ import { Chats } from "./Chats"
 import { ChatsSkeletons } from "./ChatsSkeletons"
 import { ZapDrawer } from "../../components/ZapDrawer"
 import { useSearch } from "../../hooks/useSearch"
-import { useMediaQuery } from "react-responsive"
+import { useMediaQuery } from "@mui/material"
 import normalize from "../../tools/normalize"
 
 interface ZapProps {
@@ -16,7 +16,7 @@ interface ZapProps {
 }
 
 export const Zap: React.FC<ZapProps> = ({ user }) => {
-    const isMobile = useMediaQuery({ maxWidth: 600 })
+    const isMobile = useMediaQuery({ orientation: "portrait" })
 
     const { client, qrcode, loading, setCurrentChat, currentChat } = useZap()
     const { setOnSearch } = useSearch()

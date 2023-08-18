@@ -112,12 +112,18 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
 }
 
 export const StatusLogs: React.FC<StatusLogsProps> = ({ logs }) => {
-    const { list } = useUser()
+    const { list, connectedList } = useUser()
+
+    const connectedUsers = list.filter((user) => connectedList.map((item) => item.id).includes(user.id))
+    const nonConnectedUsers = list.filter((user) => !connectedList.map((item) => item.id).includes(user.id))
 
     return (
         <Box sx={{ flexDirection: "column", gap: "1vw", color: "primary.main", fontWeight: "bold", height: "75vh", overflowY: "auto" }}>
             Log de atividade
-            {list.map((user) => (
+            {connectedUsers.map((user) => (
+                <UserContainer key={user.id} user={user} logs={logs.filter((log) => log.user.id == user.id)} />
+            ))}
+            {nonConnectedUsers.map((user) => (
                 <UserContainer key={user.id} user={user} logs={logs.filter((log) => log.user.id == user.id)} />
             ))}
         </Box>
