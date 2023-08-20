@@ -12,7 +12,7 @@ export const QrCodeModal = forwardRef<HTMLCanvasElement, QrCodeModalProps>((prop
     const qrCodeSize = isMobile ? 50 * vw : 20 * vw
 
     return (
-        <Box ref={ref}>
+        <Box ref={ref} sx={{ justifyContent: "center" }}>
             <QRCode value={props.value} size={qrCodeSize} />
         </Box>
     )
