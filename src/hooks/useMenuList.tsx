@@ -117,10 +117,7 @@ export const useMenuList = () => {
             icon: <FileDownload />,
             name: "Baixar",
             path: "/download",
-            onClick: () =>
-                window
-                    .open("https://github.com/agenciaboz-dev/boz.electron/releases/download/windows/boz.electron-1.0.0-setup.exe", "_blank")
-                    ?.focus(),
+            onClick: () => window.open("https://github.com/agenciaboz-dev/boz.electron/releases/download/windows/Boz-setup.exe", "_blank")?.focus(),
         },
     ]
 
