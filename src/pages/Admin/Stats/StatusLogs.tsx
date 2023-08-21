@@ -109,9 +109,9 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
                         fixedHeaderScrollHeight={"38.1vw"}
                         // onRowClicked={(row) => navigate(`/dashboard/products/${row.id}`)}
                         customStyles={{
-                            headRow: { style: { backgroundColor: colors.background.primary, fontSize: "0.8vw" } },
+                            headRow: { style: { backgroundColor: colors.background.primary, fontSize: "0.6vw" } },
                             table: { style: { backgroundColor: colors.background.primary } },
-                            rows: { style: { cursor: "pointer", backgroundColor: colors.background.primary, fontSize: "0.8vw" } },
+                            rows: { style: { cursor: "pointer", backgroundColor: colors.background.primary, fontSize: "0.65vw" } },
                             pagination: { style: { backgroundColor: colors.background.primary, fontSize: "0.6vw" } },
                         }}
                     />
