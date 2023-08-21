@@ -44,7 +44,7 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
         >
             <Avatar
                 src={chat.profilePic}
-                sx={{ width: isMobile ? "12vw" : "3vw", height: isMobile ? "12vw" : "3vw", bgcolor: "primary.main" }}
+                sx={{ width: isMobile ? "15vw" : "3vw", height: isMobile ? "15vw" : "3vw", bgcolor: "primary.main" }}
                 onClick={() => picture.open(chat?.profilePic || "")}
             />
             <Box
@@ -78,7 +78,7 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                     color: "primary.main",
                 }}
             >
-                <p style={{ fontSize: isMobile ? "3.5vw" : "0.6vw" }}>{formatTime(new Date(chat.lastMessage?.timestamp * 1000))}</p>
+                <p style={{ fontSize: isMobile ? "3.5vw" : "0.6vw", wordWrap: "break-word" }}>{formatTime(new Date(chat.lastMessage?.timestamp * 1000))}</p>
                 {!!chat.unreadCount && (
                     <Box
                         color={"secondary.main"}

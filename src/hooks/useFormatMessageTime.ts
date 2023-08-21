@@ -55,8 +55,10 @@ export const useFormatMessageTime = () => {
             return `${date.toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })}`;
         } else if (diffInDays <= 5) {
             return `${days[weekDay]}`;
+        } else if (diffInDays <= 360) {
+            return `${months[month]}`;
         } else {
-            return `${months[month]}/${date.getFullYear()}`;
+            return `${date.getFullYear()}`;
         }
     }    
 
