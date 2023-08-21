@@ -95,6 +95,24 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     const filterDevTag = containsElement(profile?.department.name, "Tecnologia")
     //console.log(filterDevTag)
 
+    const scrollBar: SxProps = {
+        overflowY: "auto",
+
+        "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#888" /* Cor do rastreador */,
+            borderRadius: "10px" /* Borda arredondada do rastreador */,
+        },
+
+        /* Estilizando o rastreador quando estiver passando o mouse */
+        "&::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: "#555" /* Cor do rastreador ao passar o mouse */,
+        },
+
+        /* Estilizando o rastreador quando estiver ativo (arrastando) */
+        "&::-webkit-scrollbar-thumb:active": {
+            backgroundColor: "#333" /* Cor do rastreador quando arrastado */,
+        },
+    }
     const handleDelete = () => {
         if (deleting) return
         if (!profile) return
@@ -212,7 +230,11 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                         position: "relative",
                     }}
                 >
-                    <IconButton sx={{ position: "absolute", top: "1vw", left: "1vw" }} color="secondary" onClick={() => navigate(-1)}>
+                    <IconButton
+                        sx={{ position: "absolute", top: "1vw", left: "1vw" }}
+                        color="secondary"
+                        onClick={() => navigate(-1)}
+                    >
                         <ArrowBackIosNewIcon />
                     </IconButton>
                     {isEditing ? (
@@ -232,7 +254,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                         <Box sx={{ ...wrapperStyle, gap: "2vw" }}>
                                             <Box
                                                 sx={{
-                                                    ...scrollbar,
+                                                    ...scrollBar,
                                                     padding: "0 3.5vw",
                                                     height: "90%",
                                                     flexDirection: "column",
@@ -252,12 +274,18 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                             <Box sx={{ alignSelf: "end", gap: "1vw", paddingRight: "4vw" }}>
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={() => (createOnly ? navigate("/admin/users") : setIsEditing(false))}
+                                                    onClick={() =>
+                                                        createOnly ? navigate("/admin/users") : setIsEditing(false)
+                                                    }
                                                 >
                                                     Cancelar
                                                 </Button>
                                                 <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
-                                                    {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "salvar"}
+                                                    {loading ? (
+                                                        <CircularProgress size="1.5rem" color="secondary" />
+                                                    ) : (
+                                                        "salvar"
+                                                    )}
                                                 </Button>
                                             </Box>
                                         </Box>
@@ -273,15 +301,21 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                         onClick={handleDelete}
                                         bottom={"1vw"}
                                         right={"6vw"}
-                                            color="error"
-                                            loading={deleting}
-                                        icon={<DeleteForeverIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
+                                        color="error"
+                                        loading={deleting}
+                                        icon={
+                                            <DeleteForeverIcon
+                                                sx={{ width: "100%", height: "100%", color: colors.secondary }}
+                                            />
+                                        }
                                     />
                                     <NewButton
                                         onClick={() => setIsEditing(true)}
                                         bottom={"1vw"}
                                         right={"1vw"}
-                                        icon={<ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />}
+                                        icon={
+                                            <ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />
+                                        }
                                     />
                                 </>
                             )}
@@ -296,7 +330,11 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                             />
                             <Box sx={{ ...wrapperStyle, padding: "3vw", gap: "3vw" }}>
                                 <Container name="Informações Pessoais">
-                                    <Data icon={<TextFieldsOutlinedIcon color="primary" />} title="Nome" value={profile?.name} />
+                                    <Data
+                                        icon={<TextFieldsOutlinedIcon color="primary" />}
+                                        title="Nome"
+                                        value={profile?.name}
+                                    />
                                     <Data
                                         icon={<WhatsAppIcon color="primary" />}
                                         title="Telefone"
@@ -316,20 +354,37 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                         title="Data de nascimento"
                                         value={getDateString(profile?.birth, true)}
                                     />
-                                    <Data icon={<PermIdentityIcon color="primary" />} title="Nome de usuário" value={profile?.username} />
+                                    <Data
+                                        icon={<PermIdentityIcon color="primary" />}
+                                        title="Nome de usuário"
+                                        value={profile?.username}
+                                    />
                                 </Container>
                                 <Container name="Redes Sociais">
-                                    <Data icon={<InstagramIcon color="primary" />} title="Instagram" value={`@${profile?.username}`} />
+                                    <Data
+                                        icon={<InstagramIcon color="primary" />}
+                                        title="Instagram"
+                                        value={`@${profile?.username}`}
+                                    />
                                 </Container>
                                 <Container name="Setor">
-                                    <Data icon={<WorkOutlineOutlinedIcon color="primary" />} title="Departamento" value={profile?.department?.name} />
+                                    <Data
+                                        icon={<WorkOutlineOutlinedIcon color="primary" />}
+                                        title="Departamento"
+                                        value={profile?.department?.name}
+                                    />
                                     <Data
                                         icon={<PermIdentityIcon color="primary" />}
                                         title="Funções"
                                         value={
                                             <>
                                                 {profile?.roles?.map((role) => (
-                                                    <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />
+                                                    <Tag
+                                                        key={role.id}
+                                                        name={role.tag}
+                                                        tooltip={role.name}
+                                                        sx={{ fontSize: "0.7vw" }}
+                                                    />
                                                 ))}
                                             </>
                                         }
