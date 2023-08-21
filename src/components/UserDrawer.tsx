@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom"
 import DuoIcon from "@mui/icons-material/Duo"
 import ChairIcon from "@mui/icons-material/Chair"
 import { useMediaQuery } from "@mui/material"
-import RestaurantIcon from "@mui/icons-material/Restaurant"
 import { Stopwatch } from "./Stopwatch"
+import FastfoodIcon from "@mui/icons-material/Fastfood"
 
 interface UserDrawerProps {}
 
@@ -19,7 +19,13 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
     const { user, drawer, updateStatus } = useUser()
     const navigate = useNavigate()
 
-    const switchWrapperStyle: SxProps = { flexDirection: "column", color: "secondary.main", alignItems: "center", flexShrink: 0, flex: 1 }
+    const switchWrapperStyle: SxProps = {
+        flexDirection: "column",
+        color: "secondary.main",
+        alignItems: "center",
+        flexShrink: 0,
+        flex: 1,
+    }
 
     const handleClose = () => {
         drawer.close()
@@ -85,8 +91,8 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                         color="error"
                         checked={user?.status == 4}
                         onChange={() => updateStatus(4)}
-                        icon={<RestaurantIcon />}
-                        checkedIcon={<RestaurantIcon />}
+                        icon={<FastfoodIcon />}
+                        checkedIcon={<FastfoodIcon />}
                     />
                     {user?.status == 4 && <Stopwatch />}
                 </Box>
