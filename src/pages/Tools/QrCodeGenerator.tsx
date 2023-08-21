@@ -96,8 +96,8 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
     }, [])
 
     return (
-        <Box sx={{ padding: "2vw", flexDirection: "column", gap: "2vw" }}>
-            <h1>QR Code</h1>
+        <Box sx={{ color: "primary.main", padding: isMobile ? "8vw 2vw 2vw 2vw" : "2vw", margin: "2vw 5vw", flexDirection: "column", gap: isMobile ? "4vw" : "2vw" }}>
+            <h1 style={{ fontSize: isMobile ? "6vw" : "", textAlign: isMobile ? "center" : "left" }}>QR Code</h1>
             <Paper
                 sx={{
                     bgcolor: "background.default",
@@ -112,8 +112,8 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                 <Formik initialValues={initialQrCode} onSubmit={handleSubmit} enableReinitialize>
                     {({ values, handleChange }) => (
                         <Form>
-                            <Box sx={{ gap: "1vw", flexDirection: isMobile ? "column-reverse" : "" }}>
-                                <Box sx={{ flexDirection: "column", gap: "1vw", flex: "1" }}>
+                            <Box sx={{ gap: isMobile ? "2vw" : "1vw", flexDirection: isMobile ? "column-reverse" : "", padding: isMobile ? "2vw" : "" }}>
+                                <Box sx={{ flexDirection: "column", gap: isMobile ? "3vw" : "1vw", flex: "1" }}>
                                     <TextField
                                         label="Cliente"
                                         name="customerId"
@@ -163,13 +163,13 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     )}
                 </Formik>
             </Paper>
-            <h2 style={{ color: "#555" }}>Carregar código salvo:</h2>
+            <h2 style={{ color: "#656565", fontSize: isMobile ? "5vw" : "" }}>Carregar código salvo:</h2>
             <Paper
                 sx={{
                     bgcolor: "background.default",
                     flexDirection: "column",
                     gap: "1vw",
-                    padding: "1vw",
+                    padding: isMobile ? "3vw" : "1vw",
                     borderBottom: "2px solid",
                     borderRadius: "0.5vw",
                     fontWeight: "bold",
