@@ -86,27 +86,13 @@ export const useMenuList = () => {
             submenus: [
                 {
                     id: 1,
-                    icon: <Groups3Icon />,
-                    name: "Usuários",
-                    path: "/users",
-                    onClick: () => navigate("/admin/users"),
-                },
-                {
-                    id: 2,
-                    icon: <BusinessIcon />,
-                    name: "Clientes",
-                    path: "/customers",
-                    onClick: () => navigate("/admin/customers"),
-                },
-                {
-                    id: 3,
                     name: "Departamentos e funções",
                     path: "/departments",
                     icon: <CategoryIcon />,
                     onClick: () => navigate("/admin/departments"),
                 },
                 {
-                    id: 4,
+                    id: 2,
                     name: "Estatísticas",
                     path: "/stats",
                     icon: <BarChartIcon />,
