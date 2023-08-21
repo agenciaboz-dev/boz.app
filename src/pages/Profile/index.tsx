@@ -47,14 +47,12 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     const navigate = useNavigate()
 
     const { departments } = useDepartments()
-    const { list, addUser } = useUser()
+    const { list, addUser, isAdmin } = useUser()
     const { snackbar } = useSnackbar()
     const { confirm } = useConfirmDialog()
     const { getDateString } = useDate()
 
-    const [profile, setProfile] = useState(
-        createOnly ? undefined : username ? list.find((item) => item.username == username) : user
-    )
+    const [profile, setProfile] = useState(createOnly ? undefined : username ? list.find((item) => item.username == username) : user)
     const [isEditing, setIsEditing] = useState(createOnly)
     const [image, setImage] = useState<File>()
     const [selectedRoles, setSelectedRoles] = useState<Role[]>(profile?.roles || [])
@@ -75,7 +73,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
         departmentId: departments.find((item) => item.id == profile?.department?.id)?.id || 1,
     })
 
-    const shouldEdit = !!(user.id == profile?.id) || admin
+    const shouldEdit = !!(user.id == profile?.id) || isAdmin()
 
     const wrapperStyle: SxProps = { flexDirection: "column", gap: "1vw", padding: "3vw 1vw", flex: 1 }
 
