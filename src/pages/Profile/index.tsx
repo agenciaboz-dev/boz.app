@@ -52,7 +52,9 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     const { confirm } = useConfirmDialog()
     const { getDateString } = useDate()
 
-    const [profile, setProfile] = useState(createOnly ? undefined : username ? list.find((item) => item.username == username) : user)
+    const [profile, setProfile] = useState(
+        createOnly ? undefined : username ? list.find((item) => item.username == username) : user
+    )
     const [isEditing, setIsEditing] = useState(createOnly)
     const [image, setImage] = useState<File>()
     const [selectedRoles, setSelectedRoles] = useState<Role[]>(profile?.roles || [])
@@ -89,11 +91,11 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
         io.emit(createOnly ? "user:new" : "user:update", data)
     }
 
-    const containsElement = (department: string | undefined, search: string) => {
+    const containsElement = (department: number | undefined, search: number) => {
         return department === search
     }
-    const filterDevTag = containsElement(profile?.department.name, "Tecnologia")
-    //console.log(filterDevTag)
+    const filterDevTag = containsElement(profile?.department.id, 1)
+    //console.log(profile?.department.id)
 
     const scrollBar: SxProps = {
         overflowY: "auto",
@@ -322,8 +324,6 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                             <Card
                                 name={profile?.name}
                                 username={profile?.username}
-                                email={profile?.email}
-                                phone={profile?.phone}
                                 roles={profile?.roles}
                                 user={profile}
                                 dev={filterDevTag}
