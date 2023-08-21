@@ -1,12 +1,6 @@
 import { Box } from "@mui/material"
 import { TableColumn } from "react-data-table-component"
 
-const calculateMinutesDifference = (start: string, end: string): number => {
-    const startDate = new Date(start)
-    const endDate = new Date(end)
-    return (endDate.getTime() - startDate.getTime()) / 1000 / 60
-}
-
 export const buildWorkedHours = (logs: StatusLog[]) => {
     const groupedByDay = logs.reduce<Record<string, StatusLog[]>>((acc, item) => {
         const date = new Date(item.datetime).getDate()
@@ -15,30 +9,25 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
         return acc
     }, {})
 
-    // If you want the result to be an array of arrays
     const days = Object.values(groupedByDay)
 
     const connectedTimes = days.map((logs) => {
-        // Reduce the logs to calculate the total connected time
         logs.sort((a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime())
 
         const meetingMinutes = logs.reduce(
             (acc, log, index) => {
                 const { status, datetime } = log
 
-                // If the status is connected, meeting, or pause
                 if (status == 2) {
-                    // If there's no start time, this is the beginning of a connected period
                     if (!acc.meetingStartTime) {
                         acc.meetingStartTime = new Date(datetime)
                     }
                 }
 
-                // If the status is disconnected or this is the last log
                 if ((status === 0 || status === 1 || status === 3 || status === 4 || index === logs.length - 1) && acc.meetingStartTime) {
                     const endTime = new Date(datetime)
                     acc.totalMinutes += (endTime.getTime() - acc.meetingStartTime.getTime()) / 1000 / 60
-                    acc.meetingStartTime = null // Reset the start time
+                    acc.meetingStartTime = null
                 }
 
                 return acc
@@ -50,19 +39,16 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
             (acc, log, index) => {
                 const { status, datetime } = log
 
-                // If the status is connected, meeting, or pause
                 if (status == 3) {
-                    // If there's no start time, this is the beginning of a connected period
                     if (!acc.pauseStartTime) {
                         acc.pauseStartTime = new Date(datetime)
                     }
                 }
 
-                // If the status is disconnected or this is the last log
                 if ((status === 0 || status === 1 || status === 2 || status === 4 || index === logs.length - 1) && acc.pauseStartTime) {
                     const endTime = new Date(datetime)
                     acc.totalMinutes += (endTime.getTime() - acc.pauseStartTime.getTime()) / 1000 / 60
-                    acc.pauseStartTime = null // Reset the start time
+                    acc.pauseStartTime = null
                 }
 
                 return acc
@@ -74,19 +60,16 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
             (acc, log, index) => {
                 const { status, datetime } = log
 
-                // If the status is connected, meeting, or pause
                 if (status == 4) {
-                    // If there's no start time, this is the beginning of a connected period
                     if (!acc.lunchStartTime) {
                         acc.lunchStartTime = new Date(datetime)
                     }
                 }
 
-                // If the status is disconnected or this is the last log
                 if ((status === 0 || status === 1 || status === 2 || status === 3 || index === logs.length - 1) && acc.lunchStartTime) {
                     const endTime = new Date(datetime)
                     acc.totalMinutes += (endTime.getTime() - acc.lunchStartTime.getTime()) / 1000 / 60
-                    acc.lunchStartTime = null // Reset the start time
+                    acc.lunchStartTime = null
                 }
 
                 return acc
@@ -98,19 +81,16 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
             (acc, log, index) => {
                 const { status, datetime } = log
 
-                // If the status is connected, meeting, or pause
                 if (status === 1 || status === 2 || status === 3) {
-                    // If there's no start time, this is the beginning of a connected period
                     if (!acc.connectedStartTime) {
                         acc.connectedStartTime = new Date(datetime)
                     }
                 }
 
-                // If the status is disconnected or this is the last log
                 if ((status === 0 || status === 4 || index === logs.length - 1) && acc.connectedStartTime) {
                     const endTime = new Date(datetime)
                     acc.totalMinutes += (endTime.getTime() - acc.connectedStartTime.getTime()) / 1000 / 60
-                    acc.connectedStartTime = null // Reset the start time
+                    acc.connectedStartTime = null
                 }
 
                 return acc
@@ -120,7 +100,6 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
 
         const time = new Date()
 
-        // Add the total connected minutes
         const lunchTime = new Date()
         time.setHours(0, 0, 0, 0)
         time.setMinutes(totalMinutes.totalMinutes)
