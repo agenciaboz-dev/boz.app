@@ -41,7 +41,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
                 >
                     {user.name.split(" ")[0]}
                 </Box>
-                <Box sx={{ gap: isMobile ? "2vw" : "0.2vw", flexWrap: "wrap", width: isMobile ? "70vw" : "15vw" }}>
+                <Box sx={{ gap: isMobile ? "2vw" : "0.2vw", flexWrap: "wrap", width: isMobile ? "65vw" : "15vw" }}>
                     {user.roles.map((role) => (
                         <Tag
                             key={role.id}

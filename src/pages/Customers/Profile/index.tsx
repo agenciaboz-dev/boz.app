@@ -75,7 +75,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         alignSelf: "center",
         alignItems: "center",
         width: "80%",
-        height: "36vw",
+        height: "36.5vw",
         position: "relative",
     }
 
@@ -167,7 +167,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
                     backgroundColor: "background.paper",
                     width: "100%",
                     flexDirection: "column",
-                    height: "27vw",
+                    height: "70%",
                     maxHeight: "50vw",
                     position: "relative",
                     padding: "1vw",

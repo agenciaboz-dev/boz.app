@@ -49,6 +49,7 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
                 <Box
                     sx={{
                         flexDirection: "column",
+                        alignItems: isMobile ? "center" : "",
                         padding: "2vw",
                         height: "90vh",
                         overflowX: isMobile ? "hidden" : "auto",
@@ -60,7 +61,7 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
                         },
                     }}
                 >
-                    <p style={{ fontWeight: "bold", textAlign: isMobile ? "center" : "initial", padding: isMobile ? "4vw" : "" }}>
+                    <p style={{ fontSize: isMobile ? "6vw" : "", fontWeight: "bold", textAlign: isMobile ? "center" : "initial", padding: isMobile ? "8vw 4vw 4vw 4vw" : "" }}>
                         {client.info.pushname}
                     </p>
                     {loading ? <ChatsSkeletons /> : <Chats chats={chats} onChatClick={handleChatClick} />}

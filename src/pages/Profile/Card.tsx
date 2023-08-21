@@ -16,12 +16,10 @@ interface CardProps {
     image?: File
     setImage?: (file: File) => void
     editing?: boolean
-    phone?: string
-    email?: string
     dev?: boolean
 }
 
-export const Card: React.FC<CardProps> = ({ name, username, phone, email, roles, user, image, setImage, editing, dev }) => {
+export const Card: React.FC<CardProps> = ({ name, username, roles, user, image, setImage, editing, dev }) => {
     const colors = useColors()
     const { getProfilePic } = useImageUrl()
     const { darkMode } = useDarkMode()
@@ -41,7 +39,7 @@ export const Card: React.FC<CardProps> = ({ name, username, phone, email, roles,
             elevation={3}
             sx={{
                 width: "25%",
-                padding: "7vw 3vw",
+                padding: "9vw 3vw",
                 flexDirection: "column",
                 alignItems: "center",
                 gap: "1.5vw",
@@ -68,24 +66,41 @@ export const Card: React.FC<CardProps> = ({ name, username, phone, email, roles,
                     />
                 )
             ) : !user ? (
-                <Skeleton variant="circular" animation="wave" sx={{ width: "12vw", height: "12vw", bgcolor: skeletonColor }} />
+                <Skeleton
+                    variant="circular"
+                    animation="wave"
+                    sx={{ width: "12vw", height: "12vw", bgcolor: skeletonColor }}
+                />
             ) : (
                 <Avatar size={"12vw"} user={user} />
             )}
             <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
                 {!name ? (
-                    <Skeleton variant="rounded" animation="wave" sx={{ width: "15vw", height: "2vw", bgcolor: skeletonColor }} />
+                    <Skeleton
+                        variant="rounded"
+                        animation="wave"
+                        sx={{ width: "15vw", height: "2vw", bgcolor: skeletonColor }}
+                    />
                 ) : (
                     <p style={{ fontWeight: "600", fontSize: "1.3vw", color: "secondary.main" }}>{name}</p>
                 )}
                 {!username ? (
-                    <Skeleton variant="rounded" animation="wave" sx={{ width: "10vw", height: "1vw", bgcolor: skeletonColor }} />
+                    <Skeleton
+                        variant="rounded"
+                        animation="wave"
+                        sx={{ width: "10vw", height: "1vw", bgcolor: skeletonColor }}
+                    />
                 ) : (
                     <p style={{ fontSize: "1.0vw", color: "secondary.main" }}>@{username}</p>
                 )}
             </Box>
-            <Box sx={{ flexDirection: "row", alignItems: "center", gap: "0.5vw", flexWrap: "wrap" }}>
-                {roles && roles.map((role) => <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />)}
+            <Box
+                sx={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: "0.5vw", flexWrap: "wrap" }}
+            >
+                {roles &&
+                    roles.map((role) => (
+                        <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />
+                    ))}
             </Box>
 
             {!editing && (

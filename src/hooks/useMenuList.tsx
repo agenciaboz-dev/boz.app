@@ -69,7 +69,7 @@ export const useMenuList = () => {
                 {
                     id: 1,
                     icon: <QrCodeScannerIcon />,
-                    name: "Qr code",
+                    name: "QR code",
                     path: "/qrcode",
                     onClick: () => navigate("/tools/qrcode"),
                 },
@@ -98,14 +98,14 @@ export const useMenuList = () => {
                 },
                 {
                     id: 3,
-                    name: "departamentos e funções",
+                    name: "Departamentos e funções",
                     path: "/departments",
                     icon: <CategoryIcon />,
                     onClick: () => navigate("/admin/departments"),
                 },
                 {
                     id: 4,
-                    name: "estatísticas",
+                    name: "Estatísticas",
                     path: "/stats",
                     icon: <BarChartIcon />,
                     onClick: () => navigate("/admin/stats"),
@@ -117,7 +117,10 @@ export const useMenuList = () => {
             icon: <FileDownload />,
             name: "Baixar",
             path: "/download",
-            onClick: () => window.open("https://github.com/agenciaboz-dev/boz.electron/releases/download/windows/Boz-setup.exe", "_blank")?.focus(),
+            onClick: () =>
+                window
+                    .open("https://github.com/agenciaboz-dev/boz.electron/releases/download/windows/Boz-setup.exe", "_blank")
+                    ?.focus(),
         },
     ]
 
