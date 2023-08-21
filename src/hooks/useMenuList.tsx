@@ -10,7 +10,6 @@ import CategoryIcon from "@mui/icons-material/Category"
 import BarChartIcon from "@mui/icons-material/BarChart"
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner"
 import { FileDownload } from "@mui/icons-material"
-
 import { useNavigate } from "react-router-dom"
 
 export const useMenuList = () => {
@@ -37,6 +36,7 @@ export const useMenuList = () => {
             path: "/tasks",
             icon: <FormatListNumberedRtlIcon />,
             onClick: () => navigate("/tasks"),
+            admin: true,
         },
         {
             id: 4,
@@ -58,6 +58,7 @@ export const useMenuList = () => {
             path: "/agenda",
             icon: <CalendarMonthIcon />,
             onClick: () => navigate("/agenda"),
+            admin: true,
         },
         {
             id: 7,
@@ -81,6 +82,7 @@ export const useMenuList = () => {
             path: "/admin",
             icon: <AdminPanelSettingsIcon />,
             onClick: () => {},
+            admin: true,
             submenus: [
                 {
                     id: 1,
@@ -111,16 +113,6 @@ export const useMenuList = () => {
                     onClick: () => navigate("/admin/stats"),
                 },
             ],
-        },
-        {
-            id: 9,
-            icon: <FileDownload />,
-            name: "Baixar",
-            path: "/download",
-            onClick: () =>
-                window
-                    .open("https://github.com/agenciaboz-dev/boz.electron/releases/download/windows/Boz-setup.exe", "_blank")
-                    ?.focus(),
         },
     ]
 

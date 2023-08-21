@@ -16,7 +16,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
     const navigate = useNavigate()
 
     const { drawer } = useMenu()
-    const { user, logout } = useUser()
+    const { isAdmin, logout } = useUser()
 
     return (
         <Drawer
@@ -26,16 +26,23 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
             PaperProps={{ sx: { width: isMobile ? "80vw" : "22vw", backgroundColor: "background.paper", paddingTop: isMobile ? "6vw" : "" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
-            <Box sx={{ padding: isMobile ? "6vw" : "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
+            <Box
+                sx={{ padding: isMobile ? "6vw" : "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }}
+                color={"text.secondary"}
+            >
                 <img src={logo} style={{ width: isMobile ? "25vw" : "10vw" }} />
             </Box>
             <Box sx={{ flexDirection: "column", height: "80%" }}>
                 {drawer.menus.map((menu) => (
-                    <MenuButton sx={{ fontSize: isMobile ? "4vw" : "1vw" }} menu={menu} key={menu.id} />
+                    <MenuButton
+                        sx={{ fontSize: isMobile ? "4vw" : "1vw", display: menu.admin ? (isAdmin() ? "" : "none") : "" }}
+                        menu={menu}
+                        key={menu.id}
+                    />
                 ))}
                 <MenuButton
                     menu={{ id: 0, name: "Sair", path: "/login", icon: <LogoutIcon />, onClick: () => logout() }}
-                    sx={{ fontSize: isMobile ? "4vw" : "1vw" , marginTop: "auto" }}
+                    sx={{ fontSize: isMobile ? "4vw" : "1vw", marginTop: "auto" }}
                 />
             </Box>
         </Drawer>

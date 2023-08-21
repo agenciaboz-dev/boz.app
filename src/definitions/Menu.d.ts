@@ -5,5 +5,6 @@ declare interface Menu {
     icon: React.ReactElement
     onClick: (data?: any) => void
 
+    admin?: boolean
     submenus?: Menu[]
 }
