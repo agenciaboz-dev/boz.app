@@ -219,7 +219,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     return (
         <Box sx={backgroundStyle}>
             {!admin && <Header user={user} disabledSearch />}
-            <Box sx={{ padding: "2vw", height: "80%" }}>
+            <Box sx={{ padding: "2vw", height: "90%" }}>
                 <Paper
                     elevation={3}
                     sx={{
