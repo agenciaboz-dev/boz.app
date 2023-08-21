@@ -100,8 +100,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     useEffect(() => {
         console.log({ list })
 
-        io.on("user:update", (user) => {
-            addUser(user)
+        io.on("user:update", (data) => {
+            addUser(data)
+            if (data.id == user?.id) setUser(data)
         })
 
         io.on("user:new", (user) => {
