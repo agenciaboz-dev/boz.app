@@ -1,5 +1,5 @@
 import React from "react"
-import { Box } from "@mui/material"
+import { Box, useMediaQuery } from "@mui/material"
 import { RoleContainer, RoleSkeletons } from "./RoleContainer"
 import { useDepartments } from "../../../hooks/useDepartments"
 import { useUser } from "../../../hooks/useUser"
@@ -9,6 +9,7 @@ interface UserListProps {
 }
 
 export const UserList: React.FC<UserListProps> = ({ list }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const { departments, loading } = useDepartments()
     const { connectedList } = useUser()
 
@@ -17,12 +18,13 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
     ) : (
         <Box
             sx={{
-                flexDirection: "row",
+                flexDirection: isMobile ? "column" : "row",
                 // flexWrap: "wrap",
                 height: "100%",
                 width: "100%",
-                overflowX: "auto",
-                overflowY: "hidden",
+                padding: isMobile ? "8vw 0 18vw 0" : "",
+                overflowX: isMobile ? "hidden" : "auto",
+                overflowY: isMobile ? "auto" :  "hidden",
 
                 "::-webkit-scrollbar-thumb": {
                     bgcolor: "primary.main",
