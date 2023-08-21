@@ -42,7 +42,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                         <Paper
                             elevation={0}
                             sx={{
-                                //width: "100%",
+                                // width: "100%",
                                 gap: "2vw",
                                 flexWrap: "wrap",
                                 backgroundColor: "background.default",
