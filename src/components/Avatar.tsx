@@ -28,8 +28,9 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickMo
 
     const color = {
         [1]: "success" as AlertColor,
-        [2]: "error" as AlertColor,
+        [2]: "info" as AlertColor,
         [3]: "warning" as AlertColor,
+        [4]: "error" as AlertColor,
     }
 
     // useEffect(() => {

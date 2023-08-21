@@ -9,11 +9,12 @@ import { useNavigate } from "react-router-dom"
 import DuoIcon from "@mui/icons-material/Duo"
 import ChairIcon from "@mui/icons-material/Chair"
 import { useMediaQuery } from "@mui/material"
+import RestaurantIcon from "@mui/icons-material/Restaurant"
 
 interface UserDrawerProps {}
 
 export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const { user, drawer, updateStatus } = useUser()
     const navigate = useNavigate()
 
@@ -63,13 +64,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
             <Box sx={{ justifyContent: "space-evenly" }}>
                 <Box sx={switchWrapperStyle}>
                     Reunião
-                    <Switch
-                        color="error"
-                        checked={user?.status == 2}
-                        onChange={() => updateStatus(2)}
-                        icon={<DuoIcon />}
-                        checkedIcon={<DuoIcon />}
-                    />
+                    <Switch color="info" checked={user?.status == 2} onChange={() => updateStatus(2)} icon={<DuoIcon />} checkedIcon={<DuoIcon />} />
                 </Box>
                 <Box sx={switchWrapperStyle}>
                     Pausa
@@ -79,6 +74,16 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                         onChange={() => updateStatus(3)}
                         icon={<ChairIcon />}
                         checkedIcon={<ChairIcon />}
+                    />
+                </Box>
+                <Box sx={switchWrapperStyle}>
+                    Almoço
+                    <Switch
+                        color="error"
+                        checked={user?.status == 4}
+                        onChange={() => updateStatus(4)}
+                        icon={<RestaurantIcon />}
+                        checkedIcon={<RestaurantIcon />}
                     />
                 </Box>
             </Box>
