@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Collapse, MenuItem, SxProps, alpha, darken } from "@mui/material"
+import { Box, Collapse, MenuItem, SxProps, alpha, darken, useMediaQuery } from "@mui/material"
 import { useMenu } from "../../hooks/useMenu"
 import { useLocation } from "react-router-dom"
 import { useColors } from "../../hooks/useColors"
@@ -11,6 +11,7 @@ interface MenuButtonProps {
 }
 
 export const MenuButton: React.FC<MenuButtonProps> = ({ menu, sx }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const Icon = () => menu.icon
     const location = useLocation()
     const active = location.pathname.split("/")[1] == menu.path.split("/")[1]
@@ -60,12 +61,19 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ menu, sx }) => {
                         return (
                             <MenuItem
                                 key={menu.id}
-                                sx={{ ...buildStyle(active, menu), paddingLeft: "3vw", fontSize: "0.85vw" }}
+                                sx={{
+                                    ...buildStyle(active, menu),
+                                    paddingLeft: isMobile ? '14vw' : '3vw',
+                                    fontSize: isMobile ? '3.5vw' : '0.85vw',
+                                    whiteSpace: 'normal',
+                                    overflow: 'hidden',
+                                }}
                                 onClick={() => handleMenuClick(menu)}
                             >
                                 <Icon />
                                 {menu.name}
                             </MenuItem>
+
                         )
                     })}
                 </Box>

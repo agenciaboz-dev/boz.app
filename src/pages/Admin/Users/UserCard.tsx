@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, MenuItem } from "@mui/material"
+import { Box, MenuItem, useMediaQuery } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { Avatar } from "../../../components/Avatar"
 import { Tag } from "../../../components/Tag"
@@ -9,21 +9,23 @@ interface UserCardProps {
 }
 
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const navigate = useNavigate()
     return (
         <Box
             sx={{
-                gap: "0.5vw",
+                gap: isMobile ? "3vw" :"0.5vw",
                 color: "primary.main",
-                borderRadius: "0.5vw",
+                borderRadius: isMobile ? "3vw" : "0.5vw",
                 borderBottom: "2px solid",
-                padding: "0.5vw",
-                height: "5vw",
+                padding: isMobile ? "3vw" : "0.5vw",
+                height: isMobile ? "auto" : "5vw",
+                alignItems: "center"
             }}
         >
-            <Avatar size={"3vw"} small user={user} />
+            <Avatar size={ isMobile ? "15vw" : "3vw"} small user={user} />
 
-            <Box sx={{ flexDirection: "column", fontSize: "0.9vw", height: "100%", gap: "0.3vw", color: "text.secondary" }}>
+            <Box sx={{ flexDirection: "column", fontSize: isMobile ? "5vw" : "0.9vw", height: "100%", gap: isMobile ? "2vw" : "0.3vw", color: "text.secondary" }}>
                 <Box
                     sx={{
                         fontWeight: "bold",
@@ -39,13 +41,13 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
                 >
                     {user.name.split(" ")[0]}
                 </Box>
-                <Box sx={{ gap: "0.2vw", flexWrap: "wrap", width: "15vw" }}>
+                <Box sx={{ gap: isMobile ? "2vw" : "0.2vw", flexWrap: "wrap", width: isMobile ? "70vw" : "15vw" }}>
                     {user.roles.map((role) => (
                         <Tag
                             key={role.id}
                             name={role.tag}
                             tooltip={role.name}
-                            sx={{ fontSize: "0.6vw", padding: "0.1vw 0.3vw", borderRadius: "0.75vw" }}
+                            sx={{ fontSize: isMobile ? "4vw" : "0.6vw", padding: isMobile ? "1vw 3vw" : "0.1vw 0.3vw", borderRadius: isMobile ? "5vw" : "0.75vw" }}
                         />
                     ))}
                 </Box>

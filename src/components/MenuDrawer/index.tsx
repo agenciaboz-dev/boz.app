@@ -27,15 +27,15 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({}) => {
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
         >
             <Box sx={{ padding: isMobile ? "6vw" : "2vw", flexDirection: "column", gap: "1vw", width: "100%", alignItems: "center" }} color={"text.secondary"}>
-                <img src={logo} style={{ width: "10vw" }} />
+                <img src={logo} style={{ width: isMobile ? "25vw" : "10vw" }} />
             </Box>
             <Box sx={{ flexDirection: "column", height: "80%" }}>
                 {drawer.menus.map((menu) => (
-                    <MenuButton menu={menu} key={menu.id} />
+                    <MenuButton sx={{ fontSize: isMobile ? "4vw" : "1vw" }} menu={menu} key={menu.id} />
                 ))}
                 <MenuButton
-                    menu={{ id: 0, name: "sair", path: "/login", icon: <LogoutIcon />, onClick: () => logout() }}
-                    sx={{ marginTop: "auto" }}
+                    menu={{ id: 0, name: "Sair", path: "/login", icon: <LogoutIcon />, onClick: () => logout() }}
+                    sx={{ fontSize: isMobile ? "4vw" : "1vw" , marginTop: "auto" }}
                 />
             </Box>
         </Drawer>

@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Paper, Skeleton } from "@mui/material"
+import { Box, Paper, Skeleton, useMediaQuery } from "@mui/material"
 import { useArray } from "burgos-array"
 import { useUser } from "../../../hooks/useUser"
 import { UserCard } from "./UserCard"
@@ -10,6 +10,7 @@ interface RoleContainerProps {
 }
 
 export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const userList = users.filter((user) => user.department.id == department.id)
     const { connectedList } = useUser()
 
@@ -20,15 +21,16 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
         <Box
             sx={{
                 flexDirection: "column",
-                gap: "1vw",
+                gap: isMobile ? "5vw" : "1vw",
                 color: "primary.main",
-                width: "20vw",
+                width: isMobile ? "95vw" : "20vw",
+                alignItems: isMobile ? "center" : "",
                 borderRadius: "0.5vw",
                 padding: "0.5vw",
-                paddingBottom: "3vw",
+                paddingBottom: isMobile ? "15vw" : "3vw",
             }}
         >
-            <Box sx={{ fontWeight: "bold", fontSize: "1vw" }}>{department.name}</Box>
+            <Box sx={{ fontWeight: "bold", fontSize: isMobile ? "6vw" : "1vw" }}>{department.name}</Box>
 
             <Box sx={{ flexDirection: "column", bgcolor: "background.default", gap: "0.5vw", height: "100%", overflowY: "auto" }}>
                 {connectedUsers.map((user) => (

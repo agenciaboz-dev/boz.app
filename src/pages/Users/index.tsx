@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import { useSearch } from "../../hooks/useSearch"
 import { useUser } from "../../hooks/useUser"
 import normalize from "../../tools/normalize"
-import { Box, Paper } from "@mui/material"
+import { Box, Paper, useMediaQuery } from "@mui/material"
 import { UserList } from "../Admin/Users/UserList"
 import { Profile } from "../Profile"
 import { backgroundStyle } from "../../style/background"
@@ -14,6 +14,7 @@ interface UsersProps {
 }
 
 export const Users: React.FC<UsersProps> = ({ user }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const navigate = useNavigate()
 
     const { setOnSearch } = useSearch()
@@ -45,8 +46,8 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                                 gap: "2vw",
                                 flexWrap: "wrap",
                                 backgroundColor: "background.default",
-                                margin: "2vw 2vw 0 2vw",
-                                height: "85vh",
+                                margin: isMobile ? "0 0 0 2vw" : "2vw 2vw 0 2vw",
+                                height: isMobile ? "100vh" : "85vh",
                             }}
                         >
                             <UserList list={userList} />

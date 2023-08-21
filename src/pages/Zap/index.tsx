@@ -51,6 +51,7 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
                         flexDirection: "column",
                         padding: "2vw",
                         height: "90vh",
+                        overflowX: isMobile ? "hidden" : "auto",
                         overflowY: "auto",
                         gap: "1vw",
                         color: "primary.main",
