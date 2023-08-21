@@ -10,6 +10,7 @@ import DuoIcon from "@mui/icons-material/Duo"
 import ChairIcon from "@mui/icons-material/Chair"
 import { useMediaQuery } from "@mui/material"
 import RestaurantIcon from "@mui/icons-material/Restaurant"
+import { Stopwatch } from "./Stopwatch"
 
 interface UserDrawerProps {}
 
@@ -18,7 +19,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
     const { user, drawer, updateStatus } = useUser()
     const navigate = useNavigate()
 
-    const switchWrapperStyle: SxProps = { flexDirection: "column", color: "secondary.main", alignItems: "center" }
+    const switchWrapperStyle: SxProps = { flexDirection: "column", color: "secondary.main", alignItems: "center", flexShrink: 0, flex: 1 }
 
     const handleClose = () => {
         drawer.close()
@@ -61,10 +62,11 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                     @{user?.username}
                 </Box>
             </Box>
-            <Box sx={{ justifyContent: "space-evenly" }}>
+            <Box sx={{ justifyContent: "space-evenly", width: "100%" }}>
                 <Box sx={switchWrapperStyle}>
                     Reunião
                     <Switch color="info" checked={user?.status == 2} onChange={() => updateStatus(2)} icon={<DuoIcon />} checkedIcon={<DuoIcon />} />
+                    {user?.status == 2 && <Stopwatch />}
                 </Box>
                 <Box sx={switchWrapperStyle}>
                     Pausa
@@ -75,6 +77,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                         icon={<ChairIcon />}
                         checkedIcon={<ChairIcon />}
                     />
+                    {user?.status == 3 && <Stopwatch />}
                 </Box>
                 <Box sx={switchWrapperStyle}>
                     Almoço
@@ -85,6 +88,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                         icon={<RestaurantIcon />}
                         checkedIcon={<RestaurantIcon />}
                     />
+                    {user?.status == 4 && <Stopwatch />}
                 </Box>
             </Box>
 
