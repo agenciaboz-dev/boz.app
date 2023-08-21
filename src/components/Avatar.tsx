@@ -16,13 +16,13 @@ interface AvatarProps {
 type ColorStatus = 1 | 2 | 3
 
 export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickModal }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const { getProfilePic } = useImageUrl()
     const { connectedList, list } = useUser()
     const picture = usePictureModal()
     const connected = connectedList.find((item) => item.id == user.id)
 
-    const [url, setUrl] = useState(getProfilePic(user))
+    // const [url, setUrl] = useState(getProfilePic(user))
 
     const dotSize = small ? "1vw" : "2vw"
 
@@ -32,9 +32,9 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickMo
         [3]: "warning" as AlertColor,
     }
 
-    useEffect(() => {
-        setUrl((url) => `${url}?timestamp=${new Date().getTime()}`)
-    }, [user])
+    // useEffect(() => {
+    //     setUrl((url) => `${url}?timestamp=${new Date().getTime()}`)
+    // }, [user])
 
     return (
         <Badge
@@ -49,7 +49,7 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickMo
             }}
         >
             <MuiAvatar
-                src={url}
+                src={user.image}
                 sx={{
                     color: "primary.main",
                     backgroundColor: "background.default",
@@ -59,7 +59,7 @@ export const Avatar: React.FC<AvatarProps> = ({ user, sx, size, small, noClickMo
                     ...sx,
                 }}
                 imgProps={{ sx: { objectFit: "contain" } }}
-                onClick={() => (noClickModal ? {} : picture.open(url))}
+                onClick={() => (noClickModal ? {} : picture.open(user.image))}
             />
         </Badge>
     )

@@ -101,6 +101,7 @@ export const Profile: React.FC<ProfileProps> = ({ admin, createOnly }) => {
         const data = {
             ...values,
             image,
+            filename: image?.name,
             services: selectedServices,
         }
 

@@ -8,6 +8,7 @@ declare interface User {
     birth: string
     phone: string
     status: number
+    image: string
 
     department: Department
     roles: Role[]

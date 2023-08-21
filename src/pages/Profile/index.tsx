@@ -82,6 +82,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
             ...values,
             roles: selectedRoles,
             image,
+            filename: image?.name,
             id: profile?.id,
         }
 
