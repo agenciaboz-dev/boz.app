@@ -7,6 +7,7 @@ import { useDepartments } from "../../hooks/useDepartments"
 import MaskedInput from "../../components/MaskedInput"
 import masks from "../../style/masks"
 import { TaiTextField } from "../../components/TaiTextField"
+import { useUser } from "../../hooks/useUser"
 
 interface UserFormProps {
     values: UserForm
@@ -21,6 +22,7 @@ interface UserFormProps {
 
 export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, selectedRoles, setSelectedRoles, createOnly }) => {
     const { departments, roles } = useDepartments()
+    const { isAdmin } = useUser()
 
     const style: SxProps = { width: "49%" }
 
@@ -63,14 +65,7 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                         inputProps: { mask: masks.cpf },
                     }}
                 />
-                <TaiTextField
-                    label="E-mail"
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                    style={style}
-                    required
-                />
+                <TaiTextField label="E-mail" name="email" value={values.email} onChange={handleChange} style={style} required />
 
                 <TaiTextField
                     label="Data de nascimento"
@@ -93,22 +88,8 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     required
                     disabled={!createOnly}
                 />
-                <TaiTextField
-                    label="Instagram"
-                    name="instagram"
-                    value={values.instagram}
-                    onChange={handleChange}
-                    style={style}
-                    required={false}
-                />
-                <TaiTextField
-                    label="Github"
-                    name="Github"
-                    value={values.github}
-                    onChange={handleChange}
-                    style={style}
-                    required={false}
-                />
+                <TaiTextField label="Instagram" name="instagram" value={values.instagram} onChange={handleChange} style={style} required={false} />
+                <TaiTextField label="Github" name="Github" value={values.github} onChange={handleChange} style={style} required={false} />
             </Container>
 
             <Container name="Setor">
@@ -151,12 +132,24 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     required
                 >
                     <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
-                    {roles.map((role) => (
-                        <MenuItem key={role.id} value={role.id}>
-                            <Checkbox checked={selectedRoles.map((item) => item.id).includes(role.id)} />
-                            <ListItemText primary={role.name} />
-                        </MenuItem>
-                    ))}
+                    {roles.map((role) => {
+                        if (role.tag == "admin") {
+                            return isAdmin() ? (
+                                <MenuItem key={role.id} value={role.id}>
+                                    <Checkbox checked={selectedRoles.map((item) => item.id).includes(role.id)} />
+                                    <ListItemText primary={role.name} />
+                                </MenuItem>
+                            ) : (
+                                <></>
+                            )
+                        } else
+                            return (
+                                <MenuItem key={role.id} value={role.id}>
+                                    <Checkbox checked={selectedRoles.map((item) => item.id).includes(role.id)} />
+                                    <ListItemText primary={role.name} />
+                                </MenuItem>
+                            )
+                    })}
                 </TextField>
             </Container>
         </>
