@@ -10,15 +10,17 @@ import { ZapDrawer } from "../../components/ZapDrawer"
 import { useSearch } from "../../hooks/useSearch"
 import { useMediaQuery } from "@mui/material"
 import normalize from "../../tools/normalize"
+import { useUser } from "../../hooks/useUser"
 
 interface ZapProps {
     user: User
 }
 
 export const Zap: React.FC<ZapProps> = ({ user }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     const { client, qrcode, loading, setCurrentChat, currentChat } = useZap()
+    const { isAdmin } = useUser()
     const { setOnSearch } = useSearch()
 
     const [chats, setChats] = useState<Chat[]>([])
@@ -45,30 +47,41 @@ export const Zap: React.FC<ZapProps> = ({ user }) => {
     return (
         <Box sx={backgroundStyle}>
             <Header user={user} />
-            {client?.connected ? (
-                <Box
-                    sx={{
-                        flexDirection: "column",
-                        alignItems: isMobile ? "center" : "",
-                        padding: "2vw",
-                        height: "90vh",
-                        overflowX: isMobile ? "hidden" : "auto",
-                        overflowY: "auto",
-                        gap: "1vw",
-                        color: "primary.main",
-                        "::-webkit-scrollbar-thumb": {
-                            backgroundColor: "primary.main",
-                        },
-                    }}
-                >
-                    <p style={{ fontSize: isMobile ? "6vw" : "", fontWeight: "bold", textAlign: isMobile ? "center" : "initial", padding: isMobile ? "8vw 4vw 4vw 4vw" : "" }}>
-                        {client.info.pushname}
-                    </p>
-                    {loading ? <ChatsSkeletons /> : <Chats chats={chats} onChatClick={handleChatClick} />}
-                    <ZapDrawer />
-                </Box>
+            {isAdmin() ? (
+                client?.connected ? (
+                    <Box
+                        sx={{
+                            flexDirection: "column",
+                            alignItems: isMobile ? "center" : "",
+                            padding: "2vw",
+                            height: "90vh",
+                            overflowX: isMobile ? "hidden" : "auto",
+                            overflowY: "auto",
+                            gap: "1vw",
+                            color: "primary.main",
+                            "::-webkit-scrollbar-thumb": {
+                                backgroundColor: "primary.main",
+                            },
+                        }}
+                    >
+                        <p
+                            style={{
+                                fontSize: isMobile ? "6vw" : "",
+                                fontWeight: "bold",
+                                textAlign: isMobile ? "center" : "initial",
+                                padding: isMobile ? "8vw 4vw 4vw 4vw" : "",
+                            }}
+                        >
+                            {client.info.pushname}
+                        </p>
+                        {loading ? <ChatsSkeletons /> : <Chats chats={chats} onChatClick={handleChatClick} />}
+                        <ZapDrawer />
+                    </Box>
+                ) : (
+                    <QrCode qrcode={qrcode} />
+                )
             ) : (
-                <QrCode qrcode={qrcode} />
+                <Box sx={{ color: "text.secondary", padding: "2vw" }}>curioso</Box>
             )}
         </Box>
     )
