@@ -11,6 +11,8 @@ import ChairIcon from "@mui/icons-material/Chair"
 import { useMediaQuery } from "@mui/material"
 import { Stopwatch } from "./Stopwatch"
 import FastfoodIcon from "@mui/icons-material/Fastfood"
+import LocalPizzaIcon from "@mui/icons-material/LocalPizza"
+import LunchDiningIcon from "@mui/icons-material/LunchDining"
 
 interface UserDrawerProps {}
 
@@ -91,8 +93,8 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                         color="error"
                         checked={user?.status == 4}
                         onChange={() => updateStatus(4)}
-                        icon={<FastfoodIcon />}
-                        checkedIcon={<FastfoodIcon />}
+                        icon={<LunchDiningIcon />}
+                        checkedIcon={<LunchDiningIcon />}
                     />
                     {user?.status == 4 && <Stopwatch />}
                 </Box>
