@@ -3,15 +3,23 @@ import { Box, useMediaQuery } from "@mui/material"
 import { RoleContainer, RoleSkeletons } from "./RoleContainer"
 import { useDepartments } from "../../../hooks/useDepartments"
 import { useUser } from "../../../hooks/useUser"
+import { useNavigate } from "react-router-dom"
+import { NewButton } from "../../../components/NewButton"
+import AddIcon from "@mui/icons-material/Add"
 
 interface UserListProps {
     list: User[]
 }
 
 export const UserList: React.FC<UserListProps> = ({ list }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const navigate = useNavigate()
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const { departments, loading } = useDepartments()
-    const { connectedList } = useUser()
+    const { connectedList, isAdmin } = useUser()
+
+    const handleNewUserClick = () => {
+        navigate("/admin/users/new")
+    }
 
     return loading ? (
         <RoleSkeletons />
@@ -24,7 +32,7 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
                 width: "100%",
                 padding: isMobile ? "8vw 0 18vw 0" : "",
                 overflowX: isMobile ? "hidden" : "auto",
-                overflowY: isMobile ? "auto" :  "hidden",
+                overflowY: isMobile ? "auto" : "hidden",
 
                 "::-webkit-scrollbar-thumb": {
                     bgcolor: "primary.main",
@@ -32,6 +40,9 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
                 },
             }}
         >
+            {isAdmin() && (
+                <NewButton onClick={handleNewUserClick} bottom={"2vw"} right={"2vw"} icon={<AddIcon sx={{ width: "100%", height: "100%" }} />} />
+            )}
             {departments
                 .filter((department) => !!list.filter((user) => user.department.id == department.id).length)
                 .sort(

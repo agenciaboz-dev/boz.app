@@ -17,16 +17,12 @@ interface UsersProps {
 }
 
 export const Users: React.FC<UsersProps> = ({ user }) => {
-    const navigate = useNavigate()
 
     const { setOnSearch } = useSearch()
     const { list } = useUser()
 
     const [userList, setUserList] = useState(list)
 
-    const handleNewUserClick = () => {
-        navigate("/admin/users/new")
-    }
 
     const handleSearch = (value: string) => {
         const result = list.filter((user) => normalize(user.name).includes(value))
@@ -54,13 +50,6 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                             height: "85vh",
                         }}
                     >
-                        <NewButton
-                            onClick={handleNewUserClick}
-                            bottom={"2vw"}
-                            right={"2vw"}
-                            icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
-                        />
-
                         <UserList list={userList} />
                     </Paper>
                 }
