@@ -3,6 +3,7 @@ declare interface Customer {
     name: string
     recomendations: string
     active: boolean
+    image: string
     services: Service[]
     qrcodes: QrCode[]
 }

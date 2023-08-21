@@ -13,11 +13,19 @@ export const CustomerAvatar: React.FC<CustomerAvatarProps> = ({ customer, sx }) 
     const { getCustomerPic } = useImageUrl()
     const { open } = usePictureModal()
 
-    const [url, setUrl] = useState(getCustomerPic(customer))
+    // const [url, setUrl] = useState(getCustomerPic(customer))
 
-    useEffect(() => {
-        setUrl((url) => `${url}?timestamp=${new Date().getTime()}`)
-    }, [customer])
+    // useEffect(() => {
+    //     setUrl((url) => `${url}?timestamp=${new Date().getTime()}`)
+    // }, [customer])
 
-    return <Avatar src={url} imgProps={{ sx: { objectFit: "contain", cursor: "pointer" } }} sx={sx} variant="rounded" onClick={() => open(url)} />
+    return (
+        <Avatar
+            src={customer.image}
+            imgProps={{ sx: { objectFit: "contain", cursor: "pointer" } }}
+            sx={sx}
+            variant="rounded"
+            onClick={() => open(customer.image)}
+        />
+    )
 }
