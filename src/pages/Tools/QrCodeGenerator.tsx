@@ -163,7 +163,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     )}
                 </Formik>
             </Paper>
-            <h2 style={{ color: "#656565", fontSize: isMobile ? "5vw" : "" }}>Carregar código salvo:</h2>
+            <h2 style={{ color: "#757575", fontSize: isMobile ? "5vw" : "2vw" }}>Carregar código salvo:</h2>
             <Paper
                 sx={{
                     bgcolor: "background.default",
