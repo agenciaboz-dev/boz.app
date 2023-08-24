@@ -44,11 +44,11 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
                 <NewButton onClick={handleNewUserClick} bottom={"2vw"} right={"2vw"} icon={<AddIcon sx={{ width: "100%", height: "100%" }} />} />
             )}
             {departments
-                .filter((department) => !!list.filter((user) => user.department.id == department.id).length)
+                .filter((department) => !!list.filter((user) => user?.department?.id == department.id).length)
                 .sort(
                     (a, b) =>
-                        connectedList.filter((user) => user.department.id == b.id).length -
-                        connectedList.filter((user) => user.department.id == a.id).length
+                        connectedList.filter((user) => user?.department?.id == b?.id).length -
+                        connectedList.filter((user) => user?.department?.id == a?.id).length
                 )
                 .map((department) => (
                     <RoleContainer key={department.id} department={department} users={list} />
