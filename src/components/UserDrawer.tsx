@@ -40,6 +40,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
             onClose={handleClose}
             PaperProps={{ sx: { width: isMobile ? "80vw" : "22vw", backgroundColor: "background.paper" } }}
             ModalProps={{ BackdropProps: { sx: backdropStyle } }}
+            keepMounted
         >
             <Box
                 sx={{
