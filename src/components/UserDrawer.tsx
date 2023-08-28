@@ -52,7 +52,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                 }}
                 color={"secondary.main"}
             >
-                <Avatar user={user!} size="10vw" />
+                {user && <Avatar user={user} size="10vw" />}
                 <p style={{ fontWeight: "bold", textAlign: "center" }}>{user?.name}</p>
                 <Box
                     sx={{
