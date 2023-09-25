@@ -6,10 +6,14 @@ import { useSearch } from "../../../hooks/useSearch"
 import normalize from "../../../tools/normalize"
 import { Services } from "./Services"
 import { useUser } from "../../../hooks/useUser"
+import { NewButton } from "../../../components/NewButton"
+import { useNavigate } from "react-router-dom"
+import AddIcon from "@mui/icons-material/Add"
 
 interface CustomerListProps {}
 
 export const CustomerList: React.FC<CustomerListProps> = ({}) => {
+    const navigate = useNavigate()
     const { customers } = useCustomers()
     const { setOnSearch } = useSearch()
     const { isAdmin } = useUser()
@@ -32,6 +36,14 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
     return (
         <Box sx={{ flexDirection: "column", gap: "2vw" }}>
             {isAdmin() && <Services />}
+            {isAdmin() && (
+                <NewButton
+                    onClick={() => navigate("/customers/new")}
+                    bottom={"2vw"}
+                    right={"2vw"}
+                    icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
+                />
+            )}
             <Paper sx={{ bgcolor: "background.default", flexDirection: "column", padding: "1vw", gap: "1vw" }}>
                 <p style={{ fontWeight: "bold" }}>Clientes</p>
                 <Box sx={{ justifyContent: "space-between", flexWrap: "wrap", width: "100%", gap: "1vw" }}>
