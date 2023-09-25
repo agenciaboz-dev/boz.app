@@ -15,6 +15,7 @@ import { SearchProvider } from "./contexts/searchContext"
 import { CustomersProvider } from "./contexts/customersContext"
 import { ServiceModal } from "./components/ServiceModal"
 import { RoleModal } from "./components/RoleModal"
+import { CoffeeProvider } from "./contexts/coffeeContext"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -32,14 +33,16 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                     <ZapProvider>
                                         <MenuProvider>
                                             <PictureModalProvider>
-                                                <RoleModal />
-                                                <ServiceModal />
-                                                <PictureModal />
-                                                <MenuDrawer />
-                                                <UserDrawer />
-                                                <Snackbar />
-                                                <ConfirmDialog />
-                                                {children}
+                                                <CoffeeProvider>
+                                                    <RoleModal />
+                                                    <ServiceModal />
+                                                    <PictureModal />
+                                                    <MenuDrawer />
+                                                    <UserDrawer />
+                                                    <Snackbar />
+                                                    <ConfirmDialog />
+                                                    {children}
+                                                </CoffeeProvider>
                                             </PictureModalProvider>
                                         </MenuProvider>
                                     </ZapProvider>

@@ -13,6 +13,7 @@ import { Stopwatch } from "./Stopwatch"
 import FastfoodIcon from "@mui/icons-material/Fastfood"
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza"
 import LunchDiningIcon from "@mui/icons-material/LunchDining"
+import { CoffeeSwitch } from "./CoffeeSystem/CoffeeSwitch"
 
 interface UserDrawerProps {}
 
@@ -101,6 +102,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                 </Box>
             </Box>
 
+            <CoffeeSwitch bottom={"3vw"} />
             <ModeToggler bottom={0} right="6vw" />
         </Drawer>
     )
