@@ -3,7 +3,7 @@ import { TableColumn } from "react-data-table-component"
 
 export const buildWorkedHours = (logs: StatusLog[]) => {
     const groupedByDay = logs.reduce<Record<string, StatusLog[]>>((acc, item) => {
-        const date = new Date(item.datetime).getDate()
+        const date = new Date(item.datetime).toDateString()
         acc[date] = acc[date] || []
         acc[date].push(item)
         return acc
