@@ -16,6 +16,7 @@ import { CustomersProvider } from "./contexts/customersContext"
 import { ServiceModal } from "./components/ServiceModal"
 import { RoleModal } from "./components/RoleModal"
 import { CoffeeProvider } from "./contexts/coffeeContext"
+import { CoffeeModal } from "./components/CoffeeSystem/CofffeModal"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -41,6 +42,7 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                                     <UserDrawer />
                                                     <Snackbar />
                                                     <ConfirmDialog />
+                                                    <CoffeeModal />
                                                     {children}
                                                 </CoffeeProvider>
                                             </PictureModalProvider>

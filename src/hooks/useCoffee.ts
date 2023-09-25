@@ -7,12 +7,17 @@ export const useCoffee = () => {
     const io = useIo()
     const { user } = useUser()
     const coffeeContext = useContext(CoffeeContext)
-    const { wanting, setWanting, wantingList } = coffeeContext
+    const { wanting, setWanting, wantingList, openModal, setOpenModal } = coffeeContext
+
+    const modal = {
+        open: openModal,
+        setOpen: setOpenModal,
+    }
 
     const toogleWanting = (checked: boolean) => {
         io.emit("coffee:wanting", { user, wanting: checked })
         setWanting(checked)
     }
 
-    return { wanting, toogleWanting, wantingList }
+    return { wanting, toogleWanting, wantingList, modal }
 }

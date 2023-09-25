@@ -21,6 +21,8 @@ const Themed = () => {
 }
 
 const App = () => {
+    Notification.requestPermission()
+    
     return (
         <DarkModeProvider>
             <Themed />
