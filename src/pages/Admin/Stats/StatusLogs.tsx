@@ -101,8 +101,10 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
                             selectAllRowsItemText: "Todos",
                         }}
                         noDataComponent={<p>Nenhum registro</p>}
+                        // @ts-ignore
                         columns={renderHours ? workedHours.columns : columns}
                         theme={darkMode ? "dark" : ""}
+                        // @ts-ignore
                         data={renderHours ? workedHours.data : logs}
                         highlightOnHover
                         fixedHeader
