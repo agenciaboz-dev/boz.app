@@ -4,6 +4,7 @@ import axios from "axios"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import ErrorIcon from "@mui/icons-material/Error"
 import { gitToken } from "../../api/gitToken"
+import { useUser } from "../../hooks/useUser"
 
 interface UpdateProps {
     user: User
@@ -11,25 +12,12 @@ interface UpdateProps {
 
 export const Update: React.FC<UpdateProps> = ({ user }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
+
+    const { latestVersion, downloadUrl } = useUser().electron
+
     const [electron] = useState(window.electron)
-    const [latestVersion, setLatestVersion] = useState<string>()
     const [currentVersion, setCurrentVersion] = useState(electron?.process.env.npm_package_version)
     const [loadingGitData, setLoadingGitData] = useState(false)
-    const [downloadUrl, setDownloadUrl] = useState("")
-
-    useEffect(() => {
-        setLoadingGitData(true)
-        axios
-            .get("https://api.github.com/repos/agenciaboz-dev/boz.electron/releases/latest", {
-                headers: { Authorization: `token ${gitToken}` },
-            })
-            .then((response) => {
-                console.log(response.data)
-                setLatestVersion(response.data.name.replace("v", ""))
-                setDownloadUrl(response.data.assets[0].browser_download_url)
-                setLoadingGitData(false)
-            })
-    }, [])
 
     return (
         <Box

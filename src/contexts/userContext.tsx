@@ -21,6 +21,9 @@ interface UserContextValue {
     logs: {
         status: StatusLog[]
     }
+
+    latestVersion: string
+    downloadUrl: string
 }
 
 interface UserProviderProps {
@@ -40,6 +43,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [openDrawer, setOpenDrawer] = useState(false)
     const [connected, setConnected] = useState(false)
     const [statusLogs, setStatusLogs] = useState<StatusLog[]>([])
+    const [latestVersion, setLatestVersion] = useState("")
+    const [downloadUrl, setDownloadUrl] = useState("")
 
     const drawer = {
         open: openDrawer,
@@ -161,5 +166,20 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         }
     }, [user])
 
-    return <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList, addUser, logs }}>{children}</UserContext.Provider>
+    useEffect(() => {
+        io.on("electron:latest", ({ latestVersion, downloadUrl }) => {
+            setDownloadUrl(downloadUrl)
+            setLatestVersion(latestVersion)
+        })
+
+        return () => {
+            io.off("electron:latest")
+        }
+    }, [])
+
+    return (
+        <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList, addUser, logs, downloadUrl, latestVersion }}>
+            {children}
+        </UserContext.Provider>
+    )
 }
