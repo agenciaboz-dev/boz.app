@@ -16,8 +16,18 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
     const { latestVersion, downloadUrl } = useUser().electron
 
     const [electron] = useState(window.electron)
-    const [currentVersion, setCurrentVersion] = useState(electron?.process.env.npm_package_version)
-    const [loadingGitData, setLoadingGitData] = useState(false)
+    const [currentVersion, setCurrentVersion] = useState("")
+
+    useEffect(() => {
+        if (electron) {
+            const getVersion = async () => {
+                const version = await electron.ipcRenderer.invoke("version")
+                setCurrentVersion(version)
+            }
+
+            getVersion()
+        }
+    }, [latestVersion])
 
     return (
         <Box
@@ -34,15 +44,15 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
                 <Box sx={{ flexDirection: "column", gap: "1vw" }}>
                     <Box sx={{ gap: "1vw", alignItems: "center" }}>
                         <p>Versão atual: {currentVersion}</p>
-                        {!loadingGitData && (latestVersion == currentVersion ? <CheckCircleIcon color="success" /> : <ErrorIcon color="warning" />)}
+                        {latestVersion == currentVersion ? <CheckCircleIcon color="success" /> : <ErrorIcon color="warning" />}
                     </Box>
                     <Box sx={{ alignItems: "center", gap: "1vw" }}>
                         <p>Última versão: {latestVersion}</p>
-                        {loadingGitData && <CircularProgress size="1rem" color="primary" />}
+                        {!latestVersion && <CircularProgress size="1rem" color="primary" />}
                     </Box>
                     <Button
                         variant="contained"
-                        disabled={loadingGitData || latestVersion == currentVersion}
+                        disabled={!!latestVersion && latestVersion == currentVersion}
                         onClick={() => window.open(downloadUrl, "_blank")?.focus()}
                     >
                         Baixar atualização

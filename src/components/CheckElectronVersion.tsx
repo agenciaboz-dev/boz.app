@@ -17,19 +17,25 @@ export const CheckElectronVersion: React.FC<CheckElectronVersionProps> = ({}) =>
 
     useEffect(() => {
         if (electron) {
-            const currentVersion = electron.process.env.npm_package_version
+            const getVersion = async () => {
+                const currentVersion = await electron.ipcRenderer.invoke("version")
+                console.log({ currentVersion, latestVersion })
 
-            console.log({ currentVersion, latestVersion })
+                if (currentVersion && latestVersion) {
+                    if (currentVersion != latestVersion)
+                        confirm({
+                            title: "Atualização",
+                            content: "Seu app está desatualizado, clica ai pra baixar a nova",
+                            hideCancel: true,
+                            onConfirm: () => navigate("/tools/update"),
+                        })
+                }
+            }
 
-            if (currentVersion != latestVersion)
-                confirm({
-                    title: "Atualização",
-                    content: "Seu app está desatualizado, clica ai pra baixar a nova",
-                    hideCancel: true,
-                    onConfirm: () => navigate("/tools/update"),
-                })
+            getVersion()
         }
-    }, [])
+    }, [latestVersion])
+
 
     return <></>
 }
