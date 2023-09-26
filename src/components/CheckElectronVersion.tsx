@@ -3,6 +3,7 @@ import { Box } from "@mui/material"
 import axios from "axios"
 import { useConfirmDialog } from "burgos-confirm"
 import { useNavigate } from "react-router-dom"
+import { gitToken } from "../api/gitToken"
 
 interface CheckElectronVersionProps {}
 
@@ -17,12 +18,14 @@ export const CheckElectronVersion: React.FC<CheckElectronVersionProps> = ({}) =>
             axios
                 .get("https://api.github.com/repos/agenciaboz-dev/boz.electron/releases/latest", {
                     headers: {
-                        Authorization: "Bearer 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",
+                        Authorization: `token ${gitToken}`,
                     },
                 })
                 .then((response) => {
                     const currentVersion = electron.process.env.npm_package_version
                     const latestVersion = response.data.name.replace("v", "")
+
+                    console.log({ currentVersion, latestVersion })
 
                     if (currentVersion != latestVersion)
                         confirm({

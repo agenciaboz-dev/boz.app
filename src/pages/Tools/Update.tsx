@@ -3,6 +3,7 @@ import { Box, Button, CircularProgress, useMediaQuery } from "@mui/material"
 import axios from "axios"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import ErrorIcon from "@mui/icons-material/Error"
+import { gitToken } from "../../api/gitToken"
 
 interface UpdateProps {
     user: User
@@ -20,7 +21,7 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
         setLoadingGitData(true)
         axios
             .get("https://api.github.com/repos/agenciaboz-dev/boz.electron/releases/latest", {
-                headers: { Authorization: "Bearer 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" },
+                headers: { Authorization: `token ${gitToken}` },
             })
             .then((response) => {
                 console.log(response.data)
