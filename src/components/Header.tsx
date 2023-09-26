@@ -87,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                 <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => menuDrawer.toogle()}>
                     <MenuIcon sx={iconStyle} />
                 </IconButton>
-                <img src={logo} alt="boz" style={{ width: "3.5vw", display: isMobile ? "none" : "" }} />C
+                <img src={logo} alt="boz" style={{ width: "3.5vw", display: isMobile ? "none" : "" }} />
             </Box>
 
             <Box sx={{ flex: 1 }}>
