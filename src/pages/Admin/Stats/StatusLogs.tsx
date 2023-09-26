@@ -107,8 +107,8 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
                         // @ts-ignore
                         data={renderHours ? workedHours.data : logs}
                         highlightOnHover
-                        fixedHeader
-                        fixedHeaderScrollHeight={"38.1vw"}
+                        // fixedHeader
+                        // fixedHeaderScrollHeight={"38.1vw"}
                         // onRowClicked={(row) => navigate(`/dashboard/products/${row.id}`)}
                         customStyles={{
                             headRow: { style: { backgroundColor: colors.background.primary, fontSize: "0.6vw" } },

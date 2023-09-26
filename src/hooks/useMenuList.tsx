@@ -11,6 +11,7 @@ import BarChartIcon from "@mui/icons-material/BarChart"
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner"
 import { FileDownload } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
+import BrowserUpdatedIcon from "@mui/icons-material/BrowserUpdated"
 
 export const useMenuList = () => {
     const navigate = useNavigate()
@@ -73,6 +74,13 @@ export const useMenuList = () => {
                     name: "QR code",
                     path: "/qrcode",
                     onClick: () => navigate("/tools/qrcode"),
+                },
+                {
+                    id: 3,
+                    icon: <BrowserUpdatedIcon />,
+                    name: "Atualizar",
+                    path: "/update",
+                    onClick: () => navigate("/tools/update"),
                 },
             ],
         },

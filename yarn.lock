@@ -1074,6 +1074,11 @@
   resolved "https://registry.yarnpkg.com/@dynamicss/dynamicss/-/dynamicss-2.2.8.tgz#e28c3209ed44fa768ea1ba609d0825b402ca72f7"
   integrity sha512-e6hrGUydr8f+c9E/9fHFSG5LoSLdq/MdZXXfbzEDWIVuzKF2hcdxZE7nHNqUNF2htw1mZ17Pyoshu3A6kFEeFA==
 
+"@electron-toolkit/preload@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@electron-toolkit/preload/-/preload-2.0.0.tgz#1b704c4c4643ae1d960835db196625e17c9dcf4e"
+  integrity sha512-zpZDzbqJTZQC5d4LRs2EKruKWnqah+T75s+niBYFemYLtiW5TTZcWi3Q8UxHqnwTudDMuWJb233aaS2yjx3Xiw==
+
 "@emotion/babel-plugin@^11.11.0":
   version "11.11.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.11.0.tgz#c2d872b6a7767a9d176d007f5b31f7d504bb5d6c"
