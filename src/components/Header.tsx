@@ -14,6 +14,7 @@ import { useSearch } from "../hooks/useSearch"
 import ClearIcon from "@mui/icons-material/Clear"
 import { useMediaQuery } from "@mui/material"
 import normalize from "../tools/normalize"
+import { CheckElectronVersion } from "./CheckElectronVersion"
 
 interface HeaderProps {
     user: User
@@ -21,7 +22,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     const userDrawer = useUser().drawer
     const menuDrawer = useMenu().drawer
@@ -55,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
     useEffect(() => {
         if (onSearch) onSearch(normalize(searchValue))
     }, [searchValue, onSearch])
-    
+
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
@@ -86,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({ user, disabledSearch }) => {
                 <IconButton color={"secondary"} sx={iconButtonStyle} onClick={() => menuDrawer.toogle()}>
                     <MenuIcon sx={iconStyle} />
                 </IconButton>
-                <img src={logo} alt="boz" style={{ width: "3.5vw", display: isMobile ? "none" : "" }} />
+                <img src={logo} alt="boz" style={{ width: "3.5vw", display: isMobile ? "none" : "" }} />C
             </Box>
 
             <Box sx={{ flex: 1 }}>
