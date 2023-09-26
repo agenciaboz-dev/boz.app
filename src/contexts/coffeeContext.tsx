@@ -129,6 +129,7 @@ export const CoffeeProvider: React.FC<CoffeeProviderProps> = ({ children }) => {
                 confirm({
                     title: "Parabéns!",
                     content: "Você foi escolhido pra fazer o cafezinho, vamo colocar pausinha e fazer lá?",
+                    hideCancel: true,
                     onConfirm: () => {
                         updateStatus(3)
                     },

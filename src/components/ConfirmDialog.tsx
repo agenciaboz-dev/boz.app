@@ -5,7 +5,7 @@ import { useConfirmDialog } from "burgos-confirm"
 interface ConfirmDialogProps {}
 
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({}) => {
-    const { open, setOpen, title, content, onConfirm, button } = useConfirmDialog()
+    const { open, setOpen, title, content, onConfirm, button, hideCancel } = useConfirmDialog()
 
     const styles = {
         dialog: {
@@ -67,7 +67,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({}) => {
                 <DialogContentText id="alert-dialog-description">{content}</DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Cancelar</Button>
+                {!hideCancel && <Button onClick={handleClose}>Cancelar</Button>}
                 <Button variant="contained" onClick={confirm} autoFocus sx={{ color: "secondary.main" }}>
                     {button}
                 </Button>

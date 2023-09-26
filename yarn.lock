@@ -1894,10 +1894,10 @@ burgos-array@^1.0.2:
   resolved "https://registry.yarnpkg.com/burgos-array/-/burgos-array-1.0.2.tgz#c0531601b9d3c2539f45dee58c9656afac4c9ee2"
   integrity sha512-K7oU+yClg+gcUrfFncdSuZ7TYrk/8buRW1+eWq7rmCNtbXdVwPXHTP9eOb9wlJWFmV1Nt6w19mcxb6bzXIQQtg==
 
-burgos-confirm@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/burgos-confirm/-/burgos-confirm-1.2.2.tgz#8e0cf488223a8096ca105d5390fa1e8d6adb44c3"
-  integrity sha512-YfTRPlngORSYJu+DLSVCYkCSm7ckNgvF6Pzpyu6fUxHS6n4uUR8wXQlJnPqU8kmZgOSe4VDDqZaEyGEXciRb5w==
+burgos-confirm@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/burgos-confirm/-/burgos-confirm-1.3.1.tgz#53f413079fb14f0225eea1191574b2183730eff4"
+  integrity sha512-aTfWsA43GQM9QeQjz8ON4icBeLoiJezR1x4zp2u1q64D6wKdhwzy7Sd0RkoR6LhaGfCi6UERDamSV3XN/CvQWg==
 
 burgos-masks@^1.0.45:
   version "1.0.45"
