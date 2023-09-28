@@ -1,15 +1,19 @@
-import { useContext } from 'react'
-import UserContext from '../contexts/userContext'
+import { useContext, useState } from "react"
+import UserContext from "../contexts/userContext"
 import { useApi } from "./useApi"
 import { useSnackbar } from "burgos-snackbar"
 import { useIo } from "./useIo"
 import { useNavigate } from "react-router-dom"
+import { useLocalStorage } from "./useLocalStorage"
 
 export const useUser = () => {
     const api = useApi()
     const io = useIo()
     const navigate = useNavigate()
     const { snackbar } = useSnackbar()
+    const storage = useLocalStorage()
+
+    const electronApi = window.electron
 
     const userContext = useContext(UserContext)
     const { user, setUser, connected, list, connectedList, addUser, logs, latestVersion, downloadUrl } = userContext
@@ -33,6 +37,10 @@ export const useUser = () => {
         io.emit("user:status:update", updatedUser)
     }
 
+    const saveLoginData = (values: LoginForm | null) => {
+        storage.set("boz:login", values)
+    }
+
     const login = (values: LoginForm, setLoading: (value: boolean) => void) => {
         setLoading(true)
         api.user.login({
@@ -43,6 +51,8 @@ export const useUser = () => {
                     setUser(user)
                     io.emit("client:sync", user)
                     io.emit("zap:sync")
+
+                    if (electronApi) saveLoginData(values)
 
                     snackbar({ severity: "success", text: "logado" })
                 } else {
@@ -57,6 +67,7 @@ export const useUser = () => {
         setUser(null)
         io.emit("user:logout", user)
         drawer.close()
+        if (electronApi) saveLoginData(null)
     }
 
     const remove = (user: User, setDeleting: (value: boolean) => void) => {

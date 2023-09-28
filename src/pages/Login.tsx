@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box, Button, CircularProgress, IconButton, SxProps, TextField } from "@mui/material"
 import { Form, Formik } from "formik"
 import logo from "../assets/logo.png"
@@ -9,16 +9,19 @@ import { useColors } from "../hooks/useColors"
 import { ModeToggler } from "../components/ModeToggler"
 import { textFieldStyle } from "../style/textfield"
 import { useMediaQuery } from "@mui/material"
+import { useLocalStorage } from "../hooks/useLocalStorage"
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const colors = useColors()
+    const storage = useLocalStorage()
     const { login } = useUser()
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [electron] = useState(window.electron)
 
     const webkitbg = {
         "& .MuiInputBase-input.MuiOutlinedInput-input:-webkit-autofill": {
@@ -37,6 +40,15 @@ export const Login: React.FC<LoginProps> = ({}) => {
 
         login(values, setLoading)
     }
+
+    useEffect(() => {
+        if (electron) {
+            const loginData = storage.get("boz:login")
+            if (loginData) {
+                login(loginData, setLoading)
+            }
+        }
+    }, [])
 
     return (
         <Box
