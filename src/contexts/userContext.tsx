@@ -168,6 +168,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
     useEffect(() => {
         io.on("electron:latest", ({ latestVersion, downloadUrl }) => {
+            console.log({ latestVersion, downloadUrl })
             setDownloadUrl(downloadUrl)
             setLatestVersion(latestVersion)
         })
