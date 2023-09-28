@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Box, Switch, alpha } from "@mui/material"
+import { Avatar, Box, Switch, alpha, useMediaQuery } from "@mui/material"
 import { Tag } from "./Tag"
 import { useColors } from "../hooks/useColors"
 import { useMuiTheme } from "../hooks/useMuiTheme"
@@ -14,6 +14,8 @@ interface CustomerContainerProps {
 }
 
 export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
+
     const io = useIo()
     const colors = useColors()
     const theme = useMuiTheme()
@@ -30,9 +32,9 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
         <Box
             sx={{
                 borderBottom: "2px solid",
-                borderRadius: "0.5vw",
-                padding: "1vw",
-                width: "30vw",
+                borderRadius: isMobile? "3vw" : "0.5vw",
+                padding: isMobile? "0 0 5vw 0" : "1vw",
+                width: isMobile ? "80vw" : "30vw",
                 // bgcolor: customer.active ? "background.default" : alpha(theme.palette.error.main, 0.25),
                 color: customer.active ? "primary.main" : "error.main",
                 position: "relative",
@@ -45,13 +47,13 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 sx={{ position: "absolute", right: "0.5vw", top: "0.5vw", pointerEvents: isAdmin() ? "" : "none" }}
             />
 
-            <Box sx={{ flexDirection: "column", gap: "1.5vw", height: "vw" }}>
-                <Box sx={{ gap: "1vw", alignItems: "center" }}>
-                    <CustomerAvatar customer={customer} sx={{ width: "5vw", height: "5vw" }} />
+            <Box sx={{ flexDirection: "column", gap: isMobile? "5vw" : "1.5vw", height: "vw" }}>
+                <Box sx={{ gap: isMobile? "3vw" : "1vw", alignItems: "center" }}>
+                    <CustomerAvatar customer={customer} sx={{ width: isMobile? "15vw" : "5vw", height: isMobile? "15vw" : "5vw" }} />
                     <Box
                         sx={{
                             fontWeight: "bold",
-                            fontSize: "1vw",
+                            fontSize: isMobile? "5vw" : "1vw",
                             width: "20vw",
                             cursor: "pointer",
                             "&:hover": { textDecoration: "underline" },
@@ -63,23 +65,24 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                         {customer.name}
                     </Box>
                 </Box>
-                <Box sx={{ gap: "0.5vw", width: "28vw", flexWrap: "wrap", height: "4vw" }}>
+                <Box sx={{ gap: isMobile? "2vw" : "0.5vw",
+                            width: isMobile? "80vw" : "28vw", flexWrap: "wrap", height: isMobile? "auto" : "4vw" }}>
                     {customer.services.map((service) => (
                         <Tag
                             key={service.id}
                             name={service.tag}
                             tooltip={service.name}
-                            sx={{ fontSize: "0.7vw", padding: "0.5vw", height: "1.5vw" }}
+                            sx={{ fontSize: isMobile? "4vw" : "0.7vw", padding: isMobile? "3vw" : "0.5vw", height: isMobile? "2vw" : "1.5vw" }}
                             color={customer.active ? "" : theme.palette.error.main}
                         />
                     ))}
                 </Box>
                 <Box
                     sx={{
-                        height: "5vw",
+                        height: isMobile? "auto" : "5vw",
                         color: "text.secondary",
-                        fontSize: "0.75vw",
-                        width: "28vw",
+                        fontSize: isMobile? "4vw" : "0.75vw",
+                        width: isMobile? "80vw" : "28vw",
                         textAlign: "justify",
                         whiteSpace: "pre-wrap",
                         overflow: "hidden",
