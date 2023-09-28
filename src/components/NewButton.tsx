@@ -1,5 +1,5 @@
 import React from "react"
-import { AlertColor, Button, CircularProgress } from "@mui/material"
+import { AlertColor, Button, CircularProgress, useMediaQuery } from "@mui/material"
 import zIndex from "@mui/material/styles/zIndex"
 
 interface NewButtonProps {
@@ -14,6 +14,7 @@ interface NewButtonProps {
 }
 
 export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, onClick, icon, color, loading }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const Icon = () => icon || <></>
 
     return (
@@ -26,8 +27,8 @@ export const NewButton: React.FC<NewButtonProps> = ({ top, left, bottom, right, 
                 bottom,
                 right,
                 color: "secondary.main",
-                width: "4vw",
-                height: "4vw",
+                width: isMobile? "15vw" : "4vw",
+                height: isMobile? "15vw" : "4vw",
                 zIndex: 2,
                 justifyContent: "center",
                 alignItems: "center",

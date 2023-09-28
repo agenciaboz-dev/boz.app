@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, MenuItem, Paper } from "@mui/material"
+import { Box, MenuItem, Paper, useMediaQuery } from "@mui/material"
 import { useCustomers } from "../../../hooks/useCustomers"
 import { CustomerContainer } from "../../../components/CustomerContainer"
 import { useSearch } from "../../../hooks/useSearch"
@@ -13,6 +13,7 @@ import AddIcon from "@mui/icons-material/Add"
 interface CustomerListProps {}
 
 export const CustomerList: React.FC<CustomerListProps> = ({}) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const navigate = useNavigate()
     const { customers } = useCustomers()
     const { setOnSearch } = useSearch()
@@ -34,7 +35,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", gap: "2vw" }}>
+        <Box sx={{ flexDirection: "column", gap: isMobile? "10vw" : "2vw" }}>
             {isAdmin() && <Services />}
             {isAdmin() && (
                 <NewButton
@@ -44,9 +45,9 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
                     icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
                 />
             )}
-            <Paper sx={{ bgcolor: "background.default", flexDirection: "column", padding: "1vw", gap: "1vw" }}>
-                <p style={{ fontWeight: "bold" }}>Clientes</p>
-                <Box sx={{ justifyContent: "space-between", flexWrap: "wrap", width: "100%", gap: "1vw" }}>
+            <Paper sx={{ bgcolor: "background.default", flexDirection: "column", padding: isMobile ? "5vw" : "1vw", gap: isMobile? "5vw" : "1vw" }}>
+                <p style={{ fontWeight: "bold", fontSize: isMobile? "6vw" : "1vw", textAlign: isMobile? "center" : "start" }}>Clientes</p>
+                <Box sx={{ justifyContent: "space-between", flexWrap: "wrap", width: "100%", gap: isMobile? "12vw" : "1vw" }}>
                     {customerList
                         .sort((a, b) => a.id - b.id)
                         .map((customer) => (
