@@ -96,7 +96,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
     }, [])
 
     return (
-        <Box sx={{ color: "primary.main", padding: isMobile ? "8vw 2vw 2vw 2vw" : "2vw", margin: "2vw 5vw", flexDirection: "column", gap: isMobile ? "4vw" : "2vw" }}>
+        <Box sx={{ color: "primary.main", padding: isMobile ? "8vw 2vw 2vw 2vw" : "2vw", margin: isMobile? "0 5vw 5vw" : "2vw 5vw", flexDirection: "column", gap: isMobile ? "4vw" : "2vw", overflowX: "hidden" }}>
             <h1 style={{ fontSize: isMobile ? "6vw" : "", textAlign: isMobile ? "center" : "left" }}>QR Code</h1>
             <Paper
                 sx={{
