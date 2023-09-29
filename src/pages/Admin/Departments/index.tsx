@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, CircularProgress, IconButton, Paper, TextField, darken, lighten } from "@mui/material"
+import { Box, CircularProgress, IconButton, Paper, TextField, darken, lighten, useMediaQuery } from "@mui/material"
 import { backgroundStyle } from "../../../style/background"
 import { Roles } from "./Roles"
 import { useDepartments } from "../../../hooks/useDepartments"
@@ -19,6 +19,8 @@ interface FormValues {
 }
 
 export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
+
     const api = useApi()
 
     const { departments } = useDepartments()
@@ -46,13 +48,13 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
     }
 
     return (
-        <Box sx={{ ...backgroundStyle, padding: "2vw", gap: "2vw" }}>
+        <Box sx={{ ...backgroundStyle, padding: isMobile? "5vw" : "2vw", gap: isMobile? "10vw" : "2vw", height: isMobile? "auto" : "100vh" }}>
             <Roles />
 
-            <Paper sx={{ gap: "1vw", bgcolor: "background.default", padding: "1vw", flexDirection: "column" }}>
-                <p style={{ fontWeight: "bold" }}>Departamentos</p>
+            <Paper sx={{ gap: isMobile? "5vw" : "1vw", bgcolor: "background.default", padding: isMobile? "5vw" : "1vw", flexDirection: "column" }}>
+                <p style={{ fontWeight: "bold", fontSize: isMobile ? "6vw" : "1vw", textAlign: isMobile? "center" : "start" }}>Departamentos</p>
 
-                <Box sx={{ gap: "2vw", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
+                <Box sx={{ gap: isMobile? "10vw" : "2vw", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
                     {departments
                         .sort((a, b) => a.id - b.id)
                         .map((department) => (
@@ -66,7 +68,7 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
                                     name="name"
                                     value={values.name}
                                     onChange={handleChange}
-                                    sx={{ ...textFieldStyle, width: "21.5vw" }}
+                                    sx={{ ...textFieldStyle, width: isMobile? "80vw" : "21.5vw" }}
                                     required
                                     InputProps={{
                                         endAdornment: (

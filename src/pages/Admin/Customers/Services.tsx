@@ -18,9 +18,10 @@ export const Services: React.FC<ServicesProps> = ({}) => {
                     .sort((a, b) => a.id - b.id)
                     .map((service) => (
                         <Tag key={service.id} name={service.tag} tooltip={service.name} fontSize={isMobile? "4vw" : "0.8vw"} onClick={() => serviceModal.open(service)}
-                        sx={{
-                            padding: isMobile ? "2vw" : "0.5vw"
-                        }}/>
+                            sx={{
+                                padding: isMobile ? "2vw" : "0.5vw"
+                            }}
+                        />
                     ))}
                 <IconButton color="primary" sx={{ width: "2vw", height: "2vw" }} onClick={() => serviceModal.open()}>
                     <AddIcon />

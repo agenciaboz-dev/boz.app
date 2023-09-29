@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Tab, Tabs } from "@mui/material"
+import { Box, Tab, Tabs, useMediaQuery } from "@mui/material"
 import { Header } from "../../components/Header"
 import { Route, Routes, useLocation } from "react-router-dom"
 import { Users } from "./Users"
@@ -12,6 +12,8 @@ interface AdminProps {
 }
 
 export const Admin: React.FC<AdminProps> = ({ user }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
+
     return (
         <Box
             sx={{
@@ -23,13 +25,15 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
             }}
         >
             <Header user={user} />
-            <Routes>
-                <Route index element={<Users user={user} />} />
-                <Route path="/users/*" element={<Users user={user} />} />
-                <Route path="/customers/*" element={<Customers user={user} />} />
-                <Route path="/departments/*" element={<Deparments user={user} />} />
-                <Route path="/stats/*" element={<Stats user={user} />} />
-            </Routes>
+            <Box sx={{ flexDirection: "column", overflowY: "auto", height: isMobile? "90vh" : "87vh" }} >
+                <Routes>
+                    <Route index element={<Users user={user} />} />
+                    <Route path="/users/*" element={<Users user={user} />} />
+                    <Route path="/customers/*" element={<Customers user={user} />} />
+                    <Route path="/departments/*" element={<Deparments user={user} />} />
+                    <Route path="/stats/*" element={<Stats user={user} />} />
+                </Routes>
+            </Box>
         </Box>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, IconButton, darken, lighten } from "@mui/material"
+import { Box, IconButton, darken, lighten, useMediaQuery } from "@mui/material"
 import EditIcon from "@mui/icons-material/Edit"
 import { useDarkMode } from "../../../hooks/useDarkMode"
 import { useColors } from "../../../hooks/useColors"
@@ -12,6 +12,8 @@ interface DepartmentContainerProps {
 }
 
 export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ department }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
+
     const colors = useColors()
 
     const { darkMode } = useDarkMode()
@@ -32,7 +34,7 @@ export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ depart
         <Box
             key={department.id}
             sx={{
-                width: "21.5vw",
+                width: isMobile? "80vw" : "21.5vw",
                 borderRadius: "1vw",
                 borderBottom: "2px solid",
                 padding: "1vw",
@@ -53,12 +55,12 @@ export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ depart
             <UsersToolip users={users}>
                 <Box
                     sx={{
-                        padding: "0.5vw",
+                        padding: isMobile? "3vw" : "0.5vw",
                         cursor: "default",
                         borderRadius: "50%",
-                        fontSize: "0.7vw",
-                        minWidth: "1.5vw",
-                        height: "1.5vw",
+                        fontSize: isMobile? "4vw" : "0.7vw",
+                        minWidth: isMobile? "9vw" : "1.5vw",
+                        height: isMobile? "9vw" : "1.5vw",
                         justifyContent: "center",
                         alignItems: "center",
                         color: "secondary.main",
