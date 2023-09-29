@@ -86,7 +86,7 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
                         </Button>
                     </Box>
                 ) : (
-                    <Box>Você não tá usando o app, se saia</Box>
+                    <Box>Para atualizar, instale o aplicativo Boz App</Box>
                 )}
             </Paper>
         </Box>
