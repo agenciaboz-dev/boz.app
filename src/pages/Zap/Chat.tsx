@@ -31,7 +31,7 @@ export const Chat: React.FC<ChatProps> = ({ chat, onChatClick }) => {
                 gap: isMobile ? "3vw" : "1vw",
                 height: isMobile ? "20vw" : "5vw",
                 cursor: "pointer",
-                borderRadius: "0.5vw",
+                borderRadius: isMobile? "3vw" : "0.5vw",
                 borderBottom: "2px solid",
                 // borderRight: "1px solid",
                 // boxShadow: "0px 5px 7px rgba(0, 0, 0, 0.2)",
