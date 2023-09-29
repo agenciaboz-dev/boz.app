@@ -35,7 +35,7 @@ export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ depart
             key={department.id}
             sx={{
                 width: isMobile? "80vw" : "21.5vw",
-                borderRadius: "1vw",
+                borderRadius: isMobile? "3vw" : "1vw",
                 borderBottom: "2px solid",
                 padding: "1vw",
                 justifyContent: "space-between",
