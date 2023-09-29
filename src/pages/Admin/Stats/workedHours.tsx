@@ -1,7 +1,9 @@
-import { Box } from "@mui/material"
+import { Box, useMediaQuery } from "@mui/material"
 import { TableColumn } from "react-data-table-component"
 
 export const buildWorkedHours = (logs: StatusLog[]) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
+
     const groupedByDay = logs.reduce<Record<string, StatusLog[]>>((acc, item) => {
         const date = new Date(item.datetime).toDateString()
         acc[date] = acc[date] || []
@@ -134,14 +136,14 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
             selector: (row) => row.date,
             sortable: true,
             cell: (row) => <Box>{new Date(row.date).toLocaleDateString("pt-br")}</Box>,
-            width: "5vw",
+            width: isMobile? "20%" : "5vw",
         },
         {
             name: "Horas",
             selector: (row) => row.minutes,
             sortable: true,
             cell: (row) => <Box>{row.minutes}</Box>,
-            width: "5vw",
+            width: isMobile? "20%" : "5vw",
             center: true,
         },
         {
@@ -149,7 +151,7 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
             selector: (row) => row.meeting,
             sortable: true,
             cell: (row) => <Box>{row.meeting}</Box>,
-            width: "5.1vw",
+            width: isMobile? "20%" : "5.1vw",
             center: true,
         },
         {
@@ -157,7 +159,7 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
             selector: (row) => row.pause,
             sortable: true,
             cell: (row) => <Box>{row.pause}</Box>,
-            width: "4.5vw",
+            width: isMobile? "20%" : "4.5vw",
             center: true,
         },
         {
@@ -165,7 +167,7 @@ export const buildWorkedHours = (logs: StatusLog[]) => {
             selector: (row) => row.lunch,
             sortable: true,
             cell: (row) => <Box>{row.lunch}</Box>,
-            width: "5vw",
+            width: isMobile? "20%" : "5vw",
             right: true,
         },
     ]

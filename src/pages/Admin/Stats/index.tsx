@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Paper } from "@mui/material"
+import { Box, Paper, useMediaQuery } from "@mui/material"
 import { backgroundStyle } from "../../../style/background"
 import { useUser } from "../../../hooks/useUser"
 import { StatusLogs } from "./StatusLogs"
@@ -9,10 +9,12 @@ interface StatsProps {
 }
 
 export const Stats: React.FC<StatsProps> = ({ user }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
+
     const { logs } = useUser()
 
     return (
-        <Box sx={{ padding: "2vw" }}>
+        <Box sx={{ padding: isMobile? "0 5vw" : "2vw" }}>
             <StatusLogs logs={logs.status.sort((a, b) => b.id - a.id)} />
         </Box>
     )
