@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Box, Button, CircularProgress, IconButton, MenuItem, Paper, TextField, useMediaQuery } from "@mui/material"
+import { Box, Button, CircularProgress, IconButton, MenuItem, Paper, TextField, Tooltip, useMediaQuery } from "@mui/material"
 import { QrCodeModal } from "../../components/QrcodeModal"
 import { Form, Formik } from "formik"
 import { saveAs } from "file-saver"
@@ -11,13 +11,14 @@ import { textFieldStyle } from "../../style/textfield"
 import { selectMenuStyle } from "../../style/selectMenuStyle"
 import { useIo } from "../../hooks/useIo"
 import ClearIcon from "@mui/icons-material/Clear"
-
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
+import CloseIcon from "@mui/icons-material/Close"
 interface QrCodeGeneratorProps {
     user: User
 }
 
 export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const ref = useRef<HTMLCanvasElement>(null)
     const io = useIo()
 
@@ -43,7 +44,9 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
             return
         }
 
-        const filename = `${values.name}${values.customerId ? ` - ${customers.find((item) => item.id == values.customerId)?.name.trim()}` : ""}`
+        const filename = `${values.name}${
+            values.customerId ? ` - ${customers.find((item) => item.id == values.customerId)?.name.trim()}` : ""
+        }`
 
         const canvas = ref.current?.querySelector("canvas")
         canvas?.toBlob((blob: Blob | null) => {
@@ -85,6 +88,9 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
         io.emit(loadedCode ? "qrcode:update" : "qrcode:new", data)
     }
 
+    const handleDelete = () => {
+        console.log("deletou")
+    }
     useEffect(() => {
         io.on("qrcode:new:success", (qrcode: QrCode) => {
             setLoading(false)
@@ -96,7 +102,16 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
     }, [])
 
     return (
-        <Box sx={{ color: "primary.main", padding: isMobile ? "8vw 2vw 2vw 2vw" : "2vw", margin: isMobile? "0 5vw 5vw" : "2vw 5vw", flexDirection: "column", gap: isMobile ? "4vw" : "2vw", overflowX: "hidden" }}>
+        <Box
+            sx={{
+                color: "primary.main",
+                padding: isMobile ? "8vw 2vw 2vw 2vw" : "2vw",
+                margin: isMobile ? "0 5vw 5vw" : "2vw 5vw",
+                flexDirection: "column",
+                gap: isMobile ? "4vw" : "2vw",
+                overflowX: "hidden",
+            }}
+        >
             <h1 style={{ fontSize: isMobile ? "6vw" : "", textAlign: isMobile ? "center" : "left" }}>QR Code</h1>
             <Paper
                 sx={{
@@ -112,7 +127,13 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                 <Formik initialValues={initialQrCode} onSubmit={handleSubmit} enableReinitialize>
                     {({ values, handleChange }) => (
                         <Form>
-                            <Box sx={{ gap: isMobile ? "2vw" : "1vw", flexDirection: isMobile ? "column-reverse" : "", padding: isMobile ? "2vw" : "" }}>
+                            <Box
+                                sx={{
+                                    gap: isMobile ? "2vw" : "1vw",
+                                    flexDirection: isMobile ? "column-reverse" : "",
+                                    padding: isMobile ? "2vw" : "",
+                                }}
+                            >
                                 <Box sx={{ flexDirection: "column", gap: isMobile ? "3vw" : "1vw", flex: "1" }}>
                                     <TextField
                                         label="Cliente"
@@ -135,7 +156,14 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                    <TextField label="Nome do código" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} required />
+                                    <TextField
+                                        label="Nome do código"
+                                        name="name"
+                                        value={values.name}
+                                        onChange={handleChange}
+                                        sx={textFieldStyle}
+                                        required
+                                    />
                                     <TextField
                                         label="Código"
                                         name="code"
@@ -147,12 +175,21 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                                     />
 
                                     <Box sx={{ gap: "1vw", marginTop: "auto" }}>
-                                        <Button sx={{ gap: "0.25vw" }} variant="outlined" fullWidth onClick={() => downloadImage(values)}>
+                                        <Button
+                                            sx={{ gap: "0.25vw" }}
+                                            variant="outlined"
+                                            fullWidth
+                                            onClick={() => downloadImage(values)}
+                                        >
                                             <FileDownload color="primary" />
                                             Baixar
                                         </Button>
                                         <Button sx={{ gap: "0.4vw" }} variant="outlined" fullWidth type="submit">
-                                            {loading ? <CircularProgress size="1.5rem" color="primary" /> : <SaveIcon color="primary" />}
+                                            {loading ? (
+                                                <CircularProgress size="1.5rem" color="primary" />
+                                            ) : (
+                                                <SaveIcon color="primary" />
+                                            )}
                                             Salvar
                                         </Button>
                                     </Box>
@@ -175,6 +212,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     fontWeight: "bold",
                 }}
             >
+                {" "}
                 <TextField
                     label="Selecione"
                     value={loadedCode}
@@ -188,14 +226,25 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     }}
                     required
                 >
+                    {" "}
                     <MenuItem value={0} sx={{}}>
                         <IconButton></IconButton>
                     </MenuItem>
                     {savedCodes.map((qrcode) => (
                         <MenuItem key={qrcode.id} value={qrcode.id}>
-                            {qrcode.name} - {qrcode.customer.name}
+                            <Box sx={{ alignItems: "center", gap: "1vw" }}>
+                                <Tooltip
+                                    title="Excluir QR Code"
+                                    onClick={() => {
+                                        handleDelete
+                                    }}
+                                >
+                                    <CloseIcon key={qrcode.id} fontSize="small" />
+                                </Tooltip>
+                                {qrcode.name} - {qrcode.customer.name}
+                            </Box>
                         </MenuItem>
-                    ))}
+                    ))}{" "}
                 </TextField>
             </Paper>
         </Box>
