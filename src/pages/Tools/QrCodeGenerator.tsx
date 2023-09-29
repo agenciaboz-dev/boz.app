@@ -105,7 +105,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     gap: "1vw",
                     padding: "1vw",
                     borderBottom: "2px solid",
-                    borderRadius: "0.5vw",
+                    borderRadius: isMobile? "3vw" : "0.5vw",
                     fontWeight: "bold",
                 }}
             >
@@ -171,7 +171,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     gap: "1vw",
                     padding: isMobile ? "3vw" : "1vw",
                     borderBottom: "2px solid",
-                    borderRadius: "0.5vw",
+                    borderRadius: isMobile? "3vw" : "0.5vw",
                     fontWeight: "bold",
                 }}
             >
