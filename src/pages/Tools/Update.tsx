@@ -7,6 +7,7 @@ import { gitToken } from "../../api/gitToken"
 import { useUser } from "../../hooks/useUser"
 import UpdateIcon from "@mui/icons-material/Update"
 import colors from "../../style/colors"
+import { useIo } from "../../hooks/useIo"
 
 interface UpdateProps {
     user: User
@@ -14,6 +15,7 @@ interface UpdateProps {
 
 export const Update: React.FC<UpdateProps> = ({ user }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
+    const io = useIo()
 
     const { latestVersion, downloadUrl } = useUser().electron
 
@@ -22,6 +24,8 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
 
     useEffect(() => {
         if (electron) {
+            io.emit("electron:update")
+
             const getVersion = async () => {
                 const version = await electron.ipcRenderer.invoke("version")
                 setCurrentVersion(version)
@@ -42,10 +46,7 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
             }}
         >
             <h1>Atualização </h1>
-            <Paper
-                sx={{ backgroundColor: "transparent", flexDirection: "column", padding: "2vw", borderRadius: "0 3vw 0" }}
-                elevation={3}
-            >
+            <Paper sx={{ backgroundColor: "transparent", flexDirection: "column", padding: "2vw", borderRadius: "0 3vw 0" }} elevation={3}>
                 {electron ? (
                     <Box sx={{ flexDirection: "row", gap: "1vw", justifyContent: "space-between", alignItems: "center" }}>
                         <Box sx={{ gap: "2vw" }}>
@@ -66,11 +67,7 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
                                 <Box sx={{ gap: "1vw" }}>
                                     <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
                                         <p style={{ fontSize: "1vw" }}>Versão atual: {currentVersion}</p>
-                                        {latestVersion == currentVersion ? (
-                                            <CheckCircleIcon color="success" />
-                                        ) : (
-                                            <ErrorIcon color="warning" />
-                                        )}
+                                        {latestVersion == currentVersion ? <CheckCircleIcon color="success" /> : <ErrorIcon color="warning" />}
                                     </Box>
                                     <Box sx={{ alignItems: "center", gap: "1vw" }}>
                                         <p style={{ fontSize: "1vw" }}>Última versão: {latestVersion}</p>
