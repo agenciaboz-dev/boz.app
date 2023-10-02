@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, CircularProgress, IconButton, TextField } from "@mui/material"
+import { Box, CircularProgress, IconButton, TextField, useMediaQuery } from "@mui/material"
 import { Form, Formik } from "formik"
 import { textFieldStyle } from "../../../style/textfield"
 import CheckIcon from "@mui/icons-material/Check"
@@ -15,6 +15,7 @@ interface DepartmentFormProps {
 }
 
 export const DepartmentForm: React.FC<DepartmentFormProps> = ({ department, finish }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const io = useIo()
 
     const { confirm } = useConfirmDialog()
@@ -93,7 +94,7 @@ export const DepartmentForm: React.FC<DepartmentFormProps> = ({ department, fini
                         name="name"
                         value={values.name}
                         onChange={handleChange}
-                        sx={{ ...textFieldStyle, width: "21.5vw" }}
+                        sx={{ ...textFieldStyle, width: isMobile? "100%" : "21.5vw" }}
                         required
                         InputProps={{
                             endAdornment: (

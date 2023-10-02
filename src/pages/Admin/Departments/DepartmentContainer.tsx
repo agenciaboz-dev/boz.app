@@ -1,11 +1,12 @@
-import React, { useState } from "react"
-import { Box, IconButton, darken, lighten, useMediaQuery } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { Box, IconButton, Paper, darken, lighten, useMediaQuery } from "@mui/material"
 import EditIcon from "@mui/icons-material/Edit"
 import { useDarkMode } from "../../../hooks/useDarkMode"
 import { useColors } from "../../../hooks/useColors"
 import { useUser } from "../../../hooks/useUser"
 import { DepartmentForm } from "./DepartmentForm"
 import { UsersToolip } from "../../Profile/UsersTooltip"
+import { UserAvatar } from "../Stats/StatusLogs"
 
 interface DepartmentContainerProps {
     department: Department
@@ -20,13 +21,22 @@ export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ depart
     const { list } = useUser()
     const users = list.filter((user) => user.department.id == department.id)
 
-    const [mouseIn, setMouseIn] = useState(false)
     const [editing, setEditing] = useState(false)
+    const [viewEmployees, setViewEmployees] = useState(false)
 
     const onUpdate = () => {
         setEditing(false)
-        setMouseIn(false)
     }
+
+    useEffect(() => {
+
+        if (viewEmployees) {
+            setTimeout(() => {
+                setViewEmployees(false);
+            }, 2000);
+        }
+
+    }, [viewEmployees]);
 
     return editing ? (
         <DepartmentForm department={department} finish={onUpdate} />
@@ -43,16 +53,8 @@ export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ depart
                 position: "relative",
                 gap: "1vw",
             }}
-            onMouseEnter={() => setMouseIn(true)}
-            onMouseLeave={() => setMouseIn(false)}
         >
             {department.name}
-            {mouseIn && (
-                <IconButton color="primary" sx={{ width: "1.5vw", height: "1.5vw", marginLeft: "auto" }} onClick={() => setEditing(true)}>
-                    <EditIcon />
-                </IconButton>
-            )}
-            <UsersToolip users={users}>
                 <Box
                     sx={{
                         padding: isMobile? "3vw" : "0.5vw",
@@ -66,10 +68,36 @@ export const DepartmentContainer: React.FC<DepartmentContainerProps> = ({ depart
                         color: "secondary.main",
                         bgcolor: darkMode ? darken(colors.primary, 0.5) : lighten(colors.primary, 0.4),
                     }}
+                    onClick={
+                        viewEmployees?
+                            () => setViewEmployees(false)
+                        :
+                            () => setViewEmployees(true)
+                    }
                 >
                     {users.length}
                 </Box>
-            </UsersToolip>
+                {viewEmployees && (
+                    <Paper
+                        sx={{
+                            flexDirection: "column",
+                            gap: isMobile? "3vw" : "0.3vw",
+                            bgcolor: "background.default",
+                            padding: isMobile? "5vw" : "0.5vw",
+                            color: "text.secondary",
+                            position: "absolute",
+                            top: isMobile? "10vw" : "3vw",
+                            zIndex: 2
+                        }}
+                    >
+                        {users.map((user) => (
+                            <UserAvatar user={user} avatarSize="2vw" />
+                        ))}
+                    </Paper>
+                )}
+                    <IconButton color="primary" sx={{ width: "1.5vw", height: "1.5vw", marginLeft: "auto" }} onClick={() => setEditing(true)}>
+                        <EditIcon />
+                    </IconButton>
         </Box>
     )
 }
