@@ -13,6 +13,7 @@ import { useIo } from "../../hooks/useIo"
 import ClearIcon from "@mui/icons-material/Clear"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import CloseIcon from "@mui/icons-material/Close"
+import { useConfirmDialog } from "burgos-confirm"
 interface QrCodeGeneratorProps {
     user: User
 }
@@ -24,6 +25,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
 
     const { customers } = useCustomers()
     const { snackbar } = useSnackbar()
+    const { confirm } = useConfirmDialog()
     const savedCodes = customers
         .map((customer) => customer.qrcodes)
         .flat()
@@ -32,6 +34,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
     const [loading, setLoading] = useState(false)
     const [initialQrCode, setInitialQrCode] = useState<QrCodeForm>({ name: "", code: "", customerId: 0 })
     const [loadedCode, setLoadedCode] = useState(0)
+    const [listCode, setListCode] = useState<QrCode[]>(savedCodes)
 
     const downloadImage = (values: QrCodeForm) => {
         if (!values.name) {
@@ -88,16 +91,30 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
         io.emit(loadedCode ? "qrcode:update" : "qrcode:new", data)
     }
 
-    const handleDelete = () => {
-        console.log("deletou")
+    const handleDelete = (qrcode: QrCode) => {
+        confirm({
+            title: "Deseja excluir o QrCode?",
+            content: "",
+            onConfirm: () => {
+                console.log(qrcode)
+                setLoadedCode(0)
+                io.emit("qrcode:delete", qrcode)
+            },
+        })
     }
     useEffect(() => {
         io.on("qrcode:new:success", (qrcode: QrCode) => {
             setLoading(false)
         })
 
+        io.on("qrcode:delete:success", (qrcode: QrCode) => {
+            snackbar({ severity: "success", text: "QrCode deletado com sucesso" })
+            setListCode((prevList) => prevList.filter((item) => item.id != qrcode.id))
+        })
+
         return () => {
             io.off("qrcode:new:success")
+            io.off("qrcode:delete:success")
         }
     }, [])
 
@@ -120,7 +137,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     gap: "1vw",
                     padding: "1vw",
                     borderBottom: "2px solid",
-                    borderRadius: isMobile? "3vw" : "0.5vw",
+                    borderRadius: isMobile ? "3vw" : "0.5vw",
                     fontWeight: "bold",
                 }}
             >
@@ -208,7 +225,7 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     gap: "1vw",
                     padding: isMobile ? "3vw" : "1vw",
                     borderBottom: "2px solid",
-                    borderRadius: isMobile? "3vw" : "0.5vw",
+                    borderRadius: isMobile ? "3vw" : "0.5vw",
                     fontWeight: "bold",
                 }}
             >
@@ -230,16 +247,11 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     <MenuItem value={0} sx={{}}>
                         <IconButton></IconButton>
                     </MenuItem>
-                    {savedCodes.map((qrcode) => (
+                    {listCode.map((qrcode) => (
                         <MenuItem key={qrcode.id} value={qrcode.id}>
                             <Box sx={{ alignItems: "center", gap: "1vw" }}>
-                                <Tooltip
-                                    title="Excluir QR Code"
-                                    onClick={() => {
-                                        handleDelete
-                                    }}
-                                >
-                                    <CloseIcon key={qrcode.id} fontSize="small" />
+                                <Tooltip title="Excluir QR Code" onClick={() => handleDelete(qrcode)}>
+                                    <CloseIcon key={qrcode.id ? qrcode.id : 0} fontSize="small" />
                                 </Tooltip>
                                 {qrcode.name} - {qrcode.customer.name}
                             </Box>
