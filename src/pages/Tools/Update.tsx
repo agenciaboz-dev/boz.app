@@ -39,13 +39,19 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
         <Box
             sx={{
                 color: "primary.main",
-                padding: isMobile ? "8vw 2vw 2vw 2vw" : "2vw",
+                padding: isMobile ? "8vw 0" : "2vw",
                 margin: "2vw 5vw",
                 flexDirection: "column",
                 gap: isMobile ? "4vw" : "2vw",
             }}
         >
-            <h1>Atualização </h1>
+            <h1
+                style={{
+                    alignSelf: isMobile? "center" : "start"
+                }}
+            >
+                Atualização
+            </h1>
             <Paper sx={{ backgroundColor: "transparent", flexDirection: "column", padding: "2vw", borderRadius: "0 3vw 0" }} elevation={3}>
                 {electron ? (
                     <Box sx={{ flexDirection: "row", gap: "1vw", justifyContent: "space-between", alignItems: "center" }}>
@@ -58,31 +64,32 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
                                     borderRadius: "50%",
                                     justifyContent: "center",
                                     alignItems: "center",
+                                    display: isMobile? "none" : ""
                                 }}
                             >
                                 <UpdateIcon color="secondary" fontSize="large" />
                             </Box>
-                            <Box sx={{ flexDirection: "column", justifyContent: "center" }}>
+                            <Box sx={{ flexDirection: "column", justifyContent: "center", fontSize: isMobile ? "4vw" : "", gap: isMobile? "2vw" : "" }}>
                                 <h3>Boz App </h3>
-                                <Box sx={{ gap: "1vw" }}>
-                                    <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
-                                        <p style={{ fontSize: "1vw" }}>Versão atual: {currentVersion}</p>
+                                <Box sx={{ gap: isMobile? "2vw" : "1vw", flexDirection: isMobile? "column" : "" }}>
+                                    <Box sx={{ gap: isMobile? "1vw" : "0.5vw", alignItems: "center" }}>
+                                        <p style={{ fontSize: isMobile? "4vw" : "1vw" }}>Versão atual: {currentVersion}</p>
                                         {latestVersion == currentVersion ? <CheckCircleIcon color="success" /> : <ErrorIcon color="warning" />}
                                     </Box>
                                     <Box sx={{ alignItems: "center", gap: "1vw" }}>
-                                        <p style={{ fontSize: "1vw" }}>Última versão: {latestVersion}</p>
+                                        <p style={{ fontSize: isMobile? "4vw" : "1vw" }}>Última versão: {latestVersion}</p>
                                         {!latestVersion && <CircularProgress size="1rem" color="primary" />}
                                     </Box>
                                 </Box>
                             </Box>
                         </Box>
                         <Button
-                            sx={{ color: "#fff", height: "3vw" }}
+                            sx={{ color: "#fff", height: "auto", width: "auto", fontSize: isMobile? "4vw" : "1vw", padding: isMobile? "2vw" : "" }}
                             variant="contained"
                             disabled={!!latestVersion && latestVersion == currentVersion}
                             onClick={() => window.open(downloadUrl, "_blank")?.focus()}
                         >
-                            Baixar atualização
+                            Baixar<br />atualização
                         </Button>
                     </Box>
                 ) : (
