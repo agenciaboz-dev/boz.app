@@ -17,7 +17,7 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const io = useIo()
 
-    const { latestVersion, downloadUrl } = useUser().electron
+    const { latestVersion } = useUser().electron
 
     const [electron] = useState(window.electron)
     const [currentVersion, setCurrentVersion] = useState("")
@@ -47,7 +47,7 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
         >
             <h1
                 style={{
-                    alignSelf: isMobile? "center" : "start"
+                    alignSelf: isMobile ? "center" : "start",
                 }}
             >
                 Atualização
@@ -64,32 +64,50 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
                                     borderRadius: "50%",
                                     justifyContent: "center",
                                     alignItems: "center",
-                                    display: isMobile? "none" : ""
+                                    display: isMobile ? "none" : "",
                                 }}
                             >
                                 <UpdateIcon color="secondary" fontSize="large" />
                             </Box>
-                            <Box sx={{ flexDirection: "column", justifyContent: "center", fontSize: isMobile ? "4vw" : "", gap: isMobile? "2vw" : "" }}>
+                            <Box
+                                sx={{
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    fontSize: isMobile ? "4vw" : "",
+                                    gap: isMobile ? "2vw" : "",
+                                }}
+                            >
                                 <h3>Boz App </h3>
-                                <Box sx={{ gap: isMobile? "2vw" : "1vw", flexDirection: isMobile? "column" : "" }}>
-                                    <Box sx={{ gap: isMobile? "1vw" : "0.5vw", alignItems: "center" }}>
-                                        <p style={{ fontSize: isMobile? "4vw" : "1vw" }}>Versão atual: {currentVersion}</p>
+                                <Box sx={{ gap: isMobile ? "2vw" : "1vw", flexDirection: isMobile ? "column" : "" }}>
+                                    <Box sx={{ gap: isMobile ? "1vw" : "0.5vw", alignItems: "center" }}>
+                                        <p style={{ fontSize: isMobile ? "4vw" : "1vw" }}>Versão atual: {currentVersion}</p>
                                         {latestVersion == currentVersion ? <CheckCircleIcon color="success" /> : <ErrorIcon color="warning" />}
                                     </Box>
                                     <Box sx={{ alignItems: "center", gap: "1vw" }}>
-                                        <p style={{ fontSize: isMobile? "4vw" : "1vw" }}>Última versão: {latestVersion}</p>
+                                        <p style={{ fontSize: isMobile ? "4vw" : "1vw" }}>Última versão: {latestVersion}</p>
                                         {!latestVersion && <CircularProgress size="1rem" color="primary" />}
                                     </Box>
                                 </Box>
                             </Box>
                         </Box>
                         <Button
-                            sx={{ color: "#fff", height: "auto", width: "auto", fontSize: isMobile? "4vw" : "1vw", padding: isMobile? "2vw" : "" }}
+                            sx={{ color: "#fff", height: "auto", width: "auto", fontSize: isMobile ? "4vw" : "1vw", padding: isMobile ? "2vw" : "" }}
                             variant="contained"
                             disabled={!!latestVersion && latestVersion == currentVersion}
-                            onClick={() => window.open(downloadUrl, "_blank")?.focus()}
+                            onClick={() =>
+                                window
+                                    .open(
+                                        electron.process.platform == "linux"
+                                            ? `https://github.com/agenciaboz-dev/boz.electron/releases/download/v${latestVersion}/boz.electron_${latestVersion}_amd64.deb`
+                                            : `https://github.com/agenciaboz-dev/boz.electron/releases/download/v${latestVersion}/Boz-setup.exe`,
+                                        "_blank"
+                                    )
+                                    ?.focus()
+                            }
                         >
-                            Baixar<br />atualização
+                            Baixar
+                            <br />
+                            atualização
                         </Button>
                     </Box>
                 ) : (
