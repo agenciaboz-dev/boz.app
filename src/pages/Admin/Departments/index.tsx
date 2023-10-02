@@ -64,7 +64,7 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
                         {({ values, handleChange }) => (
                             <Form>
                                 <TextField
-                                    label="novo departamento"
+                                    label="Novo departamento"
                                     name="name"
                                     value={values.name}
                                     onChange={handleChange}
