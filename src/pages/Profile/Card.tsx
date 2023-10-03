@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Paper, Skeleton, Tooltip, alpha, lighten } from "@mui/material"
+import { Box, Paper, Skeleton, Tooltip, alpha, lighten, useMediaQuery } from "@mui/material"
 import { Avatar } from "../../components/Avatar"
 import { Tag } from "../../components/Tag"
 import { Avatar as AvatarUpload } from "@files-ui/react"
@@ -20,6 +20,7 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ name, username, roles, user, image, setImage, editing, dev }) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const colors = useColors()
     const { getProfilePic } = useImageUrl()
     const { darkMode } = useDarkMode()
@@ -38,12 +39,12 @@ export const Card: React.FC<CardProps> = ({ name, username, roles, user, image, 
         <Paper
             elevation={3}
             sx={{
-                width: "25%",
+                width: isMobile? "100%" : "25%",
                 padding: "9vw 3vw",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: "1.5vw",
-                borderRadius: "0.2vw 0 0 2vw ",
+                gap: isMobile? "5vw" : "1.5vw",
+                borderRadius: isMobile? "0 2vw 0 0" : "0 0 0 2vw ",
                 bgcolor: "background.paper",
                 color: "secondary.main",
             }}
@@ -58,10 +59,10 @@ export const Card: React.FC<CardProps> = ({ name, username, roles, user, image, 
                         emptyLabel="enviar imagem"
                         // style={{ width: "100%", height: "30vw" }}
                         style={{
-                            width: "12vw",
-                            height: "12vw",
-                            borderRadius: "20vw",
-                            fontSize: "1.0vw",
+                            width: isMobile? "30vw" : "12vw",
+                            height: isMobile? "30vw" : "12vw",
+                            borderRadius: "50%",
+                            fontSize: isMobile? "5vw" : "1.0vw",
                         }}
                     />
                 )
@@ -70,9 +71,9 @@ export const Card: React.FC<CardProps> = ({ name, username, roles, user, image, 
             ) : (
                 <Avatar size={"12vw"} user={user} />
             )}
-            <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.6vw" }}>
+            <Box sx={{ flexDirection: "column", alignItems: "center", gap: isMobile? "5vw" : "0.6vw" }}>
                 {!name ? (
-                    <Skeleton variant="rounded" animation="wave" sx={{ width: "15vw", height: "2vw", bgcolor: skeletonColor }} />
+                    <Skeleton variant="rounded" animation="wave" sx={{ width: isMobile? "48vw" : "15vw", height: isMobile? "5vw" : "2vw", bgcolor: skeletonColor }} />
                 ) : (
                     <p style={{ fontWeight: "600", fontSize: "1.3vw", color: "secondary.main" }}>{name}</p>
                 )}

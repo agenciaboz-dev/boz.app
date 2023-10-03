@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, IconButton, Paper, Skeleton, SxProps, alpha, lighten } from "@mui/material"
+import { Box, Button, CircularProgress, IconButton, Paper, Skeleton, SxProps, alpha, lighten, useMediaQuery } from "@mui/material"
 import { backgroundStyle } from "../../style/background"
 import { Header } from "../../components/Header"
 import { Card } from "./Card"
@@ -40,6 +40,7 @@ interface ProfileProps {
 }
 
 export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const io = useIo()
     const colors = useColors()
     const api = useApi()
@@ -218,9 +219,9 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
     }, [])
 
     return (
-        <Box sx={backgroundStyle}>
+        <Box sx={{...backgroundStyle, height: isMobile? "auto" : "100vh"}}>
             {!admin && <Header user={user} disabledSearch />}
-            <Box sx={{ padding: "2vw", height: "90%" }}>
+            <Box sx={{ padding: isMobile? "5vw" : "2vw", height: isMobile? "auto" : "90%" }}>
                 <Paper
                     elevation={3}
                     sx={{
@@ -229,6 +230,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                         bgcolor: "background.default",
                         borderRadius: "0 3vw 0",
                         position: "relative",
+                        flexDirection: isMobile? "column" : "row",
                     }}
                 >
                     <IconButton
@@ -252,15 +254,15 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                             setImage={setImage}
                                             editing
                                         />
-                                        <Box sx={{ ...wrapperStyle, gap: "2vw" }}>
+                                        <Box sx={{ ...wrapperStyle, gap: isMobile? "3vw" : "2vw", padding: isMobile? "5vw 0" : "3vw 1vw" }}>
                                             <Box
                                                 sx={{
                                                     ...scrollBar,
-                                                    padding: "0 3.5vw",
+                                                    padding: isMobile? "0 3vw" : "0 3.5vw",
                                                     height: "90%",
                                                     flexDirection: "column",
-                                                    overflowX: "none",
-                                                    gap: "1vw",
+                                                    overflowX: "hidden",
+                                                    gap: isMobile? "5vw" : "1vw",
                                                     paddingBottom: "2vw",
                                                 }}
                                             >
@@ -272,7 +274,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                                     createOnly={createOnly}
                                                 />
                                             </Box>
-                                            <Box sx={{ alignSelf: "end", gap: "1vw", paddingRight: "4vw" }}>
+                                            <Box sx={{ alignSelf: "end", gap: isMobile? "3vw" : "1vw", paddingRight: isMobile? "3vw" : "4vw" }}>
                                                 <Button
                                                     variant="outlined"
                                                     onClick={() =>

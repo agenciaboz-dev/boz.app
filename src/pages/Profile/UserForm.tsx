@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Checkbox, ListItemText, MenuItem, SxProps, TextField } from "@mui/material"
+import { Box, Checkbox, ListItemText, MenuItem, SxProps, TextField, useMediaQuery } from "@mui/material"
 import { Container } from "./UserComponents"
 import { textFieldStyle } from "../../style/textfield"
 import { selectMenuStyle } from "../../style/selectMenuStyle"
@@ -21,10 +21,11 @@ interface UserFormProps {
 }
 
 export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, selectedRoles, setSelectedRoles, createOnly }) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const { departments, roles } = useDepartments()
     const { isAdmin } = useUser()
 
-    const style: SxProps = { width: "49%" }
+    const style: SxProps = { width: isMobile? "100%" : "49%" }
 
     const handleRoleSelect = (child: any) => {
         const id = child.props.value as Number
