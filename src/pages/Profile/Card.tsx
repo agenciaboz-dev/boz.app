@@ -69,22 +69,27 @@ export const Card: React.FC<CardProps> = ({ name, username, roles, user, image, 
             ) : !user ? (
                 <Skeleton variant="circular" animation="wave" sx={{ width: "12vw", height: "12vw", bgcolor: skeletonColor }} />
             ) : (
-                <Avatar size={"12vw"} user={user} />
-            )}
+                <Avatar size={isMobile? "30vw" : "12vw"} user={user} />
+            )} 
             <Box sx={{ flexDirection: "column", alignItems: "center", gap: isMobile? "5vw" : "0.6vw" }}>
                 {!name ? (
                     <Skeleton variant="rounded" animation="wave" sx={{ width: isMobile? "48vw" : "15vw", height: isMobile? "5vw" : "2vw", bgcolor: skeletonColor }} />
                 ) : (
-                    <p style={{ fontWeight: "600", fontSize: "1.3vw", color: "secondary.main" }}>{name}</p>
+                    <p style={{ fontWeight: "600", fontSize: isMobile? "5vw" : "1.3vw", color: "secondary.main" }}>{name}</p>
                 )}
                 {!username ? (
                     <Skeleton variant="rounded" animation="wave" sx={{ width: "10vw", height: "1vw", bgcolor: skeletonColor }} />
                 ) : (
-                    <p style={{ fontSize: "1.0vw", color: "secondary.main" }}>@{username}</p>
+                    <p style={{ fontSize: isMobile? "4vw" : "1.0vw", color: "secondary.main" }}>@{username}</p>
                 )}
             </Box>
-            <Box sx={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: "0.5vw", flexWrap: "wrap" }}>
-                {roles && roles.map((role) => <Tag key={role.id} name={role.tag} tooltip={role.name} sx={{ fontSize: "0.7vw" }} />)}
+            <Box sx={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: isMobile? "2vw" : "0.5vw", flexWrap: "wrap" }}>
+                {roles && roles.map((role) => <Tag key={role.id} name={role.tag} tooltip={role.name}
+                    sx={{
+                        fontSize: isMobile? "4vw" : "0.7vw",
+                        padding: isMobile? "0.5vw 2vw" : "0.25vw",
+                    }}
+                />)}
             </Box>
 
             {!editing && (

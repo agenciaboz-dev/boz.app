@@ -302,8 +302,8 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                 <>
                                     <NewButton
                                         onClick={handleDelete}
-                                        bottom={"1vw"}
-                                        right={"6vw"}
+                                        bottom={isMobile? "2vw" : "1vw"}
+                                        right={isMobile? "21vw" : "6vw"}
                                         color="error"
                                         loading={deleting}
                                         icon={
@@ -314,8 +314,8 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                     />
                                     <NewButton
                                         onClick={() => setIsEditing(true)}
-                                        bottom={"1vw"}
-                                        right={"1vw"}
+                                        bottom={isMobile? "2vw" : "1vw"}
+                                        right={isMobile? "2vw" : "1vw"}
                                         icon={
                                             <ModeEditIcon sx={{ width: "100%", height: "100%", color: colors.secondary }} />
                                         }
@@ -329,7 +329,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                 user={profile}
                                 dev={filterDevTag}
                             />
-                            <Box sx={{ ...wrapperStyle, padding: "3vw", gap: "3vw" }}>
+                            <Box sx={{ ...wrapperStyle, padding: isMobile? "3vw 3vw 20vw" : "3vw", gap: "3vw" }}>
                                 <Container name="Informações Pessoais">
                                     <Data
                                         icon={<TextFieldsOutlinedIcon color="primary" />}
@@ -378,16 +378,25 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                         icon={<PermIdentityIcon color="primary" />}
                                         title="Funções"
                                         value={
-                                            <>
+                                            <Box
+                                                sx={{
+                                                    gap: isMobile? "1vw" : "0.25vw",
+                                                    flexWrap: "wrap",
+                                                    width: isMobile? "50vw" : "20vw"
+                                                }}
+                                            >
                                                 {profile?.roles?.map((role) => (
                                                     <Tag
                                                         key={role.id}
                                                         name={role.tag}
                                                         tooltip={role.name}
-                                                        sx={{ fontSize: "0.7vw" }}
+                                                        sx={{
+                                                            fontSize: isMobile? "4vw" : "0.7vw",
+                                                            padding: isMobile? "0.5vw 2vw" : "0.25vw"
+                                                        }}
                                                     />
                                                 ))}
-                                            </>
+                                            </Box>
                                         }
                                     />
                                 </Container>

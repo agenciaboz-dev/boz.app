@@ -8,6 +8,7 @@ export const Data: React.FC<{
     value: React.ReactNode
     style?: CSSStyleDeclaration
 }> = ({ icon, title, value }) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const Icon = () => icon
     const colors = useColors()
     const color = lighten(colors.text.secondary, 0.35)
@@ -15,7 +16,7 @@ export const Data: React.FC<{
     return !value ? (
         <Skeleton variant="rounded" sx={{ width: "20vw", height: "2vw" }} animation="wave" />
     ) : (
-        <Box sx={{ gap: "0.4vw", alignItems: "center", color, fontSize: "1vw", width: "30vw" }}>
+        <Box sx={{ gap: isMobile? "2vw" : "0.4vw", alignItems: "center", color, fontSize: isMobile? "4vw" : "1vw", width: isMobile? "100%" : "30vw" }}>
             <Icon />
             <p style={{ fontWeight: "bold" }}>{title}:</p>
             {value}
