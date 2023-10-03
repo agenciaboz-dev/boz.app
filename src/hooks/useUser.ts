@@ -63,6 +63,11 @@ export const useUser = () => {
         })
     }
 
+    const googleLogin = (user: User) => {
+        setUser(user)
+        if (electronApi) saveLoginData({ login: user.username, password: user.password })
+    }
+
     const logout = () => {
         setUser(null)
         io.emit("user:logout", user)
@@ -87,5 +92,21 @@ export const useUser = () => {
         downloadUrl,
     }
 
-    return { user, drawer, login, logout, connected, list, connectedList, remove, addUser, firstname, updateStatus, isAdmin, logs, electron }
+    return {
+        user,
+        drawer,
+        login,
+        logout,
+        connected,
+        list,
+        connectedList,
+        remove,
+        addUser,
+        firstname,
+        updateStatus,
+        isAdmin,
+        logs,
+        electron,
+        googleLogin,
+    }
 }

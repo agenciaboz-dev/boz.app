@@ -15,6 +15,8 @@ declare interface User {
     qrcodes: QrCode[]
 
     connected?: boolean
+
+    googleId?: string
 }
 
 interface LoginForm {

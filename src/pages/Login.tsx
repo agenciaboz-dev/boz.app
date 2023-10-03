@@ -10,14 +10,20 @@ import { ModeToggler } from "../components/ModeToggler"
 import { textFieldStyle } from "../style/textfield"
 import { useMediaQuery } from "@mui/material"
 import { useLocalStorage } from "../hooks/useLocalStorage"
+import { useGoogle } from "../hooks/useGoogle"
+import { useIo } from "../hooks/useIo"
+import { useConfirmDialog } from "burgos-confirm"
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
+    const io = useIo()
     const isMobile = useMediaQuery("(orientation: portrait)")
     const colors = useColors()
     const storage = useLocalStorage()
-    const { login } = useUser()
+    const google = useGoogle()
+    const { login, googleLogin } = useUser()
+    const { confirm } = useConfirmDialog()
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -47,6 +53,31 @@ export const Login: React.FC<LoginProps> = ({}) => {
             if (loginData) {
                 login(loginData, setLoading)
             }
+        }
+
+        io.on("google:login", (user) => {
+            setLoading(false)
+            googleLogin(user)
+            console.log(user)
+        })
+
+        io.on("google:login:first", (user: User) => {
+            console.log(user)
+            setLoading(false)
+            confirm({
+                title: "Vincular conta google",
+                content: `O e-mail ${user.email} já está cadastrado, deseja vincular essa conta do google a esse usuário?`,
+                button: "Vincular",
+                onConfirm: () => {
+                    googleLogin(user)
+                    io.emit("google:link", user)
+                },
+            })
+        })
+
+        return () => {
+            io.off("google:login")
+            io.off("google:login:first")
         }
     }, [])
 
@@ -115,6 +146,15 @@ export const Login: React.FC<LoginProps> = ({}) => {
                                 }}
                             >
                                 {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "entrar"}
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    if (loading) return
+                                    setLoading(true)
+                                    google.login()
+                                }}
+                            >
+                                google
                             </Button>
                         </Box>
                     </Form>
