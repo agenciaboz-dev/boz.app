@@ -13,7 +13,7 @@ interface CardProps {
     name?: string
     username?: string
     roles?: Role[]
-    image?: File
+    image?: File | string
     setImage?: (file: File) => void
     editing?: boolean
     dev?: boolean

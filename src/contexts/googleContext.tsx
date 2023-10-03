@@ -5,6 +5,9 @@ import { useIo } from "../hooks/useIo"
 interface GoogleContextValue {
     accessToken: string
     setAccessToken: (value: string) => void
+
+    people?: People
+    setPeople: (people: People) => void
 }
 
 interface GoogleProviderProps {
@@ -18,7 +21,7 @@ export default GoogleContext
 export const GoogleProvider: React.FC<GoogleProviderProps> = ({ children }) => {
     const io = useIo()
     const [accessToken, setAccessToken] = useState("")
-    const [people, setPeople] = useState()
+    const [people, setPeople] = useState<People>()
 
     useEffect(() => {
         io.on("google:people", (data) => {
@@ -30,5 +33,5 @@ export const GoogleProvider: React.FC<GoogleProviderProps> = ({ children }) => {
         }
     }, [people])
 
-    return <GoogleContext.Provider value={{ accessToken, setAccessToken }}>{children}</GoogleContext.Provider>
+    return <GoogleContext.Provider value={{ accessToken, setAccessToken, people, setPeople }}>{children}</GoogleContext.Provider>
 }

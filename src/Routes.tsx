@@ -33,6 +33,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
     ) : (
         <ReactRoutes>
             <Route index element={<Login />} />
+            <Route path="/signup" element={<Profile createOnly />} />
             <Route path="*" element={<Login />} />
             {/* <Route path="signup" element={<Signup />} /> */}
         </ReactRoutes>

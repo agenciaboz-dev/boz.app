@@ -65,6 +65,7 @@ export const useUser = () => {
 
     const googleLogin = (user: User) => {
         setUser(user)
+        io.emit("client:sync", user)
         if (electronApi) saveLoginData({ login: user.username, password: user.password })
     }
 
@@ -80,7 +81,7 @@ export const useUser = () => {
         api.user.delete({
             data: user,
             callback: () => {
-                navigate("/admin/users")
+                navigate(-1)
                 snackbar({ severity: "warning", text: "usuario deletado" })
             },
             finallyCallback: () => setDeleting(false),

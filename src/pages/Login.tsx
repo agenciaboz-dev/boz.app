@@ -13,6 +13,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage"
 import { useGoogle } from "../hooks/useGoogle"
 import { useIo } from "../hooks/useIo"
 import { useConfirmDialog } from "burgos-confirm"
+import { useNavigate } from "react-router-dom"
 
 interface LoginProps {}
 
@@ -22,6 +23,8 @@ export const Login: React.FC<LoginProps> = ({}) => {
     const colors = useColors()
     const storage = useLocalStorage()
     const google = useGoogle()
+    const navigate = useNavigate()
+
     const { login, googleLogin } = useUser()
     const { confirm } = useConfirmDialog()
 
@@ -75,9 +78,15 @@ export const Login: React.FC<LoginProps> = ({}) => {
             })
         })
 
+        io.on("google:signup", (googleUser: People) => {
+            google.setPeople(googleUser)
+            navigate("/signup", { state: { googleUser } })
+        })
+
         return () => {
             io.off("google:login")
             io.off("google:login:first")
+            io.off("google:signup")
         }
     }, [])
 

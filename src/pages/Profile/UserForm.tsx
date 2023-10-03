@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Box, Checkbox, ListItemText, MenuItem, SxProps, TextField, useMediaQuery } from "@mui/material"
 import { Container } from "./UserComponents"
 import { textFieldStyle } from "../../style/textfield"
@@ -8,6 +8,7 @@ import MaskedInput from "../../components/MaskedInput"
 import masks from "../../style/masks"
 import { TaiTextField } from "../../components/TaiTextField"
 import { useUser } from "../../hooks/useUser"
+import { useIo } from "../../hooks/useIo"
 
 interface UserFormProps {
     values: UserForm
@@ -21,11 +22,12 @@ interface UserFormProps {
 }
 
 export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, selectedRoles, setSelectedRoles, createOnly }) => {
+    const io = useIo()
     const isMobile = useMediaQuery("(orientation: portrait)")
     const { departments, roles } = useDepartments()
     const { isAdmin } = useUser()
 
-    const style: SxProps = { width: isMobile? "100%" : "49%" }
+    const style: SxProps = { width: isMobile ? "100%" : "49%" }
 
     const handleRoleSelect = (child: any) => {
         const id = child.props.value as Number
@@ -37,6 +39,10 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
             setSelectedRoles([...selectedRoles, role])
         }
     }
+
+    useEffect(() => {
+        if (departments.length == 0) io.emit("department:sync")
+    }, [])
 
     return (
         <>
