@@ -45,7 +45,13 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
     }, [])
 
     return (
-        <>
+        <Box
+            sx={{
+                flexDirection: "column",
+                paddingTop: isMobile? "9vw" : "0",
+                gap: isMobile? "9vw" : "2vw"
+            }}
+        >
             <Container name="Informações Pessoais">
                 <TaiTextField label="Nome" name="name" value={values.name} onChange={handleChange} style={style} required />
                 <TaiTextField
@@ -111,6 +117,7 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                         MenuProps: {
                             sx: selectMenuStyle,
                         },
+                        sx: {overflow: "hidden", paddingRight: "12vw"},
                     }}
                     required
                 >
@@ -130,6 +137,7 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                         MenuProps: {
                             sx: selectMenuStyle,
                         },
+                        sx: { overflow: "hidden", paddingRight: "12vw" },
                         value: selectedRoles,
                         onChange: (_, child) => handleRoleSelect(child),
                         multiple: true,
@@ -159,6 +167,6 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     })}
                 </TextField>
             </Container>
-        </>
+        </Box>
     )
 }

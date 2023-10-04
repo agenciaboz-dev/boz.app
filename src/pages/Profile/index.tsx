@@ -277,7 +277,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                             setImage={setImage}
                                             editing
                                         />
-                                        <Box sx={{ ...wrapperStyle, gap: isMobile ? "3vw" : "2vw", padding: isMobile ? "5vw 0" : "3vw 1vw" }}>
+                                        <Box sx={{ ...wrapperStyle, gap: isMobile ? "3vw" : "2vw", padding: isMobile ? "0 0 5vw" : "3vw 1vw" }}>
                                             <Box
                                                 sx={{
                                                     ...scrollBar,
@@ -331,7 +331,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, admin, createOnly }) => 
                                 </>
                             )}
                             <Card name={profile?.name} username={profile?.username} roles={profile?.roles} user={profile} dev={filterDevTag} />
-                            <Box sx={{ ...wrapperStyle, padding: isMobile ? "3vw 3vw 20vw" : "3vw", gap: "3vw" }}>
+                            <Box sx={{ ...wrapperStyle, padding: isMobile ? "9vw 3vw 20vw" : "3vw", gap: isMobile? "9vw" : "3vw" }}>
                                 <Container name="Informações Pessoais">
                                     <Data icon={<TextFieldsOutlinedIcon color="primary" />} title="Nome" value={profile?.name} />
                                     <Data
