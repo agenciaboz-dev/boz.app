@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Dialog, DialogTitle, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, Dialog, DialogTitle, TextField, useMediaQuery } from "@mui/material"
 import { useCustomers } from "../hooks/useCustomers"
 import { backdropStyle } from "../style/backdrop"
 import { Form, Formik } from "formik"
@@ -12,6 +12,7 @@ import { useConfirmDialog } from "burgos-confirm"
 interface ServiceModalProps {}
 
 export const ServiceModal: React.FC<ServiceModalProps> = ({}) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const io = useIo()
     const api = useApi()
 
@@ -102,15 +103,19 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({}) => {
             BackdropProps={{ sx: backdropStyle }}
             PaperProps={{ sx: { bgcolor: "background.default" } }}
         >
-            <DialogTitle>{service ? "atualizar serviço" : "Novo serviço"}</DialogTitle>
-            <Box sx={{ flexDirection: "column", padding: "2vw", width: "30vw", paddingTop: 0 }}>
+            <DialogTitle style={{textAlign: isMobile? "center" : "start"}}>{service ? "Atualizar serviço" : "Novo serviço"}</DialogTitle>
+            <Box sx={{ flexDirection: "column", padding: isMobile? "5vw" : "2vw", width: isMobile? "90vw" : "30vw", paddingTop: 0 }}>
                 <Formik initialValues={initialValues} onSubmit={service ? updateService : handleNewService} enableReinitialize>
                     {({ values, handleChange }) => (
                         <Form>
-                            <TextField label="nome" name="name" value={values.name} onChange={handleChange} variant="standard" sx={{}} required />
-                            <TextField label="tag" name="tag" value={values.tag} onChange={handleChange} variant="standard" sx={{}} required />
+                            <TextField label="Nome" name="name" value={values.name} onChange={handleChange} variant="standard" required
+                                sx={{}}
+                            />
+                            <TextField label="Tag" name="tag" value={values.tag} onChange={handleChange} variant="standard" required
+                                sx={{}}
+                            />
 
-                            <Box sx={{ alignSelf: "flex-end", marginTop: "2vw", gap: "1vw" }}>
+                            <Box sx={{ alignSelf: "flex-end", marginTop: isMobile? "5vw" : "2vw", gap: isMobile? "3vw" : "1vw" }}>
                                 {service && (
                                     <Button variant="outlined" color="error" sx={{ minWidth: 0, padding: "0 0.5vw" }} onClick={handleDelete}>
                                         <DeleteForever />
