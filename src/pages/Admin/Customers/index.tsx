@@ -43,7 +43,7 @@ export const Customers: React.FC<CustomersProps> = ({ user }) => {
                                 right={"3vw"}
                                 icon={<AddIcon sx={{ width: "100%", height: "100%" }} />}
                             />
-                            <Services />
+                            {/* <Services /> */}
                             <CustomerList />
                         </>
                     }

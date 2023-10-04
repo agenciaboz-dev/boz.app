@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Skeleton, Avatar, lighten } from "@mui/material"
+import { Box, Skeleton, Avatar, lighten, useMediaQuery } from "@mui/material"
 import { useColors } from "../../../hooks/useColors"
 import { useImageUrl } from "../../../hooks/useImageUrl"
 import { useDarkMode } from "../../../hooks/useDarkMode"
@@ -14,6 +14,7 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ customer, image, setImage, editing }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const colors = useColors()
     const { getCustomerPic } = useImageUrl()
     const { darkMode } = useDarkMode()
@@ -35,12 +36,12 @@ export const Card: React.FC<CardProps> = ({ customer, image, setImage, editing }
                               width: "25vw",
                               height: "25vw",
                               borderRadius: "0.3vw",
-                              fontSize: "1.2vw",
+                              fontSize: isMobile? "5vw" : "1.2vw",
                           }}
                       />
                   )
                 : customer && (
-                      <CustomerAvatar customer={customer} sx={{ width: "25vw", height: "25vw", fontSize: "1.0vw" }} />
+                      <CustomerAvatar customer={customer} sx={{ width: "25vw", height: "25vw", fontSize: isMobile? "5vw" : "1.0vw" }} />
                   )}
         </Box>
     )

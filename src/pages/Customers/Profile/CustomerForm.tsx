@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, TextField, Select, OutlinedInput, MenuItem, ListItemText, Checkbox } from "@mui/material"
+import { Box, TextField, Select, OutlinedInput, MenuItem, ListItemText, Checkbox, useMediaQuery } from "@mui/material"
 import { useCustomers } from "../../../hooks/useCustomers"
 import { textFieldStyle } from "../../../style/textfield"
 import { selectMenuStyle } from "../../../style/selectMenuStyle"
@@ -24,6 +24,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
     setSelectedServices,
     createOnly,
 }) => {
+    const isMobile = useMediaQuery('(orientation:portrait)')
     const { services } = useCustomers()
 
     const handleServiceSelect = (child: any) => {
@@ -41,9 +42,10 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
         <Box
             sx={{
                 flexDirection: "column",
-                width: "100%",
-                gap: "0.7vw",
                 height: "100%",
+                width: "100%",
+                gap: isMobile? "3vw" : "0.7vw",
+                flexShrink: "unset"
             }}
         >
             <TaiTextField label="Nome" name="name" value={values.name} onChange={handleChange} required={true} />
