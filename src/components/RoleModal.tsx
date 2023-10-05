@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, CircularProgress, Dialog, DialogTitle, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, Dialog, DialogTitle, TextField, useMediaQuery } from "@mui/material"
 import { useCustomers } from "../hooks/useCustomers"
 import { backdropStyle } from "../style/backdrop"
 import { Form, Formik } from "formik"
@@ -10,6 +10,7 @@ import { useDepartments } from "../hooks/useDepartments"
 interface RoleModalProps {}
 
 export const RoleModal: React.FC<RoleModalProps> = ({}) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const api = useApi()
 
     const { roles, roleModal } = useDepartments()
@@ -53,15 +54,15 @@ export const RoleModal: React.FC<RoleModalProps> = ({}) => {
             BackdropProps={{ sx: backdropStyle }}
             PaperProps={{ sx: { bgcolor: "background.default" } }}
         >
-            <DialogTitle>Nova função</DialogTitle>
-            <Box sx={{ flexDirection: "column", padding: "2vw", width: "30vw", paddingTop: 0 }}>
+            <DialogTitle style={{textAlign: isMobile? "center" : "start"}}>Nova função</DialogTitle>
+            <Box sx={{ flexDirection: "column", padding: isMobile? "5vw" : "2vw", width: isMobile? "90vw" : "30vw", paddingTop: 0 }}>
                 <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                     {({ values, handleChange }) => (
                         <Form>
-                            <TextField label="nome" name="name" value={values.name} onChange={handleChange} variant="standard" sx={{}} required />
-                            <TextField label="tag" name="tag" value={values.tag} onChange={handleChange} variant="standard" sx={{}} required />
+                            <TextField label="Nome" name="name" value={values.name} onChange={handleChange} variant="standard" sx={{}} required />
+                            <TextField label="Tag" name="tag" value={values.tag} onChange={handleChange} variant="standard" sx={{}} required />
 
-                            <Box sx={{ alignSelf: "flex-end", marginTop: "2vw", gap: "1vw" }}>
+                            <Box sx={{ alignSelf: "flex-end", marginTop: isMobile? "5vw" : "2vw", gap: isMobile? "3vw" : "1vw" }}>
                                 <Button onClick={handleClose}>cancelar</Button>
                                 <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
                                     {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "enviar"}
