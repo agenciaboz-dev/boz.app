@@ -14,7 +14,17 @@ export const UsersToolip: React.FC<UsersToolipProps> = ({ children, users }) => 
             enterDelay={0}
             componentsProps={{ tooltip: { sx: { bgcolor: "background.default", padding: 0 } } }}
             title={
-                <Paper sx={{ flexDirection: "column", gap: "0.3vw", bgcolor: "background.default", padding: "0.5vw", color: "text.secondary" }}>
+                <Paper
+                    sx={{
+                        flexDirection: "column",
+                        gap: "0.3vw",
+                        bgcolor: "background.default",
+                        padding: "0.5vw",
+                        color: "text.secondary",
+                        maxHeight: "50vh",
+                        overflowY: "auto",
+                    }}
+                >
                     {users.map((user) => (
                         <UserAvatar user={user} avatarSize="2vw" />
                     ))}
