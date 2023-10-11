@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Box, CircularProgress, IconButton, TextField } from "@mui/material"
-import { Form, Formik } from "formik"
+import { Form, Formik, FormikHelpers } from "formik"
 import AddCircleIcon from "@mui/icons-material/AddCircle"
 import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
@@ -18,11 +18,12 @@ export const NewWarning: React.FC<NewWarningProps> = ({ user }) => {
 
     const initialValues: NewWarning = { title: "", text: "" }
 
-    const handleSubmit = (values: NewWarning) => {
+    const handleSubmit = (values: NewWarning, bag: FormikHelpers<NewWarning>) => {
         if (loading) false
         console.log(values)
         setLoading(true)
         io.emit("warning:new", { ...values, creatorId: user.id })
+        bag.resetForm()
     }
 
     useEffect(() => {
