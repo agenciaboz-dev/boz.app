@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { Box, CircularProgress, IconButton, useMediaQuery } from "@mui/material"
 import ThumbUpIcon from "@mui/icons-material/ThumbUp"
+import ThumbDownIcon from "@mui/icons-material/ThumbDown"
 import { useIo } from "../../hooks/useIo"
 import { UsersToolip } from "../Profile/UsersTooltip"
+import { useUser } from "../../hooks/useUser"
 
 interface WarningContainerProps {
     user: User
@@ -12,6 +14,8 @@ interface WarningContainerProps {
 export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, user }) => {
     const isMobile = useMediaQuery("orientation: portrait")
     const io = useIo()
+
+    const { isAdmin, list: users } = useUser()
 
     const [confirming, setConfirming] = useState(false)
 
@@ -59,6 +63,15 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                     <p>
                         {warning.creator.name.split(" ")[0]} - {new Date(Number(warning.date)).toLocaleString("pt-br")}
                     </p>
+
+                    {isAdmin() && (
+                        <UsersToolip users={users.filter((item) => !warning.confirmed.some((confirmedUser) => confirmedUser.id == item.id))}>
+                            <IconButton color={"error"}>
+                                <ThumbDownIcon />
+                            </IconButton>
+                        </UsersToolip>
+                    )}
+
                     <UsersToolip users={warning.confirmed}>
                         <IconButton color={confirmed ? "success" : "warning"} onClick={handleConfirm}>
                             {confirming ? <CircularProgress size="1.5rem" color="warning" /> : <ThumbUpIcon />}
