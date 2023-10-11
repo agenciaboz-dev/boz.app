@@ -73,7 +73,7 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
                     const prevChat = prevChats.find((item) => item.id._serialized == data.chat.id._serialized) as Chat
                     const updatedChat: Chat = {
                         ...prevChat,
-                        messages: [...(prevChat.messages || []), data.message],
+                        messages: [...(prevChat?.messages || []), data.message],
                         lastMessage: data.message,
                         unreadCount: data.message.fromMe ? 0 : prevChat.unreadCount + 1,
                     }
