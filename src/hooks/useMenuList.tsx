@@ -13,9 +13,28 @@ import { FileDownload } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
 import BrowserUpdatedIcon from "@mui/icons-material/BrowserUpdated"
 import NewReleasesIcon from "@mui/icons-material/NewReleases"
+import { useUser } from "./useUser"
+import { Badge, BadgeProps, styled } from "@mui/material"
+import { useWarnings } from "./useWarnings"
 
 export const useMenuList = () => {
     const navigate = useNavigate()
+    const { user } = useUser()
+    const warnings = useWarnings()
+
+    const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+        "& .MuiBadge-badge": {
+            right: "0.2vw",
+            top: "0.2vw",
+            padding: "0 4px",
+            minWidth: 0,
+            width: "1.1vw",
+            height: "1.1vw",
+            color: "white",
+            fontWeight: "bold",
+            fontSize: "0.75vw",
+        },
+    }))
 
     const menus: Menu[] = [
         {
@@ -29,7 +48,15 @@ export const useMenuList = () => {
             id: 2,
             name: "Avisos",
             path: "/warnings",
-            icon: <NewReleasesIcon />,
+            icon: (
+                <StyledBadge
+                    badgeContent={warnings.list.filter((warning) => warning.confirmed.find((item) => !(item.id == user?.id))).length}
+                    max={9}
+                    color="warning"
+                >
+                    <NewReleasesIcon />
+                </StyledBadge>
+            ),
             onClick: () => navigate("/warnings"),
         },
         {

@@ -38,10 +38,10 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                     <DepartmentsProvider>
                                         <CustomersProvider>
                                             <ZapProvider>
-                                                <MenuProvider>
-                                                    <PictureModalProvider>
-                                                        <CoffeeProvider>
-                                                            <WarningsProvider>
+                                                <WarningsProvider>
+                                                    <MenuProvider>
+                                                        <PictureModalProvider>
+                                                            <CoffeeProvider>
                                                                 <RoleModal />
                                                                 <ServiceModal />
                                                                 <PictureModal />
@@ -51,10 +51,10 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                                                 <ConfirmDialog />
                                                                 <CoffeeModal />
                                                                 {children}
-                                                            </WarningsProvider>
-                                                        </CoffeeProvider>
-                                                    </PictureModalProvider>
-                                                </MenuProvider>
+                                                            </CoffeeProvider>
+                                                        </PictureModalProvider>
+                                                    </MenuProvider>
+                                                </WarningsProvider>
                                             </ZapProvider>
                                         </CustomersProvider>
                                     </DepartmentsProvider>
