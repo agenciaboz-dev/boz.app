@@ -23,7 +23,9 @@ export const WarningsProvider: React.FC<WarningsProviderProps> = ({ children }) 
     const iconUrl = `http${url}/static/favicon.ico`
     const io = useIo()
     const navigate = useNavigate()
-    
+
+    let firstRender = true
+
     const { user } = useUser()
 
     const { confirm } = useConfirmDialog()
@@ -46,6 +48,16 @@ export const WarningsProvider: React.FC<WarningsProviderProps> = ({ children }) 
                         window.parent.focus()
                     }
                 }
+
+                confirm({
+                    title: "Novo aviso",
+                    content: "Existe um novo aviso, vai lá ver",
+                    hideCancel: true,
+                    button: "Claro",
+                    onConfirm: () => {
+                        navigate("/warnings")
+                    },
+                })
             }
         })
 
@@ -53,16 +65,20 @@ export const WarningsProvider: React.FC<WarningsProviderProps> = ({ children }) 
             setList((list) => [...list.filter((item) => item.id != warning.id), warning])
         })
 
-        if (list.filter((warning) => !warning.confirmed.some((item) => item.id == user?.id)).length > 0 && user) {
-            confirm({
-                title: "Novo aviso",
-                content: "Existe um novo aviso, vai lá ver",
-                hideCancel: true,
-                button: "Claro",
-                onConfirm: () => {
-                    navigate("/warnings")
-                },
-            })
+        if (firstRender) {
+            firstRender = false
+
+            if (list.filter((warning) => !warning.confirmed.some((item) => item.id == user?.id)).length > 0 && user) {
+                confirm({
+                    title: "Novo aviso",
+                    content: "Existe um novo aviso, vai lá ver",
+                    hideCancel: true,
+                    button: "Claro",
+                    onConfirm: () => {
+                        navigate("/warnings")
+                    },
+                })
+            }
         }
 
         return () => {
