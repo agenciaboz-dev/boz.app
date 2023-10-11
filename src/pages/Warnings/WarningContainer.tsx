@@ -5,6 +5,7 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown"
 import { useIo } from "../../hooks/useIo"
 import { UsersToolip } from "../Profile/UsersTooltip"
 import { useUser } from "../../hooks/useUser"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 
 interface WarningContainerProps {
     user: User
@@ -70,7 +71,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                         <UsersToolip users={unconfirmedUsers}>
                             <Badge badgeContent={unconfirmedUsers.length} color="error">
                                 <IconButton color={"error"}>
-                                    <ThumbDownIcon />
+                                    <VisibilityOffIcon />
                                 </IconButton>
                             </Badge>
                         </UsersToolip>
