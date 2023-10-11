@@ -10,6 +10,7 @@ import { Profile } from "./pages/Profile"
 import { Users } from "./pages/Users"
 import { Tools } from "./pages/Tools"
 import { CheckElectronVersion } from "./components/CheckElectronVersion"
+import { Warnings } from "./pages/Warnings"
 
 interface RoutesProps {}
 
@@ -22,6 +23,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
             <ReactRoutes>
                 <Route index element={<Home user={user} />} />
                 <Route path="/profile/:username?" element={<Profile user={user} />} />
+                <Route path="/warnings" element={<Warnings user={user} />} />
                 <Route path="/zap" element={<Zap user={user} />} />
                 <Route path="/customers/*" element={<Customers user={user} />} />
                 <Route path="/users/*" element={<Users user={user} />} />
