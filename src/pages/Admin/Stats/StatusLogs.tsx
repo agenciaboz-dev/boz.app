@@ -31,8 +31,8 @@ export const UserAvatar: React.FC<{ user: User; avatarSize?: string }> = ({ user
     const isMobile = useMediaQuery('(orientation: portrait)')
     
     return (
-        <Box sx={{ gap: isMobile? "3vw" : "1vw", alignItems: "center", color: "text.secondary", fontSize: isMobile? "5vw" : "1vw" }}>
-            <Avatar user={user} size={avatarSize || isMobile? "15vw" : "2.5vw"} small />
+        <Box sx={{ gap: isMobile ? "3vw" : "1vw", alignItems: "center", color: "text.secondary", fontSize: isMobile ? "5vw" : "1vw" }}>
+            <Avatar user={user} size={avatarSize || (isMobile ? "15vw" : "2.5vw")} small />
             {user.name.split(" ")[0]}
         </Box>
     )
