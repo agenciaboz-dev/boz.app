@@ -20,6 +20,7 @@ import { CoffeeModal } from "./components/CoffeeSystem/CofffeModal"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import google_client_secret from "./api/google_client_secret.json"
 import { GoogleProvider } from "./contexts/googleContext"
+import { WarningsProvider } from "./contexts/warningsContext"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -40,15 +41,17 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                                 <MenuProvider>
                                                     <PictureModalProvider>
                                                         <CoffeeProvider>
-                                                            <RoleModal />
-                                                            <ServiceModal />
-                                                            <PictureModal />
-                                                            <MenuDrawer />
-                                                            <UserDrawer />
-                                                            <Snackbar />
-                                                            <ConfirmDialog />
-                                                            <CoffeeModal />
-                                                            {children}
+                                                            <WarningsProvider>
+                                                                <RoleModal />
+                                                                <ServiceModal />
+                                                                <PictureModal />
+                                                                <MenuDrawer />
+                                                                <UserDrawer />
+                                                                <Snackbar />
+                                                                <ConfirmDialog />
+                                                                <CoffeeModal />
+                                                                {children}
+                                                            </WarningsProvider>
                                                         </CoffeeProvider>
                                                     </PictureModalProvider>
                                                 </MenuProvider>

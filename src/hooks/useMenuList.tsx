@@ -12,6 +12,7 @@ import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner"
 import { FileDownload } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
 import BrowserUpdatedIcon from "@mui/icons-material/BrowserUpdated"
+import NewReleasesIcon from "@mui/icons-material/NewReleases"
 
 export const useMenuList = () => {
     const navigate = useNavigate()
@@ -26,13 +27,20 @@ export const useMenuList = () => {
         },
         {
             id: 2,
+            name: "Avisos",
+            path: "/warnings",
+            icon: <NewReleasesIcon />,
+            onClick: () => navigate("/warnings"),
+        },
+        {
+            id: 3,
             name: "Atendimento",
             path: "/zap",
             icon: <WhatsAppIcon />,
             onClick: () => navigate("/zap"),
         },
         {
-            id: 3,
+            id: 4,
             name: "Tarefas",
             path: "/tasks",
             icon: <FormatListNumberedRtlIcon />,
@@ -40,21 +48,21 @@ export const useMenuList = () => {
             admin: true,
         },
         {
-            id: 4,
+            id: 5,
             name: "Coleguinhas",
             path: "/users",
             icon: <Groups3Icon />,
             onClick: () => navigate("/users"),
         },
         {
-            id: 5,
+            id: 6,
             name: "Clientes",
             path: "/customers",
             icon: <BusinessIcon />,
             onClick: () => navigate("/customers"),
         },
         {
-            id: 6,
+            id: 7,
             name: "Agenda",
             path: "/agenda",
             icon: <CalendarMonthIcon />,
@@ -62,7 +70,7 @@ export const useMenuList = () => {
             admin: true,
         },
         {
-            id: 7,
+            id: 8,
             name: "Ferramentas",
             path: "/tools",
             icon: <SettingsIcon />,
@@ -85,7 +93,7 @@ export const useMenuList = () => {
             ],
         },
         {
-            id: 8,
+            id: 9,
             name: "Administração",
             path: "/admin",
             icon: <AdminPanelSettingsIcon />,
