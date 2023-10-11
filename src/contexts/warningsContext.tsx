@@ -53,7 +53,7 @@ export const WarningsProvider: React.FC<WarningsProviderProps> = ({ children }) 
             setList((list) => [...list.filter((item) => item.id != warning.id), warning])
         })
 
-        if (list.filter((warning) => !warning.confirmed.some((item) => item.id == user?.id)).length > 0) {
+        if (list.filter((warning) => !warning.confirmed.some((item) => item.id == user?.id)).length > 0 && user) {
             confirm({
                 title: "Novo aviso",
                 content: "Existe um novo aviso, vai lá ver",
@@ -69,7 +69,7 @@ export const WarningsProvider: React.FC<WarningsProviderProps> = ({ children }) 
             io.off("warning:new")
             io.off("warning:update")
         }
-    }, [list])
+    }, [list, user])
 
     useEffect(() => {
         io.on("warning:list", (warnings) => setList(warnings))
