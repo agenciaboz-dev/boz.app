@@ -2,7 +2,7 @@ declare interface Warning {
     id: number
     title: string
     text: string
-    date: number
+    date: string
 
     creator: User
     confirmed: User[]

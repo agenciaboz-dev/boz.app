@@ -25,8 +25,13 @@ export const WarningsProvider: React.FC<WarningsProviderProps> = ({ children }) 
             setList((list) => [...list, warning])
         })
 
+        io.on("warning:update", (warning) => {
+            setList((list) => [...list.filter((item) => item.id != warning.id), warning])
+        })
+
         return () => {
             io.off("warning:new")
+            io.off("warning:update")
         }
     }, [list])
 

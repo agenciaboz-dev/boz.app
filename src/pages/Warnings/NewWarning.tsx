@@ -21,11 +21,13 @@ export const NewWarning: React.FC<NewWarningProps> = ({ user }) => {
     const handleSubmit = (values: NewWarning) => {
         if (loading) false
         console.log(values)
+        setLoading(true)
         io.emit("warning:new", { ...values, creatorId: user.id })
     }
 
     useEffect(() => {
         io.on("warning:new:success", () => {
+            setLoading(false)
             snackbar({ severity: "success", text: "Novo aviso criado com sucesso" })
         })
 
