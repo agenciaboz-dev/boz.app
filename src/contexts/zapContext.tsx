@@ -67,22 +67,24 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
         })
 
         io.on("message:new", (data: { chat: Chat; message: Message }) => {
-            console.log(data.message)
-            setChats((prevChats) => {
-                const prevChat = prevChats.find((item) => item.id._serialized == data.chat.id._serialized) as Chat
-                const updatedChat: Chat = {
-                    ...prevChat,
-                    messages: [...(prevChat.messages || []), data.message],
-                    lastMessage: data.message,
-                    unreadCount: data.message.fromMe ? 0 : prevChat.unreadCount + 1,
-                }
+            if (data.message) {
+                console.log(data.message)
+                setChats((prevChats) => {
+                    const prevChat = prevChats.find((item) => item.id._serialized == data.chat.id._serialized) as Chat
+                    const updatedChat: Chat = {
+                        ...prevChat,
+                        messages: [...(prevChat.messages || []), data.message],
+                        lastMessage: data.message,
+                        unreadCount: data.message.fromMe ? 0 : prevChat.unreadCount + 1,
+                    }
 
-                if (currentChat?.id._serialized == prevChat.id._serialized) {
-                    setCurrentChat(updatedChat)
-                }
+                    if (currentChat?.id._serialized == prevChat.id._serialized) {
+                        setCurrentChat(updatedChat)
+                    }
 
-                return [...prevChats.filter((item) => item.id._serialized !== data.chat.id._serialized), updatedChat]
-            })
+                    return [...prevChats.filter((item) => item.id._serialized !== data.chat.id._serialized), updatedChat]
+                })
+            }
         })
 
         return () => {
