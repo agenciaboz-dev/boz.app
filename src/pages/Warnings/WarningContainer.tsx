@@ -43,7 +43,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
         <Box
             sx={{
                 gap: isMobile ? "3vw" : "0.5vw",
-                color: "secondary.main",
+                color: "primary.main",
                 borderRadius: isMobile ? "3vw" : "0.5vw",
                 borderBottom: "2px solid",
                 padding: isMobile ? "3vw" : "1vw 0.5vw",
@@ -51,26 +51,27 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
             }}
         >
             <Box sx={{ justifyContent: "space-between" }}>
-                <Box sx={{ alignItems: "center", gap: "0.5vw", color: "primary.main" }}>
+                <Box sx={{ alignItems: "center", gap: "0.5vw" }}>
                     <h3>{warning.title}</h3>
+                </Box>
 
+                <Box sx={{ alignItems: "center", gap: "1vw" }}>
+                    <p>
+                        {warning.creator.name.split(" ")[0]} - {new Date(Number(warning.date)).toLocaleString("pt-br")}
+                    </p>
                     <UsersToolip users={warning.confirmed}>
                         <IconButton color={confirmed ? "success" : "warning"} onClick={handleConfirm}>
                             {confirming ? <CircularProgress size="1.5rem" color="warning" /> : <ThumbUpIcon />}
                         </IconButton>
                     </UsersToolip>
                 </Box>
-
-                <Box>
-                    <p>
-                        {warning.creator.name.split(" ")[0]} - {new Date(Number(warning.date)).toLocaleString("pt-br")}
-                    </p>
-                </Box>
             </Box>
 
-            {warning.text.split("\n").map((line) => (
-                <p key={line}>{line}</p>
-            ))}
+            <Box sx={{ flexDirection: "column", gap: "0.3vw", color: "secondary.main", padding: "0 1vw" }}>
+                {warning.text.split("\n").map((line) => (
+                    <p key={line}>{line}</p>
+                ))}
+            </Box>
         </Box>
     )
 }
