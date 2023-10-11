@@ -50,7 +50,7 @@ export const useMenuList = () => {
             path: "/warnings",
             icon: (
                 <StyledBadge
-                    badgeContent={warnings.list.filter((warning) => warning.confirmed.find((item) => !(item.id == user?.id))).length}
+                    badgeContent={warnings.list.filter((warning) => !warning.confirmed.some((item) => item.id == user?.id)).length}
                     max={9}
                     color="warning"
                 >
