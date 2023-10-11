@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, CircularProgress, IconButton, useMediaQuery } from "@mui/material"
+import { Badge, Box, CircularProgress, IconButton, useMediaQuery } from "@mui/material"
 import ThumbUpIcon from "@mui/icons-material/ThumbUp"
 import ThumbDownIcon from "@mui/icons-material/ThumbDown"
 import { useIo } from "../../hooks/useIo"
@@ -20,6 +20,8 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
     const [confirming, setConfirming] = useState(false)
 
     const confirmed = warning.confirmed.find((item) => item.id == user.id)
+
+    const unconfirmedUsers = users.filter((item) => !warning.confirmed.some((confirmedUser) => confirmedUser.id == item.id))
 
     const handleConfirm = () => {
         if (confirmed) return
@@ -65,17 +67,21 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                     </p>
 
                     {isAdmin() && (
-                        <UsersToolip users={users.filter((item) => !warning.confirmed.some((confirmedUser) => confirmedUser.id == item.id))}>
-                            <IconButton color={"error"}>
-                                <ThumbDownIcon />
-                            </IconButton>
+                        <UsersToolip users={unconfirmedUsers}>
+                            <Badge badgeContent={unconfirmedUsers.length} color="error">
+                                <IconButton color={"error"}>
+                                    <ThumbDownIcon />
+                                </IconButton>
+                            </Badge>
                         </UsersToolip>
                     )}
 
                     <UsersToolip users={warning.confirmed}>
-                        <IconButton color={confirmed ? "success" : "warning"} onClick={handleConfirm}>
-                            {confirming ? <CircularProgress size="1.5rem" color="warning" /> : <ThumbUpIcon />}
-                        </IconButton>
+                        <Badge badgeContent={warning.confirmed.length} color="success">
+                            <IconButton color={confirmed ? "success" : "warning"} onClick={handleConfirm}>
+                                {confirming ? <CircularProgress size="1.5rem" color="warning" /> : <ThumbUpIcon />}
+                            </IconButton>
+                        </Badge>
                     </UsersToolip>
                 </Box>
             </Box>
