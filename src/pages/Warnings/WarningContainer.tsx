@@ -43,7 +43,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
         <Box
             sx={{
                 gap: isMobile ? "3vw" : "0.5vw",
-                color: "primary.main",
+                color: "secondary.main",
                 borderRadius: isMobile ? "3vw" : "0.5vw",
                 borderBottom: "2px solid",
                 padding: isMobile ? "3vw" : "1vw 0.5vw",
@@ -51,7 +51,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
             }}
         >
             <Box sx={{ justifyContent: "space-between" }}>
-                <Box sx={{ alignItems: "center", gap: "0.5vw" }}>
+                <Box sx={{ alignItems: "center", gap: "0.5vw", color: "primary.main" }}>
                     <h3>{warning.title}</h3>
 
                     <UsersToolip users={warning.confirmed}>
