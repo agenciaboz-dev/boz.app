@@ -9,18 +9,23 @@ export const useGoogle = () => {
 
     const [electron] = useState(window.electron)
 
-    const googleLogin = electron
-        ? () => {}
-        : useGoogleLogin({
-              onSuccess: (tokenResponse) => {
-                  console.log(tokenResponse)
-                  googleContext.setAccessToken(tokenResponse.access_token)
+    const googleLogin = useGoogleLogin({
+        onSuccess: (tokenResponse) => {
+            console.log(tokenResponse)
+            googleContext.setAccessToken(tokenResponse.access_token)
 
-                  if (tokenResponse.access_token) {
-                      io.emit("google:login", tokenResponse.access_token)
-                  }
-              },
-          })
+            if (tokenResponse.access_token) {
+                electron
+                    ? () => {
+                          const link = document.createElement("a")
+                          link.href = `bozapp://response=success`
+                          document.body.appendChild(link)
+                          link.click()
+                      }
+                    : io.emit("google:login", tokenResponse.access_token)
+            }
+        },
+    })
 
     return { ...googleContext, login: googleLogin }
 }
