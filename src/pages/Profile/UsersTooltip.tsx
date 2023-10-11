@@ -21,7 +21,7 @@ export const UsersToolip: React.FC<UsersToolipProps> = ({ children, users }) => 
                         bgcolor: "background.default",
                         padding: "0.5vw",
                         color: "text.secondary",
-                        maxHeight: "50vh",
+                        maxHeight: "40vh",
                         overflowY: "auto",
                     }}
                 >
