@@ -50,6 +50,18 @@ export const Login: React.FC<LoginProps> = ({}) => {
         login(values, setLoading)
     }
 
+    const handleGoogleButton = async () => {
+        if (loading) return
+
+        if (electron) {
+            const tokens = await electron.ipcRenderer.invoke("google:auth")
+            console.log({ tokens })
+        } else {
+            setLoading(true)
+            google.login()
+        }
+    }
+
     useEffect(() => {
         if (electron) {
             const loginData = storage.get("boz:login")
@@ -156,15 +168,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
                             >
                                 {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "entrar"}
                             </Button>
-                            <Button
-                                onClick={() => {
-                                    if (loading) return
-                                    setLoading(true)
-                                    google.login()
-                                }}
-                            >
-                                google
-                            </Button>
+                            <Button onClick={handleGoogleButton}>google</Button>
                         </Box>
                     </Form>
                 )}
