@@ -46,22 +46,24 @@ export const WarningsProvider: React.FC<WarningsProviderProps> = ({ children }) 
                         window.parent.focus()
                     }
                 }
-
-                confirm({
-                    title: "Novo aviso",
-                    content: "Existe um novo aviso, vai lá ver",
-                    hideCancel: true,
-                    button: "Claro",
-                    onConfirm: () => {
-                        navigate("/warnings")
-                    },
-                })
             }
         })
 
         io.on("warning:update", (warning) => {
             setList((list) => [...list.filter((item) => item.id != warning.id), warning])
         })
+
+        if (list.filter((warning) => !warning.confirmed.some((item) => item.id == user?.id)).length > 0) {
+            confirm({
+                title: "Novo aviso",
+                content: "Existe um novo aviso, vai lá ver",
+                hideCancel: true,
+                button: "Claro",
+                onConfirm: () => {
+                    navigate("/warnings")
+                },
+            })
+        }
 
         return () => {
             io.off("warning:new")
