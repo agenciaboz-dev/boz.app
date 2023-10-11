@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Box, CircularProgress, IconButton, useMediaQuery } from "@mui/material"
 import ThumbUpIcon from "@mui/icons-material/ThumbUp"
 import { useIo } from "../../hooks/useIo"
+import { UsersToolip } from "../Profile/UsersTooltip"
 
 interface WarningContainerProps {
     user: User
@@ -53,9 +54,11 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                 <Box sx={{ alignItems: "center", gap: "0.5vw" }}>
                     <h3>{warning.title}</h3>
 
-                    <IconButton color={confirmed ? "success" : "warning"} onClick={handleConfirm}>
-                        {confirming ? <CircularProgress size="1.5rem" color="warning" /> : <ThumbUpIcon />}
-                    </IconButton>
+                    <UsersToolip users={warning.confirmed}>
+                        <IconButton color={confirmed ? "success" : "warning"} onClick={handleConfirm}>
+                            {confirming ? <CircularProgress size="1.5rem" color="warning" /> : <ThumbUpIcon />}
+                        </IconButton>
+                    </UsersToolip>
                 </Box>
 
                 <Box>
