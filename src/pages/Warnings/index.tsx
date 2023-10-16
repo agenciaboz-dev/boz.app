@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box } from "@mui/material"
+import { Box, useMediaQuery } from "@mui/material"
 import { Header } from "../../components/Header"
 import { backgroundStyle } from "../../style/background"
 import { useWarnings } from "../../hooks/useWarnings"
@@ -12,6 +12,7 @@ interface WarningsProps {
 }
 
 export const Warnings: React.FC<WarningsProps> = ({ user }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const warnings = useWarnings()
 
     const { isAdmin } = useUser()
@@ -26,7 +27,7 @@ export const Warnings: React.FC<WarningsProps> = ({ user }) => {
         <Box sx={backgroundStyle}>
             <Header user={user} />
             <Box
-                sx={{ color: "primary.main", padding: "2vw", flexDirection: "column", gap: "2vw", width: "100%", overflowY: "auto", height: "90vh" }}
+                sx={{ color: "primary.main", padding: isMobile? "5vw" : "2vw", flexDirection: "column", gap: "2vw", width: "100%", overflowY: "auto", height: "90vh" }}
             >
                 <h1 style={{}}>Avisos</h1>
 
