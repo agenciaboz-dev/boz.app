@@ -21,7 +21,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
     const [firstRender, setFirstRender] = useState(true)
     const [loading, setLoading] = useState(false)
     const [deleting, setDeleting] = useState(false)
-
+    const [jsonPayload, setJsonPayload] = useState(false)
     const [status, setStatus] = useState(0)
 
     const handleSend = async () => {
@@ -77,6 +77,15 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
     }, [formik.values])
 
     useEffect(() => {
+        try {
+            formik.setFieldValue("payload", JSON.stringify(JSON.parse(formik.values.payload.trim()), null, 4))
+            setJsonPayload(true)
+        } catch {
+            setJsonPayload(false)
+        }
+    }, [formik.values.payload])
+
+    useEffect(() => {
         io.on("wakeup:request:delete:success", () => {
             close()
         })
@@ -109,7 +118,8 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 <IconButton color="error" onClick={handleDelete}>
                     {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
                 </IconButton>
-                <Button variant="contained" onClick={handleSend} fullWidth>
+
+                <Button variant="contained" onClick={handleSend} fullWidth disabled={!jsonPayload}>
                     {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
                 </Button>
             </Box>
