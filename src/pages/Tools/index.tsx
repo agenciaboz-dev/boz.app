@@ -5,6 +5,7 @@ import { Header } from "../../components/Header"
 import { QrCodeGenerator } from "./QrCodeGenerator"
 import { Route, Routes } from "react-router-dom"
 import { Update } from "./Update"
+import { Wakeup } from "./Wakeup"
 
 interface ToolsProps {
     user: User
@@ -18,6 +19,7 @@ export const Tools: React.FC<ToolsProps> = ({ user }) => {
                 <Routes>
                     <Route path="/qrcode" element={<QrCodeGenerator user={user} />} />
                     <Route path="/update" element={<Update user={user} />} />
+                    <Route path="/wakeup" element={<Wakeup user={user} />} />
                 </Routes>
             </Box>
         </Box>

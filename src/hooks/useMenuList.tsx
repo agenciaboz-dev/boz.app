@@ -16,6 +16,7 @@ import NewReleasesIcon from "@mui/icons-material/NewReleases"
 import { useUser } from "./useUser"
 import { Badge, BadgeProps, styled } from "@mui/material"
 import { useWarnings } from "./useWarnings"
+import ApiIcon from "@mui/icons-material/Api"
 
 export const useMenuList = () => {
     const navigate = useNavigate()
@@ -109,6 +110,13 @@ export const useMenuList = () => {
                     name: "QR code",
                     path: "/qrcode",
                     onClick: () => navigate("/tools/qrcode"),
+                },
+                {
+                    id: 2,
+                    icon: <ApiIcon />,
+                    name: "Wake Up",
+                    path: "/wakeup",
+                    onClick: () => navigate("/tools/wakeup"),
                 },
                 {
                     id: 3,
