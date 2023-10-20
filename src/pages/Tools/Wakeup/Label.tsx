@@ -11,8 +11,8 @@ export const Label: React.FC<LabelProps> = ({ label, color }) => {
         <Box
             sx={{
                 bgcolor: `${color}.main`,
-                fontSize: "1vw",
-                padding: "0.2vw 1vw",
+                fontSize: "0.65vw",
+                padding: "0.2vw 0.6vw",
                 borderRadius: "1vw",
                 color: "white",
                 fontWeight: "bold",
