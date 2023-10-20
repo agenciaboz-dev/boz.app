@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { Box, Button, Grid, MenuItem, TextField } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { Box, Button, CircularProgress, Grid, MenuItem, TextField } from "@mui/material"
 import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
 
@@ -13,6 +13,8 @@ interface NewRequestProps {
 export const NewRequest: React.FC<NewRequestProps> = ({ user, api, cancel, setRequest }) => {
     const io = useIo()
 
+    const [loading, setLoading] = useState(false)
+
     const initialValues: NewWakeupRequest = {
         name: "",
         url: "",
@@ -24,13 +26,14 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api, cancel, setRe
     const formik = useFormik({
         initialValues,
         onSubmit: (values) => {
-            console.log(values)
+            setLoading(true)
             io.emit("wakeup:request:new", values)
         },
     })
 
     useEffect(() => {
         io.on("wakeup:request:new:success", (request) => {
+            setLoading(false)
             setRequest(request)
             cancel()
         })
@@ -61,7 +64,7 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api, cancel, setRe
                         Cancelar
                     </Button>
                     <Button variant="contained" type="submit">
-                        Criar
+                        {loading ? <CircularProgress size={"1.5rem"} sx={{ color: "background.default" }} /> : "Criar"}
                     </Button>
                 </Box>
             </form>

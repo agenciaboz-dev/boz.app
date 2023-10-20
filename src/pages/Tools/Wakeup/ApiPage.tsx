@@ -79,25 +79,32 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         sx={{ color: "background.default", fontWeight: "bold", marginBottom: "1vw" }}
                         onClick={() => setNewRequest(true)}
                     ></Button>
-                    {api.requests.map((request) => {
-                        const active = request.id == selectedRequest?.id
-                        return (
-                            <MenuItem
-                                key={request.id}
-                                onClick={() => setSelectedRequest(request)}
-                                sx={{
-                                    bgcolor: active ? "primary.main" : "",
-                                    color: active ? "background.default" : "",
-                                    pointerEvents: active ? "none" : "",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                }}
-                            >
-                                <p style={{ width: "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{request.name}</p>
-                                <Label label={request.method} color={request.method == "GET" ? "success" : "info"} />
-                            </MenuItem>
-                        )
-                    })}
+                    {api.requests
+                        .sort((a, b) => a.id - b.id)
+                        .map((request) => {
+                            const active = request.id == selectedRequest?.id
+                            return (
+                                <MenuItem
+                                    key={request.id}
+                                    onClick={() => {
+                                        setSelectedRequest(undefined)
+                                        setTimeout(() => setSelectedRequest(request), 10)
+                                    }}
+                                    sx={{
+                                        bgcolor: active ? "primary.main" : "",
+                                        color: active ? "background.default" : "",
+                                        pointerEvents: active ? "none" : "",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <p style={{ width: "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                                        {request.name}
+                                    </p>
+                                    <Label label={request.method} color={request.method == "GET" ? "success" : "info"} />
+                                </MenuItem>
+                            )
+                        })}
                 </Title>
 
                 {api.socket && (
