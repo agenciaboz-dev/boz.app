@@ -12,27 +12,33 @@ interface RequestContainerProps {
 export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api }) => {
     const io = useIo()
     const formik = useFormik({ initialValues: request!, onSubmit: (values) => console.log(values) })
-    const { get } = useWakeup()
+    const wakeup = useWakeup()
 
     const [firstRender, setFirstRender] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [status, setStatus] = useState(0)
 
     const handleSend = async () => {
         if (loading) return
 
         setLoading(true)
-        if (request.method == "GET") {
-            try {
-                const response = await get(api!, request)
-                setLoading(false)
+        setStatus(0)
+        try {
+            formik.setFieldValue("response", "")
+            const response = await wakeup.request(api!, formik.values)
+            setLoading(false)
+            if (response) {
                 console.log(response.data)
 
                 if (response.data) {
                     formik.setFieldValue("response", JSON.stringify(response.data, null, 4))
+                    setStatus(response.status)
                 }
-            } catch (error) {
-                console.log(error)
             }
+        } catch (error: any) {
+            console.log(error)
+            setLoading(false)
+            setStatus(error.response?.status || 0)
         }
     }
 
@@ -82,11 +88,12 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 onChange={formik.handleChange}
                 multiline
                 minRows={7}
-                InputProps={{ readOnly: true }}
+                InputProps={{ readOnly: true, sx: {} }}
+                sx={{ maxHeight: "13vw", overflowY: "auto" }}
             />
 
-            <Button variant="contained" disabled>
-                Status
+            <Button variant="contained" disabled={!status} color={wakeup.statusCodeColor(status)}>
+                {status || "status"}
             </Button>
         </Box>
     )
