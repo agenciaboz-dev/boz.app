@@ -48,15 +48,9 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request }) =
                 </Grid>
             </Grid>
             <TextField label="url" name="url" value={formik.values.url} onChange={formik.handleChange} />
-            <TextField
-                label="payload"
-                name="payload"
-                value={formik.values.payload}
-                onChange={formik.handleChange}
-                multiline
-                minRows={7}
-                disabled={formik.values.method == "GET"}
-            />
+            {formik.values.method != "GET" && (
+                <TextField label="payload" name="payload" value={formik.values.payload} onChange={formik.handleChange} multiline minRows={7} />
+            )}
 
             <Button variant="contained" onClick={handleSend}>
                 send
