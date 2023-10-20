@@ -102,7 +102,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
                     <Box sx={{ alignItems: "center" }}>
                         Socket.io
-                        <Switch name="socket" value={formik.values.socket} onChange={formik.handleChange} />
+                        <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
                     </Box>
                     <IconButton color="error" onClick={handleDelete}>
                         {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
