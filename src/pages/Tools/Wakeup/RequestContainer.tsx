@@ -1,21 +1,39 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Grid, MenuItem, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, Grid, MenuItem, TextField } from "@mui/material"
 import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
-import { api } from "../../../api"
+import { useWakeup } from "../../../hooks/useWakeup"
 
 interface RequestContainerProps {
     request: WakeupRequest
+    api: Wakeup
 }
 
-export const RequestContainer: React.FC<RequestContainerProps> = ({ request }) => {
+export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api }) => {
     const io = useIo()
     const formik = useFormik({ initialValues: request!, onSubmit: (values) => console.log(values) })
+    const { get } = useWakeup()
 
     const [firstRender, setFirstRender] = useState(true)
+    const [loading, setLoading] = useState(false)
 
-    const handleSend = () => {
-        console.log(formik.values.payload)
+    const handleSend = async () => {
+        if (loading) return
+
+        setLoading(true)
+        if (request.method == "GET") {
+            try {
+                const response = await get(api!, request)
+                setLoading(false)
+                console.log(response.data)
+
+                if (response.data) {
+                    formik.setFieldValue("response", JSON.stringify(response.data, null, 4))
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 
     useEffect(() => {
@@ -28,6 +46,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request }) =
                     name: formik.values.name,
                     url: formik.values.url,
                     payload: formik.values.payload,
+                    response: formik.values.response,
                     method: formik.values.method,
                 })
             }
@@ -53,7 +72,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request }) =
             )}
 
             <Button variant="contained" onClick={handleSend}>
-                send
+                {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
             </Button>
 
             <TextField

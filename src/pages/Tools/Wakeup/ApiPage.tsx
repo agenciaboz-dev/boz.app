@@ -130,7 +130,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                     setRequest={(request: WakeupRequest) => setSelectedRequest(request)}
                 />
             ) : selectedRequest ? (
-                <RequestContainer request={selectedRequest} />
+                <RequestContainer request={selectedRequest} api={api} />
             ) : (
                 <Box sx={{ flexDirection: "column", width: "63vw", gap: "1vw" }}>
                     <Grid container spacing={1.5}>
