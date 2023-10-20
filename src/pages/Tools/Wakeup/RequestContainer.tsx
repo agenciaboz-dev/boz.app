@@ -28,6 +28,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request }) =
                     name: formik.values.name,
                     url: formik.values.url,
                     payload: formik.values.payload,
+                    method: formik.values.method,
                 })
             }
         }

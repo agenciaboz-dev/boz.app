@@ -8,6 +8,7 @@ import { useIo } from "../../../hooks/useIo"
 import { useConfirmDialog } from "burgos-confirm"
 import { NewRequest } from "./NewRequest"
 import { RequestContainer } from "./RequestContainer"
+import { Label } from "./Label"
 
 interface ApiPageProps {
     user: User
@@ -88,9 +89,12 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                     bgcolor: active ? "primary.main" : "",
                                     color: active ? "background.default" : "",
                                     pointerEvents: active ? "none" : "",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
                                 }}
                             >
                                 {request.name}
+                                <Label label={request.method} color={request.method == "GET" ? "success" : "info"} />
                             </MenuItem>
                         )
                     })}
