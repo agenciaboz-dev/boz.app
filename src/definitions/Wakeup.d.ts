@@ -1,3 +1,4 @@
+declare type HTTPMethods = "GET" | "POST"
 declare interface NewWakupForm {
     name: string
     userId: number
@@ -18,11 +19,19 @@ declare interface Wakeup {
     events: WakeupEvent[]
 }
 
+declare interface NewWakeupRequest {
+    name: string
+    url: string
+    method: HTTPMethods
+    userId: number
+    apiId: number
+}
+
 declare interface WakeupRequest {
     id: number
     name: string
     url: string
-    method: string
+    method: HTTPMethods
     payload: string
     response: string
 }

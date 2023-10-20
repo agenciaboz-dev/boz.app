@@ -6,6 +6,7 @@ import { Add, DeleteForever } from "@mui/icons-material"
 import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
 import { useConfirmDialog } from "burgos-confirm"
+import { NewRequest } from "./NewRequest"
 
 interface ApiPageProps {
     user: User
@@ -28,7 +29,10 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     const io = useIo()
     const { confirm } = useConfirmDialog()
 
+    const [firstRender, setFirstRender] = useState(true)
     const [deleting, setDeleting] = useState(false)
+    const [selectedRequest, setSelectedRequest] = useState<WakeupRequest>()
+    const [newRequest, setNewRequest] = useState(false)
 
     const formik = useFormik({ initialValues: api!, onSubmit: (values) => console.log(values) })
 
@@ -44,14 +48,18 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     }
 
     useEffect(() => {
-        if (formik.values && api) {
-            io.emit("wakeup:update", {
-                id: api.id,
-                name: formik.values.name,
-                baseUrl: formik.values.baseUrl,
-                port: formik.values.port,
-                socket: formik.values.socket,
-            })
+        if (firstRender) {
+            setFirstRender(false)
+        } else {
+            if (formik.values && api) {
+                io.emit("wakeup:update", {
+                    id: api.id,
+                    name: formik.values.name,
+                    baseUrl: formik.values.baseUrl,
+                    port: formik.values.port,
+                    socket: formik.values.socket,
+                })
+            }
         }
     }, [formik.values])
 
@@ -67,7 +75,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         endIcon={<Add />}
                         variant="contained"
                         sx={{ color: "background.default", fontWeight: "bold" }}
-                        onClick={() => navigate("/tools/wakeup/new")}
+                        onClick={() => setNewRequest(true)}
                     ></Button>
                     {api.requests.map((request) => (
                         <MenuItem key={request.id}>{request.name}</MenuItem>
@@ -89,27 +97,38 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 )}
             </Paper>
 
-            <Box sx={{ flexDirection: "column", width: "63vw", gap: "1vw" }}>
-                <Grid container spacing={1.5}>
-                    <Grid item xs={9}>
-                        <TextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+            {newRequest ? (
+                <NewRequest
+                    user={user}
+                    api={api}
+                    cancel={() => setNewRequest(false)}
+                    setRequest={(request: WakeupRequest) => setSelectedRequest(request)}
+                />
+            ) : selectedRequest ? (
+                <></>
+            ) : (
+                <Box sx={{ flexDirection: "column", width: "63vw", gap: "1vw" }}>
+                    <Grid container spacing={1.5}>
+                        <Grid item xs={9}>
+                            <TextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={3}>
-                        <TextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
-                    </Grid>
-                </Grid>
-                <TextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
-                <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
-                    <Box sx={{ alignItems: "center" }}>
-                        Socket.io
-                        <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
+                    <TextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
+                    <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
+                        <Box sx={{ alignItems: "center" }}>
+                            Socket.io
+                            <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
+                        </Box>
+                        <IconButton color="error" onClick={handleDelete}>
+                            {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
+                        </IconButton>
                     </Box>
-                    <IconButton color="error" onClick={handleDelete}>
-                        {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
-                    </IconButton>
+                    <TextField label="Descrição" multiline minRows={10} />
                 </Box>
-                <TextField label="Descrição" multiline minRows={10} />
-            </Box>
+            )}
         </Box>
     ) : (
         <></>
