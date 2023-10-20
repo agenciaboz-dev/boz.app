@@ -88,8 +88,8 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
             </Box>
 
             <Box sx={{ flexDirection: "column", gap: "0.3vw", color: "text.secondary", padding: "0 1vw", textAlign: "justify" }}>
-                {warning.text.split("\n").map((line) => (
-                    <p key={line}>{line}</p>
+                {warning.text.split("\n").map((line, index) => (
+                    <p key={index}>{line}</p>
                 ))}
             </Box>
         </Box>
