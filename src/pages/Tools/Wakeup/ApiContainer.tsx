@@ -28,7 +28,10 @@ export const ApiContainer: React.FC<ApiContainerProps> = ({ api }) => {
             }}
         >
             <p style={{ width: "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{api.name}</p>
-            <Label label={api.port} color="success" />
+            <Box sx={{ gap: "0.5vw" }}>
+                {api.socket && <Label label={"io"} color="warning" />}
+                <Label label={api.port} color="success" />
+            </Box>
         </MenuItem>
     )
 }
