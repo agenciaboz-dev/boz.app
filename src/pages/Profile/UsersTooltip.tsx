@@ -26,7 +26,7 @@ export const UsersToolip: React.FC<UsersToolipProps> = ({ children, users }) => 
                     }}
                 >
                     {users.map((user) => (
-                        <UserAvatar user={user} avatarSize="2vw" />
+                        <UserAvatar user={user} avatarSize="2vw" key={user.id} />
                     ))}
                 </Paper>
             }
