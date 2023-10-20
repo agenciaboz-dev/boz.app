@@ -82,3 +82,8 @@ img {
     width: 5px;
     height: 5px;
   }
+
+  ::selection {
+    color: white;
+    background: #00AFEF
+}
