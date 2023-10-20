@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Grid, MenuItem, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, TextField } from "@mui/material"
 import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
 import { useWakeup } from "../../../hooks/useWakeup"
+import { DeleteForever } from "@mui/icons-material"
+import { useConfirmDialog } from "burgos-confirm"
 
 interface RequestContainerProps {
     request: WakeupRequest
     api: Wakeup
+    close: () => void
 }
 
-export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api }) => {
+export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api, close }) => {
     const io = useIo()
     const formik = useFormik({ initialValues: request!, onSubmit: (values) => console.log(values) })
     const wakeup = useWakeup()
+    const { confirm } = useConfirmDialog()
 
     const [firstRender, setFirstRender] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [deleting, setDeleting] = useState(false)
+
     const [status, setStatus] = useState(0)
 
     const handleSend = async () => {
@@ -42,6 +48,17 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
         }
     }
 
+    const handleDelete = () => {
+        confirm({
+            title: "Deletar request",
+            content: "Tem certeza??",
+            onConfirm: () => {
+                setDeleting(true)
+                io.emit("wakeup:request:delete", request)
+            },
+        })
+    }
+
     useEffect(() => {
         if (firstRender) {
             setFirstRender(false)
@@ -59,6 +76,16 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
         }
     }, [formik.values])
 
+    useEffect(() => {
+        io.on("wakeup:request:delete:success", () => {
+            close()
+        })
+
+        return () => {
+            io.off("wakeup:request:delete:success")
+        }
+    }, [])
+
     return (
         <Box sx={{ flexDirection: "column", width: "63vw", gap: "1vw" }}>
             <Grid container spacing={1.5}>
@@ -73,13 +100,19 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 </Grid>
             </Grid>
             <TextField label="url" name="url" value={formik.values.url} onChange={formik.handleChange} />
+
             {formik.values.method != "GET" && (
                 <TextField label="payload" name="payload" value={formik.values.payload} onChange={formik.handleChange} multiline minRows={7} />
             )}
 
-            <Button variant="contained" onClick={handleSend}>
-                {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
-            </Button>
+            <Box sx={{ gap: "1vw" }}>
+                <IconButton color="error" onClick={handleDelete}>
+                    {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
+                </IconButton>
+                <Button variant="contained" onClick={handleSend} fullWidth>
+                    {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
+                </Button>
+            </Box>
 
             <TextField
                 label="response"
