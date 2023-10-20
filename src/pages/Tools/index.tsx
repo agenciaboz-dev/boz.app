@@ -19,7 +19,7 @@ export const Tools: React.FC<ToolsProps> = ({ user }) => {
                 <Routes>
                     <Route path="/qrcode" element={<QrCodeGenerator user={user} />} />
                     <Route path="/update" element={<Update user={user} />} />
-                    <Route path="/wakeup" element={<Wakeup user={user} />} />
+                    <Route path="/wakeup/*" element={<Wakeup user={user} />} />
                 </Routes>
             </Box>
         </Box>

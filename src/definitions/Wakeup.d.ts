@@ -1,10 +1,21 @@
+declare interface NewWakupForm {
+    name: string
+    userId: number
+    socket: boolean
+    baseUrl: string
+    port: string
+}
+
 declare interface Wakeup {
     id: number
     name: string
     baseUrl: string
     socket: boolean
+    port: string
 
     creator: User
+    requests: WakeupRequest[]
+    events: WakeupEvent[]
 }
 
 declare interface WakeupRequest {
