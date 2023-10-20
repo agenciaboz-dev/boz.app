@@ -27,7 +27,7 @@ export const ApiContainer: React.FC<ApiContainerProps> = ({ api }) => {
                 setTimeout(() => navigate(`/tools/wakeup/api/${api.id}`), 10)
             }}
         >
-            <p>{api.name}</p>
+            <p style={{ width: "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{api.name}</p>
             <Label label={api.port} color="success" />
         </MenuItem>
     )

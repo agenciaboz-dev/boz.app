@@ -93,7 +93,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                     alignItems: "center",
                                 }}
                             >
-                                {request.name}
+                                <p style={{ width: "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{request.name}</p>
                                 <Label label={request.method} color={request.method == "GET" ? "success" : "info"} />
                             </MenuItem>
                         )
