@@ -7,6 +7,7 @@ import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
 import { useConfirmDialog } from "burgos-confirm"
 import { NewRequest } from "./NewRequest"
+import { RequestContainer } from "./RequestContainer"
 
 interface ApiPageProps {
     user: User
@@ -74,12 +75,25 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                     <Button
                         endIcon={<Add />}
                         variant="contained"
-                        sx={{ color: "background.default", fontWeight: "bold" }}
+                        sx={{ color: "background.default", fontWeight: "bold", marginBottom: "1vw" }}
                         onClick={() => setNewRequest(true)}
                     ></Button>
-                    {api.requests.map((request) => (
-                        <MenuItem key={request.id}>{request.name}</MenuItem>
-                    ))}
+                    {api.requests.map((request) => {
+                        const active = request.id == selectedRequest?.id
+                        return (
+                            <MenuItem
+                                key={request.id}
+                                onClick={() => setSelectedRequest(request)}
+                                sx={{
+                                    bgcolor: active ? "primary.main" : "",
+                                    color: active ? "background.default" : "",
+                                    pointerEvents: active ? "none" : "",
+                                }}
+                            >
+                                {request.name}
+                            </MenuItem>
+                        )
+                    })}
                 </Title>
 
                 {api.socket && (
@@ -105,7 +119,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                     setRequest={(request: WakeupRequest) => setSelectedRequest(request)}
                 />
             ) : selectedRequest ? (
-                <></>
+                <RequestContainer request={selectedRequest} />
             ) : (
                 <Box sx={{ flexDirection: "column", width: "63vw", gap: "1vw" }}>
                     <Grid container spacing={1.5}>
