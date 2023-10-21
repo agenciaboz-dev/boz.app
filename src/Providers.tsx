@@ -21,6 +21,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google"
 import google_client_secret from "./api/google_client_secret.json"
 import { GoogleProvider } from "./contexts/googleContext"
 import { WarningsProvider } from "./contexts/warningsContext"
+import { WakeupProvider } from "./contexts/wakeupContext"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -39,21 +40,23 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                         <CustomersProvider>
                                             <ZapProvider>
                                                 <WarningsProvider>
-                                                    <MenuProvider>
-                                                        <PictureModalProvider>
-                                                            <CoffeeProvider>
-                                                                <RoleModal />
-                                                                <ServiceModal />
-                                                                <PictureModal />
-                                                                <MenuDrawer />
-                                                                <UserDrawer />
-                                                                <Snackbar />
-                                                                <ConfirmDialog />
-                                                                <CoffeeModal />
-                                                                {children}
-                                                            </CoffeeProvider>
-                                                        </PictureModalProvider>
-                                                    </MenuProvider>
+                                                    <WakeupProvider>
+                                                        <MenuProvider>
+                                                            <PictureModalProvider>
+                                                                <CoffeeProvider>
+                                                                    <RoleModal />
+                                                                    <ServiceModal />
+                                                                    <PictureModal />
+                                                                    <MenuDrawer />
+                                                                    <UserDrawer />
+                                                                    <Snackbar />
+                                                                    <ConfirmDialog />
+                                                                    <CoffeeModal />
+                                                                    {children}
+                                                                </CoffeeProvider>
+                                                            </PictureModalProvider>
+                                                        </MenuProvider>
+                                                    </WakeupProvider>
                                                 </WarningsProvider>
                                             </ZapProvider>
                                         </CustomersProvider>
