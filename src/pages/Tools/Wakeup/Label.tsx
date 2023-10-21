@@ -1,5 +1,5 @@
 import React from "react"
-import { AlertColor, Box } from "@mui/material"
+import { AlertColor, Box, useMediaQuery } from "@mui/material"
 
 interface LabelProps {
     label: string
@@ -7,11 +7,13 @@ interface LabelProps {
 }
 
 export const Label: React.FC<LabelProps> = ({ label, color }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
+
     return (
         <Box
             sx={{
                 bgcolor: `${color}.main`,
-                fontSize: "0.65vw",
+                fontSize: isMobile? "4vw" : "0.65vw",
                 padding: "0.2vw 0.6vw",
                 borderRadius: "1vw",
                 color: "white",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, TextField, useMediaQuery } from "@mui/material"
 import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
 import { useWakeup } from "../../../hooks/useWakeup"
@@ -13,6 +13,7 @@ interface RequestContainerProps {
 }
 
 export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api, close }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const io = useIo()
     const formik = useFormik({ initialValues: request!, onSubmit: (values) => console.log(values) })
     const wakeup = useWakeup()
@@ -98,7 +99,13 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "63vw", gap: "1vw" }}>
+        <Box
+            sx={{
+                flexDirection: "column",
+                width: isMobile? "100%" : "63vw",
+                gap: isMobile? "5vw" : "1vw"
+            }}
+        >
             <Grid container spacing={1.5}>
                 <Grid item xs={3}>
                     <TextField label="method" name="method" value={formik.values.method} onChange={formik.handleChange} select>
@@ -133,8 +140,14 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 onChange={formik.handleChange}
                 multiline
                 minRows={7}
-                InputProps={{ readOnly: true, sx: {} }}
-                sx={{ maxHeight: "13vw", overflowY: "auto" }}
+                InputProps={{ readOnly: true,
+                    sx: {
+                    }
+                }}
+                sx={{
+                    overflowY: "auto",
+                    maxHeight: isMobile? "auto" : "13vw",
+                }}
             />
 
             <Button variant="contained" disabled={!status} color={wakeup.statusCodeColor(status)}>

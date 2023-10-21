@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, Paper, Switch, TextField } from "@mui/material"
+import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, Paper, Switch, TextField, useMediaQuery } from "@mui/material"
 import { useNavigate, useParams } from "react-router-dom"
 import { useWakeup } from "../../../hooks/useWakeup"
 import { Add, DeleteForever } from "@mui/icons-material"
@@ -9,14 +9,17 @@ import { useConfirmDialog } from "burgos-confirm"
 import { NewRequest } from "./NewRequest"
 import { RequestContainer } from "./RequestContainer"
 import { Label } from "./Label"
+import colors from "../../../style/colors"
 
 interface ApiPageProps {
     user: User
 }
 
 const Title: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
+
     return (
-        <Box sx={{ flexDirection: "column", gap: "1vw", padding: "1vw 0" }}>
+        <Box sx={{ flexDirection: "column", gap: "1vw", padding: isMobile? "5vw 0" : "1vw 0" }}>
             <p style={{ textAlign: "center" }}>{title}</p>
             <Box sx={{ flexDirection: "column" }}>{children}</Box>
         </Box>
@@ -24,6 +27,7 @@ const Title: React.FC<{ title: string; children: React.ReactNode }> = ({ title, 
 }
 
 export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const id = useParams().id
     const { list } = useWakeup()
     const api = list.find((item) => item.id == Number(id))
@@ -70,13 +74,26 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     }, [])
 
     return api ? (
-        <Box sx={{ width: "100%", justifyContent: "space-between" }}>
-            <Paper sx={{ width: "15vw", height: "80vh", bgcolor: "background.default", flexDirection: "column", gap: "1vw" }}>
+        <Box sx={{ width: "100%", justifyContent: "space-between", flexDirection: isMobile? "column" : "row", gap: isMobile? "5vw" : "" }}>
+            <Paper
+                sx={{
+                    width: isMobile? "100%" : "15vw",
+                    height: isMobile? "30vh" : "80vh",
+                    bgcolor: "background.default",
+                    flexDirection: "column",
+                    overflowY: "auto",
+                    gap: isMobile? "5vw" : "1vw"
+                }}
+            >
                 <Title title="Requests">
                     <Button
                         endIcon={<Add />}
                         variant="contained"
-                        sx={{ color: "background.default", fontWeight: "bold", marginBottom: "1vw" }}
+                        sx={{
+                            color: "background.default",
+                            fontWeight: "bold",
+                            margin: isMobile? "2vw 5vw 5vw" : "0 1vw 1vw"
+                        }}
                         onClick={() => setNewRequest(true)}
                     ></Button>
                     {api.requests
@@ -91,14 +108,15 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                         setTimeout(() => setSelectedRequest(request), 10)
                                     }}
                                     sx={{
-                                        bgcolor: active ? "primary.main" : "",
-                                        color: active ? "background.default" : "",
+                                        bgcolor: active ? colors.primaryLight : "",
+                                        color: active ? "black" : "",
                                         pointerEvents: active ? "none" : "",
+                                        fontWeight: active ? "bold" : "normal",
                                         justifyContent: "space-between",
                                         alignItems: "center",
                                     }}
                                 >
-                                    <p style={{ width: "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                                    <p style={{ width: isMobile? "100%" : "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
                                         {request.name}
                                     </p>
                                     <Label label={request.method} color={request.method == "GET" ? "success" : "info"} />
@@ -112,7 +130,11 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         <Button
                             endIcon={<Add />}
                             variant="contained"
-                            sx={{ color: "background.default", fontWeight: "bold" }}
+                            sx={{
+                                color: "background.default",
+                                fontWeight: "bold",
+                                margin: isMobile? "2vw 5vw 2vw" : "0 1vw 1vw"
+                            }}
                             onClick={() => navigate("/tools/wakeup/new")}
                         ></Button>
                         {api.events.map((event) => (
@@ -132,7 +154,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
             ) : selectedRequest ? (
                 <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />
             ) : (
-                <Box sx={{ flexDirection: "column", width: "63vw", gap: "1vw" }}>
+                <Box sx={{ flexDirection: "column", width: isMobile? "100%" : "63vw", gap: isMobile? "5vw" : "1vw" }}>
                     <Grid container spacing={1.5}>
                         <Grid item xs={9}>
                             <TextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
