@@ -13,7 +13,7 @@ interface WarningContainerProps {
 }
 
 export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, user }) => {
-    const isMobile = useMediaQuery("orientation: portrait")
+    const isMobile = useMediaQuery('(orientation: portrait)')
     const io = useIo()
 
     const { isAdmin, list: users } = useUser()
@@ -57,37 +57,61 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                 flexDirection: "column",
             }}
         >
-            <Box sx={{ justifyContent: "space-between" }}>
-                <Box sx={{ alignItems: "center", gap: "0.5vw" }}>
+            <Box
+                sx={{
+                    justifyContent: "space-between",
+                    flexDirection: isMobile? "column" : "row",
+                    flexWrap: "wrap",
+                    gap: 0,
+                }}
+                >
+                <Box
+                    sx={{
+                        alignItems: "center",
+                        gap: "0.5vw",
+                        flexWrap: isMobile? "wrap" : "nowrap",
+                    }}
+                >
                     <h3>{warning.title}</h3>
                 </Box>
 
-                <Box sx={{ alignItems: "center", gap: "1vw" }}>
+                <Box
+                    sx={{
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                    }}
+                    >
                     <p>
                         {warning.creator.name.split(" ")[0]} - {new Date(Number(warning.date)).toLocaleString("pt-br")}
                     </p>
 
-                    {isAdmin() && (
-                        <UsersToolip users={unconfirmedUsers}>
-                            <Badge badgeContent={unconfirmedUsers.length} color="error">
-                                <IconButton color={"error"}>
-                                    <VisibilityOffIcon />
+                    <Box
+                        sx={{
+                            gap: isMobile? 0 : "1vw",
+                        }}
+                    >
+                        {isAdmin() && (
+                            <UsersToolip users={unconfirmedUsers}>
+                                <Badge badgeContent={unconfirmedUsers.length} color="error">
+                                    <IconButton color={"error"}>
+                                        <VisibilityOffIcon />
+                                    </IconButton>
+                                </Badge>
+                            </UsersToolip>
+                        )}
+                        <UsersToolip users={warning.confirmed}>
+                            <Badge badgeContent={warning.confirmed.length} color="success">
+                                <IconButton color={confirmed ? "success" : "warning"} onClick={handleConfirm}>
+                                    {confirming ? <CircularProgress size="1.5rem" color="warning" /> : <ThumbUpIcon />}
                                 </IconButton>
                             </Badge>
                         </UsersToolip>
-                    )}
-
-                    <UsersToolip users={warning.confirmed}>
-                        <Badge badgeContent={warning.confirmed.length} color="success">
-                            <IconButton color={confirmed ? "success" : "warning"} onClick={handleConfirm}>
-                                {confirming ? <CircularProgress size="1.5rem" color="warning" /> : <ThumbUpIcon />}
-                            </IconButton>
-                        </Badge>
-                    </UsersToolip>
+                    </Box>
                 </Box>
             </Box>
 
-            <Box sx={{ flexDirection: "column", gap: "0.3vw", color: "text.secondary", padding: "0 1vw", textAlign: "justify" }}>
+            <Box sx={{ flexDirection: "column", gap: isMobile? "3vw" : "0.3vw", color: "text.secondary", padding: isMobile? "0" : "0 1vw", textAlign: "justify" }}>
                 {warning.text.split("\n").map((line) => (
                     <p key={line}>{line}</p>
                 ))}

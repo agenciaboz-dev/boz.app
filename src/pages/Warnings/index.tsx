@@ -27,9 +27,9 @@ export const Warnings: React.FC<WarningsProps> = ({ user }) => {
         <Box sx={backgroundStyle}>
             <Header user={user} />
             <Box
-                sx={{ color: "primary.main", padding: isMobile? "5vw" : "2vw", flexDirection: "column", gap: "2vw", width: "100%", overflowY: "auto", height: "90vh" }}
+                sx={{ color: "primary.main", padding: isMobile? "8vw 5vw" : "2vw", flexDirection: "column", gap: isMobile? "12vw" : "2vw", width: "100%", overflowY: "auto", height: "90vh" }}
             >
-                <h1 style={{}}>Avisos</h1>
+                <h1 style={{textAlign: isMobile? "center" : "start", fontSize: isMobile? "6vw" : "2vw", fontWeight: "700"}}>Avisos</h1>
 
                 {isAdmin() && <NewWarning user={user} />}
 
