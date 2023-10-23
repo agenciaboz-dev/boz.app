@@ -21,6 +21,8 @@ export const useApi = () => {
         finallyCallback && finallyCallback()
     }
 
+    const wakeup = async (url: string, method: HTTPMethods, payload?: any) => (await api.post("/wakeup", { url, payload, method })).data
+
     const user = {
         login: (options: ApiOptions) => {
             api.post("/user/login", options.data)
@@ -86,5 +88,5 @@ export const useApi = () => {
         },
     }
 
-    return { user, service, customer, department }
+    return { user, service, customer, department, wakeup }
 }
