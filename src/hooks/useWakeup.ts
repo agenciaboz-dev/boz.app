@@ -9,8 +9,9 @@ export const useWakeup = () => {
     const request = async (api: Wakeup, request: WakeupRequest) => {
         if (electron) {
             const url = `${api.baseUrl}:${api.port}${request.url}`
+            const payload = request.payload ? JSON.parse(request.payload) : {}
             console.log(`sending request to ${url}`)
-            const response = await electron.ipcRenderer.invoke("wakeup:request", url, request.method, request.payload)
+            const response = await electron.ipcRenderer.invoke("wakeup:request", url, request.method, payload)
             return JSON.parse(response)
         }
     }

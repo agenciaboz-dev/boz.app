@@ -13,6 +13,7 @@ declare interface Wakeup {
     baseUrl: string
     socket: boolean
     port: string
+    description: string
 
     creator: User
     requests: WakeupRequest[]

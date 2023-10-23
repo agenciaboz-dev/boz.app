@@ -60,6 +60,12 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
         })
     }
 
+    const handlePayloadBlur = () => {
+        try {
+            formik.setFieldValue("payload", JSON.stringify(JSON.parse(formik.values.payload.trim()), null, 4))
+        } catch {}
+    }
+
     useEffect(() => {
         if (firstRender) {
             setFirstRender(false)
@@ -80,7 +86,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
     useEffect(() => {
         if (formik.values.method != "GET") {
             try {
-                formik.setFieldValue("payload", JSON.stringify(JSON.parse(formik.values.payload.trim()), null, 4))
+                JSON.parse(formik.values.payload)
                 setJsonPayload(true)
             } catch {
                 setJsonPayload(false)
@@ -102,8 +108,8 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
         <Box
             sx={{
                 flexDirection: "column",
-                width: isMobile? "100%" : "63vw",
-                gap: isMobile? "5vw" : "1vw"
+                width: isMobile ? "100%" : "63vw",
+                gap: isMobile ? "5vw" : "1vw",
             }}
         >
             <Grid container spacing={1.5}>
@@ -120,7 +126,15 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
             <TextField label="url" name="url" value={formik.values.url} onChange={formik.handleChange} />
 
             {formik.values.method != "GET" && (
-                <TextField label="payload" name="payload" value={formik.values.payload} onChange={formik.handleChange} multiline minRows={7} />
+                <TextField
+                    label="payload"
+                    name="payload"
+                    value={formik.values.payload}
+                    onChange={formik.handleChange}
+                    multiline
+                    minRows={7}
+                    onBlur={handlePayloadBlur}
+                />
             )}
 
             <Box sx={{ gap: "1vw" }}>
@@ -140,13 +154,10 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 onChange={formik.handleChange}
                 multiline
                 minRows={7}
-                InputProps={{ readOnly: true,
-                    sx: {
-                    }
-                }}
+                InputProps={{ readOnly: true, sx: {} }}
                 sx={{
                     overflowY: "auto",
-                    maxHeight: isMobile? "auto" : "13vw",
+                    maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "15vw" : "30vw",
                 }}
             />
 

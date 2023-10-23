@@ -64,6 +64,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                     baseUrl: formik.values.baseUrl,
                     port: formik.values.port,
                     socket: formik.values.socket,
+                    description: formik.values.description,
                 })
             }
         }
@@ -74,15 +75,15 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     }, [])
 
     return api ? (
-        <Box sx={{ width: "100%", justifyContent: "space-between", flexDirection: isMobile? "column" : "row", gap: isMobile? "5vw" : "" }}>
+        <Box sx={{ width: "100%", justifyContent: "space-between", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "5vw" : "" }}>
             <Paper
                 sx={{
-                    width: isMobile? "100%" : "15vw",
-                    height: isMobile? "30vh" : "80vh",
+                    width: isMobile ? "100%" : "15vw",
+                    height: isMobile ? "30vh" : "80vh",
                     bgcolor: "background.default",
                     flexDirection: "column",
                     overflowY: "auto",
-                    gap: isMobile? "5vw" : "1vw"
+                    gap: isMobile ? "5vw" : "1vw",
                 }}
             >
                 <Title title="Requests">
@@ -92,7 +93,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         sx={{
                             color: "background.default",
                             fontWeight: "bold",
-                            margin: isMobile? "2vw 5vw 5vw" : "0 1vw 1vw"
+                            margin: isMobile ? "2vw 5vw 5vw" : "0 1vw 1vw",
                         }}
                         onClick={() => setNewRequest(true)}
                     ></Button>
@@ -116,7 +117,14 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                         alignItems: "center",
                                     }}
                                 >
-                                    <p style={{ width: isMobile? "100%" : "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                                    <p
+                                        style={{
+                                            width: isMobile ? "100%" : "10vw",
+                                            overflow: "hidden",
+                                            whiteSpace: "nowrap",
+                                            textOverflow: "ellipsis",
+                                        }}
+                                    >
                                         {request.name}
                                     </p>
                                     <Label label={request.method} color={request.method == "GET" ? "success" : "info"} />
@@ -133,7 +141,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             sx={{
                                 color: "background.default",
                                 fontWeight: "bold",
-                                margin: isMobile? "2vw 5vw 2vw" : "0 1vw 1vw"
+                                margin: isMobile ? "2vw 5vw 2vw" : "0 1vw 1vw",
                             }}
                             onClick={() => navigate("/tools/wakeup/new")}
                         ></Button>
@@ -154,7 +162,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
             ) : selectedRequest ? (
                 <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />
             ) : (
-                <Box sx={{ flexDirection: "column", width: isMobile? "100%" : "63vw", gap: isMobile? "5vw" : "1vw" }}>
+                <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "63vw", gap: isMobile ? "5vw" : "1vw" }}>
                     <Grid container spacing={1.5}>
                         <Grid item xs={9}>
                             <TextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
@@ -173,7 +181,14 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
                         </IconButton>
                     </Box>
-                    <TextField label="Descrição" multiline minRows={10} />
+                    <TextField
+                        label="Descrição"
+                        multiline
+                        minRows={10}
+                        name="description"
+                        value={formik.values.description}
+                        onChange={formik.handleChange}
+                    />
                 </Box>
             )}
         </Box>
