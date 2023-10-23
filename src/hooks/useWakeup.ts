@@ -1,19 +1,18 @@
 import { useContext } from "react"
 import WakeupContext from "../contexts/wakeupContext"
-import axios from "axios"
-import { useApi } from "./useApi"
 
 export const useWakeup = () => {
-    const { wakeup } = useApi()
     const wakeupContext = useContext(WakeupContext)
     const { list } = wakeupContext
+    const electron = window.electron
 
     const request = async (api: Wakeup, request: WakeupRequest) => {
-        const url = `${api.baseUrl}:${api.port}${request.url}`
-        console.log(`sending request to ${url}`)
-        const response = await wakeup(url, request.method, request.payload)
-
-        return response
+        if (electron) {
+            const url = `${api.baseUrl}:${api.port}${request.url}`
+            console.log(`sending request to ${url}`)
+            const response = await electron.ipcRenderer.invoke("wakeup:request", url, request.method, request.payload)
+            return JSON.parse(response)
+        }
     }
 
     const statusCodeColor = (code: number | string) => {
