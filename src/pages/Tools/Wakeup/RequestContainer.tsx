@@ -157,7 +157,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 InputProps={{ readOnly: true, sx: {} }}
                 sx={{
                     overflowY: "auto",
-                    maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "15vw" : "30vw",
+                    maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "15vw" : "45vw",
                 }}
             />
 
