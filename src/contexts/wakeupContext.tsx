@@ -46,6 +46,7 @@ export const WakeupProvider: React.FC<WakeupProviderProps> = ({ children }) => {
         if (electron) {
             electron.ipcRenderer.on("socket:connected", (_, id) => {
                 setSocketConnected(id)
+                setSocketEvents([])
             })
 
             electron.ipcRenderer.on("socket:disconnected", () => {
@@ -63,7 +64,7 @@ export const WakeupProvider: React.FC<WakeupProviderProps> = ({ children }) => {
         if (electron) {
             electron.ipcRenderer.on("socket:event", (_: any, args: any) => {
                 console.log(args)
-                setSocketEvents((events) => [...events, { ...args, datetime: new Date() }])
+                setSocketEvents((events) => [...events, { ...args, datetime: new Date(), incoming: true }])
             })
 
             return () => {

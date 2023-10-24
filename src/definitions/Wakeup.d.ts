@@ -57,4 +57,5 @@ declare interface ElectronWakeupEvent {
     event: string
     data: any
     datetime: Date
+    incoming?: boolean
 }

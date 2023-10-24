@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Box, Button, CircularProgress } from "@mui/material"
 import { useWakeup } from "../../../hooks/useWakeup"
 import { ElectronAPI } from "@electron-toolkit/preload"
+import { EventsBlock } from "./EventsBlock"
 
 interface SocketContainerProps {
     api: Wakeup
@@ -31,10 +32,14 @@ export const SocketContainer: React.FC<SocketContainerProps> = ({ api }) => {
     return (
         <Box sx={{ flexDirection: "column" }}>
             {socket.connected == api.id ? (
-                <Box>
-                    <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleDisconnectClick}>
-                        disconnect
-                    </Button>
+                <Box sx={{ flexDirection: "column", gap: "1vw" }}>
+                    <Box sx={{ gap: "1vw", alignItems: "center" }}>
+                        <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleDisconnectClick}>
+                            disconnect
+                        </Button>
+                        <p>events</p>
+                    </Box>
+                    <EventsBlock />
                 </Box>
             ) : (
                 <Box>
