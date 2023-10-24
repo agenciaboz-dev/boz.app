@@ -228,7 +228,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 </Box>
             ) : newEvent ? (
                 <Box sx={{ width: "100%", padding: "4vw" }}>
-                    <NewEvent user={user} api={api} cancel={() => setNewRequest(false)} setEvent={(event: WakeupEvent) => setSelectedEvent(event)} />
+                    <NewEvent user={user} api={api} cancel={() => setNewEvent(false)} setEvent={(event: WakeupEvent) => setSelectedEvent(event)} />
                 </Box>
             ) : selectedRequest ? (
                 <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
