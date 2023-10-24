@@ -8,6 +8,7 @@ import { Title } from "../../Profile/UserComponents"
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { DeleteForever } from "@mui/icons-material"
 import { TaiTextField } from "../../../components/TaiTextField"
+import { SocketContainer } from "./SocketContainer"
 
 interface EventContainerProps {
     event: WakeupEvent
@@ -129,6 +130,8 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
                 <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleSend} fullWidth disabled={!jsonPayload}>
                     {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
                 </Button>
+
+                <SocketContainer />
             </Box>
         </Box>
     )

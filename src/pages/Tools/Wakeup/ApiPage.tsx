@@ -133,7 +133,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                     padding: "2vw 0.5vw",
                 }}
             >
-                <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>;
+                <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>
                 <Title title="Requests" handleClick={() => setNewRequest(true)}>
                     {api.requests
                         .sort((a, b) => a.id - b.id)
@@ -220,7 +220,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 </Box>
             ) : selectedEvent ? (
                 <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
-                    <EventContainer event={selectedEvent} api={api} close={() => setSelectedRequest(undefined)} />
+                    <EventContainer event={selectedEvent} api={api} close={() => setSelectedEvent(undefined)} />
                 </Box>
             ) : (
                 <Box sx={{ width: "87%", padding: "0 4vw" }}>
