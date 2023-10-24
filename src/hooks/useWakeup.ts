@@ -4,7 +4,7 @@ import { useLocalStorage } from "./useLocalStorage"
 
 export const useWakeup = () => {
     const wakeupContext = useContext(WakeupContext)
-    const { list } = wakeupContext
+    const { list, socket } = wakeupContext
     const electron = window.electron
     const storage = useLocalStorage()
 
@@ -27,5 +27,5 @@ export const useWakeup = () => {
         if (code.toString()[0] == "5") return "error"
     }
 
-    return { list, request, statusCodeColor }
+    return { list, request, statusCodeColor, socket }
 }

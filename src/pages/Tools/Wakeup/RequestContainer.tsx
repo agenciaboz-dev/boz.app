@@ -29,6 +29,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
     const [deleting, setDeleting] = useState(false)
     const [jsonPayload, setJsonPayload] = useState(formik.values.method == "GET")
     const [status, setStatus] = useState(0)
+    const [statusText, setStatusText] = useState("")
 
     const handleSend = async () => {
         if (loading) return
@@ -39,13 +40,14 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
             formik.setFieldValue("response", "")
             const response = await wakeup.request(api!, formik.values)
             setLoading(false)
+            console.log(response)
             if (response) {
-                console.log(response.data)
-
                 if (response.data) {
                     formik.setFieldValue("response", JSON.stringify(response.data, null, 4))
-                    setStatus(response.status)
                 }
+
+                setStatus(response.status)
+                setStatusText(response.statusText)
             }
         } catch (error: any) {
             console.log(error)
@@ -131,14 +133,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
             </Box>
             <Grid container spacing={1.5}>
                 <Grid item xs={2}>
-                    <TextField
-                        label="Método"
-                        name="method"
-                        value={formik.values.method}
-                        onChange={formik.handleChange}
-                        sx={textFieldStyle}
-                        select
-                    >
+                    <TextField label="Método" name="method" value={formik.values.method} onChange={formik.handleChange} sx={textFieldStyle} select>
                         <MenuItem value="GET">GET</MenuItem>
                         <MenuItem value="POST">POST</MenuItem>
                     </TextField>
@@ -164,13 +159,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                         onBlur={handlePayloadBlur}
                     />
                 )}
-                <Button
-                    variant="contained"
-                    sx={{ color: "secondary.main" }}
-                    onClick={handleSend}
-                    fullWidth
-                    disabled={!jsonPayload}
-                >
+                <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleSend} fullWidth disabled={!jsonPayload}>
                     {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
                 </Button>
                 <TaiTextField
@@ -189,9 +178,11 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                         maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "10vw" : "19vw",
                     }}
                 />
-                <Button variant="contained" disabled={!status} color={wakeup.statusCodeColor(status)}>
-                    {status || "status"}
-                </Button>
+                <Tooltip title={statusText}>
+                    <Button variant="contained" disabled={!status} color={wakeup.statusCodeColor(status)}>
+                        {status || "status"}
+                    </Button>
+                </Tooltip>
             </Box>
         </Box>
     )
