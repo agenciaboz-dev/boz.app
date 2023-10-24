@@ -77,16 +77,6 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
                                     elevation={4}
                                 >
                                     <Title title="APIs">
-                                        {/* <Button
-                                            endIcon={<Add />}
-                                            variant="contained"
-                                            onClick={() => navigate("/tools/wakeup/new")}
-                                            sx={{
-                                                color: "background.default",
-                                                fontWeight: "bold",
-                                                margin: isMobile ? "2vw 5vw 5vw" : "0 1vw 1vw",
-                                            }}
-                                        ></Button> */}
                                         <Box sx={{ padding: "0 0.5vw", justifyContent: "flex-end" }}>
                                             <Tooltip title="New API" dir="top">
                                                 <IconButton

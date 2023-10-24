@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, TextField, useMediaQuery } from "@mui/material"
+import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, TextField, Tooltip, useMediaQuery } from "@mui/material"
 import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
 import { useWakeup } from "../../../hooks/useWakeup"
 import { DeleteForever } from "@mui/icons-material"
 import { useConfirmDialog } from "burgos-confirm"
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
+import { Title } from "../../Profile/UserComponents"
+import { TaiTextField } from "../../../components/TaiTextField"
+import { textFieldStyle } from "../../../style/textfield"
 
 interface RequestContainerProps {
     request: WakeupRequest
@@ -109,64 +112,86 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
         <Box
             sx={{
                 flexDirection: "column",
-                width: isMobile ? "100%" : "63vw",
+                width: isMobile ? "100%" : "75%",
                 gap: isMobile ? "5vw" : "1vw",
+                //overflow: "auto",
             }}
         >
+            <Title name={formik.values.name} />
             <Box sx={{ justifyContent: "space-between" }}>
                 <IconButton onClick={close}>
                     <ArrowBackIosNewIcon />
                 </IconButton>
-                <IconButton color="error" onClick={handleDelete}>
-                    {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
-                </IconButton>
+                <Tooltip title={`Excluir ${formik.values.name}`} arrow>
+                    <IconButton color="primary" sx={{ color: "" }} onClick={handleDelete}>
+                        {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
+                    </IconButton>
+                </Tooltip>
             </Box>
             <Grid container spacing={1.5}>
-                <Grid item xs={3}>
-                    <TextField label="method" name="method" value={formik.values.method} onChange={formik.handleChange} select>
+                <Grid item xs={2}>
+                    <TextField
+                        label="Método"
+                        name="method"
+                        value={formik.values.method}
+                        onChange={formik.handleChange}
+                        sx={textFieldStyle}
+                        select
+                    >
                         <MenuItem value="GET">GET</MenuItem>
                         <MenuItem value="POST">POST</MenuItem>
                     </TextField>
                 </Grid>
-                <Grid item xs={9}>
-                    <TextField label="name" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                <Grid item xs={4}>
+                    <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                </Grid>
+                <Grid item xs={6}>
+                    {" "}
+                    <TaiTextField label="Url" name="url" value={formik.values.url} onChange={formik.handleChange} />
                 </Grid>
             </Grid>
-            <TextField label="url" name="url" value={formik.values.url} onChange={formik.handleChange} />
 
-            {formik.values.method != "GET" && (
+            <Box sx={{ flexDirection: "column", gap: "1vw", alignItems: "space-between" }}>
+                {formik.values.method != "GET" && (
+                    <TextField
+                        label="Payload"
+                        name="payload"
+                        value={formik.values.payload}
+                        onChange={formik.handleChange}
+                        multiline
+                        minRows={5}
+                        onBlur={handlePayloadBlur}
+                    />
+                )}
+                <Button
+                    variant="contained"
+                    sx={{ color: "secondary.main" }}
+                    onClick={handleSend}
+                    fullWidth
+                    disabled={!jsonPayload}
+                >
+                    {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
+                </Button>
                 <TextField
-                    label="payload"
-                    name="payload"
-                    value={formik.values.payload}
+                    label="Response"
+                    name="response"
+                    value={formik.values.response}
                     onChange={formik.handleChange}
                     multiline
-                    minRows={7}
-                    onBlur={handlePayloadBlur}
+                    minRows={4}
+                    InputProps={{
+                        readOnly: true,
+                        sx: {},
+                    }}
+                    sx={{
+                        overflowY: "auto",
+                        maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "10vw" : "19vw",
+                    }}
                 />
-            )}
-
-            <Button variant="contained" onClick={handleSend} fullWidth disabled={!jsonPayload}>
-                {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
-            </Button>
-
-            <TextField
-                label="response"
-                name="response"
-                value={formik.values.response}
-                onChange={formik.handleChange}
-                multiline
-                minRows={7}
-                InputProps={{ readOnly: true, sx: {} }}
-                sx={{
-                    overflowY: "auto",
-                    maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "15vw" : "45vw",
-                }}
-            />
-
-            <Button variant="contained" disabled={!status} color={wakeup.statusCodeColor(status)}>
-                {status || "status"}
-            </Button>
+                <Button variant="contained" disabled={!status} color={wakeup.statusCodeColor(status)}>
+                    {status || "status"}
+                </Button>
+            </Box>
         </Box>
     )
 }
