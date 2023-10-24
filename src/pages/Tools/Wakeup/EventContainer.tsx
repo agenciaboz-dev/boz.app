@@ -126,7 +126,13 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
                     onBlur={handlePayloadBlur}
                 />
 
-                <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleSend} fullWidth disabled={!wakeup.socket.connected}>
+                <Button
+                    variant="contained"
+                    sx={{ color: "secondary.main" }}
+                    onClick={handleSend}
+                    fullWidth
+                    disabled={wakeup.socket.connected != api.id}
+                >
                     {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
                 </Button>
 
