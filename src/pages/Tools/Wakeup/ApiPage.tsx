@@ -82,7 +82,9 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
         })
     }
 
-    
+    useEffect(() => {
+        setLocalhost(storage.get(`bozapp:wakeup:${api?.id}:localhost`))
+    }, [api])
 
     useEffect(() => {
         if (firstRender) {
@@ -220,8 +222,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                                 <Switch
                                                     icon={<HouseSidingIcon />}
                                                     checkedIcon={<HouseSidingIcon />}
-                                                    defaultChecked={localhost}
-                                                    value={localhost}
+                                                    checked={localhost}
                                                     onChange={(_, checked) => handleLocalhostChange(checked)}
                                                 />
                                             </Box>
