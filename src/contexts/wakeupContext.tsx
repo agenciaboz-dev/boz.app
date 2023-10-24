@@ -9,6 +9,7 @@ interface WakeupContextValue {
     socket: {
         connected: number
         events: ElectronWakeupEvent[]
+        addEvent: (data: ElectronWakeupEvent) => void
     }
 }
 
@@ -29,9 +30,14 @@ export const WakeupProvider: React.FC<WakeupProviderProps> = ({ children }) => {
     const [socketConnected, setSocketConnected] = useState(0)
     const [socketEvents, setSocketEvents] = useState<ElectronWakeupEvent[]>([])
 
+    const addEvent = (data: ElectronWakeupEvent) => {
+        setSocketEvents((events) => [...events, data])
+    }
+
     const socket = {
         connected: socketConnected,
         events: socketEvents,
+        addEvent,
     }
 
     const addItem = (item: Wakeup) => {
@@ -64,7 +70,7 @@ export const WakeupProvider: React.FC<WakeupProviderProps> = ({ children }) => {
         if (electron) {
             electron.ipcRenderer.on("socket:event", (_: any, args: any) => {
                 console.log(args)
-                setSocketEvents((events) => [...events, { ...args, datetime: new Date(), incoming: true }])
+                addEvent({ ...args, datetime: new Date(), incoming: true })
             })
 
             return () => {

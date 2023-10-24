@@ -39,5 +39,12 @@ export const useWakeup = () => {
         await electron.ipcRenderer.invoke("wakeup:socket:disconnect")
     }
 
-    return { list, request, statusCodeColor, socket, connect, disconnect }
+    const send = async (event: string, message: string) => {
+        const data = message ? JSON.parse(message) : undefined
+        const newEvent = await electron.ipcRenderer.invoke("wakeup:socket:send", { event, message: data })
+        socket.addEvent({ event, data, datetime: new Date() })
+        return newEvent
+    }
+
+    return { list, request, statusCodeColor, socket, connect, disconnect, send }
 }

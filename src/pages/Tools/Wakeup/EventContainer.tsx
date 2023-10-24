@@ -30,8 +30,9 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
 
     const handleSend = async () => {
         if (loading) return
-
         setLoading(true)
+        await wakeup.send(formik.values.event, formik.values.payload)
+        setLoading(false)
     }
 
     const handleDelete = () => {
