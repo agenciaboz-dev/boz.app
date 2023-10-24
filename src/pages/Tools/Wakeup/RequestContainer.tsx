@@ -171,7 +171,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                     minRows={4}
                     InputProps={{
                         readOnly: true,
-                        sx: { maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "19vw" : "30vw", overflowY: "auto" },
+                        sx: {},
                     }}
                     sx={{
                         overflowY: "auto",
