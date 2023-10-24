@@ -9,6 +9,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { Title } from "../../Profile/UserComponents"
 import { TaiTextField } from "../../../components/TaiTextField"
 import { textFieldStyle } from "../../../style/textfield"
+import colors from "../../../style/colors"
 
 interface RequestContainerProps {
     request: WakeupRequest
@@ -117,11 +118,11 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 //overflow: "auto",
             }}
         >
-            <Title name={formik.values.name} />
-            <Box sx={{ justifyContent: "space-between" }}>
+            <Box sx={{ justifyContent: "space-between", alignItems: "center" }}>
                 <IconButton onClick={close}>
                     <ArrowBackIosNewIcon />
                 </IconButton>
+                <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{formik.values.name}</p>
                 <Tooltip title={`Excluir ${formik.values.name}`} arrow>
                     <IconButton color="primary" sx={{ color: "" }} onClick={handleDelete}>
                         {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
@@ -153,7 +154,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
 
             <Box sx={{ flexDirection: "column", gap: "1vw", alignItems: "space-between" }}>
                 {formik.values.method != "GET" && (
-                    <TextField
+                    <TaiTextField
                         label="Payload"
                         name="payload"
                         value={formik.values.payload}
@@ -172,7 +173,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 >
                     {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
                 </Button>
-                <TextField
+                <TaiTextField
                     label="Response"
                     name="response"
                     value={formik.values.response}
