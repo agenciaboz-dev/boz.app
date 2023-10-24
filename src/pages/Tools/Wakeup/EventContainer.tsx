@@ -27,13 +27,11 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
     const [loading, setLoading] = useState(false)
     const [deleting, setDeleting] = useState(false)
     const [jsonPayload, setJsonPayload] = useState(false)
-    const [status, setStatus] = useState(0)
 
     const handleSend = async () => {
         if (loading) return
 
         setLoading(true)
-        setStatus(0)
     }
 
     const handleDelete = () => {
@@ -127,11 +125,11 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
                     onBlur={handlePayloadBlur}
                 />
 
-                <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleSend} fullWidth disabled={!jsonPayload}>
+                <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleSend} fullWidth disabled={!wakeup.socket.connected}>
                     {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
                 </Button>
 
-                <SocketContainer />
+                <SocketContainer api={api} />
             </Box>
         </Box>
     )

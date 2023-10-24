@@ -30,6 +30,7 @@ import HomeIcon from "@mui/icons-material/Home"
 import { useLocalStorage } from "../../../hooks/useLocalStorage"
 import { TaiTextField } from "../../../components/TaiTextField"
 import { EventContainer } from "./EventContainer"
+import { NewEvent } from "./NewEvent"
 
 interface ApiPageProps {
     user: User
@@ -225,6 +226,10 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         setRequest={(request: WakeupRequest) => setSelectedRequest(request)}
                     />
                 </Box>
+            ) : newEvent ? (
+                <Box sx={{ width: "100%", padding: "4vw" }}>
+                    <NewEvent user={user} api={api} cancel={() => setNewRequest(false)} setEvent={(event: WakeupEvent) => setSelectedEvent(event)} />
+                </Box>
             ) : selectedRequest ? (
                 <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
                     <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />
@@ -239,12 +244,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
                             <Box sx={{ alignItems: "center" }}>
                                 Socket.io
-                                <Switch
-                                    name="socket"
-                                    defaultChecked={api.socket}
-                                    value={api.socket}
-                                    onChange={formik.handleChange}
-                                />
+                                <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
                                 localhost
                                 <Switch
                                     icon={<HouseSidingIcon />}
@@ -263,28 +263,13 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
 
                         <Grid container spacing={1.5}>
                             <Grid item xs={9}>
-                                <TaiTextField
-                                    label="Nome"
-                                    name="name"
-                                    value={formik.values.name}
-                                    onChange={formik.handleChange}
-                                />
+                                <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
                             </Grid>
                             <Grid item xs={3}>
-                                <TaiTextField
-                                    label="Porta"
-                                    name="port"
-                                    value={formik.values.port}
-                                    onChange={formik.handleChange}
-                                />
+                                <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
                             </Grid>
                         </Grid>
-                        <TaiTextField
-                            label="Endereço base"
-                            name="baseUrl"
-                            value={formik.values.baseUrl}
-                            onChange={formik.handleChange}
-                        />
+                        <TaiTextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
                         <TaiTextField
                             label="Descrição"
                             multiline

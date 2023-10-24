@@ -6,7 +6,10 @@ interface WakeupContextValue {
     list: Wakeup[]
     setList: React.Dispatch<React.SetStateAction<Wakeup[]>>
 
-    // socket: Socket<DefaultEventsMap, DefaultEventsMap>
+    socket: {
+        connected: number
+        events: ElectronWakeupEvent[]
+    }
 }
 
 interface WakeupProviderProps {
@@ -18,9 +21,18 @@ const WakeupContext = createContext<WakeupContextValue>({} as WakeupContextValue
 export default WakeupContext
 
 export const WakeupProvider: React.FC<WakeupProviderProps> = ({ children }) => {
+    const electron = window.electron
+
     const io = useIo()
 
     const [list, setList] = useState<Wakeup[]>([])
+    const [socketConnected, setSocketConnected] = useState(0)
+    const [socketEvents, setSocketEvents] = useState<ElectronWakeupEvent[]>([])
+
+    const socket = {
+        connected: socketConnected,
+        events: socketEvents,
+    }
 
     const addItem = (item: Wakeup) => {
         setList((list) => [...list.filter((api) => api.id != item.id), item])
@@ -29,6 +41,36 @@ export const WakeupProvider: React.FC<WakeupProviderProps> = ({ children }) => {
     const removeItem = (item: Wakeup) => {
         setList((list) => list.filter((api) => api.id != item.id))
     }
+
+    useEffect(() => {
+        if (electron) {
+            electron.ipcRenderer.on("socket:connected", (_, id) => {
+                setSocketConnected(id)
+            })
+
+            electron.ipcRenderer.on("socket:disconnected", () => {
+                setSocketConnected(0)
+            })
+
+            return () => {
+                electron.ipcRenderer.removeAllListeners("socket:connected")
+                electron.ipcRenderer.removeAllListeners("socket:disconnected")
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (electron) {
+            electron.ipcRenderer.on("socket:event", (_: any, args: any) => {
+                console.log(args)
+                setSocketEvents((events) => [...events, { ...args, datetime: new Date() }])
+            })
+
+            return () => {
+                electron.ipcRenderer.removeAllListeners("socket:event")
+            }
+        }
+    }, [socketEvents])
 
     useEffect(() => {
         io.on("wakeup:new", (api) => {
@@ -62,5 +104,5 @@ export const WakeupProvider: React.FC<WakeupProviderProps> = ({ children }) => {
         }
     }, [])
 
-    return <WakeupContext.Provider value={{ list, setList }}>{children}</WakeupContext.Provider>
+    return <WakeupContext.Provider value={{ list, setList, socket }}>{children}</WakeupContext.Provider>
 }

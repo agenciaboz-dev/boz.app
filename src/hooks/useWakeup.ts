@@ -1,11 +1,12 @@
 import { useContext } from "react"
 import WakeupContext from "../contexts/wakeupContext"
 import { useLocalStorage } from "./useLocalStorage"
+import { ElectronAPI } from "@electron-toolkit/preload"
 
 export const useWakeup = () => {
     const wakeupContext = useContext(WakeupContext)
     const { list, socket } = wakeupContext
-    const electron = window.electron
+    const electron = window.electron as ElectronAPI
     const storage = useLocalStorage()
 
     const request = async (api: Wakeup, request: WakeupRequest) => {
@@ -15,6 +16,7 @@ export const useWakeup = () => {
             const payload = request.payload ? JSON.parse(request.payload) : {}
             console.log(`sending request to ${url}`)
             const response = await electron.ipcRenderer.invoke("wakeup:request", url, request.method, payload)
+
             return JSON.parse(response)
         }
     }
@@ -27,5 +29,15 @@ export const useWakeup = () => {
         if (code.toString()[0] == "5") return "error"
     }
 
-    return { list, request, statusCodeColor, socket }
+    const connect = async (api: Wakeup) => {
+        const localhost = storage.get(`bozapp:wakeup:${api.id}:localhost`)
+        const url = localhost ? "http://localhost" : api.baseUrl
+        await electron.ipcRenderer.invoke("wakeup:socket:connect", { ...api, baseUrl: url })
+    }
+
+    const disconnect = async () => {
+        await electron.ipcRenderer.invoke("wakeup:socket:disconnect")
+    }
+
+    return { list, request, statusCodeColor, socket, connect, disconnect }
 }

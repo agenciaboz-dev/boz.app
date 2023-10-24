@@ -52,3 +52,9 @@ declare interface WakeupEvent {
     event: string
     payload: string
 }
+
+declare interface ElectronWakeupEvent {
+    event: string
+    data: any
+    datetime: Date
+}
