@@ -18,6 +18,7 @@ const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                 value={JSON.stringify(event.data, null, 4)}
                 multiline
                 sx={{}}
+                label={event.datetime.toLocaleString("pt-br")}
                 InputProps={{
                     readOnly: true,
                     sx: {
@@ -27,13 +28,9 @@ const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                         gap: "1vw",
                     },
                     startAdornment: (
-                        <Box sx={{ flexDirection: "column", color: "text.primary" }}>
-                            <Box sx={{ alignItems: "center", gap: "0.5vw" }}>
-                                {event.incoming ? <Download color="warning" /> : <Upload color="success" />}
-                                <p style={{ fontWeight: "bold" }}>{event.event}</p>
-                            </Box>
-                            <p style={{ fontSize: "0.7vw" }}>{event.datetime.toLocaleDateString("pt-br", {})}</p>
-                            <p style={{ fontSize: "0.7vw" }}>{event.datetime.toLocaleTimeString("pt-br", {})}</p>
+                        <Box sx={{ alignItems: "center", gap: "0.5vw", color: "text.primary" }}>
+                            {event.incoming ? <Download color="warning" /> : <Upload color="success" />}
+                            <p style={{ fontWeight: "bold" }}>{event.event}</p>
                         </Box>
                     ),
                 }}

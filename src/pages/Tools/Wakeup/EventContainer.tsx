@@ -122,7 +122,8 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
                     value={formik.values.payload}
                     onChange={formik.handleChange}
                     multiline
-                    minRows={5}
+                    minRows={2}
+                    maxRows={5}
                     onBlur={handlePayloadBlur}
                 />
 
