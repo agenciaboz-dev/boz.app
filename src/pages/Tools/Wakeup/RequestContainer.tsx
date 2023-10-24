@@ -5,6 +5,7 @@ import { useIo } from "../../../hooks/useIo"
 import { useWakeup } from "../../../hooks/useWakeup"
 import { DeleteForever } from "@mui/icons-material"
 import { useConfirmDialog } from "burgos-confirm"
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 
 interface RequestContainerProps {
     request: WakeupRequest
@@ -13,7 +14,7 @@ interface RequestContainerProps {
 }
 
 export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api, close }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const io = useIo()
     const formik = useFormik({ initialValues: request!, onSubmit: (values) => console.log(values) })
     const wakeup = useWakeup()
@@ -112,6 +113,14 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 gap: isMobile ? "5vw" : "1vw",
             }}
         >
+            <Box sx={{ justifyContent: "space-between" }}>
+                <IconButton onClick={close}>
+                    <ArrowBackIosNewIcon />
+                </IconButton>
+                <IconButton color="error" onClick={handleDelete}>
+                    {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
+                </IconButton>
+            </Box>
             <Grid container spacing={1.5}>
                 <Grid item xs={3}>
                     <TextField label="method" name="method" value={formik.values.method} onChange={formik.handleChange} select>
@@ -137,15 +146,9 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                 />
             )}
 
-            <Box sx={{ gap: "1vw" }}>
-                <IconButton color="error" onClick={handleDelete}>
-                    {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
-                </IconButton>
-
-                <Button variant="contained" onClick={handleSend} fullWidth disabled={!jsonPayload}>
-                    {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
-                </Button>
-            </Box>
+            <Button variant="contained" onClick={handleSend} fullWidth disabled={!jsonPayload}>
+                {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
+            </Button>
 
             <TextField
                 label="response"
