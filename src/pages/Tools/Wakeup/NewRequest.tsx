@@ -5,16 +5,16 @@ import { useIo } from "../../../hooks/useIo"
 import { TaiTextField } from "../../../components/TaiTextField"
 import { textFieldStyle } from "../../../style/textfield"
 import { Title } from "../../Profile/UserComponents"
+import { useNavigate } from "react-router-dom"
 
 interface NewRequestProps {
     user: User
     api: Wakeup
-    cancel: () => void
-    setRequest: (request: WakeupRequest) => void
 }
 
-export const NewRequest: React.FC<NewRequestProps> = ({ user, api, cancel, setRequest }) => {
+export const NewRequest: React.FC<NewRequestProps> = ({ user, api }) => {
     const io = useIo()
+    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -34,11 +34,13 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api, cancel, setRe
         },
     })
 
+    const goBack = () => navigate(`/tools/wakeup/api/${api.id}`)
+
     useEffect(() => {
         io.on("wakeup:request:new:success", (request) => {
             setLoading(false)
-            setRequest(request)
-            cancel()
+            navigate(`/tools/wakeup/api/${api.id}/request/${request.id}`)
+            goBack()
         })
 
         return () => {
@@ -66,17 +68,12 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api, cancel, setRe
                             </TextField>
                         </Grid>
                         <Grid item xs={9}>
-                            <TaiTextField
-                                label="Nome"
-                                name="name"
-                                value={formik.values.name}
-                                onChange={formik.handleChange}
-                            />
+                            <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
                         </Grid>
                     </Grid>
                     <TaiTextField label="Url" name="url" value={formik.values.url} onChange={formik.handleChange} />
                     <Box sx={{ gap: "1vw", alignSelf: "end" }}>
-                        <Button variant="outlined" onClick={() => cancel()}>
+                        <Button variant="outlined" onClick={() => goBack()}>
                             Cancelar
                         </Button>
                         <Button variant="contained" type="submit" sx={{ color: "secondary.main" }}>

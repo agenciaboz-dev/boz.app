@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Box, Button, CircularProgress, Grid, IconButton, Tooltip, useMediaQuery } from "@mui/material"
 import { useIo } from "../../../hooks/useIo"
 import { useFormik } from "formik"
@@ -9,19 +9,23 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 import { DeleteForever } from "@mui/icons-material"
 import { TaiTextField } from "../../../components/TaiTextField"
 import { SocketContainer } from "./SocketContainer"
+import { useNavigate, useParams } from "react-router-dom"
 
 interface EventContainerProps {
-    event: WakeupEvent
     api: Wakeup
-    close: () => void
 }
 
-export const EventContainer: React.FC<EventContainerProps> = ({ event, api, close }) => {
+export const EventContainer: React.FC<EventContainerProps> = ({ api }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const io = useIo()
-    const formik = useFormik({ initialValues: event, onSubmit: (values) => console.log(values) })
+    const id = Number(useParams().id)
+    const event = api.events.find((item) => item.id == id)!
+    const formik = useFormik({ initialValues: event, onSubmit: (values) => console.log(values), enableReinitialize: true })
     const wakeup = useWakeup()
     const { confirm } = useConfirmDialog()
+    const navigate = useNavigate()
+
+    const emitTimeout = useRef<number | null>(null)
 
     const [firstRender, setFirstRender] = useState(true)
     const [loading, setLoading] = useState(false)
@@ -46,6 +50,10 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
         })
     }
 
+    const goBack = () => {
+        navigate(`/tools/wakeup/api/${api.id}`)
+    }
+
     const handlePayloadBlur = () => {
         try {
             formik.setFieldValue("payload", JSON.stringify(JSON.parse(formik.values.payload), null, 4))
@@ -57,12 +65,18 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
             setFirstRender(false)
         } else {
             if (formik.values) {
-                io.emit("wakeup:event:update", {
-                    id: event.id,
-                    name: formik.values.name,
-                    payload: formik.values.payload,
-                    event: formik.values.event,
-                })
+                if (emitTimeout.current) {
+                    clearTimeout(emitTimeout.current)
+                }
+
+                emitTimeout.current = setTimeout(() => {
+                    io.emit("wakeup:event:update", {
+                        id: event.id,
+                        name: formik.values.name,
+                        payload: formik.values.payload,
+                        event: formik.values.event,
+                    })
+                }, 2000)
             }
         }
     }, [formik.values])
@@ -78,7 +92,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
 
     useEffect(() => {
         io.on("wakeup:event:delete:success", () => {
-            close()
+            goBack()
         })
 
         return () => {
@@ -97,7 +111,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event, api, clos
         >
             <Title name={formik.values.name} />
             <Box sx={{ justifyContent: "space-between" }}>
-                <IconButton onClick={close}>
+                <IconButton onClick={goBack}>
                     <ArrowBackIosNewIcon />
                 </IconButton>
                 <Tooltip title={`Excluir ${formik.values.name}`} arrow>

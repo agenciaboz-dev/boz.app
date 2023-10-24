@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, TextField, Tooltip, useMediaQuery } from "@mui/material"
 import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
@@ -10,24 +10,29 @@ import { Title } from "../../Profile/UserComponents"
 import { TaiTextField } from "../../../components/TaiTextField"
 import { textFieldStyle } from "../../../style/textfield"
 import colors from "../../../style/colors"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 
 interface RequestContainerProps {
-    request: WakeupRequest
     api: Wakeup
-    close: () => void
 }
 
-export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api, close }) => {
+export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const io = useIo()
-    const formik = useFormik({ initialValues: request!, onSubmit: (values) => console.log(values) })
+    const id = Number(useParams().id)
+    const request = api.requests.find((item) => item.id == id)!
+    const formik = useFormik({ initialValues: request!, onSubmit: (values) => console.log(values), enableReinitialize: true })
     const wakeup = useWakeup()
+    const navigate = useNavigate()
     const { confirm } = useConfirmDialog()
+    const pathname = useLocation().pathname
+
+    const emitTimeout = useRef<number | null>(null)
 
     const [firstRender, setFirstRender] = useState(true)
     const [loading, setLoading] = useState(false)
     const [deleting, setDeleting] = useState(false)
-    const [jsonPayload, setJsonPayload] = useState(formik.values.method == "GET")
+    const [jsonPayload, setJsonPayload] = useState(formik.values?.method == "GET")
     const [status, setStatus] = useState(0)
     const [statusText, setStatusText] = useState("")
 
@@ -73,19 +78,33 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
         } catch {}
     }
 
+    const goBack = () => {
+        navigate(`/tools/wakeup/api/${api.id}`)
+    }
+
+    useEffect(() => {
+        setStatus(0)
+        setStatusText("")
+    }, [pathname])
+
     useEffect(() => {
         if (firstRender) {
             setFirstRender(false)
         } else {
             if (formik.values) {
-                io.emit("wakeup:request:update", {
-                    id: request.id,
-                    name: formik.values.name,
-                    url: formik.values.url,
-                    payload: formik.values.payload,
-                    response: formik.values.response,
-                    method: formik.values.method,
-                })
+                if (emitTimeout.current) {
+                    clearTimeout(emitTimeout.current)
+                }
+                emitTimeout.current = setTimeout(() => {
+                    io.emit("wakeup:request:update", {
+                        id: request.id,
+                        name: formik.values.name,
+                        url: formik.values.url,
+                        payload: formik.values.payload,
+                        response: formik.values.response,
+                        method: formik.values.method,
+                    })
+                }, 2000)
             }
         }
     }, [formik.values])
@@ -103,7 +122,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
 
     useEffect(() => {
         io.on("wakeup:request:delete:success", () => {
-            close()
+            goBack()
         })
 
         return () => {
@@ -121,7 +140,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
             }}
         >
             <Box sx={{ justifyContent: "space-between", alignItems: "center" }}>
-                <IconButton onClick={close}>
+                <IconButton onClick={goBack}>
                     <ArrowBackIosNewIcon />
                 </IconButton>
                 <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{formik.values.name}</p>

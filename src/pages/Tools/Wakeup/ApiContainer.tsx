@@ -13,7 +13,7 @@ interface ApiContainerProps {
 export const ApiContainer: React.FC<ApiContainerProps> = ({ api }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const navigate = useNavigate()
-    const currentId = useLocation().pathname.split("api/")[1]
+    const currentId = useLocation().pathname.split("api/")[1]?.split("/")[0]
     const active = Number(currentId) == api.id
     const { socket } = useWakeup()
 
@@ -29,8 +29,7 @@ export const ApiContainer: React.FC<ApiContainerProps> = ({ api }) => {
                 fontSize: active ? "1vw" : "1vw",
             }}
             onClick={() => {
-                navigate("/tools/wakeup")
-                setTimeout(() => navigate(`/tools/wakeup/api/${api.id}`), 10)
+                navigate(`/tools/wakeup/api/${api.id}`)
             }}
         >
             <p

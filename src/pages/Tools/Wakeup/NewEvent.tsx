@@ -4,16 +4,16 @@ import { useIo } from "../../../hooks/useIo"
 import { useFormik } from "formik"
 import { Title } from "../../Profile/UserComponents"
 import { TaiTextField } from "../../../components/TaiTextField"
+import { useNavigate } from "react-router-dom"
 
 interface NewEventProps {
     user: User
     api: Wakeup
-    cancel: () => void
-    setEvent: (event: WakeupEvent) => void
 }
 
-export const NewEvent: React.FC<NewEventProps> = ({ user, api, cancel, setEvent }) => {
+export const NewEvent: React.FC<NewEventProps> = ({ user, api }) => {
     const io = useIo()
+    const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
 
@@ -39,11 +39,13 @@ export const NewEvent: React.FC<NewEventProps> = ({ user, api, cancel, setEvent 
         } catch {}
     }
 
+    const goBack = () => navigate(`/tools/wakeup/api/${api.id}`)
+
     useEffect(() => {
         io.on("wakeup:event:new:success", (event) => {
             setLoading(false)
-            setEvent(event)
-            cancel()
+            navigate(`/tools/wakeup/api/${api.id}/event/${event.id}`)
+            goBack()
         })
 
         return () => {
@@ -74,7 +76,7 @@ export const NewEvent: React.FC<NewEventProps> = ({ user, api, cancel, setEvent 
                 />
 
                 <Box sx={{ gap: "1vw", alignSelf: "end" }}>
-                    <Button variant="outlined" onClick={() => cancel()}>
+                    <Button variant="outlined" onClick={() => goBack()}>
                         Cancelar
                     </Button>
                     <Button variant="contained" type="submit" sx={{ color: "secondary.main" }}>

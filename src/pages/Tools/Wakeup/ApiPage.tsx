@@ -1,19 +1,6 @@
-import React, { useEffect, useState } from "react"
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Grid,
-    IconButton,
-    MenuItem,
-    Paper,
-    Switch,
-    TextField,
-    Tooltip,
-    lighten,
-    useMediaQuery,
-} from "@mui/material"
-import { useNavigate, useParams } from "react-router-dom"
+import React, { useEffect, useRef, useState } from "react"
+import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, Paper, Switch, TextField, Tooltip, lighten, useMediaQuery } from "@mui/material"
+import { Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom"
 import { useWakeup } from "../../../hooks/useWakeup"
 import { Add, DeleteForever } from "@mui/icons-material"
 import { useFormik } from "formik"
@@ -36,11 +23,7 @@ interface ApiPageProps {
     user: User
 }
 
-const Title: React.FC<{ title: string; children: React.ReactNode; handleClick: () => void }> = ({
-    title,
-    children,
-    handleClick,
-}) => {
+const Title: React.FC<{ title: string; children: React.ReactNode; handleClick: () => void }> = ({ title, children, handleClick }) => {
     const colors = useColors()
     const color = lighten(colors.text.secondary, 0.35)
     const isMobile = useMediaQuery("(orientation: portrait)")
@@ -69,6 +52,9 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     const io = useIo()
     const { confirm } = useConfirmDialog()
     const storage = useLocalStorage()
+    const pathname = useLocation().pathname
+
+    const emitTimeout = useRef<number | null>(null)
 
     const [firstRender, setFirstRender] = useState(true)
     const [deleting, setDeleting] = useState(false)
@@ -78,7 +64,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     const [newEvent, setNewEvent] = useState(false)
     const [localhost, setLocalhost] = useState<boolean>(storage.get(`bozapp:wakeup:${api?.id}:localhost`))
 
-    const formik = useFormik({ initialValues: api!, onSubmit: (values) => console.log(values) })
+    const formik = useFormik({ initialValues: api!, onSubmit: (values) => console.log(values), enableReinitialize: true })
 
     const handleLocalhostChange = (checked: boolean) => {
         storage.set(`bozapp:wakeup:${api?.id}:localhost`, checked)
@@ -96,19 +82,26 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
         })
     }
 
+    
+
     useEffect(() => {
         if (firstRender) {
             setFirstRender(false)
         } else {
             if (formik.values && api) {
-                io.emit("wakeup:update", {
-                    id: api.id,
-                    name: formik.values.name,
-                    baseUrl: formik.values.baseUrl,
-                    port: formik.values.port,
-                    socket: formik.values.socket,
-                    description: formik.values.description,
-                })
+                if (emitTimeout.current) {
+                    clearTimeout(emitTimeout.current)
+                }
+                emitTimeout.current = setTimeout(() => {
+                    io.emit("wakeup:update", {
+                        id: api.id,
+                        name: formik.values.name,
+                        baseUrl: formik.values.baseUrl,
+                        port: formik.values.port,
+                        socket: formik.values.socket,
+                        description: formik.values.description,
+                    })
+                }, 2000)
             }
         }
     }, [formik.values])
@@ -139,29 +132,18 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 }}
             >
                 <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>
-                <Title title="Requests" handleClick={() => setNewRequest(true)}>
-                    {/* <Button
-                        endIcon={<Add />}
-                        variant="contained"
-                        sx={{
-                            color: "background.default",
-                            fontWeight: "bold",
-                            margin: isMobile ? "2vw 5vw 5vw" : "0 1vw 1vw",
-                        }}
-                        onClick={() => setNewRequest(true)}
-                    ></Button> */}
-
+                <></>
+                <Title title="Requests" handleClick={() => navigate(`/tools/wakeup/api/${api.id}/new/request`)}>
                     {api.requests
                         .sort((a, b) => a.id - b.id)
                         .map((request) => {
-                            const active = request.id == selectedRequest?.id
+                            const split = pathname.split("request/")
+                            const active = request.id == (split.length > 0 ? Number(split[1]) : 1)
                             return (
                                 <MenuItem
                                     key={request.id}
                                     onClick={() => {
-                                        setSelectedRequest(undefined)
-                                        setSelectedEvent(undefined)
-                                        setTimeout(() => setSelectedRequest(request), 10)
+                                        navigate(`/tools/wakeup/api/${api.id}/request/${request.id}`)
                                     }}
                                     sx={{
                                         bgcolor: active ? colors.primary : "",
@@ -189,9 +171,10 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         })}
                 </Title>
                 {api.socket && (
-                    <Title title="Events" handleClick={() => setNewEvent(true)}>
+                    <Title title="Events" handleClick={() => navigate(`/tools/wakeup/api/${api.id}/new/event`)}>
                         {api.events.map((event) => {
-                            const active = event.id == selectedEvent?.id
+                            const split = pathname.split("event/")
+                            const active = event.id == (split.length > 0 ? Number(split[1]) : 1)
                             return (
                                 <MenuItem
                                     key={event.id}
@@ -204,9 +187,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                         alignItems: "center",
                                     }}
                                     onClick={() => {
-                                        setSelectedRequest(undefined)
-                                        setSelectedEvent(undefined)
-                                        setTimeout(() => setSelectedEvent(event), 10)
+                                        navigate(`/tools/wakeup/api/${api.id}/event/${event.id}`)
                                     }}
                                 >
                                     {event.name}
@@ -217,70 +198,59 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 )}
             </Box>
 
-            {newRequest ? (
-                <Box sx={{ width: "100%", padding: "4vw" }}>
-                    <NewRequest
-                        user={user}
-                        api={api}
-                        cancel={() => setNewRequest(false)}
-                        setRequest={(request: WakeupRequest) => setSelectedRequest(request)}
-                    />
-                </Box>
-            ) : newEvent ? (
-                <Box sx={{ width: "100%", padding: "4vw" }}>
-                    <NewEvent user={user} api={api} cancel={() => setNewEvent(false)} setEvent={(event: WakeupEvent) => setSelectedEvent(event)} />
-                </Box>
-            ) : selectedRequest ? (
-                <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
-                    <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />
-                </Box>
-            ) : selectedEvent ? (
-                <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
-                    <EventContainer event={selectedEvent} api={api} close={() => setSelectedEvent(undefined)} />
-                </Box>
-            ) : (
-                <Box sx={{ width: "87%", padding: "2vw 4vw" }}>
-                    <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "90%", gap: isMobile ? "5vw" : "1vw" }}>
-                        <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
-                            <Box sx={{ alignItems: "center" }}>
-                                Socket.io
-                                <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
-                                localhost
-                                <Switch
-                                    icon={<HouseSidingIcon />}
-                                    checkedIcon={<HouseSidingIcon />}
-                                    defaultChecked={localhost}
-                                    value={localhost}
-                                    onChange={(_, checked) => handleLocalhostChange(checked)}
-                                />
+            <Box sx={{ flexDirection: "column", width: "100%", padding: "2vw 1vw" }}>
+                <Routes>
+                    <Route
+                        index
+                        element={
+                            <Box sx={{ width: "87%", padding: "2vw 4vw" }}>
+                                <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "90%", gap: isMobile ? "5vw" : "1vw" }}>
+                                    <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
+                                        <Box sx={{ alignItems: "center" }}>
+                                            Socket.io
+                                            <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
+                                            localhost
+                                            <Switch
+                                                icon={<HouseSidingIcon />}
+                                                checkedIcon={<HouseSidingIcon />}
+                                                defaultChecked={localhost}
+                                                value={localhost}
+                                                onChange={(_, checked) => handleLocalhostChange(checked)}
+                                            />
+                                        </Box>
+                                        <Tooltip title={`Excluir ${formik.values.name}`} arrow>
+                                            <IconButton color="primary" onClick={handleDelete}>
+                                                {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>
+                                    <Grid container spacing={1.5}>
+                                        <Grid item xs={9}>
+                                            <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                                        </Grid>
+                                        <Grid item xs={3}>
+                                            <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
+                                        </Grid>
+                                    </Grid>
+                                    <TaiTextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
+                                    <TaiTextField
+                                        label="Descrição"
+                                        multiline
+                                        minRows={10}
+                                        name="description"
+                                        value={formik.values.description}
+                                        onChange={formik.handleChange}
+                                    />
+                                </Box>
                             </Box>
-                            <Tooltip title={`Excluir ${formik.values.name}`} arrow>
-                                <IconButton color="primary" onClick={handleDelete}>
-                                    {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
-                                </IconButton>
-                            </Tooltip>
-                        </Box>
-
-                        <Grid container spacing={1.5}>
-                            <Grid item xs={9}>
-                                <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
-                            </Grid>
-                            <Grid item xs={3}>
-                                <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
-                            </Grid>
-                        </Grid>
-                        <TaiTextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
-                        <TaiTextField
-                            label="Descrição"
-                            multiline
-                            minRows={10}
-                            name="description"
-                            value={formik.values.description}
-                            onChange={formik.handleChange}
-                        />
-                    </Box>
-                </Box>
-            )}
+                        }
+                    />
+                    <Route path="/event/:id" element={<EventContainer api={api} />} />
+                    <Route path="/request/:id" element={<RequestContainer api={api} />} />
+                    <Route path="/new/request" element={<NewRequest api={api} user={user} />} />
+                    <Route path="/new/event" element={<NewEvent api={api} user={user} />} />
+                </Routes>
+            </Box>
         </Box>
     ) : (
         <></>

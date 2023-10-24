@@ -79,10 +79,7 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
                                     <Title title="APIs">
                                         <Box sx={{ padding: "0 0.5vw", justifyContent: "flex-end" }}>
                                             <Tooltip title="New API" dir="top">
-                                                <IconButton
-                                                    sx={{ justifyContent: "flex-end" }}
-                                                    onClick={() => navigate("/tools/wakeup/new")}
-                                                >
+                                                <IconButton sx={{ justifyContent: "flex-end" }} onClick={() => navigate("/tools/wakeup/new")}>
                                                     <Add color="secondary" />
                                                 </IconButton>
                                             </Tooltip>
@@ -99,7 +96,7 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
                                     <Routes>
                                         <Route index element={<></>} />
                                         <Route path="/new" element={<NewApi user={user} />} />
-                                        <Route path="/api/:id" element={<ApiPage user={user} />} />
+                                        <Route path="/api/:id/*" element={<ApiPage user={user} />} />
                                     </Routes>
                                 </Box>
                             </>
