@@ -49,36 +49,42 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api, cancel, setRe
     return (
         <Box sx={{ flexDirection: "column", width: "77%", gap: "2vw", padding: "0vw 0vw" }}>
             <Title name="New request" />
-            <form onSubmit={formik.handleSubmit}>
-                <Grid container spacing={1.5}>
-                    <Grid item xs={3}>
-                        <TextField
-                            label="Método"
-                            name="method"
-                            value={formik.values.method}
-                            onChange={formik.handleChange}
-                            select
-                            sx={textFieldStyle}
-                        >
-                            <MenuItem value="GET">GET</MenuItem>
-                            <MenuItem value="POST">POST</MenuItem>
-                        </TextField>
+            <Box sx={{ flexDirection: "column", gap: "1vw" }}>
+                <form onSubmit={formik.handleSubmit}>
+                    <Grid container spacing={1.5}>
+                        <Grid item xs={3}>
+                            <TextField
+                                label="Método"
+                                name="method"
+                                value={formik.values.method}
+                                onChange={formik.handleChange}
+                                select
+                                sx={textFieldStyle}
+                            >
+                                <MenuItem value="GET">GET</MenuItem>
+                                <MenuItem value="POST">POST</MenuItem>
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <TaiTextField
+                                label="Nome"
+                                name="name"
+                                value={formik.values.name}
+                                onChange={formik.handleChange}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={9}>
-                        <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
-                    </Grid>
-                </Grid>
-                <TaiTextField label="Url" name="url" value={formik.values.url} onChange={formik.handleChange} />
-
-                <Box sx={{ gap: "1vw", alignSelf: "end" }}>
-                    <Button variant="outlined" onClick={() => cancel()}>
-                        Cancelar
-                    </Button>
-                    <Button variant="contained" type="submit" sx={{ color: "secondary.main" }}>
-                        {loading ? <CircularProgress size={"1.5rem"} color="secondary" /> : "Criar"}
-                    </Button>
-                </Box>
-            </form>
+                    <TaiTextField label="Url" name="url" value={formik.values.url} onChange={formik.handleChange} />
+                    <Box sx={{ gap: "1vw", alignSelf: "end" }}>
+                        <Button variant="outlined" onClick={() => cancel()}>
+                            Cancelar
+                        </Button>
+                        <Button variant="contained" type="submit" sx={{ color: "secondary.main" }}>
+                            {loading ? <CircularProgress size={"1.5rem"} color="secondary" /> : "Criar"}
+                        </Button>
+                    </Box>
+                </form>
+            </Box>
         </Box>
     )
 }
