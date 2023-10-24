@@ -32,12 +32,7 @@ interface ApiPageProps {
     user: User
 }
 
-const Title: React.FC<{ title: string; children: React.ReactNode; request: boolean; handleClick: () => void }> = ({
-    title,
-    children,
-    request,
-    handleClick,
-}) => {
+const Title: React.FC<{ title: string; children: React.ReactNode; handleClick: () => void }> = ({ title, children, handleClick }) => {
     const colors = useColors()
     const color = lighten(colors.text.secondary, 0.35)
     const isMobile = useMediaQuery("(orientation: portrait)")
@@ -46,7 +41,7 @@ const Title: React.FC<{ title: string; children: React.ReactNode; request: boole
         <Box sx={{ flexDirection: "column", gap: "0.1vw", padding: isMobile ? "5vw 0" : "0.3vw 0vw" }}>
             <Box sx={{ padding: "0 1vw", justifyContent: "space-between", alignItems: "center" }}>
                 <p style={{ textAlign: "center", fontWeight: "800", color }}>{title}</p>
-                <Tooltip title={request ? "New Request" : "New Event"} placement="top">
+                <Tooltip title={`New ${title}`} placement="top">
                     <IconButton sx={{ justifyContent: "flex-end" }} onClick={handleClick}>
                         <Add color="primary" />
                     </IconButton>
@@ -134,7 +129,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 }}
             >
                 <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>
-                <Title title="Requests" handleClick={() => setNewRequest(true)} request>
+                <Title title="Requests" handleClick={() => setNewRequest(true)}>
                     {/* <Button
                         endIcon={<Add />}
                         variant="contained"
@@ -184,7 +179,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 </Title>
 
                 {api.socket && (
-                    <Title title="Events" handleClick={() => navigate("/tools/wakeup/new")} request={false}>
+                    <Title title="Events" handleClick={() => navigate("/tools/wakeup/new")}>
                         {/* <Button
                             endIcon={<Add />}
                             variant="contained"
