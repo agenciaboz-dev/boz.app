@@ -113,7 +113,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
         >
             <Box
                 sx={{
-                    width: isMobile ? "100%" : "15vw",
+                    width: isMobile ? "100%" : "20%",
                     height: isMobile ? "30vh" : "100%",
                     bgcolor: "background.default",
                     flexDirection: "column",
@@ -195,12 +195,14 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
             </Box>
 
             {newRequest ? (
-                <NewRequest
-                    user={user}
-                    api={api}
-                    cancel={() => setNewRequest(false)}
-                    setRequest={(request: WakeupRequest) => setSelectedRequest(request)}
-                />
+                <Box sx={{ width: "100%", padding: "4vw" }}>
+                    <NewRequest
+                        user={user}
+                        api={api}
+                        cancel={() => setNewRequest(false)}
+                        setRequest={(request: WakeupRequest) => setSelectedRequest(request)}
+                    />
+                </Box>
             ) : selectedRequest ? (
                 <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />
             ) : (
