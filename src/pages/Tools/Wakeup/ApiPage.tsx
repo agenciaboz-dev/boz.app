@@ -108,6 +108,12 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
 
     useEffect(() => {
         if (!api) navigate("/tools/wakeup")
+
+        io.on("wakeup:delete:success", () => setDeleting(false))
+
+        return () => {
+            io.off("wakeup:delete:success")
+        }
     }, [])
 
     return api ? (
@@ -203,46 +209,55 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                     <Route
                         index
                         element={
-                            <Box sx={{ width: "87%", padding: "2vw 4vw" }}>
-                                <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "90%", gap: isMobile ? "5vw" : "1vw" }}>
-                                    <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
-                                        <Box sx={{ alignItems: "center" }}>
-                                            Socket.io
-                                            <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
-                                            localhost
-                                            <Switch
-                                                icon={<HouseSidingIcon />}
-                                                checkedIcon={<HouseSidingIcon />}
-                                                defaultChecked={localhost}
-                                                value={localhost}
-                                                onChange={(_, checked) => handleLocalhostChange(checked)}
-                                            />
+                            formik.values ? (
+                                <Box sx={{ width: "87%", padding: "2vw 4vw" }}>
+                                    <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "90%", gap: isMobile ? "5vw" : "1vw" }}>
+                                        <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
+                                            <Box sx={{ alignItems: "center" }}>
+                                                Socket.io
+                                                <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
+                                                localhost
+                                                <Switch
+                                                    icon={<HouseSidingIcon />}
+                                                    checkedIcon={<HouseSidingIcon />}
+                                                    defaultChecked={localhost}
+                                                    value={localhost}
+                                                    onChange={(_, checked) => handleLocalhostChange(checked)}
+                                                />
+                                            </Box>
+                                            <Tooltip title={`Excluir ${formik.values.name}`} arrow>
+                                                <IconButton color="primary" onClick={handleDelete}>
+                                                    {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
+                                                </IconButton>
+                                            </Tooltip>
                                         </Box>
-                                        <Tooltip title={`Excluir ${formik.values.name}`} arrow>
-                                            <IconButton color="primary" onClick={handleDelete}>
-                                                {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
-                                            </IconButton>
-                                        </Tooltip>
+                                        <Grid container spacing={1.5}>
+                                            <Grid item xs={9}>
+                                                <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
+                                            </Grid>
+                                        </Grid>
+                                        <TaiTextField
+                                            label="Endereço base"
+                                            name="baseUrl"
+                                            value={formik.values.baseUrl}
+                                            onChange={formik.handleChange}
+                                        />
+                                        <TaiTextField
+                                            label="Descrição"
+                                            multiline
+                                            minRows={10}
+                                            name="description"
+                                            value={formik.values.description}
+                                            onChange={formik.handleChange}
+                                        />
                                     </Box>
-                                    <Grid container spacing={1.5}>
-                                        <Grid item xs={9}>
-                                            <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
-                                        </Grid>
-                                    </Grid>
-                                    <TaiTextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
-                                    <TaiTextField
-                                        label="Descrição"
-                                        multiline
-                                        minRows={10}
-                                        name="description"
-                                        value={formik.values.description}
-                                        onChange={formik.handleChange}
-                                    />
                                 </Box>
-                            </Box>
+                            ) : (
+                                <></>
+                            )
                         }
                     />
                     <Route path="/event/:id" element={<EventContainer api={api} />} />
