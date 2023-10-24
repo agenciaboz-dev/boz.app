@@ -24,6 +24,9 @@ import { RequestContainer } from "./RequestContainer"
 import { Label } from "./Label"
 import { useColors } from "../../../hooks/useColors"
 import colors from "../../../style/colors"
+import HouseSidingIcon from "@mui/icons-material/HouseSiding"
+import HomeIcon from "@mui/icons-material/Home"
+import { useLocalStorage } from "../../../hooks/useLocalStorage"
 
 interface ApiPageProps {
     user: User
@@ -62,13 +65,20 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     const navigate = useNavigate()
     const io = useIo()
     const { confirm } = useConfirmDialog()
+    const storage = useLocalStorage()
 
     const [firstRender, setFirstRender] = useState(true)
     const [deleting, setDeleting] = useState(false)
     const [selectedRequest, setSelectedRequest] = useState<WakeupRequest>()
     const [newRequest, setNewRequest] = useState(false)
+    const [localhost, setLocalhost] = useState<boolean>(storage.get(`bozapp:wakeup:${api?.id}:localhost`))
 
     const formik = useFormik({ initialValues: api!, onSubmit: (values) => console.log(values) })
+
+    const handleLocalhostChange = (checked: boolean) => {
+        storage.set(`bozapp:wakeup:${api?.id}:localhost`, checked)
+        setLocalhost(checked)
+    }
 
     const handleDelete = () => {
         confirm({
@@ -213,20 +223,18 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             <TextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
                         </Grid>
                     </Grid>
-                    <TextField
-                        label="Endereço base"
-                        name="baseUrl"
-                        value={formik.values.baseUrl}
-                        onChange={formik.handleChange}
-                    />
+                    <TextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
                     <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
                         <Box sx={{ alignItems: "center" }}>
                             Socket.io
+                            <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
+                            localhost
                             <Switch
-                                name="socket"
-                                defaultChecked={api.socket}
-                                value={api.socket}
-                                onChange={formik.handleChange}
+                                icon={<HouseSidingIcon />}
+                                checkedIcon={<HouseSidingIcon />}
+                                defaultChecked={localhost}
+                                value={localhost}
+                                onChange={(_, checked) => handleLocalhostChange(checked)}
                             />
                         </Box>
                         <IconButton color="error" onClick={handleDelete}>
