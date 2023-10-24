@@ -5,6 +5,8 @@ import { useIo } from "../hooks/useIo"
 interface WakeupContextValue {
     list: Wakeup[]
     setList: React.Dispatch<React.SetStateAction<Wakeup[]>>
+
+    // socket: Socket<DefaultEventsMap, DefaultEventsMap>
 }
 
 interface WakeupProviderProps {

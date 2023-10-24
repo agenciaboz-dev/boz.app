@@ -29,6 +29,7 @@ import HouseSidingIcon from "@mui/icons-material/HouseSiding"
 import HomeIcon from "@mui/icons-material/Home"
 import { useLocalStorage } from "../../../hooks/useLocalStorage"
 import { TaiTextField } from "../../../components/TaiTextField"
+import { EventContainer } from "./EventContainer"
 
 interface ApiPageProps {
     user: User
@@ -71,7 +72,9 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     const [firstRender, setFirstRender] = useState(true)
     const [deleting, setDeleting] = useState(false)
     const [selectedRequest, setSelectedRequest] = useState<WakeupRequest>()
+    const [selectedEvent, setSelectedEvent] = useState<WakeupEvent>()
     const [newRequest, setNewRequest] = useState(false)
+    const [newEvent, setNewEvent] = useState(false)
     const [localhost, setLocalhost] = useState<boolean>(storage.get(`bozapp:wakeup:${api?.id}:localhost`))
 
     const formik = useFormik({ initialValues: api!, onSubmit: (values) => console.log(values) })
@@ -156,6 +159,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                     key={request.id}
                                     onClick={() => {
                                         setSelectedRequest(undefined)
+                                        setSelectedEvent(undefined)
                                         setTimeout(() => setSelectedRequest(request), 10)
                                     }}
                                     sx={{
@@ -183,14 +187,31 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             )
                         })}
                 </Title>
-
                 {api.socket && (
-                    <Title title="Events" handleClick={() => navigate("/tools/wakeup/new")}>
-                        {api.events.map((event) => (
-                            <MenuItem key={event.id} sx={{ fontSize: "1vw" }}>
-                                {event.name}
-                            </MenuItem>
-                        ))}
+                    <Title title="Events" handleClick={() => setNewEvent(true)}>
+                        {api.events.map((event) => {
+                            const active = event.id == selectedEvent?.id
+                            return (
+                                <MenuItem
+                                    key={event.id}
+                                    sx={{
+                                        bgcolor: active ? colors.primary : "",
+                                        color: active ? colors.background : "",
+                                        pointerEvents: active ? "none" : "",
+                                        fontWeight: active ? "bold" : "normal",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}
+                                    onClick={() => {
+                                        setSelectedRequest(undefined)
+                                        setSelectedEvent(undefined)
+                                        setTimeout(() => setSelectedEvent(event), 10)
+                                    }}
+                                >
+                                    {event.name}
+                                </MenuItem>
+                            )
+                        })}
                     </Title>
                 )}
             </Box>
@@ -207,6 +228,10 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
             ) : selectedRequest ? (
                 <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
                     <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />
+                </Box>
+            ) : selectedEvent ? (
+                <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
+                    <EventContainer event={selectedEvent} api={api} close={() => setSelectedEvent(undefined)} />
                 </Box>
             ) : (
                 <Box sx={{ width: "87%", padding: "2vw 4vw" }}>
