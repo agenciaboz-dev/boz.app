@@ -169,15 +169,19 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ request, api
                     onChange={formik.handleChange}
                     multiline
                     minRows={4}
+                    maxRows={formik.values.method != "GET" ? 11 : 19}
                     InputProps={{
                         readOnly: true,
                         sx: {},
                     }}
-                    sx={{
-                        overflowY: "auto",
-                        maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "10vw" : "19vw",
-                    }}
+                    sx={
+                        {
+                            // overflowY: "auto",
+                            // maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "10vw" : "19vw",
+                        }
+                    }
                 />
+
                 <Tooltip title={statusText}>
                     <Button variant="contained" disabled={!status} color={wakeup.statusCodeColor(status)}>
                         {status || "status"}
