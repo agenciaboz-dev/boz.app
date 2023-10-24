@@ -45,7 +45,6 @@ export const NewEvent: React.FC<NewEventProps> = ({ user, api }) => {
         io.on("wakeup:event:new:success", (event) => {
             setLoading(false)
             navigate(`/tools/wakeup/api/${api.id}/event/${event.id}`)
-            goBack()
         })
 
         return () => {

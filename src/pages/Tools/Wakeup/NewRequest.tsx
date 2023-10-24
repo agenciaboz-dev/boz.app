@@ -40,7 +40,6 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api }) => {
         io.on("wakeup:request:new:success", (request) => {
             setLoading(false)
             navigate(`/tools/wakeup/api/${api.id}/request/${request.id}`)
-            goBack()
         })
 
         return () => {

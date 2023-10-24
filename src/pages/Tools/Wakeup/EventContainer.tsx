@@ -88,7 +88,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ api }) => {
         } catch {
             setJsonPayload(false)
         }
-    }, [formik.values.payload])
+    }, [formik.values?.payload])
 
     useEffect(() => {
         io.on("wakeup:event:delete:success", () => {
@@ -100,7 +100,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ api }) => {
         }
     }, [])
 
-    return (
+    return formik.values ? (
         <Box
             sx={{
                 flexDirection: "column",
@@ -154,5 +154,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ api }) => {
                 <SocketContainer api={api} />
             </Box>
         </Box>
+    ) : (
+        <></>
     )
 }
