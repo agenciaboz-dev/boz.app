@@ -27,6 +27,7 @@ import colors from "../../../style/colors"
 import HouseSidingIcon from "@mui/icons-material/HouseSiding"
 import HomeIcon from "@mui/icons-material/Home"
 import { useLocalStorage } from "../../../hooks/useLocalStorage"
+import { NewEvent } from "./NewEvent"
 
 interface ApiPageProps {
     user: User
@@ -65,7 +66,9 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     const [firstRender, setFirstRender] = useState(true)
     const [deleting, setDeleting] = useState(false)
     const [selectedRequest, setSelectedRequest] = useState<WakeupRequest>()
+    const [selectedEvent, setSelectedEvent] = useState<WakeupEvent>()
     const [newRequest, setNewRequest] = useState(false)
+    const [newEvent, setNewEvent] = useState(false)
     const [localhost, setLocalhost] = useState<boolean>(storage.get(`bozapp:wakeup:${api?.id}:localhost`))
 
     const formik = useFormik({ initialValues: api!, onSubmit: (values) => console.log(values) })
@@ -130,17 +133,6 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
             >
                 <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>
                 <Title title="Requests" handleClick={() => setNewRequest(true)}>
-                    {/* <Button
-                        endIcon={<Add />}
-                        variant="contained"
-                        sx={{
-                            color: "background.default",
-                            fontWeight: "bold",
-                            margin: isMobile ? "2vw 5vw 5vw" : "0 1vw 1vw",
-                        }}
-                        onClick={() => setNewRequest(true)}
-                    ></Button> */}
-
                     {api.requests
                         .sort((a, b) => a.id - b.id)
                         .map((request) => {
@@ -179,17 +171,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 </Title>
 
                 {api.socket && (
-                    <Title title="Events" handleClick={() => navigate("/tools/wakeup/new")}>
-                        {/* <Button
-                            endIcon={<Add />}
-                            variant="contained"
-                            sx={{
-                                color: "background.default",
-                                fontWeight: "bold",
-                                margin: isMobile ? "2vw 5vw 2vw" : "0 1vw 1vw",
-                            }}
-                            onClick={() => navigate("/tools/wakeup/new")}
-                        ></Button> */}
+                    <Title title="Events" handleClick={() => setNewEvent(true)}>
                         {api.events.map((event) => (
                             <MenuItem key={event.id} sx={{ fontSize: "1vw" }}>
                                 {event.name}
@@ -207,6 +189,10 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         cancel={() => setNewRequest(false)}
                         setRequest={(request: WakeupRequest) => setSelectedRequest(request)}
                     />
+                </Box>
+            ) : newEvent ? (
+                <Box sx={{ width: "100%", padding: "4vw" }}>
+                    <NewEvent user={user} api={api} cancel={() => setNewEvent(false)} setEvent={(event: WakeupEvent) => setSelectedEvent(event)} />
                 </Box>
             ) : selectedRequest ? (
                 <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />

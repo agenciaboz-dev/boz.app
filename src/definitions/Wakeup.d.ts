@@ -21,6 +21,14 @@ declare interface Wakeup {
     events: WakeupEvent[]
 }
 
+declare interface NewWakeupEvent {
+    name: string
+    event: string
+    userId: number
+    apiId: number
+    payload: string
+}
+
 declare interface NewWakeupRequest {
     name: string
     url: string
