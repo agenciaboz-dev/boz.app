@@ -85,22 +85,22 @@ export const NewApi: React.FC<NewApiProps> = ({ user }) => {
                         />
                     </Grid>
                 </Grid>
-                {/* <Box sx={{ alignSelf: "end", gap: "3vw" : "1vw", paddingRight: "3vw" : "4vw" }}>
+                <Box sx={{ alignSelf: "end", gap: "1vw", paddingRight: "0vw" }}>
                     <Button variant="outlined" onClick={() => navigate("/tools/wakeup")}>
                         Cancelar
                     </Button>
                     <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
                         {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "salvar"}
                     </Button>
-                </Box> */}
-                <Box sx={{ gap: "1vw" }}>
+                </Box>
+                {/* <Box sx={{ gap: "1vw" }}>
                     <Button variant="outlined" fullWidth onClick={() => navigate("/tools/wakeup")}>
                         Cancelar
                     </Button>
                     <Button variant="contained" type="submit" sx={{ color: "background.default" }} fullWidth>
                         {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "Criar"}
                     </Button>
-                </Box>
+                </Box> */}
             </form>
         </Box>
     )
