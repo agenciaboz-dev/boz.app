@@ -29,16 +29,13 @@ import HomeIcon from "@mui/icons-material/Home"
 import { useLocalStorage } from "../../../hooks/useLocalStorage"
 import { NewEvent } from "./NewEvent"
 import { TaiTextField } from "../../../components/TaiTextField"
+import { EventContainer } from "./EventContainer"
 
 interface ApiPageProps {
     user: User
 }
 
-const Title: React.FC<{ title: string; children: React.ReactNode; handleClick: () => void }> = ({
-    title,
-    children,
-    handleClick,
-}) => {
+const Title: React.FC<{ title: string; children: React.ReactNode; handleClick: () => void }> = ({ title, children, handleClick }) => {
     const colors = useColors()
     const color = lighten(colors.text.secondary, 0.35)
     const isMobile = useMediaQuery("(orientation: portrait)")
@@ -136,7 +133,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                     padding: "2vw 0.5vw",
                 }}
             >
-                <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>
+                <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>;
                 <Title title="Requests" handleClick={() => setNewRequest(true)}>
                     {api.requests
                         .sort((a, b) => a.id - b.id)
@@ -147,6 +144,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                     key={request.id}
                                     onClick={() => {
                                         setSelectedRequest(undefined)
+                                        setSelectedEvent(undefined)
                                         setTimeout(() => setSelectedRequest(request), 10)
                                     }}
                                     sx={{
@@ -174,14 +172,31 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             )
                         })}
                 </Title>
-
                 {api.socket && (
                     <Title title="Events" handleClick={() => setNewEvent(true)}>
-                        {api.events.map((event) => (
-                            <MenuItem key={event.id} sx={{ fontSize: "1vw" }}>
-                                {event.name}
-                            </MenuItem>
-                        ))}
+                        {api.events.map((event) => {
+                            const active = event.id == selectedEvent?.id
+                            return (
+                                <MenuItem
+                                    key={event.id}
+                                    sx={{
+                                        bgcolor: active ? colors.primary : "",
+                                        color: active ? colors.background : "",
+                                        pointerEvents: active ? "none" : "",
+                                        fontWeight: active ? "bold" : "normal",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}
+                                    onClick={() => {
+                                        setSelectedRequest(undefined)
+                                        setSelectedEvent(undefined)
+                                        setTimeout(() => setSelectedEvent(event), 10)
+                                    }}
+                                >
+                                    {event.name}
+                                </MenuItem>
+                            )
+                        })}
                     </Title>
                 )}
             </Box>
@@ -203,42 +218,26 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
                     <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />
                 </Box>
+            ) : selectedEvent ? (
+                <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
+                    <EventContainer event={selectedEvent} api={api} close={() => setSelectedRequest(undefined)} />
+                </Box>
             ) : (
                 <Box sx={{ width: "87%", padding: "0 4vw" }}>
                     <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "63vw", gap: isMobile ? "5vw" : "1vw" }}>
                         <Grid container spacing={1.5}>
                             <Grid item xs={9}>
-                                <TextField
-                                    label="Nome"
-                                    name="name"
-                                    value={formik.values.name}
-                                    onChange={formik.handleChange}
-                                />
+                                <TextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
                             </Grid>
                             <Grid item xs={3}>
-                                <TextField
-                                    label="Porta"
-                                    name="port"
-                                    value={formik.values.port}
-                                    onChange={formik.handleChange}
-                                />
+                                <TextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
                             </Grid>
                         </Grid>
-                        <TextField
-                            label="Endereço base"
-                            name="baseUrl"
-                            value={formik.values.baseUrl}
-                            onChange={formik.handleChange}
-                        />
+                        <TextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
                         <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
                             <Box sx={{ alignItems: "center" }}>
                                 Socket.io
-                                <Switch
-                                    name="socket"
-                                    defaultChecked={api.socket}
-                                    value={api.socket}
-                                    onChange={formik.handleChange}
-                                />
+                                <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
                                 localhost
                                 <Switch
                                     icon={<HouseSidingIcon />}
@@ -250,28 +249,13 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             </Box>
                             <Grid container spacing={1.5}>
                                 <Grid item xs={9}>
-                                    <TaiTextField
-                                        label="Nome"
-                                        name="name"
-                                        value={formik.values.name}
-                                        onChange={formik.handleChange}
-                                    />
+                                    <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
                                 </Grid>
                                 <Grid item xs={3}>
-                                    <TaiTextField
-                                        label="Porta"
-                                        name="port"
-                                        value={formik.values.port}
-                                        onChange={formik.handleChange}
-                                    />
+                                    <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
                                 </Grid>
                             </Grid>
-                            <TaiTextField
-                                label="Endereço base"
-                                name="baseUrl"
-                                value={formik.values.baseUrl}
-                                onChange={formik.handleChange}
-                            />
+                            <TaiTextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
                             <TextField
                                 label="Descrição"
                                 multiline
