@@ -9,7 +9,7 @@ export const useMuiTheme = () => {
 
     const THEME = createTheme({
         typography: {
-            fontFamily: ["Montserrat"].join(","),
+            fontFamily: ["Montserrat", "Futura Medium BT"].join(","),
         },
         palette: {
             mode: darkMode ? "dark" : "light",

@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, Paper, Switch, TextField, useMediaQuery } from "@mui/material"
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Grid,
+    IconButton,
+    MenuItem,
+    Paper,
+    Switch,
+    TextField,
+    Tooltip,
+    lighten,
+    useMediaQuery,
+} from "@mui/material"
 import { useNavigate, useParams } from "react-router-dom"
 import { useWakeup } from "../../../hooks/useWakeup"
 import { Add, DeleteForever } from "@mui/icons-material"
@@ -9,25 +22,40 @@ import { useConfirmDialog } from "burgos-confirm"
 import { NewRequest } from "./NewRequest"
 import { RequestContainer } from "./RequestContainer"
 import { Label } from "./Label"
+import { useColors } from "../../../hooks/useColors"
 import colors from "../../../style/colors"
 
 interface ApiPageProps {
     user: User
 }
 
-const Title: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+const Title: React.FC<{ title: string; children: React.ReactNode; request: boolean; handleClick: () => void }> = ({
+    title,
+    children,
+    request,
+    handleClick,
+}) => {
+    const colors = useColors()
+    const color = lighten(colors.text.secondary, 0.35)
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     return (
-        <Box sx={{ flexDirection: "column", gap: "1vw", padding: isMobile? "5vw 0" : "1vw 0" }}>
-            <p style={{ textAlign: "center" }}>{title}</p>
+        <Box sx={{ flexDirection: "column", gap: "0.1vw", padding: isMobile ? "5vw 0" : "0.3vw 0vw" }}>
+            <Box sx={{ padding: "0 1vw", justifyContent: "space-between", alignItems: "center" }}>
+                <p style={{ textAlign: "center", fontWeight: "800", color }}>{title}</p>
+                <Tooltip title={request ? "New Request" : "New Event"} placement="top">
+                    <IconButton sx={{ justifyContent: "flex-end" }} onClick={handleClick}>
+                        <Add color="primary" />
+                    </IconButton>
+                </Tooltip>
+            </Box>
             <Box sx={{ flexDirection: "column" }}>{children}</Box>
         </Box>
     )
 }
 
 export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const id = useParams().id
     const { list } = useWakeup()
     const api = list.find((item) => item.id == Number(id))
@@ -75,19 +103,29 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     }, [])
 
     return api ? (
-        <Box sx={{ width: "100%", justifyContent: "space-between", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "5vw" : "" }}>
-            <Paper
+        <Box
+            sx={{
+                width: "100%",
+                justifyContent: "space-between",
+                flexDirection: isMobile ? "column" : "row",
+                gap: isMobile ? "5vw" : "",
+            }}
+        >
+            <Box
                 sx={{
                     width: isMobile ? "100%" : "15vw",
-                    height: isMobile ? "30vh" : "80vh",
+                    height: isMobile ? "30vh" : "100%",
                     bgcolor: "background.default",
                     flexDirection: "column",
                     overflowY: "auto",
                     gap: isMobile ? "5vw" : "1vw",
+                    boxShadow: "rgba(0, 0, 0, 0.08) 0px 4px 12px",
+                    padding: "2vw 0.5vw",
                 }}
             >
-                <Title title="Requests">
-                    <Button
+                <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>
+                <Title title="Requests" handleClick={() => setNewRequest(true)} request>
+                    {/* <Button
                         endIcon={<Add />}
                         variant="contained"
                         sx={{
@@ -96,7 +134,8 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             margin: isMobile ? "2vw 5vw 5vw" : "0 1vw 1vw",
                         }}
                         onClick={() => setNewRequest(true)}
-                    ></Button>
+                    ></Button> */}
+
                     {api.requests
                         .sort((a, b) => a.id - b.id)
                         .map((request) => {
@@ -109,8 +148,8 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                         setTimeout(() => setSelectedRequest(request), 10)
                                     }}
                                     sx={{
-                                        bgcolor: active ? colors.primaryLight : "",
-                                        color: active ? "black" : "",
+                                        bgcolor: active ? colors.primary : "",
+                                        color: active ? colors.background : "",
                                         pointerEvents: active ? "none" : "",
                                         fontWeight: active ? "bold" : "normal",
                                         justifyContent: "space-between",
@@ -123,6 +162,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                             overflow: "hidden",
                                             whiteSpace: "nowrap",
                                             textOverflow: "ellipsis",
+                                            fontSize: "0.9vw",
                                         }}
                                     >
                                         {request.name}
@@ -134,8 +174,8 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 </Title>
 
                 {api.socket && (
-                    <Title title="Events">
-                        <Button
+                    <Title title="Events" handleClick={() => navigate("/tools/wakeup/new")} request={false}>
+                        {/* <Button
                             endIcon={<Add />}
                             variant="contained"
                             sx={{
@@ -144,13 +184,15 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                 margin: isMobile ? "2vw 5vw 2vw" : "0 1vw 1vw",
                             }}
                             onClick={() => navigate("/tools/wakeup/new")}
-                        ></Button>
+                        ></Button> */}
                         {api.events.map((event) => (
-                            <MenuItem key={event.id}>{event.name}</MenuItem>
+                            <MenuItem key={event.id} sx={{ fontSize: "1vw" }}>
+                                {event.name}
+                            </MenuItem>
                         ))}
                     </Title>
                 )}
-            </Paper>
+            </Box>
 
             {newRequest ? (
                 <NewRequest
@@ -171,11 +213,21 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             <TextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
                         </Grid>
                     </Grid>
-                    <TextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
+                    <TextField
+                        label="Endereço base"
+                        name="baseUrl"
+                        value={formik.values.baseUrl}
+                        onChange={formik.handleChange}
+                    />
                     <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
                         <Box sx={{ alignItems: "center" }}>
                             Socket.io
-                            <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
+                            <Switch
+                                name="socket"
+                                defaultChecked={api.socket}
+                                value={api.socket}
+                                onChange={formik.handleChange}
+                            />
                         </Box>
                         <IconButton color="error" onClick={handleDelete}>
                             {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}

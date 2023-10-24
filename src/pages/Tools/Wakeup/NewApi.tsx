@@ -4,6 +4,8 @@ import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
 import { useNavigate } from "react-router-dom"
+import { TaiTextField } from "../../../components/TaiTextField"
+import { Title } from "../../Profile/UserComponents"
 
 interface NewApiProps {
     user: User
@@ -49,17 +51,32 @@ export const NewApi: React.FC<NewApiProps> = ({ user }) => {
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "100%", gap: "2vw" }}>
+        <Box sx={{ flexDirection: "column", width: "99%", gap: "2vw", padding: "4vw" }}>
             <form onSubmit={formik.handleSubmit}>
+                <Title name="Dados da API" />
                 <Grid container spacing={1.5}>
-                    <Grid item xs={3}>
-                        <TextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} required autoComplete="off" />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} placeholder="4100" required />
+                    <Grid item xs={6}>
+                        <TaiTextField
+                            label="Nome"
+                            name="name"
+                            value={formik.values.name}
+                            onChange={formik.handleChange}
+                            required
+                            //autoComplete="off"
+                        />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField
+                        <TaiTextField
+                            label="Porta"
+                            name="port"
+                            value={formik.values.port}
+                            onChange={formik.handleChange}
+                            placeholder="4100"
+                            required
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TaiTextField
                             label="Endereço base"
                             name="baseUrl"
                             value={formik.values.baseUrl}
@@ -68,7 +85,14 @@ export const NewApi: React.FC<NewApiProps> = ({ user }) => {
                         />
                     </Grid>
                 </Grid>
-
+                {/* <Box sx={{ alignSelf: "end", gap: "3vw" : "1vw", paddingRight: "3vw" : "4vw" }}>
+                    <Button variant="outlined" onClick={() => navigate("/tools/wakeup")}>
+                        Cancelar
+                    </Button>
+                    <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
+                        {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "salvar"}
+                    </Button>
+                </Box> */}
                 <Box sx={{ gap: "1vw" }}>
                     <Button variant="outlined" fullWidth onClick={() => navigate("/tools/wakeup")}>
                         Cancelar

@@ -8,6 +8,7 @@ import { useUser } from "../../hooks/useUser"
 import UpdateIcon from "@mui/icons-material/Update"
 import colors from "../../style/colors"
 import { useIo } from "../../hooks/useIo"
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline"
 
 interface UpdateProps {
     user: User
@@ -52,7 +53,10 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
             >
                 Atualização
             </h1>
-            <Paper sx={{ backgroundColor: "transparent", flexDirection: "column", padding: "2vw", borderRadius: "0 3vw 0" }} elevation={3}>
+            <Paper
+                sx={{ backgroundColor: "transparent", flexDirection: "column", padding: "2vw", borderRadius: "0 3vw 0" }}
+                elevation={3}
+            >
                 {electron ? (
                     <Box sx={{ flexDirection: "row", gap: "1vw", justifyContent: "space-between", alignItems: "center" }}>
                         <Box sx={{ gap: "2vw" }}>
@@ -81,7 +85,11 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
                                 <Box sx={{ gap: isMobile ? "2vw" : "1vw", flexDirection: isMobile ? "column" : "" }}>
                                     <Box sx={{ gap: isMobile ? "1vw" : "0.5vw", alignItems: "center" }}>
                                         <p style={{ fontSize: isMobile ? "4vw" : "1vw" }}>Versão atual: {currentVersion}</p>
-                                        {latestVersion == currentVersion ? <CheckCircleIcon color="success" /> : <ErrorIcon color="warning" />}
+                                        {latestVersion == currentVersion ? (
+                                            <CheckCircleIcon color="success" />
+                                        ) : (
+                                            <ErrorIcon color="warning" />
+                                        )}
                                     </Box>
                                     <Box sx={{ alignItems: "center", gap: "1vw" }}>
                                         <p style={{ fontSize: isMobile ? "4vw" : "1vw" }}>Última versão: {latestVersion}</p>
@@ -91,7 +99,13 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
                             </Box>
                         </Box>
                         <Button
-                            sx={{ color: "#fff", height: "auto", width: "auto", fontSize: isMobile ? "4vw" : "1vw", padding: isMobile ? "2vw" : "" }}
+                            sx={{
+                                color: "#fff",
+                                height: "auto",
+                                width: "auto",
+                                fontSize: isMobile ? "4vw" : "1vw",
+                                padding: isMobile ? "2vw" : "",
+                            }}
                             variant="contained"
                             disabled={!!latestVersion && latestVersion == currentVersion}
                             onClick={() =>
@@ -111,7 +125,10 @@ export const Update: React.FC<UpdateProps> = ({ user }) => {
                         </Button>
                     </Box>
                 ) : (
-                    <Box>Para atualizar, instale o aplicativo Boz App</Box>
+                    <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
+                        <ErrorOutlineIcon color="primary" />
+                        Para atualizar, instale o aplicativo Boz App
+                    </Box>
                 )}
             </Paper>
         </Box>

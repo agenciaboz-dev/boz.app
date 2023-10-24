@@ -21,17 +21,27 @@ export const ApiContainer: React.FC<ApiContainerProps> = ({ api }) => {
                 width: "100%",
                 pointerEvents: active ? "none" : "",
                 bgcolor: active ? colors.primaryLight : "",
-                color: active ? "black" : "",
+                color: active ? "white" : "",
                 fontWeight: active ? "bold" : "normal",
                 justifyContent: "space-between",
+                fontSize: active ? "1vw" : "1vw",
             }}
             onClick={() => {
                 navigate("/tools/wakeup")
                 setTimeout(() => navigate(`/tools/wakeup/api/${api.id}`), 10)
             }}
         >
-            <p style={{ width: isMobile? "100%" : "10vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{api.name}</p>
-            <Box sx={{ gap: isMobile? "5vw" : "0.5vw" }}>
+            <p
+                style={{
+                    width: isMobile ? "100%" : "10vw",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                }}
+            >
+                {api.name}
+            </p>
+            <Box sx={{ gap: isMobile ? "5vw" : "0.5vw" }}>
                 {api.socket && <Label label={"io"} color="warning" />}
                 <Label label={api.port} color="success" />
             </Box>

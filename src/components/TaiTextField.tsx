@@ -16,9 +16,10 @@ interface TaiTextFieldProps {
     }
     placeholder?: string
     required?: boolean
-    style?: SxProps 
+    style?: SxProps
     disabled?: boolean
     InputProps?: InputProps
+    autocomplete?: string
 }
 
 export const TaiTextField: React.FC<TaiTextFieldProps> = ({
@@ -31,6 +32,7 @@ export const TaiTextField: React.FC<TaiTextFieldProps> = ({
     style,
     disabled,
     InputProps,
+    autocomplete,
 }) => {
     const colors = useColors()
     const background = useMuiTheme()
@@ -49,7 +51,7 @@ export const TaiTextField: React.FC<TaiTextFieldProps> = ({
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            //autoComplete="off"
+            autoComplete={autocomplete}
             required={required}
             sx={{ ...textFieldStyle, ...webkitbg, ...(style && style) }}
             disabled={disabled}
