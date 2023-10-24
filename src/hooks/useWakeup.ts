@@ -1,14 +1,17 @@
 import { useContext } from "react"
 import WakeupContext from "../contexts/wakeupContext"
+import { useLocalStorage } from "./useLocalStorage"
 
 export const useWakeup = () => {
     const wakeupContext = useContext(WakeupContext)
     const { list } = wakeupContext
     const electron = window.electron
+    const storage = useLocalStorage()
 
     const request = async (api: Wakeup, request: WakeupRequest) => {
         if (electron) {
-            const url = `${api.baseUrl}:${api.port}${request.url}`
+            const localhost = storage.get(`bozapp:wakeup:${api.id}:localhost`)
+            const url = `${localhost ? "http://localhost" : api.baseUrl}:${api.port}${request.url}`
             const payload = request.payload ? JSON.parse(request.payload) : {}
             console.log(`sending request to ${url}`)
             const response = await electron.ipcRenderer.invoke("wakeup:request", url, request.method, payload)

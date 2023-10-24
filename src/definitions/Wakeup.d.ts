@@ -14,6 +14,7 @@ declare interface Wakeup {
     socket: boolean
     port: string
     description: string
+    localhost?: boolean
 
     creator: User
     requests: WakeupRequest[]

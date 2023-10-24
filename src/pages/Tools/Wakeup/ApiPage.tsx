@@ -24,16 +24,18 @@ import { RequestContainer } from "./RequestContainer"
 import { Label } from "./Label"
 import { useColors } from "../../../hooks/useColors"
 import colors from "../../../style/colors"
+import HouseSidingIcon from "@mui/icons-material/HouseSiding"
+import HomeIcon from "@mui/icons-material/Home"
+import { useLocalStorage } from "../../../hooks/useLocalStorage"
 import { TaiTextField } from "../../../components/TaiTextField"
 
 interface ApiPageProps {
     user: User
 }
 
-const Title: React.FC<{ title: string; children: React.ReactNode; request: boolean; handleClick: () => void }> = ({
+const Title: React.FC<{ title: string; children: React.ReactNode; handleClick: () => void }> = ({
     title,
     children,
-    request,
     handleClick,
 }) => {
     const colors = useColors()
@@ -44,7 +46,7 @@ const Title: React.FC<{ title: string; children: React.ReactNode; request: boole
         <Box sx={{ flexDirection: "column", gap: "0.1vw", padding: isMobile ? "5vw 0" : "0.3vw 0vw" }}>
             <Box sx={{ padding: "0 1vw", justifyContent: "space-between", alignItems: "center" }}>
                 <p style={{ textAlign: "center", fontWeight: "800", color }}>{title}</p>
-                <Tooltip title={request ? "New Request" : "New Event"} placement="top">
+                <Tooltip title={`New ${title}`} placement="top">
                     <IconButton sx={{ justifyContent: "flex-end" }} onClick={handleClick}>
                         <Add color="primary" />
                     </IconButton>
@@ -63,13 +65,20 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
     const navigate = useNavigate()
     const io = useIo()
     const { confirm } = useConfirmDialog()
+    const storage = useLocalStorage()
 
     const [firstRender, setFirstRender] = useState(true)
     const [deleting, setDeleting] = useState(false)
     const [selectedRequest, setSelectedRequest] = useState<WakeupRequest>()
     const [newRequest, setNewRequest] = useState(false)
+    const [localhost, setLocalhost] = useState<boolean>(storage.get(`bozapp:wakeup:${api?.id}:localhost`))
 
     const formik = useFormik({ initialValues: api!, onSubmit: (values) => console.log(values) })
+
+    const handleLocalhostChange = (checked: boolean) => {
+        storage.set(`bozapp:wakeup:${api?.id}:localhost`, checked)
+        setLocalhost(checked)
+    }
 
     const handleDelete = () => {
         confirm({
@@ -125,7 +134,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 }}
             >
                 <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{api.name}</p>
-                <Title title="Requests" handleClick={() => setNewRequest(true)} request>
+                <Title title="Requests" handleClick={() => setNewRequest(true)}>
                     {/* <Button
                         endIcon={<Add />}
                         variant="contained"
@@ -175,7 +184,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 </Title>
 
                 {api.socket && (
-                    <Title title="Events" handleClick={() => navigate("/tools/wakeup/new")} request={false}>
+                    <Title title="Events" handleClick={() => navigate("/tools/wakeup/new")}>
                         {/* <Button
                             endIcon={<Add />}
                             variant="contained"
@@ -209,8 +218,32 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                     <RequestContainer request={selectedRequest} api={api} close={() => setSelectedRequest(undefined)} />
                 </Box>
             ) : (
-                <Box sx={{ width: "87%", padding: "4vw" }}>
-                    <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "90%", gap: isMobile ? "5vw" : "1vw" }}>
+                <Box sx={{ width: "87%", padding: "0 4vw" }}>
+                    <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "63vw", gap: isMobile ? "5vw" : "1vw" }}>
+                        <Grid container spacing={1.5}>
+                            <Grid item xs={9}>
+                                <TextField
+                                    label="Nome"
+                                    name="name"
+                                    value={formik.values.name}
+                                    onChange={formik.handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <TextField
+                                    label="Porta"
+                                    name="port"
+                                    value={formik.values.port}
+                                    onChange={formik.handleChange}
+                                />
+                            </Grid>
+                        </Grid>
+                        <TextField
+                            label="Endereço base"
+                            name="baseUrl"
+                            value={formik.values.baseUrl}
+                            onChange={formik.handleChange}
+                        />
                         <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
                             <Box sx={{ alignItems: "center" }}>
                                 Socket.io
@@ -220,45 +253,48 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                     value={api.socket}
                                     onChange={formik.handleChange}
                                 />
+                                localhost
+                                <Switch
+                                    icon={<HouseSidingIcon />}
+                                    checkedIcon={<HouseSidingIcon />}
+                                    defaultChecked={localhost}
+                                    value={localhost}
+                                    onChange={(_, checked) => handleLocalhostChange(checked)}
+                                />
                             </Box>
-                            <Tooltip title={`Excluir ${formik.values.name}`} arrow>
-                                <IconButton color="primary" onClick={handleDelete}>
-                                    {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
-                                </IconButton>
-                            </Tooltip>
+                            <Grid container spacing={1.5}>
+                                <Grid item xs={9}>
+                                    <TaiTextField
+                                        label="Nome"
+                                        name="name"
+                                        value={formik.values.name}
+                                        onChange={formik.handleChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TaiTextField
+                                        label="Porta"
+                                        name="port"
+                                        value={formik.values.port}
+                                        onChange={formik.handleChange}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <TaiTextField
+                                label="Endereço base"
+                                name="baseUrl"
+                                value={formik.values.baseUrl}
+                                onChange={formik.handleChange}
+                            />
+                            <TextField
+                                label="Descrição"
+                                multiline
+                                minRows={10}
+                                name="description"
+                                value={formik.values.description}
+                                onChange={formik.handleChange}
+                            />
                         </Box>
-                        <Grid container spacing={1.5}>
-                            <Grid item xs={9}>
-                                <TaiTextField
-                                    label="Nome"
-                                    name="name"
-                                    value={formik.values.name}
-                                    onChange={formik.handleChange}
-                                />
-                            </Grid>
-                            <Grid item xs={3}>
-                                <TaiTextField
-                                    label="Porta"
-                                    name="port"
-                                    value={formik.values.port}
-                                    onChange={formik.handleChange}
-                                />
-                            </Grid>
-                        </Grid>
-                        <TaiTextField
-                            label="Endereço base"
-                            name="baseUrl"
-                            value={formik.values.baseUrl}
-                            onChange={formik.handleChange}
-                        />
-                        <TextField
-                            label="Descrição"
-                            multiline
-                            minRows={10}
-                            name="description"
-                            value={formik.values.description}
-                            onChange={formik.handleChange}
-                        />
                     </Box>
                 </Box>
             )}
