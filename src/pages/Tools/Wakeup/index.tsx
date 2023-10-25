@@ -38,7 +38,7 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
 
     const [electron] = useState(window.electron)
 
-    const noAccessStyle:SxProps = { gap: "0.5vw", padding: "2vw", alignItems: "center", height: "min-content" }
+    const noAccessStyle: SxProps = { gap: "0.5vw", padding: "2vw", alignItems: "center", height: "min-content" }
 
     return (
         <Box sx={{ ...backgroundStyle, height: isMobile ? "auto" : electron ? "90vh" : "10vw" }}>
@@ -73,11 +73,12 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
                                             bgcolor: "background.paper",
                                             flexDirection: "column",
                                             overflowY: "auto",
-                                            padding: "1vw 3vw",
+                                            padding: "1vw 0",
                                             alignItems: "center",
                                             gap: isMobile ? "5vw" : "1.5vw",
                                             borderRadius: isMobile ? "0 2vw 0 0" : "0 0 0 2vw ",
                                             color: "secondary.main",
+                                            overflowX: "hidden",
                                         }}
                                         elevation={4}
                                     >
