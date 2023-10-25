@@ -64,7 +64,7 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
                         }}
                     >
                         {electron ? (
-                            isRole("dev") ? (
+                            isRole("dev") || isRole("web") ? (
                                 <>
                                     <Paper
                                         sx={{
