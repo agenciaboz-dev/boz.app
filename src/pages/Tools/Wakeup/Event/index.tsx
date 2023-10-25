@@ -11,9 +11,10 @@ import { TaiTextField } from "../../../../components/TaiTextField"
 
 interface EventProps {
     api: Wakeup
+    fullscreenSocket: boolean
 }
 
-export const Event: React.FC<EventProps> = ({ api }) => {
+export const Event: React.FC<EventProps> = ({ api, fullscreenSocket }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const io = useIo()
     const id = Number(useParams().id)
@@ -106,6 +107,7 @@ export const Event: React.FC<EventProps> = ({ api }) => {
                 gap: isMobile ? "5vw" : "1vw",
                 padding: "1vw",
                 //overflow: "auto",
+                display: fullscreenSocket ? "none" : "",
             }}
         >
             <Box sx={{ justifyContent: "space-between", alignItems: "center", color: "primary.main" }}>

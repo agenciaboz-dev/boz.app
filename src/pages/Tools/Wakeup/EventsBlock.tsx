@@ -43,7 +43,7 @@ const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
 export const EventsBlock: React.FC<EventsBlockProps> = ({}) => {
     const { socket } = useWakeup()
     return (
-        <Box sx={{ flexDirection: "column", overflowY: "auto", height: "20vw" }}>
+        <Box sx={{ flexDirection: "column", overflowY: "auto", height: "100%" }}>
             {socket.events
                 .sort((a, b) => b.datetime.getTime() - a.datetime.getTime())
                 .map((event) => (

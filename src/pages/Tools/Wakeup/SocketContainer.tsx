@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Paper } from "@mui/material"
+import { Box, Button, CircularProgress, IconButton, Paper } from "@mui/material"
 import { useWakeup } from "../../../hooks/useWakeup"
 import { ElectronAPI } from "@electron-toolkit/preload"
 import { EventsBlock } from "./EventsBlock"
+import OpenInFullIcon from "@mui/icons-material/OpenInFull"
+import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen"
 
 interface SocketContainerProps {
     api: Wakeup
+    fullscreenSocket: boolean
+    setFullscreenSocket: (value: boolean) => void
 }
 
-export const SocketContainer: React.FC<SocketContainerProps> = ({ api }) => {
+export const SocketContainer: React.FC<SocketContainerProps> = ({ api, fullscreenSocket, setFullscreenSocket }) => {
     const { socket, connect, disconnect } = useWakeup()
     const [connecting, setConnecting] = useState(false)
 
@@ -36,11 +40,18 @@ export const SocketContainer: React.FC<SocketContainerProps> = ({ api }) => {
                     <Box sx={{ gap: "1vw", alignItems: "center", justifyContent: "space-between" }}>
                         <Box sx={{ width: "1vw", height: "1vw", bgcolor: "success.main", borderRadius: "100%" }}></Box>
                         <p>Socket connected to {api.name}</p>
-                        <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleDisconnectClick}>
-                            disconnect
-                        </Button>
+                        <Box sx={{ gap: "1vw" }}>
+                            <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleDisconnectClick}>
+                                disconnect
+                            </Button>
+                            <IconButton onClick={() => setFullscreenSocket(!fullscreenSocket)}>
+                                {!fullscreenSocket ? <OpenInFullIcon /> : <CloseFullscreenIcon />}
+                            </IconButton>
+                        </Box>
                     </Box>
-                    <EventsBlock />
+                    <Box sx={{ flexDirection: "column", height: fullscreenSocket ? "40vw" : "20vw" }}>
+                        <EventsBlock />
+                    </Box>
                 </Box>
             ) : (
                 <Box sx={{ gap: "1vw", alignItems: "center", justifyContent: "space-between" }}>
