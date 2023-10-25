@@ -134,9 +134,10 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
             <Box
                 sx={{
                     flexDirection: "column",
-                    width: isMobile ? "100%" : "75%",
+                    width: "100%",
                     gap: isMobile ? "5vw" : "1vw",
                     //overflow: "auto",
+                    padding: "1vw 2vw 1vw 1vw",
                 }}
             >
                 <Box sx={{ justifyContent: "space-between", alignItems: "center" }}>

@@ -206,13 +206,13 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                 )}
             </Box>
 
-            <Box sx={{ flexDirection: "column", width: "100%", padding: "2vw 1vw" }}>
+            <Box sx={{ flexDirection: "column", width: "80%" }}>
                 <Routes>
                     <Route
                         index
                         element={
                             formik.values ? (
-                                <Box sx={{ width: "87%", padding: "2vw 4vw" }}>
+                                <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
                                     <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "90%", gap: isMobile ? "5vw" : "1vw" }}>
                                         <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
                                             <Box sx={{ alignItems: "center" }}>
@@ -261,7 +261,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                             )
                         }
                     />
-                    <Route path="/event/:id" element={<EventContainer api={api} />} />
+                    <Route path="/event/*" element={<EventContainer api={api} />} />
                     <Route path="/request/:id" element={<RequestContainer api={api} />} />
                     <Route path="/new/request" element={<NewRequest api={api} user={user} />} />
                     <Route path="/new/event" element={<NewEvent api={api} user={user} />} />

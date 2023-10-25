@@ -19,6 +19,7 @@ const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                 multiline
                 sx={{}}
                 label={event.datetime.toLocaleString("pt-br")}
+                inputProps={{ style: { fontSize: "0.8vw" } }}
                 InputProps={{
                     readOnly: true,
                     sx: {
@@ -42,12 +43,12 @@ const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
 export const EventsBlock: React.FC<EventsBlockProps> = ({}) => {
     const { socket } = useWakeup()
     return (
-        <Paper sx={{ flexDirection: "column", height: "15vw", overflowY: "auto", bgcolor: "background.default", padding: "1vw" }}>
+        <Box sx={{ flexDirection: "column", overflowY: "auto", height: "20vw" }}>
             {socket.events
                 .sort((a, b) => b.datetime.getTime() - a.datetime.getTime())
                 .map((event) => (
                     <EventContainer key={event.datetime.getTime()} event={event} />
                 ))}
-        </Paper>
+        </Box>
     )
 }
