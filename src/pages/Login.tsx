@@ -14,6 +14,7 @@ import { useGoogle } from "../hooks/useGoogle"
 import { useIo } from "../hooks/useIo"
 import { useConfirmDialog } from "burgos-confirm"
 import { useNavigate } from "react-router-dom"
+import { useSnackbar } from "burgos-snackbar"
 
 interface LoginProps {}
 
@@ -27,6 +28,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
 
     const { login, googleLogin } = useUser()
     const { confirm } = useConfirmDialog()
+    const { snackbar } = useSnackbar()
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -53,12 +55,18 @@ export const Login: React.FC<LoginProps> = ({}) => {
     const handleGoogleButton = async () => {
         if (loading) return
 
-        if (electron) {
-            const tokens = await electron.ipcRenderer.invoke("google:auth")
-            io.emit("google:login", tokens.access_token)
-        } else {
-            setLoading(true)
-            google.login()
+        setLoading(true)
+        try {
+            if (electron) {
+                const tokens = await electron.ipcRenderer.invoke("google:auth")
+                io.emit("google:login", tokens.access_token)
+            } else {
+                google.login()
+            }
+        } catch (error) {
+            console.log(error)
+            snackbar({ severity: "error", text: "não foi possível autenticar com Google" })
+            setLoading(false)
         }
     }
 
