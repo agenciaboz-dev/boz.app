@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, IconButton, MenuItem, Paper, Tooltip, useMediaQuery } from "@mui/material"
+import { Box, Button, IconButton, MenuItem, Paper, SxProps, Tooltip, useMediaQuery } from "@mui/material"
 import { useWakeup } from "../../../hooks/useWakeup"
 import { useColors } from "../../../hooks/useColors"
 import { ApiContainer } from "./ApiContainer"
@@ -37,6 +37,8 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
     const { isRole } = useUser()
 
     const [electron] = useState(window.electron)
+
+    const noAccessStyle:SxProps = { gap: "0.5vw", padding: "2vw", alignItems: "center", height: "min-content" }
 
     return (
         <Box sx={{ ...backgroundStyle, height: isMobile ? "auto" : electron ? "90vh" : "10vw" }}>
@@ -104,13 +106,13 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
                                     </Box>
                                 </>
                             ) : (
-                                <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
+                                <Box sx={noAccessStyle}>
                                     <ErrorOutlineIcon color="primary" />
                                     <p>Essa ferramenta só está disponível para desenvolvedores.</p>
                                 </Box>
                             )
                         ) : (
-                            <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
+                            <Box sx={noAccessStyle}>
                                 <ErrorOutlineIcon color="primary" />
                                 <p>Essa ferramenta só está disponível através do APP.</p>
                             </Box>
