@@ -57,7 +57,9 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
         } catch (error: any) {
             console.log(error)
             setLoading(false)
-            setStatus(error.response?.status || 0)
+            formik.setFieldValue("response", "error connecting to the server")
+            setStatus(error.response?.status || 500)
+            setStatusText("error connecting to the server")
         }
     }
 
