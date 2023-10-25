@@ -28,6 +28,8 @@ export const useUser = () => {
 
     const isAdmin = () => user?.roles.map((role) => role.tag).includes("admin")
 
+    const isRole = (role: string) => !!user?.roles.find((item) => item.tag == role)
+
     const updateStatus = (status: number) => {
         if (!user) return
 
@@ -109,5 +111,6 @@ export const useUser = () => {
         logs,
         electron,
         googleLogin,
+        isRole,
     }
 }
