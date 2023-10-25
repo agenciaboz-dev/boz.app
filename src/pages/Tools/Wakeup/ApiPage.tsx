@@ -212,49 +212,50 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                         index
                         element={
                             formik.values ? (
-                                <Box sx={{ width: "100%", padding: "2vw 4vw" }}>
-                                    <Box sx={{ flexDirection: "column", width: isMobile ? "100%" : "90%", gap: isMobile ? "5vw" : "1vw" }}>
-                                        <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
-                                            <Box sx={{ alignItems: "center" }}>
-                                                Socket.io
-                                                <Switch name="socket" checked={api.socket} onChange={formik.handleChange} />
-                                                localhost
-                                                <Switch
-                                                    icon={<HouseSidingIcon />}
-                                                    checkedIcon={<HouseSidingIcon />}
-                                                    checked={localhost}
-                                                    onChange={(_, checked) => handleLocalhostChange(checked)}
-                                                />
-                                            </Box>
-                                            <Tooltip title={`Excluir ${formik.values.name}`} arrow>
-                                                <IconButton color="primary" onClick={handleDelete}>
-                                                    {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
-                                                </IconButton>
-                                            </Tooltip>
+                                <Box
+                                    sx={{
+                                        flexDirection: "column",
+                                        width: "100%",
+                                        gap: isMobile ? "5vw" : "1vw",
+                                        padding: "2vw 4vw",
+                                        paddingRight: "5vw",
+                                    }}
+                                >
+                                    <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
+                                        <Box sx={{ alignItems: "center" }}>
+                                            Socket.io
+                                            <Switch name="socket" checked={api.socket} onChange={formik.handleChange} />
+                                            localhost
+                                            <Switch
+                                                icon={<HouseSidingIcon />}
+                                                checkedIcon={<HouseSidingIcon />}
+                                                checked={localhost}
+                                                onChange={(_, checked) => handleLocalhostChange(checked)}
+                                            />
                                         </Box>
-                                        <Grid container spacing={1.5}>
-                                            <Grid item xs={9}>
-                                                <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
-                                            </Grid>
-                                            <Grid item xs={3}>
-                                                <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
-                                            </Grid>
-                                        </Grid>
-                                        <TaiTextField
-                                            label="Endereço base"
-                                            name="baseUrl"
-                                            value={formik.values.baseUrl}
-                                            onChange={formik.handleChange}
-                                        />
-                                        <TaiTextField
-                                            label="Descrição"
-                                            multiline
-                                            minRows={10}
-                                            name="description"
-                                            value={formik.values.description}
-                                            onChange={formik.handleChange}
-                                        />
+                                        <Tooltip title={`Excluir ${formik.values.name}`} arrow>
+                                            <IconButton color="primary" onClick={handleDelete}>
+                                                {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
+                                            </IconButton>
+                                        </Tooltip>
                                     </Box>
+                                    <Grid container spacing={1.5}>
+                                        <Grid item xs={9}>
+                                            <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                                        </Grid>
+                                        <Grid item xs={3}>
+                                            <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
+                                        </Grid>
+                                    </Grid>
+                                    <TaiTextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
+                                    <TaiTextField
+                                        label="Descrição"
+                                        multiline
+                                        minRows={10}
+                                        name="description"
+                                        value={formik.values.description}
+                                        onChange={formik.handleChange}
+                                    />
                                 </Box>
                             ) : (
                                 <></>
