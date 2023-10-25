@@ -109,11 +109,11 @@ export const EventContainer: React.FC<EventContainerProps> = ({ api }) => {
                 //overflow: "auto",
             }}
         >
-            <Title name={formik.values.name} />
-            <Box sx={{ justifyContent: "space-between" }}>
+            <Box sx={{ justifyContent: "space-between", alignItems: "center", color: "primary.main" }}>
                 <IconButton onClick={goBack}>
                     <ArrowBackIosNewIcon />
                 </IconButton>
+                <p style={{ fontWeight: "800", textAlign: "center" }}>{formik.values.name}</p>
                 <Tooltip title={`Excluir ${formik.values.name}`} arrow>
                     <IconButton color="primary" sx={{ color: "" }} onClick={handleDelete}>
                         {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
