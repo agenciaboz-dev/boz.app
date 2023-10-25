@@ -217,7 +217,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                         <Box sx={{ alignItems: "center", justifyContent: "space-between" }}>
                                             <Box sx={{ alignItems: "center" }}>
                                                 Socket.io
-                                                <Switch name="socket" defaultChecked={api.socket} value={api.socket} onChange={formik.handleChange} />
+                                                <Switch name="socket" checked={api.socket} onChange={formik.handleChange} />
                                                 localhost
                                                 <Switch
                                                     icon={<HouseSidingIcon />}
