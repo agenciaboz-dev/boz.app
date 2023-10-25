@@ -154,7 +154,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
                 <Grid container spacing={1.5}>
                     <Grid item xs={2}>
                         <TextField
-                            label="Método"
+                            label="method"
                             name="method"
                             value={formik.values.method}
                             onChange={formik.handleChange}
@@ -166,18 +166,18 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
                         </TextField>
                     </Grid>
                     <Grid item xs={4}>
-                        <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                        <TaiTextField label="name" name="name" value={formik.values.name} onChange={formik.handleChange} />
                     </Grid>
                     <Grid item xs={6}>
                         {" "}
-                        <TaiTextField label="Url" name="url" value={formik.values.url} onChange={formik.handleChange} />
+                        <TaiTextField label="endpoint" name="url" value={formik.values.url} onChange={formik.handleChange} />
                     </Grid>
                 </Grid>
 
                 <Box sx={{ flexDirection: "column", gap: "1vw", alignItems: "space-between" }}>
                     {formik.values.method != "GET" && (
                         <TaiTextField
-                            label="Payload"
+                            label="payload"
                             name="payload"
                             value={formik.values.payload}
                             onChange={formik.handleChange}
@@ -190,7 +190,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
                         {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
                     </Button>
                     <TaiTextField
-                        label="Response"
+                        label="response"
                         name="response"
                         value={formik.values.response}
                         onChange={formik.handleChange}

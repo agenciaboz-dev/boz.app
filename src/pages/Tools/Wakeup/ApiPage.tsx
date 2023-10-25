@@ -241,15 +241,15 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                     </Box>
                                     <Grid container spacing={1.5}>
                                         <Grid item xs={9}>
-                                            <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                                            <TaiTextField label="name" name="name" value={formik.values.name} onChange={formik.handleChange} />
                                         </Grid>
                                         <Grid item xs={3}>
-                                            <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
+                                            <TaiTextField label="port" name="port" value={formik.values.port} onChange={formik.handleChange} />
                                         </Grid>
                                     </Grid>
-                                    <TaiTextField label="Endereço base" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
+                                    <TaiTextField label="base url" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
                                     <TaiTextField
-                                        label="Descrição"
+                                        label="comments"
                                         multiline
                                         minRows={10}
                                         name="description"
