@@ -59,7 +59,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
         try {
             if (electron) {
                 const code = await electron.ipcRenderer.invoke("google:auth")
-                console.log(code)
+                console.log({ code })
                 io.emit("google:exchange", code)
             } else {
                 google.login()

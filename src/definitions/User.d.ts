@@ -17,6 +17,7 @@ declare interface User {
     connected?: boolean
 
     googleId?: string
+    googleToken?: string
 }
 
 interface LoginForm {
