@@ -23,6 +23,8 @@ export const useMenuList = () => {
     const { user } = useUser()
     const warnings = useWarnings()
 
+    const electron = window.electron
+
     const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
         "& .MuiBadge-badge": {
             right: "0.2vw",
@@ -92,9 +94,9 @@ export const useMenuList = () => {
         {
             id: 7,
             name: "Agenda",
-            path: "/agenda",
+            path: "/calendar",
             icon: <CalendarMonthIcon />,
-            onClick: () => navigate("/agenda"),
+            onClick: () => navigate("/calendar"),
             admin: true,
         },
         {
@@ -121,7 +123,7 @@ export const useMenuList = () => {
                 {
                     id: 3,
                     icon: <BrowserUpdatedIcon />,
-                    name: "Atualizar",
+                    name: electron ? "Atualizar" : "Baixar App",
                     path: "/update",
                     onClick: () => navigate("/tools/update"),
                 },
