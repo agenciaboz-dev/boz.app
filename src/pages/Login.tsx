@@ -58,8 +58,9 @@ export const Login: React.FC<LoginProps> = ({}) => {
         setLoading(true)
         try {
             if (electron) {
-                const tokens = await electron.ipcRenderer.invoke("google:auth")
-                io.emit("google:login", tokens.access_token)
+                const code = await electron.ipcRenderer.invoke("google:auth")
+                console.log(code)
+                io.emit("google:exchange", code)
             } else {
                 google.login()
             }
