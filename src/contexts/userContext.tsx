@@ -155,6 +155,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             io.on("log:status:sync", (logs: StatusLog[]) => {
                 setStatusLogs(logs)
             })
+
+            if (user.googleToken) {
+                io.emit("google:calendar", user.googleToken)
+            }
         }
 
         return () => {

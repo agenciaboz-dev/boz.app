@@ -11,6 +11,7 @@ import { Users } from "./pages/Users"
 import { Tools } from "./pages/Tools"
 import { CheckElectronVersion } from "./components/CheckElectronVersion"
 import { Warnings } from "./pages/Warnings"
+import { Calendar } from "./pages/Calendar"
 
 interface RoutesProps {}
 
@@ -29,6 +30,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
                 <Route path="/users/*" element={<Users user={user} />} />
                 <Route path="/tools/*" element={<Tools user={user} />} />
                 <Route path="/admin/*" element={<Admin user={user} />} />
+                <Route path="/calendar/*" element={<Calendar user={user} />} />
                 <Route path="*" element={<WildCard />} />
             </ReactRoutes>
         </>
