@@ -94,12 +94,12 @@ export const ZapProvider: React.FC<ZapProviderProps> = ({ children }) => {
     }, [chats, currentChat])
 
     useEffect(() => {
-        console.log({ qrcode })
+        // console.log({ qrcode })
     }, [qrcode])
 
     useEffect(() => {
         io.on("zap:qrcode", (code) => {
-            console.log(code)
+            // console.log(code)
             setQrcode(code)
         })
 
