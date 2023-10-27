@@ -31,7 +31,7 @@ export const DayContainer: React.FC<DayContainerProps> = ({ day, events, meeting
                     fontSize: "0.7vw",
                     flexDirection: "column",
                     alignItems: "center",
-                    outline: `1px solid ${colors.text.secondary}`,
+                    outline: `1px solid ${colors.primary}`,
                     padding: "0.5vw",
                     color: isToday ? "secondary.main" : "text.secondary",
                     gap: "0.5vw",
