@@ -34,23 +34,26 @@ export const DayContainer: React.FC<DayContainerProps> = ({ day, events, meeting
                     outline: `1px solid ${colors.primary}`,
                     padding: "0.5vw",
                     color: isToday ? "secondary.main" : "text.secondary",
-                    gap: "0.5vw",
+                    gap: "0.1vw",
                     overflowY: "auto",
                     bgcolor: isToday ? "background.paper" : "",
                     fontWeight: isToday ? "bold" : "",
+                    borderRadius: "0 2.5vw ",
                 }}
             >
                 <Box
                     sx={{
-                        border: `1px solid ${isToday ? colors.secondary : colors.text.secondary}`,
-                        borderRadius: "100%",
+                        border: `1px solid ${isToday ? colors.secondary : colors.text.primary}`,
+                        borderRadius: "50%",
                         padding: "0.3vw",
                         minWidth: "1.5vw",
                         alignItems: "center",
                         justifyContent: "center",
+                        height: "1.5vw",
+                        width: "1.5vw",
                     }}
                 >
-                    <p>{day}</p>
+                    <p style={{ color: isToday ? colors.secondary : colors.text.primary }}>{day}</p>
                 </Box>
 
                 <Box sx={{ flexDirection: "column", width: "100%" }}>

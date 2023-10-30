@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Grid, Paper } from "@mui/material"
+import { Box, Grid, Pagination, Paper } from "@mui/material"
 import { DayContainer } from "./DayContainer"
 import { useArray } from "burgos-array"
 import formatDate from "../../tools/formatDate"
@@ -54,13 +54,21 @@ export const CalendarContainer: React.FC<CalendarContainerProps> = ({ calendar }
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", gap: "1vw", padding: "2vw", color: "primary.main" }}>
+        <Box sx={{ flexDirection: "column", gap: "1vw", padding: "1vw", color: "primary.main" }}>
             <p>{calendar.summary}</p>
-            <Paper sx={{ flexDirection: "column", padding: "1vw 2vw", bgcolor: "background.default", height: "80vh" }}>
+            <Paper
+                sx={{
+                    flexDirection: "column",
+                    padding: "1vw 2vw",
+                    bgcolor: "background.default",
+                    height: "86vh",
+                    borderRadius: "0 3vw 0 0",
+                }}
+            >
                 <Box sx={{ justifyContent: "center", alignItems: "center", width: "100%" }}>
-                    <Grid container spacing={0} sx={{}} columns={7}>
+                    <Grid container spacing={1} sx={{}} columns={7}>
                         {newArray(7).map((day) => (
-                            <Grid key={day} item xs={1} sx={{ justifyContent: "center", marginBottom: "0.5vw", fontWeight: "bold" }}>
+                            <Grid key={day} item xs={1} sx={{ justifyContent: "center", fontWeight: "bold" }}>
                                 {formatDate.weekDay(day)}
                             </Grid>
                         ))}
