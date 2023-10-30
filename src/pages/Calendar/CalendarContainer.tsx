@@ -62,11 +62,11 @@ export const CalendarContainer: React.FC<CalendarContainerProps> = ({ calendar }
             <Box sx={{ paddingLeft: "1vw", flexDirection: "row", width: "100%", alignItems: "center" }}>
                 <p style={{ textAlign: "start", width: "50%", textDecoration: "underline" }}>{calendar.summary}</p>
                 <Box sx={{ width: "60%", flexDirection: "row", alignItems: "center", gap: "4vw" }}>
-                    <IconButton>
+                    <IconButton onClick={() => {}}>
                         <ArrowBackIosNewIcon sx={{ color: "primary.main" }} />
                     </IconButton>
                     <p style={{ textAlign: "start", fontWeight: "800", fontSize: "1.5vw" }}>{monthName(currentMonth)}</p>
-                    <IconButton>
+                    <IconButton onClick={() => {}}>
                         <ArrowForwardIosIcon sx={{ color: "primary.main" }} />
                     </IconButton>
                 </Box>
