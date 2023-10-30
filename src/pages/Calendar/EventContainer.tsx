@@ -1,5 +1,5 @@
 import React from "react"
-import { Box } from "@mui/material"
+import { Box, Tooltip } from "@mui/material"
 import { useColors } from "../../hooks/useColors"
 
 interface EventContainerProps {
@@ -8,9 +8,11 @@ interface EventContainerProps {
 
 export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
     return (
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             <Box>
-                <p>{event.summary}</p>
+                <Tooltip title={event.summary} arrow>
+                    <p style={{ whiteSpace: "nowrap" }}>{event.summary}</p>
+                </Tooltip>
             </Box>
         </Box>
     )

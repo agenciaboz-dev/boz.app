@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { Box, Grid, Pagination, Paper } from "@mui/material"
+import { Box, Grid, IconButton, Pagination, Paper } from "@mui/material"
 import { DayContainer } from "./DayContainer"
 import { useArray } from "burgos-array"
 import formatDate from "../../tools/formatDate"
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew"
 
 interface CalendarContainerProps {
     calendar: Calendar
 }
 
 export const CalendarContainer: React.FC<CalendarContainerProps> = ({ calendar }) => {
+    const { monthName } = formatDate
+
     const currentDate = new Date()
     const currentMonth = currentDate.getMonth()
     const currentYear = currentDate.getFullYear()
@@ -54,8 +58,19 @@ export const CalendarContainer: React.FC<CalendarContainerProps> = ({ calendar }
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", gap: "1vw", padding: "1vw", color: "primary.main" }}>
-            <p>{calendar.summary}</p>
+        <Box sx={{ flexDirection: "column", gap: "0.5vw", padding: "0.5vw", color: "primary.main" }}>
+            <Box sx={{ paddingLeft: "1vw", flexDirection: "row", width: "100%", alignItems: "center" }}>
+                <p style={{ textAlign: "start", width: "50%", textDecoration: "underline" }}>{calendar.summary}</p>
+                <Box sx={{ width: "60%", flexDirection: "row", alignItems: "center", gap: "4vw" }}>
+                    <IconButton>
+                        <ArrowBackIosNewIcon sx={{ color: "primary.main" }} />
+                    </IconButton>
+                    <p style={{ textAlign: "start", fontWeight: "800", fontSize: "1.5vw" }}>{monthName(currentMonth)}</p>
+                    <IconButton>
+                        <ArrowForwardIosIcon sx={{ color: "primary.main" }} />
+                    </IconButton>
+                </Box>
+            </Box>
             <Paper
                 sx={{
                     flexDirection: "column",
