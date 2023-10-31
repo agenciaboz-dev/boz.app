@@ -4,8 +4,8 @@ export const useColors = () => {
     const { darkMode } = useDarkMode()
 
     return {
-        primary: darkMode ? "#8CDCFE" : "#00AFEF",
-        secondary: darkMode ? "#ffffff" : "#ffffff",
+        primary: darkMode ? "#FF8C00" : "#00AFEF",
+        secondary: darkMode ? "#ffbd5c" : "#ffffff",
         terciary: darkMode ? "#D9D9D9" : "#1F1F1F",
 
         success: "#34A853",
@@ -18,7 +18,7 @@ export const useColors = () => {
         },
 
         text: {
-            primary: darkMode ? "#8CDCFE" : "#00AFEF",
+            primary: darkMode ? "#FF8C00" : "#00AFEF",
             secondary: darkMode ? "#D9D9D9" : "#1F1F1F",
             terciary: darkMode ? "#0078D4" : "#ffffff",
         },
