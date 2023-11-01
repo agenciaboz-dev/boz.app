@@ -12,7 +12,7 @@ export const useMuiTheme = () => {
             fontFamily: ["Montserrat", "Futura Medium BT"].join(","),
         },
         palette: {
-            mode: "dark",
+            mode: darkMode ? "dark" : "light",
 
             primary: {
                 main: colors.primary,
