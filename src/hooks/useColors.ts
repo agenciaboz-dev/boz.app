@@ -1,8 +1,7 @@
 import { useDarkMode } from "./useDarkMode"
 
 export const useColors = () => {
-    // const { darkMode } = useDarkMode()
-    const darkMode = true
+    const { darkMode } = useDarkMode()
 
     return {
         primary: darkMode ? "#FF8C00" : "#00AFEF",
