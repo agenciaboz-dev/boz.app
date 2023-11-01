@@ -97,7 +97,6 @@ export const useMenuList = () => {
             path: "/calendar",
             icon: <CalendarMonthIcon />,
             onClick: () => navigate("/calendar"),
-            admin: true,
         },
         {
             id: 8,
