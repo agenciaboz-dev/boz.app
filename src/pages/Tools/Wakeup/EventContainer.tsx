@@ -12,7 +12,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ api }) => {
     const [fullscreenSocket, setFullscreenSocket] = useState(false)
     
     return (
-        <Box sx={{ flexDirection: "column", paddingRight: "1vw", flex: 1 }}>
+        <Box sx={{ flexDirection: "column", paddingRight: "1vw", flex: 0.8 }}>
             <Routes>
                 <Route path="/:id" element={<Event api={api} fullscreenSocket={fullscreenSocket} />} />
             </Routes>

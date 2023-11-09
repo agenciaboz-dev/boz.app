@@ -123,22 +123,22 @@ export const Event: React.FC<EventProps> = ({ api, fullscreenSocket }) => {
             </Box>
             <Grid container spacing={1.5}>
                 <Grid item xs={6}>
-                    <TaiTextField label="name" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                    <TaiTextField label="Name" name="name" value={formik.values.name} onChange={formik.handleChange} />
                 </Grid>
                 <Grid item xs={6}>
-                    <TaiTextField label="event" name="event" value={formik.values.event} onChange={formik.handleChange} />
+                    <TaiTextField label="Event" name="event" value={formik.values.event} onChange={formik.handleChange} />
                 </Grid>
             </Grid>
 
             <Box sx={{ flexDirection: "column", gap: "1vw", alignItems: "space-between" }}>
                 <TaiTextField
-                    label="message"
+                    label="Message"
                     name="payload"
                     value={formik.values.payload}
                     onChange={formik.handleChange}
                     multiline
                     minRows={4}
-                    maxRows={4}
+                    maxRows={13}
                     onBlur={handlePayloadBlur}
                 />
 
