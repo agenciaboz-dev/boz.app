@@ -235,21 +235,40 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                         </Box>
                                         <Tooltip title={`Excluir ${formik.values.name}`} arrow>
                                             <IconButton color="primary" onClick={handleDelete}>
-                                                {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
+                                                {deleting ? (
+                                                    <CircularProgress color="error" size="1.5rem" />
+                                                ) : (
+                                                    <DeleteForever />
+                                                )}
                                             </IconButton>
                                         </Tooltip>
                                     </Box>
                                     <Grid container spacing={1.5}>
                                         <Grid item xs={9}>
-                                            <TaiTextField label="name" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                                            <TaiTextField
+                                                label="Name"
+                                                name="name"
+                                                value={formik.values.name}
+                                                onChange={formik.handleChange}
+                                            />
                                         </Grid>
                                         <Grid item xs={3}>
-                                            <TaiTextField label="port" name="port" value={formik.values.port} onChange={formik.handleChange} />
+                                            <TaiTextField
+                                                label="Porta"
+                                                name="port"
+                                                value={formik.values.port}
+                                                onChange={formik.handleChange}
+                                            />
                                         </Grid>
                                     </Grid>
-                                    <TaiTextField label="base url" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
                                     <TaiTextField
-                                        label="comments"
+                                        label="Base url"
+                                        name="baseUrl"
+                                        value={formik.values.baseUrl}
+                                        onChange={formik.handleChange}
+                                    />
+                                    <TaiTextField
+                                        label="Comments"
                                         multiline
                                         minRows={10}
                                         name="description"

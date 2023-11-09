@@ -53,19 +53,31 @@ export const NewEvent: React.FC<NewEventProps> = ({ user, api }) => {
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "77%", gap: "2vw", padding: "0vw 0vw" }}>
+        <Box sx={{ flexDirection: "column", width: "80%", gap: "2vw", padding: "2vw 4vw" }}>
             <Title name="New event" />
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={1.5}>
                     <Grid item xs={6}>
-                        <TaiTextField label="nome" name="name" value={formik.values.name} onChange={formik.handleChange} required />
+                        <TaiTextField
+                            label="Nome"
+                            name="name"
+                            value={formik.values.name}
+                            onChange={formik.handleChange}
+                            required
+                        />
                     </Grid>
+
                     <Grid item xs={6}>
-                        <TaiTextField label="evento" name="event" value={formik.values.event} onChange={formik.handleChange} />
+                        <TaiTextField
+                            label="Evento"
+                            name="event"
+                            value={formik.values.event}
+                            onChange={formik.handleChange}
+                        />
                     </Grid>
                 </Grid>
                 <TaiTextField
-                    label="message"
+                    label="Message"
                     name="payload"
                     value={formik.values.payload}
                     onChange={formik.handleChange}
