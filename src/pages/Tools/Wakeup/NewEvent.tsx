@@ -53,7 +53,7 @@ export const NewEvent: React.FC<NewEventProps> = ({ user, api }) => {
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "80%", gap: "2vw", padding: "2vw 4vw" }}>
+        <Box sx={{ flexDirection: "column", width: "100%", gap: "1vw", padding: "2vw 4vw" }}>
             <Title name="New event" />
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={1.5}>
