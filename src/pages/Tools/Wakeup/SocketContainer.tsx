@@ -34,7 +34,17 @@ export const SocketContainer: React.FC<SocketContainerProps> = ({ api, fullscree
     }, [])
 
     return (
-        <Paper sx={{ flexDirection: "column", bgcolor: "background.default", width: "100%", flex: 1, padding: "vw" }}>
+        <Paper
+            sx={{
+                flexDirection: "column",
+
+                bgcolor: "background.default",
+                width: "98%",
+                height: fullscreenSocket ? "45vw" : "21vw",
+                padding: "1vw",
+            }}
+            elevation={0}
+        >
             {socket.connected == api.id ? (
                 <Box sx={{ flexDirection: "column" }}>
                     <Box sx={{ gap: "1vw", alignItems: "center", justifyContent: "space-between" }}>
@@ -49,7 +59,7 @@ export const SocketContainer: React.FC<SocketContainerProps> = ({ api, fullscree
                             </IconButton>
                         </Box>
                     </Box>
-                    <Box sx={{ flexDirection: "column", height: fullscreenSocket ? "40vw" : "20vw" }}>
+                    <Box sx={{ flexDirection: "column", height: fullscreenSocket ? "40vw" : "16vw" }}>
                         <EventsBlock />
                     </Box>
                 </Box>

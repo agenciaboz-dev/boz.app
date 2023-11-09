@@ -124,11 +124,11 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                                 height: "5vw",
                                 flexWrap: "wrap",
                                 maxHeight: "3vw",
-                                overflow: "hidden",
+
                                 textOverflow: "ellipsis",
                             }}
                         >
-                            <p style={{ fontSize: "0.9vw", color: colors.secondary, textAlign: "justify" }}>
+                            <p style={{ fontSize: "0.9vw", height: "3vw", color: colors.secondary, textAlign: "justify" }}>
                                 {event.description}
                             </p>
                         </Box>

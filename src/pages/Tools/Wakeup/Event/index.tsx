@@ -106,6 +106,7 @@ export const Event: React.FC<EventProps> = ({ api, fullscreenSocket }) => {
                 width: "100%",
                 gap: isMobile ? "5vw" : "1vw",
                 padding: "2vw",
+                paddingLeft: "1vw",
                 //overflow: "auto",
                 display: fullscreenSocket ? "none" : "",
             }}
@@ -130,7 +131,13 @@ export const Event: React.FC<EventProps> = ({ api, fullscreenSocket }) => {
                 </Grid>
             </Grid>
 
-            <Box sx={{ flexDirection: "column", gap: "1vw", alignItems: "space-between" }}>
+            <Box
+                sx={{
+                    flexDirection: "column",
+                    gap: "1vw",
+                    alignItems: "space-between",
+                }}
+            >
                 <TaiTextField
                     label="Message"
                     name="payload"
@@ -138,7 +145,7 @@ export const Event: React.FC<EventProps> = ({ api, fullscreenSocket }) => {
                     onChange={formik.handleChange}
                     multiline
                     minRows={4}
-                    maxRows={13}
+                    maxRows={10}
                     onBlur={handlePayloadBlur}
                 />
 

@@ -20,6 +20,8 @@ const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                 sx={{}}
                 label={event.datetime.toLocaleString("pt-br")}
                 inputProps={{ style: { fontSize: "0.8vw" } }}
+                minRows={5}
+                maxRows={15}
                 InputProps={{
                     readOnly: true,
                     sx: {
@@ -29,7 +31,13 @@ const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                         gap: "1vw",
                     },
                     startAdornment: (
-                        <Box sx={{ alignItems: "center", gap: "0.5vw", color: "text.primary" }}>
+                        <Box
+                            sx={{
+                                alignItems: "center",
+                                gap: "0.5vw",
+                                color: "text.primary",
+                            }}
+                        >
                             {event.incoming ? <Download color="warning" /> : <Upload color="success" />}
                             <p style={{ fontWeight: "bold" }}>{event.event}</p>
                         </Box>
