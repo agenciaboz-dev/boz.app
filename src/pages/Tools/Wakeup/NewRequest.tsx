@@ -48,7 +48,7 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api }) => {
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "77%", gap: "2vw", padding: "0vw 0vw" }}>
+        <Box sx={{ flexDirection: "column", width: "99%", gap: "2vw", padding: "2vw " }}>
             <Title name="New request" />
             <Box sx={{ flexDirection: "column", gap: "1vw" }}>
                 <form onSubmit={formik.handleSubmit}>
@@ -67,7 +67,12 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api }) => {
                             </TextField>
                         </Grid>
                         <Grid item xs={9}>
-                            <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                            <TaiTextField
+                                label="Nome"
+                                name="name"
+                                value={formik.values.name}
+                                onChange={formik.handleChange}
+                            />
                         </Grid>
                     </Grid>
                     <TaiTextField label="Url" name="url" value={formik.values.url} onChange={formik.handleChange} />

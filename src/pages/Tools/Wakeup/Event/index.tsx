@@ -105,7 +105,7 @@ export const Event: React.FC<EventProps> = ({ api, fullscreenSocket }) => {
                 flexDirection: "column",
                 width: "100%",
                 gap: isMobile ? "5vw" : "1vw",
-                padding: "1vw",
+                padding: "2vw",
                 //overflow: "auto",
                 display: fullscreenSocket ? "none" : "",
             }}

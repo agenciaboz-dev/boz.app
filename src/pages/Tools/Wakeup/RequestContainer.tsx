@@ -1,5 +1,16 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Box, Button, CircularProgress, Grid, IconButton, MenuItem, TextField, Tooltip, useMediaQuery } from "@mui/material"
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Grid,
+    IconButton,
+    MenuItem,
+    SxProps,
+    TextField,
+    Tooltip,
+    useMediaQuery,
+} from "@mui/material"
 import { useFormik } from "formik"
 import { useIo } from "../../../hooks/useIo"
 import { useWakeup } from "../../../hooks/useWakeup"
@@ -21,7 +32,11 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
     const io = useIo()
     const id = Number(useParams().id)
     const request = api.requests.find((item) => item.id == id)!
-    const formik = useFormik({ initialValues: request!, onSubmit: (values) => console.log(values), enableReinitialize: true })
+    const formik = useFormik({
+        initialValues: request!,
+        onSubmit: (values) => console.log(values),
+        enableReinitialize: true,
+    })
     const wakeup = useWakeup()
     const navigate = useNavigate()
     const { confirm } = useConfirmDialog()
@@ -36,6 +51,19 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
     const [status, setStatus] = useState(0)
     const [statusText, setStatusText] = useState("")
 
+    const customScrollbar: SxProps = {
+        "&::-webkit-scrollbar": {
+            width: "0.5vw", // Largura da barra de rolagem
+        },
+        "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "primary.main", // Cor do polegar da barra de rolagem
+            borderRadius: "6px", // Raio da borda do polegar
+        },
+        "&::-webkit-scrollbar-track": {
+            backgroundColor: "#f1f1f1", // Cor da faixa da barra de rolagem
+            borderRadius: "6px", // Raio da borda da faixa
+        },
+    }
     const handleSend = async () => {
         if (loading) return
 
@@ -111,148 +139,146 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
         }
     }, [formik.values])
 
-        useEffect(() => {
-            if (formik.values?.method != "GET") {
-                try {
-                    JSON.parse(formik.values.payload)
-                    setJsonPayload(true)
-                } catch {
-                    setJsonPayload(false)
-                }
+    useEffect(() => {
+        if (formik.values?.method != "GET") {
+            try {
+                JSON.parse(formik.values.payload)
+                setJsonPayload(true)
+            } catch {
+                setJsonPayload(false)
             }
-        }, [formik.values?.payload])
+        }
+    }, [formik.values?.payload])
 
-        useEffect(() => {
-            io.on("wakeup:request:delete:success", () => {
-                goBack()
-            })
+    useEffect(() => {
+        io.on("wakeup:request:delete:success", () => {
+            goBack()
+        })
 
-            return () => {
-                io.off("wakeup:request:delete:success")
-            }
-        }, [])
+        return () => {
+            io.off("wakeup:request:delete:success")
+        }
+    }, [])
 
-        return formik.values ? (
+    return formik.values ? (
+        <Box
+            sx={{
+                flexDirection: "column",
+                width: "98%",
+                gap: isMobile ? "5vw" : "0vw",
+                //overflow: "auto",
+                padding: "1vw ",
+            }}
+        >
+            <Box sx={{ justifyContent: "space-between", alignItems: "center" }}>
+                <IconButton onClick={goBack}>
+                    <ArrowBackIosNewIcon />
+                </IconButton>
+                <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{formik.values.name}</p>
+                <Tooltip title={`Excluir ${formik.values.name}`} arrow>
+                    <IconButton color="primary" sx={{ color: "" }} onClick={handleDelete}>
+                        {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
+                    </IconButton>
+                </Tooltip>
+            </Box>
             <Box
                 sx={{
                     flexDirection: "column",
                     width: "98%",
+                    height: "39vw",
                     gap: isMobile ? "5vw" : "1vw",
-                    //overflow: "auto",
-                    padding: "1vw 2vw 1vw 2vw",
+                    padding: "1vw",
                 }}
             >
-                <Box sx={{ justifyContent: "space-between", alignItems: "center" }}>
-                    <IconButton onClick={goBack}>
-                        <ArrowBackIosNewIcon />
-                    </IconButton>
-                    <p style={{ fontWeight: "800", color: colors.primary, textAlign: "center" }}>{formik.values.name}</p>
-                    <Tooltip title={`Excluir ${formik.values.name}`} arrow>
-                        <IconButton color="primary" sx={{ color: "" }} onClick={handleDelete}>
-                            {deleting ? <CircularProgress size="1.5rem" color="error" /> : <DeleteForever />}
-                        </IconButton>
-                    </Tooltip>
-                </Box>
+                <Grid container spacing={1.5}>
+                    <Grid item xs={2}>
+                        <TextField
+                            label="Method"
+                            name="method"
+                            value={formik.values.method}
+                            onChange={formik.handleChange}
+                            sx={textFieldStyle}
+                            select
+                        >
+                            <MenuItem value="GET">GET</MenuItem>
+                            <MenuItem value="POST">POST</MenuItem>
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TaiTextField label="Name" name="name" value={formik.values.name} onChange={formik.handleChange} />
+                    </Grid>
+                    <Grid item xs={6}>
+                        {" "}
+                        <TaiTextField label="Endpoint" name="url" value={formik.values.url} onChange={formik.handleChange} />
+                    </Grid>
+                </Grid>
                 <Box
                     sx={{
                         flexDirection: "column",
-                        width: "98%",
-                        height: "37vw",
-                        gap: isMobile ? "5vw" : "1vw",
-                        padding: "1vw",
+                        gap: "1vw",
+                        alignItems: "space-between",
+                        overflow: "auto",
+                        padding: "1vw 0",
+                        height: "34vw",
+                        ...customScrollbar,
                     }}
                 >
-                    <Grid container spacing={1.5}>
-                        <Grid item xs={2}>
-                            <TextField
-                                label="Method"
-                                name="method"
-                                value={formik.values.method}
-                                onChange={formik.handleChange}
-                                sx={textFieldStyle}
-                                select
-                            >
-                                <MenuItem value="GET">GET</MenuItem>
-                                <MenuItem value="POST">POST</MenuItem>
-                            </TextField>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <TaiTextField
-                                label="Name"
-                                name="name"
-                                value={formik.values.name}
-                                onChange={formik.handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            {" "}
-                            <TaiTextField
-                                label="Endpoint"
-                                name="url"
-                                value={formik.values.url}
-                                onChange={formik.handleChange}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Box
-                        sx={{
-                            flexDirection: "column",
-                            gap: "1vw",
-                            alignItems: "space-between",
-                            overflow: "auto",
-                            padding: "1vw 0",
-                            height: "32vw",
-                        }}
-                    >
-                        {formik.values.method != "GET" && (
-                            <TaiTextField
-                                label="Payload"
-                                name="payload"
-                                value={formik.values.payload}
-                                onChange={formik.handleChange}
-                                multiline
-                                minRows={5}
-                                maxRows={15}
-                                onBlur={handlePayloadBlur}
-                            />
-                        )}
-                        <Button
-                            variant="contained"
-                            sx={{ color: "secondary.main" }}
-                            onClick={handleSend}
-                            fullWidth
-                            disabled={!jsonPayload}
-                        >
-                            {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
-                        </Button>
+                    {formik.values.method != "GET" && (
                         <TaiTextField
-                            label="Response"
-                            name="response"
-                            value={formik.values.response}
+                            label="Payload"
+                            name="payload"
+                            value={formik.values.payload}
                             onChange={formik.handleChange}
                             multiline
-                            minRows={4}
-                            maxRows={formik.values.method != "GET" ? 11 : 25}
-                            InputProps={{
-                                readOnly: true,
-                                sx: {},
-                            }}
-                            sx={
-                                {
-                                    // overflowY: "auto",
-                                    // maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "10vw" : "19vw",
-                                }
-                            }
+                            minRows={5}
+                            maxRows={15}
+                            onBlur={handlePayloadBlur}
                         />
-                    </Box>
+                    )}
+                    <Button
+                        variant="contained"
+                        sx={{ color: "secondary.main" }}
+                        onClick={handleSend}
+                        fullWidth
+                        disabled={!jsonPayload}
+                    >
+                        {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
+                    </Button>
+                    <TaiTextField
+                        label="Response"
+                        name="response"
+                        value={formik.values.response}
+                        onChange={formik.handleChange}
+                        multiline
+                        minRows={4}
+                        maxRows={formik.values.method != "GET" ? 11 : 25}
+                        InputProps={{
+                            readOnly: true,
+                            sx: {},
+                        }}
+                        sx={
+                            {
+                                // overflowY: "auto",
+                                // maxHeight: isMobile ? "auto" : formik.values.method != "GET" ? "10vw" : "19vw",
+                            }
+                        }
+                    />
                 </Box>
+            </Box>
+            <Box sx={{ padding: "0 2vw 0 1vw ", width: "100%" }}>
                 <Tooltip title={statusText}>
-                    <Button variant="contained" disabled={!status} color={wakeup.statusCodeColor(status)}>
+                    <Button
+                        variant="contained"
+                        sx={{ width: "100%" }}
+                        disabled={!status}
+                        color={wakeup.statusCodeColor(status)}
+                    >
                         {status || "status"}
                     </Button>
                 </Tooltip>
             </Box>
-        ) : (
-            <></>
-        )
+        </Box>
+    ) : (
+        <></>
+    )
 }

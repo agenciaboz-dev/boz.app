@@ -217,7 +217,7 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                         flexDirection: "column",
                                         width: "100%",
                                         gap: isMobile ? "5vw" : "1vw",
-                                        padding: "2vw 4vw",
+                                        padding: "2vw 2vw",
                                         paddingRight: "5vw",
                                     }}
                                 >

@@ -51,7 +51,7 @@ export const NewApi: React.FC<NewApiProps> = ({ user }) => {
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "99%", gap: "2vw", padding: "4vw" }}>
+        <Box sx={{ flexDirection: "column", width: "99%", gap: "2vw", padding: "2vw" }}>
             <form onSubmit={formik.handleSubmit}>
                 <Title name="Dados da API" />
                 <Grid container spacing={1.5}>
