@@ -1,10 +1,10 @@
 #!/bin/bash
 
-user="agenciaboz"
-subdomain="app.agenciaboz.com.br"
+user="agencyboz.com"
+subdomain="app.agencyboz.com"
 path="/home/${user}/${subdomain}"
 
 npx vite build
 echo 'Uploading build to server'
-scp -r -P 22022 dist/* agenciaboz:${path}
-ssh -p 22022 agenciaboz "chown -R ${user}:${user} ${path}/*"
+scp -r dist/* root@agencyboz:${path}
+# ssh -p 22022 agenciaboz "chown -R ${user}:${user} ${path}/*"
