@@ -158,7 +158,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                 <p
                     style={{
                         cursor: "pointer",
-                        color: isHovered ? colors.primary : "black",
+                        color: isHovered ? colors.primary : colors.text.secondary,
                         width: "97%",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",

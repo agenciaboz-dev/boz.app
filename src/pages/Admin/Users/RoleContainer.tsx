@@ -35,6 +35,7 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
             <Box sx={{ flexDirection: "column", bgcolor: "background.default", gap: "0.5vw", height: "100%", overflowY: "auto" }}>
                 {connectedUsers.map((user) => (
                     <UserCard key={user.id} user={user} />
+                    
                 ))}
                 {nonConnectedUsers.map((user) => (
                     <UserCard key={user.id} user={user} />
