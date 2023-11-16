@@ -79,6 +79,7 @@ export const CalendarContainer: React.FC<CalendarContainerProps> = ({ calendar }
                     height: "86vh",
                     borderRadius: "0 3vw 0 0",
                 }}
+                elevation={5}
             >
                 <Box sx={{ justifyContent: "center", alignItems: "center", width: "100%" }}>
                     <Grid container spacing={1} sx={{}} columns={7}>
