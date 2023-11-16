@@ -1,8 +1,9 @@
 import React, { useState } from "react"
-import { Box, Button, Dialog, DialogContent, Paper, Popper, Tooltip, Typography } from "@mui/material"
+import { Box, Button, Dialog, DialogContent, IconButton, Modal, Paper, Popper, Tooltip, Typography } from "@mui/material"
 import { useColors } from "../../hooks/useColors"
 import formatDate from "../../tools/formatDate"
 import AddIcon from "@mui/icons-material/Add"
+import CloseIcon from "@mui/icons-material/Close"
 
 interface EventContainerProps {
     event: Event
@@ -12,6 +13,15 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
     const colors = useColors()
     const { monthName } = formatDate
     const [open, setOpen] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+
+    const handleOpenModal = () => {
+        setOpenModal(true)
+        setOpen(false)
+
+        return open
+    }
+    const handleCloseModal = () => setOpenModal(false)
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const [isHovered, setIsHovered] = useState(false)
@@ -42,8 +52,6 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
     return (
         <Box>
             <Tooltip
-                onOpen={() => setOpen(true)}
-                onClose={() => setOpen(false)}
                 title={
                     <Paper
                         elevation={4}
@@ -113,7 +121,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                                         textAlign: "justify",
 
                                         display: "-webkit-box",
-                                        WebkitLineClamp: 3, // Número de linhas que você quer mostrar antes do ellipsis
+                                        WebkitLineClamp: 3,
                                         WebkitBoxOrient: "vertical",
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
@@ -133,6 +141,9 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                                         fontSize: "0.8vw",
                                         fontWeight: "400",
                                     }}
+                                    onClick={() => {
+                                        handleOpenModal()
+                                    }}
                                 >
                                     Mais informações
                                 </p>
@@ -141,7 +152,7 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                     </Paper>
                 }
                 slotProps={{ tooltip: { sx: { bgcolor: "transparent", p: 0 } }, arrow: { sx: { color: colors.primary } } }}
-                placement="right-start"
+                placement="bottom"
                 arrow
             >
                 <p
@@ -153,13 +164,61 @@ export const EventContainer: React.FC<EventContainerProps> = ({ event }) => {
                         textOverflow: "ellipsis",
                         overflow: "hidden",
                     }}
-                    onClick={handleClick}
+                    // onClick={handleClick}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
                     {event.summary}
                 </p>
             </Tooltip>
+            <Modal
+                open={openModal}
+                onClose={handleCloseModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{ alignItems: "center", justifyContent: "center" }}
+            >
+                <Paper
+                    sx={{
+                        width: "40%",
+                        height: "90%",
+                        p: "1.5vw",
+                        bgcolor: colors.background.primary,
+                        borderRadius: "0 3vw",
+                        flexDirection: "column",
+                        gap: "1vw",
+                    }}
+                >
+                    <Box sx={{ flexDirection: "column" }}>
+                        <IconButton sx={{ alignSelf: "flex-end" }} onClick={handleCloseModal}>
+                            <CloseIcon color="primary" />
+                        </IconButton>
+                        <Box sx={{ flexDirection: "row", width: "100%" }}>
+                            <Box sx={{ flexDirection: "column" }}>
+                                <p
+                                    style={{
+                                        fontWeight: "800",
+                                        fontSize: "1.3vw",
+                                        alignItems: "center",
+                                        cursor: "pointer",
+                                        color: colors.primary,
+                                        width: "100%",
+                                    }}
+                                >
+                                    {event.summary}
+                                </p>
+                                <p style={{ fontSize: "0.8vw", color: colors.primary }}>
+                                    {getDateSplit(String(event.start.date))}
+                                </p>
+                            </Box>
+                        </Box>
+                    </Box>
+
+                    <Box sx={{ textAlign: "justify", width: "100%", heigth: "8vw", overflowY: "auto" }}>
+                        {event.description}
+                    </Box>
+                </Paper>
+            </Modal>
         </Box>
     )
 }

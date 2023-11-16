@@ -35,7 +35,8 @@ export const MeetingContainer: React.FC<MeetingContainerProps> = ({ meeting }) =
                     bgcolor: self?.responseStatus == "accepted" ? colors.success : "",
                 }}
             ></Box>
-            <p style={{ fontSize: "0.55vw" }}>{startTime}</p>
+            <p style={ { fontSize: "0.55vw" } }>{ startTime }</p>
+            
             <Tooltip title={meeting.summary} arrow>
                 <p>{meeting.summary}</p>
             </Tooltip>
