@@ -116,7 +116,7 @@ export const Wakeup: React.FC<WakeupProps> = ({ user }) => {
                                 </Box>
                             )
                         ) : (
-                            <Box sx={noAccessStyle}>
+                            <Box sx={{ ...noAccessStyle, padding: "0" }}>
                                 <ErrorOutlineIcon color="primary" />
                                 <p>Essa ferramenta só está disponível através do APP.</p>
                             </Box>
