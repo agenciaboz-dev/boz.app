@@ -10,7 +10,7 @@ interface RoleContainerProps {
 }
 
 export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const userList = users.filter((user) => user.department.id == department.id)
     const { connectedList } = useUser()
 
@@ -26,16 +26,24 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
                 width: isMobile ? "95vw" : "20vw",
                 alignItems: isMobile ? "center" : "",
                 borderRadius: "0.5vw",
-                padding: "0.5vw",
+                padding: "0vw",
                 paddingBottom: isMobile ? "15vw" : "3vw",
             }}
         >
             <Box sx={{ fontWeight: "bold", fontSize: isMobile ? "6vw" : "1vw" }}>{department.name}</Box>
 
-            <Box sx={{ flexDirection: "column", bgcolor: "background.default", gap: "0.5vw", height: "100%", overflowY: "auto" }}>
+            <Box
+                sx={{
+                    flexDirection: "column",
+                    bgcolor: "background.default",
+                    gap: "0.5vw",
+                    height: "100%",
+                    overflowY: "auto",
+                    p:"0.7vw"
+                }}
+            >
                 {connectedUsers.map((user) => (
                     <UserCard key={user.id} user={user} />
-                    
                 ))}
                 {nonConnectedUsers.map((user) => (
                     <UserCard key={user.id} user={user} />

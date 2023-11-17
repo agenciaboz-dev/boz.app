@@ -14,7 +14,7 @@ interface UsersProps {
 }
 
 export const Users: React.FC<UsersProps> = ({ user }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const navigate = useNavigate()
 
     const { setOnSearch } = useSearch()
@@ -46,7 +46,7 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                                 gap: "2vw",
                                 flexWrap: "wrap",
                                 backgroundColor: "background.default",
-                                margin: isMobile ? "0 0 0 2vw" : "2vw 2vw 0 2vw",
+                                margin: isMobile ? "0 0 0 2vw" : "2vw 0",
                                 height: isMobile ? "100vh" : "85vh",
                             }}
                         >

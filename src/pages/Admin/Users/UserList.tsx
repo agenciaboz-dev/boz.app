@@ -30,13 +30,14 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
                 // flexWrap: "wrap",
                 height: "100%",
                 width: "100%",
-                padding: isMobile ? "8vw 0 18vw 0" : "",
+                padding: isMobile ? "8vw 0 18vw 0" : "2vw",
                 overflowX: isMobile ? "hidden" : "auto",
                 overflowY: isMobile ? "auto" : "hidden",
 
                 "::-webkit-scrollbar-thumb": {
                     bgcolor: "primary.main",
                     borderRadius: "1vw",
+                    p:"1vw"
                 },
             }}
         >

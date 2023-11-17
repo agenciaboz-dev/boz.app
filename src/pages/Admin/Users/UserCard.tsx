@@ -17,7 +17,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
             sx={{
                 gap: isMobile ? "3vw" : "0.5vw",
                 color: "primary.main",
-                
+
                 borderBottom: "2px solid",
                 padding: isMobile ? "3vw" : "0.5vw",
                 height: isMobile ? "auto" : "5vw",

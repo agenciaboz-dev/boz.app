@@ -17,12 +17,10 @@ interface UsersProps {
 }
 
 export const Users: React.FC<UsersProps> = ({ user }) => {
-
     const { setOnSearch } = useSearch()
     const { list } = useUser()
 
     const [userList, setUserList] = useState(list)
-
 
     const handleSearch = (value: string) => {
         const result = list.filter((user) => normalize(user.name).includes(value))
@@ -46,8 +44,9 @@ export const Users: React.FC<UsersProps> = ({ user }) => {
                             gap: "2vw",
                             flexWrap: "wrap",
                             backgroundColor: "background.default",
-                            margin: "2vw 2vw 0 2vw",
+                            // margin: "2vw 2vw 0 2vw",
                             height: "85vh",
+                           
                         }}
                     >
                         <UserList list={userList} />
