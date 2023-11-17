@@ -4,6 +4,7 @@ import { Form, Formik, FormikHelpers } from "formik"
 import AddCircleIcon from "@mui/icons-material/AddCircle"
 import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
+import { TaiTextField } from "../../components/TaiTextField"
 
 interface NewWarningProps {
     user: User
@@ -49,7 +50,7 @@ export const NewWarning: React.FC<NewWarningProps> = ({ user }) => {
             {({ values, handleChange }) => (
                 <Form>
                     <Box sx={{ flexDirection: "column", gap: "1vw" }}>
-                        <TextField
+                        <TaiTextField
                             label="Título"
                             name="title"
                             value={values.title}
@@ -63,7 +64,15 @@ export const NewWarning: React.FC<NewWarningProps> = ({ user }) => {
                                 ),
                             }}
                         />
-                        <TextField label="Texto" name="text" value={values.text} onChange={handleChange} multiline minRows={3} required />
+                        <TaiTextField
+                            label="Texto"
+                            name="text"
+                            value={values.text}
+                            onChange={handleChange}
+                            multiline
+                            minRows={3}
+                            required
+                        />
                     </Box>
                 </Form>
             )}
