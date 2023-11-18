@@ -122,10 +122,10 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
         <Box
             sx={{
                 color: "primary.main",
-                padding: isMobile ? "8vw 2vw 2vw 2vw" : "2vw",
+                padding: isMobile ? "8vw 2vw 2vw 2vw" : "1vw 8.5vw",
                 margin: isMobile ? "0 5vw 5vw" : "2vw 5vw",
                 flexDirection: "column",
-                gap: isMobile ? "4vw" : "2vw",
+                gap: isMobile ? "4vw" : "1vw",
                 overflowX: "hidden",
             }}
         >
@@ -135,10 +135,12 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                     bgcolor: "background.default",
                     flexDirection: "column",
                     gap: "1vw",
-                    padding: "1vw",
-                    borderBottom: "2px solid",
-                    borderRadius: isMobile ? "3vw" : "0.5vw",
+                    // padding: "2vw",
+                    // borderBottom: "2px solid",
+                    borderRadius: isMobile ? "3vw" : "0 3vw",
                     fontWeight: "bold",
+                    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                    height: "38+-vw",
                 }}
             >
                 <Formik initialValues={initialQrCode} onSubmit={handleSubmit} enableReinitialize>
@@ -146,51 +148,107 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                         <Form>
                             <Box
                                 sx={{
-                                    gap: isMobile ? "2vw" : "1vw",
+                                    gap: isMobile ? "2vw" : "0vw",
                                     flexDirection: isMobile ? "column-reverse" : "",
-                                    padding: isMobile ? "2vw" : "",
+                                    padding: isMobile ? "2vw" : "vw",
+                                    width: "100%",
+                                    height: "100%",
                                 }}
                             >
-                                <Box sx={{ flexDirection: "column", gap: isMobile ? "3vw" : "1vw", flex: "1" }}>
-                                    <TextField
-                                        label="Cliente"
-                                        name="customerId"
-                                        value={values.customerId}
-                                        onChange={handleChange}
-                                        select
-                                        sx={textFieldStyle}
-                                        SelectProps={{
-                                            MenuProps: {
-                                                sx: selectMenuStyle,
-                                            },
-                                        }}
-                                        required
-                                    >
-                                        <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
-                                        {customers.map((customer) => (
-                                            <MenuItem key={customer.id} value={customer.id}>
-                                                {customer.name}
+                                <Box
+                                    sx={{
+                                        flexDirection: "column",
+                                        gap: isMobile ? "3vw" : "4vw",
+                                        flex: "1",
+                                        p: "2vw",
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    <Box sx={{ flexDirection: "column", gap: "1vw" }}>
+                                        <Box sx={{ flexDirection: "column", gap: "1vw" }}>
+                                            <p style={{ color: "#757575", fontSize: isMobile ? "5vw" : "1.5vw" }}>
+                                                {" "}
+                                                Gerar novo código
+                                            </p>
+                                            <TextField
+                                                label="Código"
+                                                name="code"
+                                                placeholder="Gere o código escrevendo aqui"
+                                                value={values.code}
+                                                onChange={handleChange}
+                                                sx={textFieldStyle}
+                                                required
+                                                autoComplete="off"
+                                            />
+                                        </Box>
+                                        <Box sx={{ flexDirection: "row", gap: "1vw", flex: "0.8" }}>
+                                            <TextField
+                                                label="Nome do código"
+                                                name="name"
+                                                value={values.name}
+                                                onChange={handleChange}
+                                                sx={{ ...textFieldStyle, width: "49%" }}
+                                                required
+                                            />
+                                            <TextField
+                                                label="Cliente"
+                                                name="customerId"
+                                                value={values.customerId}
+                                                onChange={handleChange}
+                                                select
+                                                sx={{ ...textFieldStyle, width: "49%" }}
+                                                SelectProps={{
+                                                    MenuProps: {
+                                                        sx: selectMenuStyle,
+                                                    },
+                                                }}
+                                                required
+                                            >
+                                                <MenuItem value={0} sx={{ display: "none" }}></MenuItem>
+                                                {customers.map((customer) => (
+                                                    <MenuItem key={customer.id} value={customer.id}>
+                                                        {customer.name}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        </Box>
+                                    </Box>
+                                    <Box sx={{ flexDirection: "column", gap: "1vw" }}>
+                                        <h2 style={{ color: "#757575", fontSize: isMobile ? "5vw" : "1.5vw" }}>
+                                            Carregar código salvo
+                                        </h2>
+                                        <TextField
+                                            label="Selecione"
+                                            value={loadedCode}
+                                            onChange={(event) => handleChangeInitialQrCode(event)}
+                                            select
+                                            sx={textFieldStyle}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    sx: selectMenuStyle,
+                                                },
+                                            }}
+                                            required
+                                        >
+                                            {" "}
+                                            <MenuItem value={0} sx={{}}>
+                                                <IconButton></IconButton>
                                             </MenuItem>
-                                        ))}
-                                    </TextField>
-                                    <TextField
-                                        label="Nome do código"
-                                        name="name"
-                                        value={values.name}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                        required
-                                    />
-                                    <TextField
-                                        label="Código"
-                                        name="code"
-                                        value={values.code}
-                                        onChange={handleChange}
-                                        sx={textFieldStyle}
-                                        required
-                                        autoComplete="off"
-                                    />
-
+                                            {listCode.map((qrcode) => (
+                                                <MenuItem key={qrcode.id} value={qrcode.id}>
+                                                    <Box sx={{ alignItems: "center", gap: "1vw" }}>
+                                                        <Tooltip
+                                                            title="Excluir QR Code"
+                                                            onClick={() => handleDelete(qrcode)}
+                                                        >
+                                                            <CloseIcon key={qrcode.id ? qrcode.id : 0} fontSize="small" />
+                                                        </Tooltip>
+                                                        {qrcode.name} - {qrcode.customer.name}
+                                                    </Box>
+                                                </MenuItem>
+                                            ))}{" "}
+                                        </TextField>
+                                    </Box>
                                     <Box sx={{ gap: "1vw", marginTop: "auto" }}>
                                         <Button
                                             sx={{ gap: "0.25vw" }}
@@ -211,54 +269,26 @@ export const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ user }) => {
                                         </Button>
                                     </Box>
                                 </Box>
-                                <QrCodeModal value={values.code} ref={ref} />
+
+                                <Paper
+                                    sx={{
+                                        // bgcolor: "background.paper",
+                                        p: "3vw",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        borderRadius: "0 3vw 0 00",
+                                        width: "50%",
+                                        height: "100%",
+                                    }}
+                                >
+                                    <QrCodeModal value={values.code} ref={ref} />
+                                </Paper>
                             </Box>
                         </Form>
                     )}
                 </Formik>
             </Paper>
-            <h2 style={{ color: "#757575", fontSize: isMobile ? "5vw" : "2vw" }}>Carregar código salvo:</h2>
-            <Paper
-                sx={{
-                    bgcolor: "background.default",
-                    flexDirection: "column",
-                    gap: "1vw",
-                    padding: isMobile ? "3vw" : "1vw",
-                    borderBottom: "2px solid",
-                    borderRadius: isMobile ? "3vw" : "0.5vw",
-                    fontWeight: "bold",
-                }}
-            >
-                {" "}
-                <TextField
-                    label="Selecione"
-                    value={loadedCode}
-                    onChange={(event) => handleChangeInitialQrCode(event)}
-                    select
-                    sx={textFieldStyle}
-                    SelectProps={{
-                        MenuProps: {
-                            sx: selectMenuStyle,
-                        },
-                    }}
-                    required
-                >
-                    {" "}
-                    <MenuItem value={0} sx={{}}>
-                        <IconButton></IconButton>
-                    </MenuItem>
-                    {listCode.map((qrcode) => (
-                        <MenuItem key={qrcode.id} value={qrcode.id}>
-                            <Box sx={{ alignItems: "center", gap: "1vw" }}>
-                                <Tooltip title="Excluir QR Code" onClick={() => handleDelete(qrcode)}>
-                                    <CloseIcon key={qrcode.id ? qrcode.id : 0} fontSize="small" />
-                                </Tooltip>
-                                {qrcode.name} - {qrcode.customer.name}
-                            </Box>
-                        </MenuItem>
-                    ))}{" "}
-                </TextField>
-            </Paper>
+         
         </Box>
     )
 }

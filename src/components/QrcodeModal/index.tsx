@@ -7,12 +7,12 @@ interface QrCodeModalProps {
 }
 
 export const QrCodeModal = forwardRef<HTMLCanvasElement, QrCodeModalProps>((props, ref) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
     const vw = window.innerWidth / 100
-    const qrCodeSize = isMobile ? 50 * vw : 20 * vw
+    const qrCodeSize = isMobile ? 50 * vw : 30 * vw
 
     return (
-        <Box ref={ref} sx={{ justifyContent: "center" }}>
+        <Box ref={ref} sx={{ justifyContent: "center", }}>
             <QRCode value={props.value} size={qrCodeSize} />
         </Box>
     )
