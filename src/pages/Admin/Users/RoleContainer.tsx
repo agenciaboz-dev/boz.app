@@ -30,7 +30,7 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
                 paddingBottom: isMobile ? "15vw" : "3vw",
             }}
         >
-            <Box sx={{ fontWeight: "bold", fontSize: isMobile ? "6vw" : "1vw" }}>{department.name}</Box>
+            <Box sx={{ fontWeight: "bold", padding: "0 0.7vw", fontSize: isMobile ? "6vw" : "1vw" }}>{department.name}</Box>
 
             <Box
                 sx={{
@@ -39,7 +39,7 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
                     gap: "0.5vw",
                     height: "100%",
                     overflowY: "auto",
-                    p:"0.7vw"
+                    p: "0.7vw",
                 }}
             >
                 {connectedUsers.map((user) => (
