@@ -19,7 +19,7 @@ interface FormValues {
 }
 
 export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     const api = useApi()
 
@@ -48,13 +48,47 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
     }
 
     return (
-        <Box sx={{ ...backgroundStyle, padding: isMobile? "5vw" : "2vw", gap: isMobile? "10vw" : "2vw", height: isMobile? "auto" : "100vh" }}>
+        <Paper elevation={0}
+            sx={{
+                ...backgroundStyle,
+                padding: isMobile ? "5vw" : "2vw 13vw",
+                gap: isMobile ? "10vw" : "2vw",
+                height: isMobile ? "auto" : "100vh",
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+
+            }}
+        >
             <Roles />
 
-            <Paper sx={{ gap: isMobile? "5vw" : "1vw", bgcolor: "background.default", padding: isMobile? "5vw" : "1vw", flexDirection: "column" }}>
-                <p style={{ fontWeight: "bold", fontSize: isMobile ? "6vw" : "1vw", textAlign: isMobile? "center" : "start" }}>Departamentos</p>
+            <Box
+                sx={{
+                    gap: isMobile ? "5vw" : "1vw",
+                    bgcolor: "background.default",
+                    padding: isMobile ? "5vw" : "2vw",
+                    flexDirection: "column",
+                    borderRadius: "0 3vw",
+                    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                }}
+            >
+                <p
+                    style={{
+                        fontWeight: "bold",
+                        fontSize: isMobile ? "6vw" : "1.5vw",
+                        textAlign: isMobile ? "center" : "start",
+                    }}
+                >
+                    Departamentos
+                </p>
 
-                <Box sx={{ gap: isMobile? "10vw" : "2vw", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
+                <Box
+                    sx={{
+                        gap: isMobile ? "10vw" : "1.5vw",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        flexWrap: "wrap",
+                        borderRadius: "0 3vw",
+                    }}
+                >
                     {departments
                         .sort((a, b) => a.id - b.id)
                         .map((department) => (
@@ -68,7 +102,7 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
                                     name="name"
                                     value={values.name}
                                     onChange={handleChange}
-                                    sx={{ ...textFieldStyle, width: isMobile? "80vw" : "21.5vw" }}
+                                    sx={{ ...textFieldStyle, width: isMobile ? "80vw" : "21.5vw" }}
                                     required
                                     InputProps={{
                                         endAdornment: (
@@ -82,7 +116,7 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
                         )}
                     </Formik>
                 </Box>
-            </Paper>
-        </Box>
+            </Box>
+        </Paper>
     )
 }
