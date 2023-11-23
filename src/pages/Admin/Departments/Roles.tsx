@@ -7,18 +7,40 @@ import AddIcon from "@mui/icons-material/Add"
 interface RolesProps {}
 
 export const Roles: React.FC<RolesProps> = ({}) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     const { roles, roleModal } = useDepartments()
 
     return (
-        <Paper sx={{ gap: isMobile ? "5vw" : "1vw", bgcolor: "background.default", flexDirection: "column", padding: isMobile? "5vw" : "1vw" }}>
-            <p style={{ fontWeight: "bold", fontSize: isMobile ? "6vw" : "1vw", textAlign: isMobile? "center" : "start" }}>Funções</p>
-            <Box sx={{ gap: isMobile? "2vw" : "0.5vw", alignItems: "center", flexWrap: "wrap", lineHeight: isMobile ? "4vw" : "" }}>
+        <Box
+            sx={{
+                gap: isMobile ? "5vw" : "1vw",
+                bgcolor: "background.default",
+                flexDirection: "column",
+                padding: isMobile ? "5vw" : "2vw",
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                borderRadius: "0 3vw",
+            }}
+        >
+            <p style={{ fontWeight: "bold", fontSize: isMobile ? "6vw" : "1.5vw", textAlign: isMobile ? "center" : "start" }}>
+                Funções
+            </p>
+            <Box
+                sx={{
+                    gap: isMobile ? "2vw" : "0.5vw",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    lineHeight: isMobile ? "4vw" : "",
+                }}
+            >
                 {roles.map((role) => (
-                    <Tag key={role.id} name={role.tag} tooltip={role.name} fontSize={isMobile? "4vw" : "0.8vw"}
+                    <Tag
+                        key={role.id}
+                        name={role.tag}
+                        tooltip={role.name}
+                        fontSize={isMobile ? "4vw" : "0.8vw"}
                         sx={{
-                            padding: isMobile ? "2vw" : "0.5vw"
+                            padding: isMobile ? "2vw" : "0.5vw",
                         }}
                     />
                 ))}
@@ -26,6 +48,6 @@ export const Roles: React.FC<RolesProps> = ({}) => {
                     <AddIcon />
                 </IconButton>
             </Box>
-        </Paper>
+        </Box>
     )
 }
