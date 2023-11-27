@@ -19,6 +19,7 @@ interface UserContextValue {
     }
 
     logs: {
+        everybody_status: StatusLog[]
         status: StatusLog[]
     }
 
@@ -42,17 +43,19 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [connectedList, setconnectedList] = useState<User[]>([])
     const [openDrawer, setOpenDrawer] = useState(false)
     const [connected, setConnected] = useState(false)
+    const [everybodyStatusLogs, setEverybodyStatusLogs] = useState<StatusLog[]>([])
     const [statusLogs, setStatusLogs] = useState<StatusLog[]>([])
     const [latestVersion, setLatestVersion] = useState("")
     const [downloadUrl, setDownloadUrl] = useState("")
 
     const drawer = {
         open: openDrawer,
-        setOpen: setOpenDrawer,
+        setOpen: setOpenDrawer
     }
 
     const logs = {
-        status: statusLogs,
+        everybody_status: everybodyStatusLogs,
+        status: statusLogs
     }
 
     const addUser = (user: User) => {
@@ -64,15 +67,31 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
 
     useEffect(() => {
-        console.log({ statusLogs })
+        console.log({ statusLogs: statusLogs })
         io.on("log:status:new", (log: StatusLog) => {
-            setStatusLogs((prevLogs) => [...prevLogs.filter((item) => item.id != log.id), log])
+            if (user && log.user.id == user.id) {
+                setStatusLogs((prevLogs) => [...prevLogs.filter((item) => item.id != log.id), log])
+            }
+        })
+
+        io.on("log:status:self", (list) => setStatusLogs(list))
+
+        return () => {
+            io.off("log:status:new")
+            io.off("log:status:self")
+        }
+    }, [statusLogs, user])
+
+    useEffect(() => {
+        console.log({ everybodyStatusLogs })
+        io.on("log:status:new", (log: StatusLog) => {
+            setEverybodyStatusLogs((prevLogs) => [...prevLogs.filter((item) => item.id != log.id), log])
         })
 
         return () => {
             io.off("log:status:new")
         }
-    }, [statusLogs])
+    }, [everybodyStatusLogs])
 
     useEffect(() => {
         console.log({ connectedList })
@@ -153,7 +172,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             })
 
             io.on("log:status:sync", (logs: StatusLog[]) => {
-                setStatusLogs(logs)
+                setEverybodyStatusLogs(logs)
             })
 
             if (user.googleToken) {

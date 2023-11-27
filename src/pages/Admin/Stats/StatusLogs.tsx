@@ -17,7 +17,7 @@ const Circle: React.FC<{ status: number }> = ({ status }) => {
     return <Box sx={{ width: "0.75vw", height: "0.75vw", borderRadius: "50%", bgcolor: color[status] }}></Box>
 }
 
-const Status: React.FC<{ status: number }> = ({ status }) => {
+export const Status: React.FC<{ status: number }> = ({ status }) => {
     const text = ["desconectou", "disponível", "reunião", "pausa", "almoço"]
     return (
         <Box sx={{ alignItems: "center", gap: "1vw" }}>

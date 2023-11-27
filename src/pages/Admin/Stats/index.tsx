@@ -14,8 +14,8 @@ export const Stats: React.FC<StatsProps> = ({ user }) => {
     const { logs } = useUser()
 
     return (
-        <Box sx={{ padding: isMobile? "0 5vw" : "2vw" }}>
-            <StatusLogs logs={logs.status.sort((a, b) => b.id - a.id)} />
+        <Box sx={{ padding: isMobile ? "0 5vw" : "2vw" }}>
+            <StatusLogs logs={logs.everybody_status.sort((a, b) => b.id - a.id)} />
         </Box>
     )
 }
