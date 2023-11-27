@@ -2,12 +2,12 @@
 
 ssh_profile="root@agencyboz"
 user="agenc4028"
-domain="agenciaboz.com.br"
-subdomain="app.agenciaboz.com.br"
+domain="agencyboz.com"
+subdomain="app.agencyboz.com"
 
 path="/home/${domain}/${subdomain}"
 
-yarn build
+npx vite build
 echo 'Uploading build to server'
 scp -r dist/* ${ssh_profile}:${path}
 ssh ${ssh_profile} "chown -R ${user}:${user} ${path}/*"
