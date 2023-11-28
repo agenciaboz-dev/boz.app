@@ -69,7 +69,7 @@ section {
     display: contents;
 }
 
-div {
+.MuiBox-root {
     display: flex;
     flex-shrink: 0
 }
