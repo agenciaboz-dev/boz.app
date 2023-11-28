@@ -2,8 +2,8 @@
 
 ssh_profile="root@agencyboz"
 user="agenc4028"
-domain="agencyboz.com"
-subdomain="app.agencyboz.com"
+domain="agenciaboz.com.br"
+subdomain="app.agenciaboz.com.br"
 
 path="/home/${domain}/${subdomain}"
 
