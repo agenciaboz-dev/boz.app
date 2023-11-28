@@ -25,10 +25,11 @@ export const StatusLogsContainer: React.FC<StatusLogsContainerProps> = ({ user }
     const { logs } = useUser()
     return logs.status.length ? (
         <ContainerWrapper>
-            <Box sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>Status</Box>
+            <Box sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>Status [adicionar paginação]</Box>
             <Box sx={{ flexDirection: "column" }}>
                 {logs.status
                     .sort((a, b) => b.id - a.id)
+                    .slice(0, 100)
                     .map((log) => (
                         <Log key={log.id} log={log} />
                     ))}
