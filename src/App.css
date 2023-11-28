@@ -69,6 +69,11 @@ section {
     display: contents;
 }
 
+.MuiPaper-root {
+    display: flex;
+    flex-shrink: 0
+}
+
 .MuiBox-root {
     display: flex;
     flex-shrink: 0
