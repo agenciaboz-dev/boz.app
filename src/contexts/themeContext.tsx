@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import React from "react"
 import { useDarkMode } from "../hooks/useDarkMode"
 
@@ -32,7 +32,7 @@ export default ThemeContext
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const { darkMode } = useDarkMode()
 
-    const colors = {
+    const default_colors = {
         primary: darkMode ? "#8CDCFE" : "#00AFEF",
         secondary: darkMode ? "#ffffff" : "#ffffff",
         terciary: darkMode ? "#D9D9D9" : "#1F1F1F",
@@ -52,6 +52,12 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
             terciary: darkMode ? "#0078D4" : "#ffffff"
         }
     }
+
+    const [colors, setColors] = useState(default_colors)
+
+    useEffect(() => {
+        setColors(default_colors)
+    }, [darkMode])
 
     return <ThemeContext.Provider value={{ colors }}>{children}</ThemeContext.Provider>
 }

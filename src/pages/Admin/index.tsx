@@ -6,13 +6,14 @@ import { Users } from "./Users"
 import { Customers } from "./Customers"
 import { Deparments } from "./Departments"
 import { Stats } from "./Stats"
+import { Themes } from "./Theme"
 
 interface AdminProps {
     user: User
 }
 
 export const Admin: React.FC<AdminProps> = ({ user }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     return (
         <Box
@@ -21,17 +22,17 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
                 width: "100vw",
                 height: "100vh",
                 bgcolor: "background.default",
-                overflow: "hidden",
-            }}
-        >
+                overflow: "hidden"
+            }}>
             <Header user={user} />
-            <Box sx={{ flexDirection: "column", overflowY: "auto", height: isMobile? "90vh" : "87vh" }} >
+            <Box sx={{ flexDirection: "column", overflowY: "auto", height: isMobile ? "90vh" : "87vh" }}>
                 <Routes>
                     <Route index element={<Users user={user} />} />
                     <Route path="/users/*" element={<Users user={user} />} />
                     <Route path="/customers/*" element={<Customers user={user} />} />
                     <Route path="/departments/*" element={<Deparments user={user} />} />
                     <Route path="/stats/*" element={<Stats user={user} />} />
+                    <Route path="/themes/*" element={<Themes />} />
                 </Routes>
             </Box>
         </Box>

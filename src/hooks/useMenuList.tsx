@@ -9,7 +9,6 @@ import BusinessIcon from "@mui/icons-material/Business"
 import CategoryIcon from "@mui/icons-material/Category"
 import BarChartIcon from "@mui/icons-material/BarChart"
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner"
-import { FileDownload } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
 import BrowserUpdatedIcon from "@mui/icons-material/BrowserUpdated"
 import NewReleasesIcon from "@mui/icons-material/NewReleases"
@@ -17,6 +16,7 @@ import { useUser } from "./useUser"
 import { Badge, BadgeProps, styled } from "@mui/material"
 import { useWarnings } from "./useWarnings"
 import ApiIcon from "@mui/icons-material/Api"
+import PaletteIcon from "@mui/icons-material/Palette"
 
 export const useMenuList = () => {
     const navigate = useNavigate()
@@ -35,8 +35,8 @@ export const useMenuList = () => {
             height: "1.1vw",
             color: "white",
             fontWeight: "bold",
-            fontSize: "0.75vw",
-        },
+            fontSize: "0.75vw"
+        }
     }))
 
     const menus: Menu[] = [
@@ -45,7 +45,7 @@ export const useMenuList = () => {
             name: "Início",
             path: "/",
             icon: <HomeIcon />,
-            onClick: () => navigate("/"),
+            onClick: () => navigate("/")
         },
         {
             id: 2,
@@ -55,19 +55,18 @@ export const useMenuList = () => {
                 <StyledBadge
                     badgeContent={warnings.list.filter((warning) => !warning.confirmed.some((item) => item.id == user?.id)).length}
                     max={9}
-                    color="warning"
-                >
+                    color="warning">
                     <NewReleasesIcon />
                 </StyledBadge>
             ),
-            onClick: () => navigate("/warnings"),
+            onClick: () => navigate("/warnings")
         },
         {
             id: 3,
             name: "Atendimento",
             path: "/zap",
             icon: <WhatsAppIcon />,
-            onClick: () => navigate("/zap"),
+            onClick: () => navigate("/zap")
         },
         {
             id: 4,
@@ -75,28 +74,28 @@ export const useMenuList = () => {
             path: "/tasks",
             icon: <FormatListNumberedRtlIcon />,
             onClick: () => navigate("/tasks"),
-            admin: true,
+            admin: true
         },
         {
             id: 5,
             name: "Coleguinhas",
             path: "/users",
             icon: <Groups3Icon />,
-            onClick: () => navigate("/users"),
+            onClick: () => navigate("/users")
         },
         {
             id: 6,
             name: "Clientes",
             path: "/customers",
             icon: <BusinessIcon />,
-            onClick: () => navigate("/customers"),
+            onClick: () => navigate("/customers")
         },
         {
             id: 7,
             name: "Agenda",
             path: "/calendar",
             icon: <CalendarMonthIcon />,
-            onClick: () => navigate("/calendar"),
+            onClick: () => navigate("/calendar")
         },
         {
             id: 8,
@@ -110,23 +109,23 @@ export const useMenuList = () => {
                     icon: <QrCodeScannerIcon />,
                     name: "QR code",
                     path: "/qrcode",
-                    onClick: () => navigate("/tools/qrcode"),
+                    onClick: () => navigate("/tools/qrcode")
                 },
                 {
                     id: 2,
                     icon: <ApiIcon />,
                     name: "Wake Up",
                     path: "/wakeup",
-                    onClick: () => navigate("/tools/wakeup"),
+                    onClick: () => navigate("/tools/wakeup")
                 },
                 {
                     id: 3,
                     icon: <BrowserUpdatedIcon />,
                     name: electron ? "Atualizar" : "Baixar App",
                     path: "/update",
-                    onClick: () => navigate("/tools/update"),
-                },
-            ],
+                    onClick: () => navigate("/tools/update")
+                }
+            ]
         },
         {
             id: 9,
@@ -141,17 +140,24 @@ export const useMenuList = () => {
                     name: "Departamentos e funções",
                     path: "/departments",
                     icon: <CategoryIcon />,
-                    onClick: () => navigate("/admin/departments"),
+                    onClick: () => navigate("/admin/departments")
                 },
                 {
                     id: 2,
                     name: "Estatísticas",
                     path: "/stats",
                     icon: <BarChartIcon />,
-                    onClick: () => navigate("/admin/stats"),
+                    onClick: () => navigate("/admin/stats")
                 },
-            ],
-        },
+                {
+                    id: 3,
+                    name: "Temas",
+                    path: "/themes",
+                    icon: <PaletteIcon />,
+                    onClick: () => navigate("/admin/themes")
+                }
+            ]
+        }
     ]
 
     return menus
