@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material"
 import { Providers } from "./Providers"
 import { Routes } from "./Routes"
 import { DarkModeProvider } from "./contexts/darkModeContext"
+import { ThemeProvider as CustomThemeProvider } from "./contexts/themeContext"
 
 const Themed = () => {
     const theme = useMuiTheme()
@@ -25,7 +26,9 @@ const App = () => {
     
     return (
         <DarkModeProvider>
-            <Themed />
+            <CustomThemeProvider>
+                <Themed />
+            </CustomThemeProvider>
         </DarkModeProvider>
     )
 }
