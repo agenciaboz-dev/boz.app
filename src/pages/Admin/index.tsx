@@ -32,7 +32,7 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
                     <Route path="/customers/*" element={<Customers user={user} />} />
                     <Route path="/departments/*" element={<Deparments user={user} />} />
                     <Route path="/stats/*" element={<Stats user={user} />} />
-                    <Route path="/themes/*" element={<Themes />} />
+                    <Route path="/themes/*" element={<Themes user={user} />} />
                 </Routes>
             </Box>
         </Box>

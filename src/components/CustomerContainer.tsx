@@ -17,7 +17,6 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
     const isMobile = useMediaQuery("(orientation: portrait)")
 
     const io = useIo()
-    const colors = useColors()
     const theme = useMuiTheme()
     const navigate = useNavigate()
 

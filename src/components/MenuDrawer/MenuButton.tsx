@@ -15,7 +15,6 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ menu, sx }) => {
     const Icon = () => menu.icon
     const location = useLocation()
     const active = location.pathname.split("/")[1] == menu.path.split("/")[1]
-    const colors = useColors()
 
     const { drawer } = useMenu()
 

@@ -1,7 +1,6 @@
 import { ConfirmDialogProvider } from "burgos-confirm"
 import { Snackbar, SnackbarProvider } from "burgos-snackbar"
 import React from "react"
-import { IoProvider } from "./contexts/ioContext"
 import { UserProvider } from "./contexts/userContext"
 import { UserDrawer } from "./components/UserDrawer"
 import { MenuProvider } from "./contexts/menuContext"
@@ -22,6 +21,7 @@ import google_client_secret from "./api/google_client_secret.json"
 import { GoogleProvider } from "./contexts/googleContext"
 import { WarningsProvider } from "./contexts/warningsContext"
 import { WakeupProvider } from "./contexts/wakeupContext"
+import { MantineProvider } from "@mantine/core"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -29,9 +29,9 @@ interface ProvidersProps {
 
 export const Providers: React.FC<ProvidersProps> = ({ children }) => {
     return (
-        <SnackbarProvider>
-            <ConfirmDialogProvider>
-                <IoProvider>
+        <MantineProvider>
+            <SnackbarProvider>
+                <ConfirmDialogProvider>
                     <GoogleProvider>
                         <GoogleOAuthProvider clientId={google_client_secret.web.client_id}>
                             <SearchProvider>
@@ -65,8 +65,8 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                             </SearchProvider>
                         </GoogleOAuthProvider>
                     </GoogleProvider>
-                </IoProvider>
-            </ConfirmDialogProvider>
-        </SnackbarProvider>
+                </ConfirmDialogProvider>
+            </SnackbarProvider>
+        </MantineProvider>
     )
 }

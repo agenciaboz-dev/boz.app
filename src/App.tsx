@@ -6,6 +6,8 @@ import { Providers } from "./Providers"
 import { Routes } from "./Routes"
 import { DarkModeProvider } from "./contexts/darkModeContext"
 import { ThemeProvider as CustomThemeProvider } from "./contexts/themeContext"
+import { IoProvider } from "./contexts/ioContext"
+import "@mantine/core/styles.css"
 
 const Themed = () => {
     const theme = useMuiTheme()
@@ -26,9 +28,11 @@ const App = () => {
     
     return (
         <DarkModeProvider>
-            <CustomThemeProvider>
-                <Themed />
-            </CustomThemeProvider>
+            <IoProvider>
+                <CustomThemeProvider>
+                    <Themed />
+                </CustomThemeProvider>
+            </IoProvider>
         </DarkModeProvider>
     )
 }
