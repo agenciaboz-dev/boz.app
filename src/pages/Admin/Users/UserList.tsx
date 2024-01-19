@@ -6,12 +6,14 @@ import { useUser } from "../../../hooks/useUser"
 import { useNavigate } from "react-router-dom"
 import { NewButton } from "../../../components/NewButton"
 import AddIcon from "@mui/icons-material/Add"
+import { useHorizontalScroll } from "../../../hooks/useHorizontalScroll"
 
 interface UserListProps {
     list: User[]
 }
 
 export const UserList: React.FC<UserListProps> = ({ list }) => {
+    const scrollRef = useHorizontalScroll()
     const navigate = useNavigate()
     const isMobile = useMediaQuery("(orientation: portrait)")
     const { departments, loading } = useDepartments()
@@ -25,6 +27,7 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
         <RoleSkeletons />
     ) : (
         <Box
+            ref={scrollRef}
             sx={{
                 flexDirection: isMobile ? "column" : "row",
                 // flexWrap: "wrap",
@@ -37,10 +40,9 @@ export const UserList: React.FC<UserListProps> = ({ list }) => {
                 "::-webkit-scrollbar-thumb": {
                     bgcolor: "primary.main",
                     borderRadius: "1vw",
-                    p:"1vw"
-                },
-            }}
-        >
+                    p: "1vw"
+                }
+            }}>
             {isAdmin() && (
                 <NewButton onClick={handleNewUserClick} bottom={"2vw"} right={"2vw"} icon={<AddIcon sx={{ width: "100%", height: "100%" }} />} />
             )}
