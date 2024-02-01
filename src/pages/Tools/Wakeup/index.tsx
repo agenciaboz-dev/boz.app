@@ -15,7 +15,7 @@ interface WakeupProps {
     user: User
 }
 
-const Title: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
+export const Title: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
 
     return (

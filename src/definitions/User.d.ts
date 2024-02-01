@@ -14,10 +14,16 @@ declare interface User {
     roles: Role[]
     qrcodes: QrCode[]
 
+    working_projects: UserWorker[]
+
     connected?: boolean
 
     googleId?: string
     googleToken?: string
+}
+
+declare interface UserWorker extends Worker {
+    project: Project
 }
 
 interface LoginForm {

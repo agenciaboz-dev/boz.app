@@ -22,6 +22,7 @@ import { GoogleProvider } from "./contexts/googleContext"
 import { WarningsProvider } from "./contexts/warningsContext"
 import { WakeupProvider } from "./contexts/wakeupContext"
 import { MantineProvider } from "@mantine/core"
+import { ProjectProvider } from "./contexts/projectContext"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -44,15 +45,17 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
                                                         <MenuProvider>
                                                             <PictureModalProvider>
                                                                 <CoffeeProvider>
-                                                                    <RoleModal />
-                                                                    <ServiceModal />
-                                                                    <PictureModal />
-                                                                    <MenuDrawer />
-                                                                    <UserDrawer />
-                                                                    <Snackbar />
-                                                                    <ConfirmDialog />
-                                                                    <CoffeeModal />
-                                                                    {children}
+                                                                    <ProjectProvider>
+                                                                        <RoleModal />
+                                                                        <ServiceModal />
+                                                                        <PictureModal />
+                                                                        <MenuDrawer />
+                                                                        <UserDrawer />
+                                                                        <Snackbar />
+                                                                        <ConfirmDialog />
+                                                                        <CoffeeModal />
+                                                                        {children}
+                                                                    </ProjectProvider>
                                                                 </CoffeeProvider>
                                                             </PictureModalProvider>
                                                         </MenuProvider>
