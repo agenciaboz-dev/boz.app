@@ -8,6 +8,7 @@ import { useConfirmDialog } from "burgos-confirm"
 import { WorkerProjectContainer } from "./WorkerProjectContainer"
 import { ProjectInfo } from "./ProjectInfo"
 import { NewProject } from "./NewProject"
+import { useUser } from "../../hooks/useUser"
 
 interface ProjectPageProps {
     user: User
@@ -24,6 +25,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
     const navigate = useNavigate()
 
     const { confirm } = useConfirmDialog()
+    const { isAdmin } = useUser()
 
     const onDeleteClick = () => {
         confirm({
@@ -78,7 +80,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
                                     <Info />
                                 </IconButton>
                             </Tooltip>
-                            {project.workers.find((item) => item.user_id == user.id && item.admin) && (
+                            {(project.workers.find((item) => item.user_id == user.id && item.admin) || isAdmin()) && (
                                 <>
                                     <IconButton onClick={() => navigate("edit/")} color="primary">
                                         <Edit />
