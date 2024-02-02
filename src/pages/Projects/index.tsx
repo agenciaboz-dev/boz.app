@@ -45,6 +45,13 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                             </MenuItem>
                         </Tooltip>
                         {list
+                            .filter((project) => project.workers.find((item) => item.user_id == user?.id))
+                            .sort((a, b) => a.id - b.id)
+                            .map((project) => (
+                                <ProjectButton project={project} key={project.id} />
+                            ))}
+                        {list
+                            .filter((project) => !project.workers.find((item) => item.user_id == user?.id))
                             .sort((a, b) => a.id - b.id)
                             .map((project) => (
                                 <ProjectButton project={project} key={project.id} />
