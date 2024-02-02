@@ -1,6 +1,6 @@
 declare interface UpdateProjectForm {
     name: string
-    description: string
+    description?: string
     deadline?: string
     github?: string
 
