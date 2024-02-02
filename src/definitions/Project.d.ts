@@ -6,10 +6,10 @@ declare interface Project {
     deadline?: string
 
     times: ProjectTime
-    workers: Worker[]
+    workers: ProjectWorker[]
 }
 
-declare interface Worker {
+declare interface ProjectWorker {
     id: number
     admin: boolean
     joined_date: string

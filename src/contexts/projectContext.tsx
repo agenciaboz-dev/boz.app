@@ -24,6 +24,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
     const updateProject = (project: Project) => setList((list) => [...list.filter((item) => item.id != project.id), project])
     const deleteProject = (project: Project) => setList((list) => list.filter((item) => item.id != project.id))
 
+
     useEffect(() => {
         console.log({ projects: list })
 

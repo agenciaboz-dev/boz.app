@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Grid } from "@mui/material"
+import { Autocomplete, Box, Button, CircularProgress, Grid, IconButton, MenuItem, Paper, Tooltip } from "@mui/material"
 import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
 import { useNavigate } from "react-router-dom"
@@ -9,6 +9,11 @@ import { Title } from "../Profile/UserComponents"
 import { TaiTextField } from "../../components/TaiTextField"
 import MaskedInputCerto from "../../components/MaskedInputCerto"
 import { useNumberMask } from "burgos-masks"
+import { WorkerContainer } from "./WorkerContainer"
+import { useUser } from "../../hooks/useUser"
+import { Avatar } from "../../components/Avatar"
+import useMeasure from "react-use-measure"
+import { Cancel } from "@mui/icons-material"
 
 interface NewProjectProps {
     user: User
@@ -20,24 +25,39 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
     const navigate = useNavigate()
     const projects = useProject()
     const number_mask = useNumberMask({ allowDecimal: false })
+    const users = useUser()
+    const [ref, { width }] = useMeasure()
 
     const [loading, setLoading] = useState(false)
     const [weeks, setWeeks] = useState("")
+    const [addingUser, setAddingUser] = useState("")
+    const [showUsers, setShowUsers] = useState(false)
 
     const initialValues: NewProjectForm = {
         name: "",
         description: "",
         deadline: "",
         github: "",
-        workers: [],
+        workers: [{ user_id: user.id, admin: true, role: "" }],
     }
 
     const formik = useFormik<NewProjectForm>({
         initialValues,
         onSubmit: (values) => {
+            if (loading) return
             setLoading(true)
+
+            if (values.deadline) {
+                const [_day, _month, _year] = values.deadline.split("/")
+                const day = Number(_day)
+                const month = Number(_month)
+                const year = Number(_year)
+                const deadline = new Date(year, month - 1, day).getTime().toString()
+                values.deadline = deadline
+            }
+
             console.log(values)
-            // io.emit("project:new", values)
+            io.emit("project:new", values)
         },
     })
 
@@ -79,6 +99,16 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
         }
     }
 
+    const addWorker = (user: User) => {
+        const worker: NewWorkerForm = {
+            user_id: user.id,
+            role: "",
+            admin: false,
+        }
+        formik.setFieldValue("workers", [...formik.values.workers, worker])
+        setShowUsers(false)
+    }
+
     useEffect(() => {
         io.on("project:new:success", (project: Project) => {
             projects.updateProject(project)
@@ -88,6 +118,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
 
         io.on("project:new:error", (error) => {
             snackbar({ severity: "error", text: error })
+            setLoading(false)
         })
 
         return () => {
@@ -95,8 +126,6 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
             io.off("project:new:error")
         }
     }, [])
-
-    useEffect(() => {}, [weeks])
 
     return (
         <Box sx={{ flexDirection: "column", width: "99%", gap: "2vw", padding: "2vw" }}>
@@ -157,11 +186,81 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
                         />
                     </Grid>
                 </Grid>
-                <Box sx={{ flexDirection: "column", width: "100%", gap: "1vw" }}>
-                    {formik.values.workers.map((worker) => (
-                        <></>
-                    ))}
-                </Box>
+                <Paper
+                    elevation={3}
+                    sx={{
+                        flexDirection: "column",
+                        width: "100%",
+                        gap: "1vw",
+                        bgcolor: "background.default",
+                        overflowY: "auto",
+                        padding: "1vw",
+                        borderRadius: "0 2vw 0 2vw ",
+                        color: "text.secondary",
+                        height: "30%",
+                    }}
+                >
+                    <Grid container columns={2} spacing={1.5}>
+                        {formik.values.workers.map((worker, index) => (
+                            <WorkerContainer key={worker.user_id} worker={worker} self={user.id == worker.user_id} formik={formik} index={index} />
+                        ))}
+                        <Grid item xs={1}>
+                            <Tooltip
+                                placement="top-start"
+                                open={showUsers}
+                                enterDelay={0}
+                                componentsProps={{ tooltip: { sx: { bgcolor: "background.default", padding: 0 } } }}
+                                title={
+                                    <Paper
+                                        sx={{
+                                            flexDirection: "column",
+                                            gap: "0.3vw",
+                                            bgcolor: "background.default",
+                                            padding: "0.5vw",
+                                            color: "text.secondary",
+                                            maxHeight: "40vh",
+                                            overflowY: "auto",
+                                            width: width,
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                justifyContent: "space-between",
+                                                fontSize: "1rem",
+                                                alignItems: "center",
+                                                paddingLeft: "1vw",
+                                                fontWeight: "bold",
+                                                color: "primary.main",
+                                            }}
+                                        >
+                                            <Box>{"escolha o usuário"}</Box>
+                                            <IconButton onClick={() => setShowUsers(false)}>
+                                                <Cancel />
+                                            </IconButton>
+                                        </Box>
+                                        {users.list
+                                            .filter((item) => !formik.values.workers.find((worker) => worker.user_id == item.id))
+                                            .filter((user) => user.name.includes(addingUser))
+                                            .map((user) => (
+                                                <MenuItem sx={{ alignItems: "center", gap: "0.5vw" }} key={user.id} onClick={() => addWorker(user)}>
+                                                    <Avatar user={user} size="2vw" noClickModal small />
+                                                    <Box>{user.name.split(" ")[0]}</Box>
+                                                </MenuItem>
+                                            ))}
+                                    </Paper>
+                                }
+                            >
+                                <TaiTextField
+                                    value={addingUser}
+                                    onChange={(event) => setAddingUser(event.target.value)}
+                                    InputProps={{ ref }}
+                                    onFocus={() => setShowUsers(true)}
+                                    label="adicionar usuário ao projeto"
+                                />
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
+                </Paper>
                 <Box sx={{ alignSelf: "end", gap: "1vw" }}>
                     <Button variant="outlined" onClick={() => navigate("/projects")}>
                         Cancelar

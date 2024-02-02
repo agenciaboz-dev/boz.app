@@ -90,12 +90,15 @@ export const useUser = () => {
         })
     }
 
+    const find = (id: number) => list.find((user) => user.id == id)
+
     const electron = {
         latestVersion,
         downloadUrl,
     }
 
     return {
+        find,
         user,
         drawer,
         login,

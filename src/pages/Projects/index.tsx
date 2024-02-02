@@ -1,11 +1,14 @@
 import React from "react"
-import { Box, IconButton, Paper, Tooltip, useMediaQuery } from "@mui/material"
+import { Box, IconButton, MenuItem, Paper, Tooltip, useMediaQuery } from "@mui/material"
 import { backgroundStyle } from "../../style/background"
 import { Header } from "../../components/Header"
 import { Title } from "../Tools/Wakeup"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { Add } from "@mui/icons-material"
 import { NewProject } from "./NewProject"
+import { useProject } from "../../hooks/useProject"
+import { ProjectButton } from "./ProjectButton"
+import { ProjectPage } from "./ProjectPage"
 
 interface ProjectsProps {
     user: User
@@ -14,6 +17,7 @@ interface ProjectsProps {
 export const Projects: React.FC<ProjectsProps> = ({ user }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const navigate = useNavigate()
+    const { list } = useProject()
 
     return (
         <Box sx={backgroundStyle}>
@@ -27,7 +31,6 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                         flexDirection: "column",
                         overflowY: "auto",
                         padding: "1vw 0",
-                        alignItems: "center",
                         gap: isMobile ? "5vw" : "1.5vw",
                         borderRadius: isMobile ? "0 2vw 0 0" : "0 0 0 2vw ",
                         color: "secondary.main",
@@ -36,25 +39,23 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                     elevation={4}
                 >
                     <Title title="Projetos">
-                        <Box sx={{ padding: "0 0.5vw", justifyContent: "center" }}>
-                            <Tooltip title="New API" dir="top">
-                                <IconButton sx={{ justifyContent: "flex-end" }} onClick={() => navigate("/projects/new/")}>
-                                    <Add color="secondary" />
-                                </IconButton>
-                            </Tooltip>
-                        </Box>
-                        {/* {list
-                        .sort((a, b) => a.id - b.id)
-                        .map((api) => (
-                            <ApiContainer api={api} key={api.id} />
-                        ))} */}
+                        <Tooltip title="novo projeto" dir="top">
+                            <MenuItem onClick={() => navigate("/projects/new/")} sx={{ justifyContent: "center" }}>
+                                <Add color="secondary" sx={{ width: "1.5vw", height: "auto" }} />
+                            </MenuItem>
+                        </Tooltip>
+                        {list
+                            .sort((a, b) => a.id - b.id)
+                            .map((project) => (
+                                <ProjectButton project={project} key={project.id} />
+                            ))}
                     </Title>
                 </Paper>
                 <Box sx={{ width: isMobile ? "100%" : "80vw" }}>
                     <Routes>
                         <Route index element={<></>} />
                         <Route path="/new" element={<NewProject user={user} />} />
-                        {/* <Route path="/api/:id/*" element={<ApiPage user={user} />} /> */}
+                        <Route path="/:id/*" element={<ProjectPage user={user} />} />
                     </Routes>
                 </Box>
             </Box>

@@ -22,7 +22,7 @@ declare interface User {
     googleToken?: string
 }
 
-declare interface UserWorker extends Worker {
+declare interface UserWorker extends ProjectWorker {
     project: Project
 }
 

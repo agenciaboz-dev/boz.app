@@ -38,6 +38,7 @@
     "react-stopwatch": "^2.0.4",
     "react-text-mask": "^5.5.0",
     "react-timer-hook": "^3.0.7",
+    "react-use-measure": "^2.1.1",
     "remove": "^0.1.5",
     "socket.io-client": "^4.7.2",
     "styled-components": "^6.0.7",
