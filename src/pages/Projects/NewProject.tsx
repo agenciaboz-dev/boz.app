@@ -14,6 +14,7 @@ import { useUser } from "../../hooks/useUser"
 import { Avatar } from "../../components/Avatar"
 import useMeasure from "react-use-measure"
 import { Cancel } from "@mui/icons-material"
+import normalize from "../../tools/normalize"
 
 interface NewProjectProps {
     user: User
@@ -262,7 +263,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
                                         </Box>
                                         {users.list
                                             .filter((item) => !formik.values.workers.find((worker) => worker.user_id == item.id))
-                                            .filter((user) => user.name.includes(addingUser))
+                                            .filter((user) => normalize(user.name).includes(normalize(addingUser)))
                                             .map((user) => (
                                                 <MenuItem sx={{ alignItems: "center", gap: "0.5vw" }} key={user.id} onClick={() => addWorker(user)}>
                                                     <Avatar user={user} size="2vw" noClickModal small />
