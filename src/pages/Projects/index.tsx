@@ -52,7 +52,7 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                             ))}
                         {list
                             .filter((project) => !project.deadline && project.workers.find((item) => item.user_id == user?.id))
-                            .sort((a, b) => Number(a.deadline) - Number(b.deadline))
+                            .sort((a, b) => (a.name < b.name ? -1 : 1))
                             .map((project) => (
                                 <ProjectButton project={project} key={project.id} />
                             ))}
@@ -64,7 +64,7 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                             ))}
                         {list
                             .filter((project) => !project.deadline && !project.workers.find((item) => item.user_id == user?.id))
-                            .sort((a, b) => Number(a.deadline) - Number(b.deadline))
+                            .sort((a, b) => (a.name < b.name ? -1 : 1))
                             .map((project) => (
                                 <ProjectButton project={project} key={project.id} />
                             ))}
