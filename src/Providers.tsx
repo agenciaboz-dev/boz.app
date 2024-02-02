@@ -23,6 +23,7 @@ import { WarningsProvider } from "./contexts/warningsContext"
 import { WakeupProvider } from "./contexts/wakeupContext"
 import { MantineProvider } from "@mantine/core"
 import { ProjectProvider } from "./contexts/projectContext"
+import { IoProvider } from "./contexts/ioContext"
 
 interface ProvidersProps {
     children: React.ReactNode
@@ -33,41 +34,43 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
         <MantineProvider>
             <SnackbarProvider>
                 <ConfirmDialogProvider>
-                    <GoogleProvider>
-                        <GoogleOAuthProvider clientId={google_client_secret.web.client_id}>
-                            <SearchProvider>
-                                <UserProvider>
-                                    <DepartmentsProvider>
-                                        <CustomersProvider>
-                                            <ZapProvider>
-                                                <WarningsProvider>
-                                                    <WakeupProvider>
-                                                        <MenuProvider>
-                                                            <PictureModalProvider>
-                                                                <CoffeeProvider>
-                                                                    <ProjectProvider>
-                                                                        <RoleModal />
-                                                                        <ServiceModal />
-                                                                        <PictureModal />
-                                                                        <MenuDrawer />
-                                                                        <UserDrawer />
-                                                                        <Snackbar />
-                                                                        <ConfirmDialog />
-                                                                        <CoffeeModal />
-                                                                        {children}
-                                                                    </ProjectProvider>
-                                                                </CoffeeProvider>
-                                                            </PictureModalProvider>
-                                                        </MenuProvider>
-                                                    </WakeupProvider>
-                                                </WarningsProvider>
-                                            </ZapProvider>
-                                        </CustomersProvider>
-                                    </DepartmentsProvider>
-                                </UserProvider>
-                            </SearchProvider>
-                        </GoogleOAuthProvider>
-                    </GoogleProvider>
+                    <IoProvider>
+                        <GoogleProvider>
+                            <GoogleOAuthProvider clientId={google_client_secret.web.client_id}>
+                                <SearchProvider>
+                                    <UserProvider>
+                                        <DepartmentsProvider>
+                                            <CustomersProvider>
+                                                <ZapProvider>
+                                                    <WarningsProvider>
+                                                        <WakeupProvider>
+                                                            <MenuProvider>
+                                                                <PictureModalProvider>
+                                                                    <CoffeeProvider>
+                                                                        <ProjectProvider>
+                                                                            <RoleModal />
+                                                                            <ServiceModal />
+                                                                            <PictureModal />
+                                                                            <MenuDrawer />
+                                                                            <UserDrawer />
+                                                                            <Snackbar />
+                                                                            <ConfirmDialog />
+                                                                            <CoffeeModal />
+                                                                            {children}
+                                                                        </ProjectProvider>
+                                                                    </CoffeeProvider>
+                                                                </PictureModalProvider>
+                                                            </MenuProvider>
+                                                        </WakeupProvider>
+                                                    </WarningsProvider>
+                                                </ZapProvider>
+                                            </CustomersProvider>
+                                        </DepartmentsProvider>
+                                    </UserProvider>
+                                </SearchProvider>
+                            </GoogleOAuthProvider>
+                        </GoogleProvider>
+                    </IoProvider>
                 </ConfirmDialogProvider>
             </SnackbarProvider>
         </MantineProvider>

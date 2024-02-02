@@ -87,31 +87,27 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }, [darkMode, colors, darkColors])
 
     useEffect(() => {
-        io.on("theme:new", (theme: ThemeDB) => setList((prev) => [...prev.filter(item => item.id != theme.id), translateTheme(theme)]))
-
-        io.on("theme:activate", (theme: ThemeDB) => {
-            setColors(translateTheme(theme))
-            setDarkColors(translateTheme(theme))
-        })
-
-        io.on("theme:deactivate", () => {
-            setColors(default_colors)
-            setDarkColors(default_dark_colors)
-        })
-
-        return () => {
-            io.off("theme:new")
-            io.off("theme:activate")
-            io.off("theme:deactivate")
-        }
+        // io.on("theme:new", (theme: ThemeDB) => setList((prev) => [...prev.filter(item => item.id != theme.id), translateTheme(theme)]))
+        // io.on("theme:activate", (theme: ThemeDB) => {
+        //     setColors(translateTheme(theme))
+        //     setDarkColors(translateTheme(theme))
+        // })
+        // io.on("theme:deactivate", () => {
+        //     setColors(default_colors)
+        //     setDarkColors(default_dark_colors)
+        // })
+        // return () => {
+        //     io.off("theme:new")
+        //     io.off("theme:activate")
+        //     io.off("theme:deactivate")
+        // }
     }, [list])
 
     useEffect(() => {
-        io.on("theme:list", (data: ThemeDB[]) => setList(data.map((theme) => translateTheme(theme))))
-
-        return () => {
-            io.off("theme:list")
-        }
+        // io.on("theme:list", (data: ThemeDB[]) => setList(data.map((theme) => translateTheme(theme))))
+        // return () => {
+        //     io.off("theme:list")
+        // }
     }, [])
 
     return (

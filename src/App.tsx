@@ -6,7 +6,6 @@ import { Providers } from "./Providers"
 import { Routes } from "./Routes"
 import { DarkModeProvider } from "./contexts/darkModeContext"
 import { ThemeProvider as CustomThemeProvider } from "./contexts/themeContext"
-import { IoProvider } from "./contexts/ioContext"
 import "@mantine/core/styles.css"
 
 const Themed = () => {
@@ -25,14 +24,12 @@ const Themed = () => {
 
 const App = () => {
     Notification.requestPermission()
-    
+
     return (
         <DarkModeProvider>
-            <IoProvider>
-                <CustomThemeProvider>
-                    <Themed />
-                </CustomThemeProvider>
-            </IoProvider>
+            <CustomThemeProvider>
+                <Themed />
+            </CustomThemeProvider>
         </DarkModeProvider>
     )
 }
