@@ -96,12 +96,12 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
                             {project.workers
                                 .filter((item) => item.admin)
                                 .map((worker) => (
-                                    <WorkerProjectContainer key={worker.id} worker={worker} />
+                                    <WorkerProjectContainer key={worker.id} worker={worker} project={project} />
                                 ))}
                             {project.workers
                                 .filter((item) => !item.admin)
                                 .map((worker) => (
-                                    <WorkerProjectContainer key={worker.id} worker={worker} />
+                                    <WorkerProjectContainer key={worker.id} worker={worker} project={project} />
                                 ))}
                         </Box>
                     </Paper>

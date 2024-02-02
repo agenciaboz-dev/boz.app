@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Box, Button, CircularProgress, Paper } from "@mui/material"
 import { Avatar } from "../../components/Avatar"
 import { PlayCircleRounded, StopCircle } from "@mui/icons-material"
@@ -6,15 +6,19 @@ import { useIo } from "../../hooks/useIo"
 import { useProject } from "../../hooks/useProject"
 import { useUser } from "../../hooks/useUser"
 import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
+import { useConfirmDialog } from "burgos-confirm"
 
 interface WorkerProjectContainerProps {
     worker: ProjectWorker
+    project: Project
 }
 
-export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ worker }) => {
+export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ worker, project }) => {
     const io = useIo()
     const projects = useProject()
     const { user } = useUser()
+    if (!user) return null
+    const { confirm } = useConfirmDialog()
 
     const working = !!worker.times.length && !!worker.times[worker.times.length - 1].started && !worker.times[worker.times.length - 1].ended
 
@@ -22,12 +26,26 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
     const [totalWorked, setTotalWorked] = useState(getTotalWorked(worker))
     const [formatedWorkedTime, setFormatedWorkedTime] = useState(formatTotalWorked(totalWorked))
 
-    const onPlay = () => {
+    const onPlay = useCallback(() => {
         if (loading) return
 
-        setLoading(true)
-        io.emit("project:play", worker.id)
-    }
+        const already_working = user.working_projects.find((item) => !!item.times.length && !item.times[item.times.length - 1].ended)
+        if (already_working) {
+            console.log(already_working)
+            confirm({
+                title: `você já está trabalhando`,
+                content: `deseja parar de trabalhar em ${already_working.project.name} e começar ${project.name}?`,
+                onConfirm: () => {
+                    setLoading(true)
+                    io.emit("project:stop", already_working.times[already_working.times.length - 1], already_working)
+                    io.emit("project:play", worker.id)
+                },
+            })
+        } else {
+            setLoading(true)
+            io.emit("project:play", worker.id)
+        }
+    }, [user.working_projects])
 
     const onStop = () => {
         if (loading) return
