@@ -1,11 +1,12 @@
 import React, { useEffect } from "react"
-import { Box, Button, IconButton, Paper } from "@mui/material"
+import { Box, Button, IconButton, Paper, Tooltip } from "@mui/material"
 import { useNavigate, useParams } from "react-router-dom"
 import { useProject } from "../../hooks/useProject"
-import { Cancel } from "@mui/icons-material"
+import { Cancel, Info } from "@mui/icons-material"
 import { useIo } from "../../hooks/useIo"
 import { useConfirmDialog } from "burgos-confirm"
 import { WorkerProjectContainer } from "./WorkerProjectContainer"
+import { ProjectInfo } from "./ProjectInfo"
 
 interface ProjectPageProps {
     user: User
@@ -53,9 +54,21 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
                 <IconButton>{"<"}</IconButton>
                 {new Date().toLocaleDateString("pt-br")}
                 <IconButton>{">"}</IconButton>
-                <IconButton sx={{ marginLeft: "auto" }} onClick={onDeleteClick}>
-                    <Cancel />
-                </IconButton>
+
+                <Tooltip
+                    color="primary"
+                    title={<ProjectInfo project={project} />}
+                    componentsProps={{ tooltip: { sx: { bgcolor: "background.paper", padding: 0 } } }}
+                >
+                    <IconButton sx={{ marginLeft: "auto" }}>
+                        <Info />
+                    </IconButton>
+                </Tooltip>
+                {project.workers.find((item) => item.user_id == user.id && item.admin) && (
+                    <IconButton onClick={onDeleteClick} color="primary">
+                        <Cancel />
+                    </IconButton>
+                )}
             </Box>
 
             <Box sx={{ flexDirection: "column", gap: "1vw" }}>

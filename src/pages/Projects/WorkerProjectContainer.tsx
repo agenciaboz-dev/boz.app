@@ -5,6 +5,7 @@ import { PlayCircleRounded, StopCircle } from "@mui/icons-material"
 import { useIo } from "../../hooks/useIo"
 import { useProject } from "../../hooks/useProject"
 import { useUser } from "../../hooks/useUser"
+import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
 
 interface WorkerProjectContainerProps {
     worker: ProjectWorker
@@ -18,6 +19,8 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
     const working = !!worker.times.length && !!worker.times[worker.times.length - 1].started && !worker.times[worker.times.length - 1].ended
 
     const [loading, setLoading] = useState(false)
+    const [totalWorked, setTotalWorked] = useState(getTotalWorked(worker))
+    const [formatedWorkedTime, setFormatedWorkedTime] = useState(formatTotalWorked(totalWorked))
 
     const onPlay = () => {
         if (loading) return
@@ -32,6 +35,22 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
         setLoading(true)
         io.emit("project:stop", worker.times[worker.times.length - 1], worker)
     }
+
+    useEffect(() => {
+        setFormatedWorkedTime(formatTotalWorked(totalWorked))
+    }, [totalWorked])
+
+    useEffect(() => {
+        if (working) {
+            const interval = setInterval(() => {
+                setTotalWorked((total) => total + 1000)
+            }, 1000)
+
+            return () => {
+                clearInterval(interval)
+            }
+        }
+    }, [working])
 
     useEffect(() => {
         io.on("project:play:success", (project: Project) => {
@@ -49,6 +68,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
             console.log(project)
             projects.updateProject(project)
             setLoading(false)
+            setTotalWorked(getTotalWorked(project.workers.find((item) => item.id == worker.id)!))
         })
 
         io.on("project:stop:error", (error) => {
@@ -82,14 +102,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
 
                 <Box sx={{ flexDirection: "column" }}>
                     <Box>tempo do dia</Box>
-                    <Box>
-                        {worker.times.reduce((total, current) => {
-                            console.log(total)
-                            console.log(current)
-
-                            return (Number(current.worked) || new Date().getTime() - Number(current.started)) + total
-                        }, 0)}
-                    </Box>
+                    <Box>{formatedWorkedTime}</Box>
                 </Box>
             </Box>
         </Paper>
