@@ -25,6 +25,9 @@ interface UserContextValue {
 
     latestVersion: string
     downloadUrl: string
+
+    workPausedId: number
+    setWorkPausedId: React.Dispatch<React.SetStateAction<number>>
 }
 
 interface UserProviderProps {
@@ -47,6 +50,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [statusLogs, setStatusLogs] = useState<StatusLog[]>([])
     const [latestVersion, setLatestVersion] = useState("")
     const [downloadUrl, setDownloadUrl] = useState("")
+    const [workPausedId, setWorkPausedId] = useState(0)
 
     const drawer = {
         open: openDrawer,
@@ -202,7 +206,22 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ user, setUser, drawer, connected, list, connectedList, addUser, logs, downloadUrl, latestVersion }}>
+        <UserContext.Provider
+            value={{
+                user,
+                setUser,
+                drawer,
+                connected,
+                list,
+                connectedList,
+                addUser,
+                logs,
+                downloadUrl,
+                latestVersion,
+                workPausedId,
+                setWorkPausedId,
+            }}
+        >
             {children}
         </UserContext.Provider>
     )
