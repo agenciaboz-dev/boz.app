@@ -17,9 +17,10 @@ import { Cancel } from "@mui/icons-material"
 
 interface NewProjectProps {
     user: User
+    current_project?: Project
 }
 
-export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
+export const NewProject: React.FC<NewProjectProps> = ({ user, current_project }) => {
     const io = useIo()
     const { snackbar } = useSnackbar()
     const navigate = useNavigate()
@@ -33,13 +34,15 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
     const [addingUser, setAddingUser] = useState("")
     const [showUsers, setShowUsers] = useState(false)
 
-    const initialValues: NewProjectForm = {
-        name: "",
-        description: "",
-        deadline: "",
-        github: "",
-        workers: [{ user_id: user.id, admin: true, role: "" }],
-    }
+    const initialValues: NewProjectForm = current_project
+        ? { ...current_project, deadline: new Date(Number(current_project.deadline)).toLocaleDateString("pt-br") }
+        : {
+              name: "",
+              description: "",
+              deadline: "",
+              github: "",
+              workers: [{ user_id: user.id, admin: true, role: "" }],
+          }
 
     const formik = useFormik<NewProjectForm>({
         initialValues,
@@ -56,9 +59,28 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
                 values.deadline = deadline
             }
 
-            console.log(values)
-            io.emit("project:new", values)
+            if (current_project) {
+                const data: UpdateProjectForm = {
+                    ...values,
+                    workers: [
+                        ...values.workers
+                            .filter((item) => current_project.workers.find((worker) => worker.user_id == item.user_id))
+                            .map((item) => {
+                                const worker = current_project.workers.find((worker) => worker.user_id == item.user_id)!
+                                return { ...worker, ...item }
+                            }),
+                        ...values.workers
+                            .filter((worker) => !current_project.workers.find((item) => item.user_id == worker.user_id))
+                            .map((item) => ({ ...item, id: 0, joined_date: new Date().getTime().toString(), times: [], user, admin: !!item.admin })),
+                    ],
+                }
+
+                io.emit("project:update", data, current_project.id)
+            } else {
+                io.emit("project:new", values)
+            }
         },
+        enableReinitialize: true,
     })
 
     const onWeekManualChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -130,7 +152,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
     return (
         <Box sx={{ flexDirection: "column", width: "99%", gap: "2vw", padding: "2vw" }}>
             <form onSubmit={formik.handleSubmit}>
-                <Title name="novo projeto" />
+                <Title name={current_project ? "editar projeto" : "novo projeto"} />
                 <Grid container spacing={1.5}>
                     <Grid item xs={6}>
                         <TaiTextField
@@ -262,7 +284,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user }) => {
                     </Grid>
                 </Paper>
                 <Box sx={{ alignSelf: "end", gap: "1vw" }}>
-                    <Button variant="outlined" onClick={() => navigate("/projects")}>
+                    <Button variant="outlined" onClick={() => navigate(current_project ? `/projects/${current_project.id}` : "/projects")}>
                         Cancelar
                     </Button>
                     <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>

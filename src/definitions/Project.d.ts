@@ -16,6 +16,7 @@ declare interface ProjectWorker {
     times: ProjectTime[]
     user_id: number
     user: User
+    role: string
 }
 
 declare interface ProjectTime {
