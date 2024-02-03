@@ -44,18 +44,20 @@ export const Roles: React.FC<RolesProps> = ({}) => {
                     lineHeight: isMobile ? "4vw" : "",
                 }}
             >
-                {roles.map((role) => (
-                    <Tag
-                        key={role.id}
-                        name={role.tag}
-                        tooltip={role.name}
-                        fontSize={isMobile ? "4vw" : "0.8vw"}
-                        onClick={() => onRoleClick(role)}
-                        sx={{
-                            padding: isMobile ? "2vw" : "0.5vw",
-                        }}
-                    />
-                ))}
+                {roles
+                    .sort((a, b) => a.id - b.id)
+                    .map((role) => (
+                        <Tag
+                            key={role.id}
+                            name={role.tag}
+                            tooltip={role.name}
+                            fontSize={isMobile ? "4vw" : "0.8vw"}
+                            onClick={() => onRoleClick(role)}
+                            sx={{
+                                padding: isMobile ? "2vw" : "0.5vw",
+                            }}
+                        />
+                    ))}
                 <IconButton color="primary" sx={{ width: "2vw", height: "2vw" }} onClick={onNewRoleClick}>
                     <AddIcon />
                 </IconButton>

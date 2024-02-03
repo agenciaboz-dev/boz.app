@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { Box, Button, CircularProgress, Paper } from "@mui/material"
+import { Autocomplete, Box, Button, CircularProgress, Paper } from "@mui/material"
 import { Avatar } from "../../components/Avatar"
 import { PlayCircleRounded, StopCircle } from "@mui/icons-material"
 import { useIo } from "../../hooks/useIo"
@@ -7,6 +7,7 @@ import { useProject } from "../../hooks/useProject"
 import { useUser } from "../../hooks/useUser"
 import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
 import { useConfirmDialog } from "burgos-confirm"
+import { TaiTextField } from "../../components/TaiTextField"
 
 interface WorkerProjectContainerProps {
     worker: ProjectWorker
@@ -18,6 +19,12 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
     const projects = useProject()
     const { user } = useUser()
     if (!user) return null
+    const valid_roles = user.roles
+        .filter((role) => !!role.project_roles)
+        .map((role) => role.project_roles!.split(", "))
+        .filter((item) => !!item)
+        .flatMap((item) => item)
+
     const { confirm } = useConfirmDialog()
 
     const working = !!worker.times.length && !!worker.times[worker.times.length - 1].started && !worker.times[worker.times.length - 1].ended
@@ -25,9 +32,11 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
     const [loading, setLoading] = useState(false)
     const [totalWorked, setTotalWorked] = useState(getTotalWorked(worker))
     const [formatedWorkedTime, setFormatedWorkedTime] = useState(formatTotalWorked(totalWorked))
+    const [selectedRole, setSelectedRole] = useState<string | null>()
 
     const onPlay = useCallback(() => {
         if (loading) return
+        if (!selectedRole) return
 
         const already_working = user.working_projects.find((item) => !!item.times.length && !item.times[item.times.length - 1].ended)
         if (already_working) {
@@ -38,12 +47,14 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
                 onConfirm: () => {
                     setLoading(true)
                     io.emit("project:stop", already_working.times[already_working.times.length - 1], already_working)
-                    io.emit("project:play", worker.id)
+                    const data: PlayProjectForm = { worker_id: worker.id, role: selectedRole }
+                    io.emit("project:play", data)
                 },
             })
         } else {
             setLoading(true)
-            io.emit("project:play", worker.id)
+            const data: PlayProjectForm = { worker_id: worker.id, role: selectedRole }
+            io.emit("project:play", data)
         }
     }, [user.working_projects])
 
@@ -103,11 +114,22 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
     }, [])
 
     return (
-        <Paper elevation={5} sx={{ bgcolor: "background.default", padding: "1vw", color: "text.secondary" }}>
-            <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
-                <Avatar user={worker.user} size={"4vw"} noClickModal small />
-                <Box sx={{ flexDirection: "column", gap: "0.5vw" }}>
+        <Paper elevation={5} sx={{ bgcolor: "background.default", padding: "1vw", color: "text.secondary", gap: "1vw", alignItems: "center" }}>
+            <Avatar user={worker.user} size={"5vw"} noClickModal small />
+            <Box sx={{ gap: "0.5vw", flexDirection: "column", width: "20vw" }}>
+                <Box sx={{ gap: "1vw" }}>
                     <Box>{worker.user.name.split(" ")[0]}</Box>
+                </Box>
+
+                <Box sx={{ alignItems: "center", gap: "1vw" }}>
+                    <Autocomplete
+                        options={valid_roles}
+                        renderInput={(params) => <TaiTextField {...params} />}
+                        onChange={(_, value) => setSelectedRole(value)}
+                        disableClearable
+                        ListboxProps={{ sx: { width: "100%" } }}
+                        fullWidth
+                    />
                     <Button
                         variant="outlined"
                         sx={{ width: "fit-content" }}
@@ -117,11 +139,11 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
                         {loading ? <CircularProgress size="1.5rem" /> : working ? <StopCircle color="warning" /> : <PlayCircleRounded />}
                     </Button>
                 </Box>
+            </Box>
 
-                <Box sx={{ flexDirection: "column" }}>
-                    <Box>tempo do dia</Box>
-                    <Box>{formatedWorkedTime}</Box>
-                </Box>
+            <Box sx={{ flexDirection: "column" }}>
+                <Box>tempo do dia</Box>
+                <Box>{formatedWorkedTime}</Box>
             </Box>
         </Paper>
     )

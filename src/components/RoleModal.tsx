@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Box, Button, CircularProgress, Dialog, DialogTitle, TextField, useMediaQuery } from "@mui/material"
-import { useCustomers } from "../hooks/useCustomers"
 import { backdropStyle } from "../style/backdrop"
 import { Form, Formik } from "formik"
 import { useApi } from "../hooks/useApi"
