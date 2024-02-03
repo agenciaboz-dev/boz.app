@@ -30,7 +30,9 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
     const [loading, setLoading] = useState(false)
     const [weeks, setWeeks] = useState("")
 
-    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
+        customers.find((customer) => customer.id == current_project?.customer_id) || null
+    )
 
     const initialValues: NewProjectForm = current_project
         ? { ...current_project, deadline: current_project.deadline ? new Date(Number(current_project.deadline)).toLocaleDateString("pt-br") : "" }
