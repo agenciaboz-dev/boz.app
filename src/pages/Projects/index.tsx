@@ -9,6 +9,8 @@ import { NewProject } from "./NewProject"
 import { useProject } from "../../hooks/useProject"
 import { ProjectButton } from "./ProjectButton"
 import { ProjectPage } from "./ProjectPage"
+import { useCustomers } from "../../hooks/useCustomers"
+import { CustomerButton } from "./CustomerButton"
 
 interface ProjectsProps {
     user: User
@@ -17,7 +19,8 @@ interface ProjectsProps {
 export const Projects: React.FC<ProjectsProps> = ({ user }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const navigate = useNavigate()
-    const { list } = useProject()
+    const { customers } = useCustomers()
+    const list = customers.filter((item) => !!item.projects.length)
 
     return (
         <Box sx={backgroundStyle}>
@@ -44,30 +47,9 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                                 <Add color="secondary" sx={{ width: "1.5vw", height: "auto" }} />
                             </MenuItem>
                         </Tooltip>
-                        {list
-                            .filter((project) => !!project.deadline && project.workers.find((item) => item.user_id == user?.id))
-                            .sort((a, b) => Number(a.deadline) - Number(b.deadline))
-                            .map((project) => (
-                                <ProjectButton project={project} key={project.id} />
-                            ))}
-                        {list
-                            .filter((project) => !project.deadline && project.workers.find((item) => item.user_id == user?.id))
-                            .sort((a, b) => (a.name < b.name ? -1 : 1))
-                            .map((project) => (
-                                <ProjectButton project={project} key={project.id} />
-                            ))}
-                        {list
-                            .filter((project) => !!project.deadline && !project.workers.find((item) => item.user_id == user?.id))
-                            .sort((a, b) => Number(a.deadline) - Number(b.deadline))
-                            .map((project) => (
-                                <ProjectButton project={project} key={project.id} />
-                            ))}
-                        {list
-                            .filter((project) => !project.deadline && !project.workers.find((item) => item.user_id == user?.id))
-                            .sort((a, b) => (a.name < b.name ? -1 : 1))
-                            .map((project) => (
-                                <ProjectButton project={project} key={project.id} />
-                            ))}
+                        {list.map((customer) => (
+                            <CustomerButton key={customer.id} customer={customer} />
+                        ))}
                     </Title>
                 </Paper>
                 <Box sx={{ width: isMobile ? "100%" : "80vw" }}>

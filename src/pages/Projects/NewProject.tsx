@@ -59,6 +59,10 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
                 values.deadline = deadline
             }
 
+            if (!values.links[values.links.length - 1].url) {
+                values.links = []
+            }
+
             values.customer_id = selectedCustomer.id
 
             if (current_project) {

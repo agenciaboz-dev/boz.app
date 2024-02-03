@@ -6,6 +6,7 @@ declare interface Customer {
     image: string
     services: Service[]
     qrcodes: QrCode[]
+    projects: Project[]
 }
 
 declare interface CustomerForm {

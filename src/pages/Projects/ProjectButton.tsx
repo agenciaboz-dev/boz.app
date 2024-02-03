@@ -29,6 +29,7 @@ export const ProjectButton: React.FC<ProjectButtonProps> = ({ project }) => {
                 fontWeight: active ? "bold" : "normal",
                 justifyContent: "space-between",
                 fontSize: active ? "1vw" : "1vw",
+                paddingLeft: "3vw",
             }}
             onClick={() => {
                 navigate(`/projects/${project.id}`)
