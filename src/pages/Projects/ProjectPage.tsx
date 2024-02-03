@@ -61,6 +61,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
                             width: "100%",
                             bgcolor: "background.default",
                             gap: "2vw",
+                            overflowY: "auto",
                         }}
                     >
                         <Box sx={{ gap: "1vw", alignItems: "center", width: "100%" }}>

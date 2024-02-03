@@ -14,7 +14,7 @@ export const CustomerButton: React.FC<CustomerButtonProps> = ({ customer }) => {
     const currentProjectId = useLocation().pathname.split("projects/")[1]?.split("/")[0]
     const active = !!customer.projects.find((project) => project.id == Number(currentProjectId))
 
-    const [showProjects, setShowProjects] = useState(false)
+    const [showProjects, setShowProjects] = useState(active)
 
     return (
         <>
