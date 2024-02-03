@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { Autocomplete, Box, Button, CircularProgress, Grid, IconButton, MenuItem, Paper, Tooltip } from "@mui/material"
+import React, { useCallback, useEffect, useState } from "react"
+import { Autocomplete, Box, Button, CircularProgress, Grid, Paper } from "@mui/material"
 import { useIo } from "../../hooks/useIo"
 import { useSnackbar } from "burgos-snackbar"
 import { useNavigate } from "react-router-dom"
@@ -9,12 +9,9 @@ import { Title } from "../Profile/UserComponents"
 import { TaiTextField } from "../../components/TaiTextField"
 import MaskedInputCerto from "../../components/MaskedInputCerto"
 import { useNumberMask } from "burgos-masks"
-import { WorkerContainer } from "./WorkerContainer"
-import { useUser } from "../../hooks/useUser"
-import { Avatar } from "../../components/Avatar"
-import useMeasure from "react-use-measure"
-import { Cancel } from "@mui/icons-material"
-import normalize from "../../tools/normalize"
+import { useCustomers } from "../../hooks/useCustomers"
+import { EditWorkersContainer } from "./EditWorkersContainer"
+import { EditLink } from "./EditLinkContainer"
 
 interface NewProjectProps {
     user: User
@@ -23,32 +20,34 @@ interface NewProjectProps {
 
 export const NewProject: React.FC<NewProjectProps> = ({ user, current_project }) => {
     const io = useIo()
-    const { snackbar } = useSnackbar()
     const navigate = useNavigate()
     const projects = useProject()
     const number_mask = useNumberMask({ allowDecimal: false })
-    const users = useUser()
-    const [ref, { width }] = useMeasure()
+
+    const { snackbar } = useSnackbar()
+    const { customers } = useCustomers()
 
     const [loading, setLoading] = useState(false)
     const [weeks, setWeeks] = useState("")
-    const [addingUser, setAddingUser] = useState("")
-    const [showUsers, setShowUsers] = useState(false)
+
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
 
     const initialValues: NewProjectForm = current_project
-        ? { ...current_project, deadline: new Date(Number(current_project.deadline)).toLocaleDateString("pt-br") }
+        ? { ...current_project, deadline: current_project.deadline ? new Date(Number(current_project.deadline)).toLocaleDateString("pt-br") : "" }
         : {
               name: "",
               description: "",
               deadline: "",
-              github: "",
-              workers: [{ user_id: user.id, admin: true, role: "" }],
+              workers: [{ user_id: user.id, admin: true }],
+              customer_id: 0,
+              links: [{ name: "", url: "" }],
           }
 
     const formik = useFormik<NewProjectForm>({
         initialValues,
         onSubmit: (values) => {
             if (loading) return
+            if (!selectedCustomer) return
             setLoading(true)
 
             if (values.deadline) {
@@ -59,6 +58,8 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
                 const deadline = new Date(year, month - 1, day).getTime().toString()
                 values.deadline = deadline
             }
+
+            values.customer_id = selectedCustomer.id
 
             if (current_project) {
                 const data: UpdateProjectForm = {
@@ -79,6 +80,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
                 io.emit("project:update", data, current_project.id)
             } else {
                 io.emit("project:new", values)
+                console.log(values)
             }
         },
         enableReinitialize: true,
@@ -122,16 +124,6 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
         }
     }
 
-    const addWorker = (user: User) => {
-        const worker: NewWorkerForm = {
-            user_id: user.id,
-            role: "",
-            admin: false,
-        }
-        formik.setFieldValue("workers", [...formik.values.workers, worker])
-        setShowUsers(false)
-    }
-
     useEffect(() => {
         io.on("project:new:success", (project: Project) => {
             projects.updateProject(project)
@@ -151,147 +143,81 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
     }, [])
 
     return (
-        <Box sx={{ flexDirection: "column", width: "99%", gap: "2vw", padding: "2vw" }}>
-            <form onSubmit={formik.handleSubmit}>
-                <Title name={current_project ? "editar projeto" : "novo projeto"} />
-                <Grid container spacing={1.5}>
-                    <Grid item xs={6}>
-                        <TaiTextField
-                            label="Nome"
-                            name="name"
-                            value={formik.values.name}
-                            onChange={formik.handleChange}
-                            required
-                            //autoComplete="off"
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TaiTextField
-                            label="github"
-                            name="github"
-                            value={formik.values.github}
-                            onChange={formik.handleChange}
-                            placeholder="https://github.com/agenciaboz-dev/PROJETO"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TaiTextField
-                            label="Descrição"
-                            name="description"
-                            value={formik.values.description}
-                            onChange={formik.handleChange}
-                            placeholder=""
-                            multiline
-                            minRows={5}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TaiTextField
-                            label="prazo (semanas)"
-                            value={weeks}
-                            onChange={onWeekManualChange}
-                            placeholder="40"
-                            InputProps={{ inputComponent: MaskedInputCerto, inputProps: { inputMode: "numeric", mask: number_mask } }}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TaiTextField
-                            label="data do prazo"
-                            name="deadline"
-                            value={formik.values.deadline}
-                            onChange={onDeadlineChange}
-                            placeholder=""
-                            InputProps={{
-                                inputComponent: MaskedInputCerto,
-                                inputProps: { inputMode: "numeric", mask: [/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/] },
-                            }}
-                        />
-                    </Grid>
-                </Grid>
-                <Paper
-                    elevation={3}
-                    sx={{
-                        flexDirection: "column",
-                        width: "100%",
-                        gap: "1vw",
-                        bgcolor: "background.default",
-                        overflowY: "auto",
-                        padding: "1vw",
-                        borderRadius: "0 2vw 0 2vw ",
-                        color: "text.secondary",
-                        height: "30%",
-                    }}
-                >
-                    <Grid container columns={2} spacing={1.5}>
-                        {formik.values.workers.map((worker, index) => (
-                            <WorkerContainer key={worker.user_id} worker={worker} self={user.id == worker.user_id} formik={formik} index={index} />
-                        ))}
-                        <Grid item xs={1}>
-                            <Tooltip
-                                placement="top-start"
-                                open={showUsers}
-                                enterDelay={0}
-                                componentsProps={{ tooltip: { sx: { bgcolor: "background.default", padding: 0 } } }}
-                                title={
-                                    <Paper
-                                        sx={{
-                                            flexDirection: "column",
-                                            gap: "0.3vw",
-                                            bgcolor: "background.default",
-                                            padding: "0.5vw",
-                                            color: "text.secondary",
-                                            maxHeight: "40vh",
-                                            overflowY: "auto",
-                                            width: width,
-                                        }}
-                                    >
-                                        <Box
-                                            sx={{
-                                                justifyContent: "space-between",
-                                                fontSize: "1rem",
-                                                alignItems: "center",
-                                                paddingLeft: "1vw",
-                                                fontWeight: "bold",
-                                                color: "primary.main",
-                                            }}
-                                        >
-                                            <Box>{"escolha o usuário"}</Box>
-                                            <IconButton onClick={() => setShowUsers(false)}>
-                                                <Cancel />
-                                            </IconButton>
-                                        </Box>
-                                        {users.list
-                                            .filter((item) => !formik.values.workers.find((worker) => worker.user_id == item.id))
-                                            .filter((user) => normalize(user.name).includes(normalize(addingUser)))
-                                            .map((user) => (
-                                                <MenuItem sx={{ alignItems: "center", gap: "0.5vw" }} key={user.id} onClick={() => addWorker(user)}>
-                                                    <Avatar user={user} size="2vw" noClickModal small />
-                                                    <Box>{user.name.split(" ")[0]}</Box>
-                                                </MenuItem>
-                                            ))}
-                                    </Paper>
-                                }
-                            >
-                                <TaiTextField
-                                    value={addingUser}
-                                    onChange={(event) => setAddingUser(event.target.value)}
-                                    InputProps={{ ref }}
-                                    onFocus={() => setShowUsers(true)}
-                                    label="adicionar usuário ao projeto"
+        <Paper sx={{ flexDirection: "column", gap: "2vw", padding: "2vw", width: "99%", bgcolor: "background.default", borderTopRightRadius: "2vw" }}>
+            <Title name={current_project ? "editar projeto" : "novo projeto"} />
+            <Box sx={{ width: "100%", gap: "1vw", height: "90%" }}>
+                <form onSubmit={formik.handleSubmit}>
+                    <Box sx={{ flexDirection: "column", width: "70%", gap: "2vw" }}>
+                        <Grid container spacing={1.5}>
+                            <Grid item xs={6}>
+                                <Autocomplete
+                                    options={customers}
+                                    value={selectedCustomer}
+                                    onChange={(_, value) => setSelectedCustomer(value)}
+                                    renderInput={(params) => <TaiTextField {...params} label="Cliente" required />}
+                                    getOptionLabel={(customer) => `${customer.name}`}
+                                    ListboxProps={{ sx: { width: "100%" } }}
                                 />
-                            </Tooltip>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TaiTextField
+                                    label="Nome do projeto"
+                                    name="name"
+                                    value={formik.values.name}
+                                    onChange={formik.handleChange}
+                                    required
+                                    autoComplete="off"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TaiTextField
+                                    label="Descrição"
+                                    name="description"
+                                    value={formik.values.description}
+                                    onChange={formik.handleChange}
+                                    placeholder=""
+                                    multiline
+                                    minRows={5}
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TaiTextField
+                                    label="prazo (semanas)"
+                                    value={weeks}
+                                    onChange={onWeekManualChange}
+                                    placeholder="40"
+                                    InputProps={{ inputComponent: MaskedInputCerto, inputProps: { inputMode: "numeric", mask: number_mask } }}
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TaiTextField
+                                    label="data do prazo"
+                                    name="deadline"
+                                    value={formik.values.deadline}
+                                    onChange={onDeadlineChange}
+                                    placeholder=""
+                                    InputProps={{
+                                        inputComponent: MaskedInputCerto,
+                                        inputProps: { inputMode: "numeric", mask: [/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/] },
+                                    }}
+                                />
+                            </Grid>
+                            {formik.values.links.map((link, index) => (
+                                <EditLink key={index} formik={formik} index={index} link={link} />
+                            ))}
                         </Grid>
-                    </Grid>
-                </Paper>
-                <Box sx={{ alignSelf: "end", gap: "1vw" }}>
-                    <Button variant="outlined" onClick={() => navigate(current_project ? `/projects/${current_project.id}` : "/projects")}>
-                        Cancelar
-                    </Button>
-                    <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
-                        {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "salvar"}
-                    </Button>
-                </Box>
-            </form>
-        </Box>
+                        <Box sx={{ alignSelf: "end", gap: "1vw", marginTop: "auto" }}>
+                            <Button variant="outlined" onClick={() => navigate(current_project ? `/projects/${current_project.id}` : "/projects")}>
+                                Cancelar
+                            </Button>
+                            <Button type="submit" variant="contained" sx={{ color: "secondary.main" }}>
+                                {loading ? <CircularProgress size="1.5rem" color="secondary" /> : "salvar"}
+                            </Button>
+                        </Box>
+                    </Box>
+                    <EditWorkersContainer formik={formik} user={user} />
+                </form>
+            </Box>
+        </Paper>
     )
 }

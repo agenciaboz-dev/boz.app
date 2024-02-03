@@ -1,12 +1,13 @@
 declare interface Project {
     id: number
     name: string
-    github?: string
     description: string
     deadline?: string
+    customer_id: number
 
     times: ProjectTime
     workers: ProjectWorker[]
+    links: Link[]
 }
 
 declare interface ProjectWorker {
@@ -16,12 +17,18 @@ declare interface ProjectWorker {
     times: ProjectTime[]
     user_id: number
     user: User
-    role: string
 }
 
 declare interface ProjectTime {
     id: number
     started: string
+    role?: string
     ended?: string
     worked?: string
+}
+
+declare interface Link {
+    id: number
+    name?: string
+    url: string
 }

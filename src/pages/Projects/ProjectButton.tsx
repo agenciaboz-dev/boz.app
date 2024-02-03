@@ -44,7 +44,7 @@ export const ProjectButton: React.FC<ProjectButtonProps> = ({ project }) => {
             >
                 {project.name}
             </p>
-            <Box sx={{ gap: isMobile ? "5vw" : "0.5vw" }}>{you_worker && <Label label={you_worker.role} color={working ? "success" : "info"} />}</Box>
+            {/* <Box sx={{ gap: isMobile ? "5vw" : "0.5vw" }}>{you_worker && <Label label={you_worker.role} color={working ? "success" : "info"} />}</Box> */}
         </MenuItem>
     )
 }

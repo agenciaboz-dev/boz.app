@@ -34,30 +34,13 @@ export const WorkerContainer: React.FC<WorkerContainerProps> = ({ worker, self, 
             <Box sx={{ gap: "0.5vw", alignItems: "center", justifyContent: "space-between" }}>
                 <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
                     <Avatar user={user} size={"2.5vw"} small noClickModal />
-                    {worker.admin && <Star color="primary" />}
-                    <Box>{user.name}</Box>
+                    <Box>{user.name.split(" ")[0]}</Box>
                 </Box>
                 <Box sx={{ gap: "0.5vw", alignItems: "center" }}>
                     <FormControlLabel
                         label="admin"
                         control={<Checkbox checked={worker.admin} disabled={self} onChange={formik.handleChange} name={`workers[${index}].admin`} />}
                     />
-
-                    <TaiTextField
-                        select
-                        InputProps={{ sx: { width: "10vw" } }}
-                        value={formik.values.workers[index].role}
-                        name={`workers[${index}].role`}
-                        onChange={formik.handleChange}
-                        required
-                    >
-                        <MenuItem value="" sx={{ display: "none" }}></MenuItem>
-                        {valid_roles.map((item) => (
-                            <MenuItem key={item} value={item}>
-                                {item}
-                            </MenuItem>
-                        ))}
-                    </TaiTextField>
 
                     <IconButton disabled={self} onClick={removeWorker}>
                         <Cancel />

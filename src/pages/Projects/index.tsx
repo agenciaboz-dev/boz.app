@@ -36,7 +36,7 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                         color: "secondary.main",
                         overflowX: "hidden",
                     }}
-                    elevation={4}
+                    elevation={5}
                 >
                     <Title title="Projetos">
                         <Tooltip title="novo projeto" dir="top">
