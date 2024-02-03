@@ -34,14 +34,17 @@ export const useUser = () => {
         (user: User) => {
             if (user.status == 1) {
                 if (!!userContext.workPausedId) {
-                    setTimeout(() => io.emit("project:play", userContext.workPausedId), 500)
+                    const data: PlayProjectForm = { worker_id: userContext.workPausedId, role: userContext.workPausedRole }
+                    setTimeout(() => io.emit("project:play", data), 500)
                     userContext.setWorkPausedId(0)
+                    userContext.setWorkPausedRole("")
                 }
             } else {
                 const working = user.working_projects.find((worker) => !!worker.times.length && !worker.times[worker.times.length - 1].ended)
                 if (working) {
                     setTimeout(() => io.emit("project:stop", working.times[working.times.length - 1], working), 500)
                     userContext.setWorkPausedId(working.id)
+                    userContext.setWorkPausedRole(working.times[working.times.length - 1].role!)
                 }
             }
         },

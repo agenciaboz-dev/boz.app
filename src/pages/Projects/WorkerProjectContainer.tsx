@@ -56,7 +56,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
             const data: PlayProjectForm = { worker_id: worker.id, role: selectedRole }
             io.emit("project:play", data)
         }
-    }, [user.working_projects])
+    }, [user.working_projects, selectedRole])
 
     const onStop = () => {
         if (loading) return
