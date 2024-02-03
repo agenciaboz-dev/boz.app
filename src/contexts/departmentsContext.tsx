@@ -56,13 +56,22 @@ export const DepartmentsProvider: React.FC<DepartmentsProviderProps> = ({ childr
         setRoles((prevList) => [...prevList.filter((item) => item.id != role.id), role])
     }
 
+    const deleteRole = (role: Role) => {
+        setRoles((prevList) => prevList.filter((item) => item.id != role.id))
+    }
+
     useEffect(() => {
         io.on("role:new", (data: Role) => {
             addRole(data)
         })
 
+        io.on("role:delete", (data: Role) => {
+            deleteRole(data)
+        })
+
         return () => {
             io.off("role:new")
+            io.off("role:delete")
         }
     }, [roles])
 
