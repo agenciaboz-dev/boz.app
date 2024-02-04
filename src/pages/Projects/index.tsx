@@ -22,7 +22,7 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
     const navigate = useNavigate()
     const { customers } = useCustomers()
     const { isAdmin } = useUser()
-    const list = customers.filter((item) => !!item.projects.length)
+    const list = customers.filter((item) => !!item.projects.length).sort((a, b) => (a.name < b.name ? -1 : 1))
 
     return (
         <Box sx={backgroundStyle}>
