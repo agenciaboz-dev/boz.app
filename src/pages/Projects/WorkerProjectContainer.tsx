@@ -118,7 +118,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
                             onChange={(_, value) => setSelectedRole(value)}
                             value={working ? worker.times[worker.times.length - 1].role : ""}
                             disableClearable
-                            ListboxProps={{ sx: { width: "100%" } }}
+                            ListboxProps={{ sx: { width: "100%", bgcolor: "background.default" } }}
                             fullWidth
                             disabled={user?.id != worker.user.id || working}
                         />
