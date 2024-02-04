@@ -3,12 +3,14 @@ import { Box, MenuItem, SxProps } from "@mui/material"
 import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
 import { getWeekDay } from "../Tools/project/getWeekDay"
 import { isDateInThisWeek } from "../Tools/project/isDateInThisWeek"
+import { getCurrentWeekDays } from "../Tools/project/getCurrentWeekDays"
 
 interface WorkerHeaderProps {
     worker: ProjectWorker
 }
 
 export const WorkerHeader: React.FC<WorkerHeaderProps> = ({ worker }) => {
+    const week_dates = getCurrentWeekDays()
     const week_times = worker.times.filter((time) => isDateInThisWeek(new Date(Number(time.started))))
     const month_times = worker.times.filter((time) => new Date(Number(time.started)).getMonth() == new Date().getMonth())
 
@@ -16,15 +18,15 @@ export const WorkerHeader: React.FC<WorkerHeaderProps> = ({ worker }) => {
 
     return (
         <Box sx={{ borderBottom: "1px solid", borderColor: "primary.main", width: "100%", justifyContent: "space-between", paddingBottom: "0.5vw" }}>
-            {[1, 2, 3, 4, 5, 6, 7].map((day) => {
-                const times = worker.times.filter((time) => new Date(Number(time.started)).getDay() == day - 1)
+            {week_dates.map((date) => {
+                const times = worker.times.filter((time) => new Date(Number(time.started)).getDate() == date.getDate())
                 const worked_time = getTotalWorked(times)
                 const formatted_time = formatTotalWorked(worked_time, true)
-                const active = day == new Date().getDay()
+                const active = date.getDate() == new Date().getDate()
 
                 return (
-                    <MenuItem key={day} sx={{ padding: 0, minWidth: 0, minHeight: 0, ...button_style }} disabled={active}>
-                        <Box sx={{ fontSize: "1.2rem" }}>{getWeekDay(day - 1)}</Box>
+                    <MenuItem key={date.getTime()} sx={{ padding: 0, minWidth: 0, minHeight: 0, ...button_style }} disabled={active}>
+                        <Box sx={{ fontSize: "1.2rem" }}>{getWeekDay(date.getDay())}</Box>
                         <Box>{formatted_time}</Box>
                     </MenuItem>
                 )
