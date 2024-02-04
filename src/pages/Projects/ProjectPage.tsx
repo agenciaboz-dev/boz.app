@@ -9,6 +9,7 @@ import { WorkerProjectContainer } from "./WorkerProjectContainer"
 import { ProjectInfo } from "./ProjectInfo"
 import { NewProject } from "./NewProject"
 import { useUser } from "../../hooks/useUser"
+import { getTotalWorked } from "../Tools/project/getTotalWorked"
 
 interface ProjectPageProps {
     user: User
@@ -20,6 +21,8 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
     const projects = useProject()
     const project = projects.list.find((item) => item.id == project_id)
     if (!project) return null
+    const you_worker = project.workers.find((item) => item.user_id == user.id)
+    const worker_list = project.workers.filter((worker) => worker.user_id != you_worker?.user_id)
 
     const io = useIo()
     const navigate = useNavigate()
@@ -94,13 +97,9 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
                         </Box>
 
                         <Box sx={{ flexDirection: "column", gap: "1vw" }}>
-                            {project.workers
-                                .filter((item) => item.admin)
-                                .map((worker) => (
-                                    <WorkerProjectContainer key={worker.id} worker={worker} project={project} />
-                                ))}
-                            {project.workers
-                                .filter((item) => !item.admin)
+                            {you_worker && <WorkerProjectContainer worker={you_worker} project={project} />}
+                            {worker_list
+                                .sort((a, b) => getTotalWorked(b.times) - getTotalWorked(a.times))
                                 .map((worker) => (
                                     <WorkerProjectContainer key={worker.id} worker={worker} project={project} />
                                 ))}
