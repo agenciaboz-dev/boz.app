@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, CircularProgress, IconButton, Paper, TextField, darken, lighten, useMediaQuery } from "@mui/material"
+import { Box, CircularProgress, Grid, IconButton, Paper, TextField, darken, lighten, useMediaQuery } from "@mui/material"
 import { backgroundStyle } from "../../../style/background"
 import { Roles } from "./Roles"
 import { useDepartments } from "../../../hooks/useDepartments"
@@ -48,14 +48,14 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
     }
 
     return (
-        <Paper elevation={0}
+        <Paper
+            elevation={0}
             sx={{
                 ...backgroundStyle,
                 padding: isMobile ? "5vw" : "2vw 13vw",
                 gap: isMobile ? "10vw" : "2vw",
                 height: isMobile ? "auto" : "100vh",
                 boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-
             }}
         >
             <Roles />
@@ -89,32 +89,38 @@ export const Deparments: React.FC<DeparmentsProps> = ({ user }) => {
                         borderRadius: "0 3vw",
                     }}
                 >
-                    {departments
-                        .sort((a, b) => a.id - b.id)
-                        .map((department) => (
-                            <DepartmentContainer key={department.id} department={department} />
-                        ))}
-                    <Formik initialValues={{ name: "" }} onSubmit={handleNewDepartment}>
-                        {({ values, handleChange }) => (
-                            <Form>
-                                <TextField
-                                    label="Novo departamento"
-                                    name="name"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    sx={{ ...textFieldStyle, width: isMobile ? "80vw" : "21.5vw" }}
-                                    required
-                                    InputProps={{
-                                        endAdornment: (
-                                            <IconButton color={"primary"} type="submit">
-                                                {loading ? <CircularProgress size="1.5rem" color="primary" /> : <AddIcon />}
-                                            </IconButton>
-                                        ),
-                                    }}
-                                />
-                            </Form>
-                        )}
-                    </Formik>
+                    <Grid container columns={3} spacing={3}>
+                        {departments
+                            .sort((a, b) => a.id - b.id)
+                            .map((department) => (
+                                <Grid item xs={1} key={department.id}>
+                                    <DepartmentContainer department={department} />
+                                </Grid>
+                            ))}
+                        <Grid item xs={1}>
+                            <Formik initialValues={{ name: "" }} onSubmit={handleNewDepartment}>
+                                {({ values, handleChange }) => (
+                                    <Form>
+                                        <TextField
+                                            label="Novo departamento"
+                                            name="name"
+                                            value={values.name}
+                                            onChange={handleChange}
+                                            sx={{ ...textFieldStyle, width: isMobile ? "80vw" : "21.5vw" }}
+                                            required
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <IconButton color={"primary"} type="submit">
+                                                        {loading ? <CircularProgress size="1.5rem" color="primary" /> : <AddIcon />}
+                                                    </IconButton>
+                                                ),
+                                            }}
+                                        />
+                                    </Form>
+                                )}
+                            </Formik>
+                        </Grid>
+                    </Grid>
                 </Box>
             </Box>
         </Paper>
