@@ -97,7 +97,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
                         </Box>
 
                         <Box sx={{ flexDirection: "column", gap: "1vw" }}>
-                            {you_worker && <WorkerProjectContainer worker={you_worker} project={project} />}
+                            {you_worker && <WorkerProjectContainer key={you_worker.id} worker={you_worker} project={project} />}
                             {worker_list
                                 .sort((a, b) => getTotalWorked(b.times) - getTotalWorked(a.times))
                                 .map((worker) => (
