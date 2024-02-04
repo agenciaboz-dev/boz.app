@@ -11,6 +11,7 @@ import { ProjectButton } from "./ProjectButton"
 import { ProjectPage } from "./ProjectPage"
 import { useCustomers } from "../../hooks/useCustomers"
 import { CustomerButton } from "./CustomerButton"
+import { useUser } from "../../hooks/useUser"
 
 interface ProjectsProps {
     user: User
@@ -20,6 +21,7 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const navigate = useNavigate()
     const { customers } = useCustomers()
+    const { isAdmin } = useUser()
     const list = customers.filter((item) => !!item.projects.length)
 
     return (
@@ -42,11 +44,13 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                     elevation={5}
                 >
                     <Title title="Projetos">
-                        <Tooltip title="novo projeto" dir="top">
-                            <MenuItem onClick={() => navigate("/projects/new/")} sx={{ justifyContent: "center" }}>
-                                <Add color="secondary" sx={{ width: "1.5vw", height: "auto" }} />
-                            </MenuItem>
-                        </Tooltip>
+                        {isAdmin() && (
+                            <Tooltip title="novo projeto" dir="top">
+                                <MenuItem onClick={() => navigate("/projects/new/")} sx={{ justifyContent: "center" }}>
+                                    <Add color="secondary" sx={{ width: "1.5vw", height: "auto" }} />
+                                </MenuItem>
+                            </Tooltip>
+                        )}
                         {list.map((customer) => (
                             <CustomerButton key={customer.id} customer={customer} />
                         ))}
