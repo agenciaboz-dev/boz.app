@@ -68,7 +68,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
                 </p>
                 <Box sx={{ justifyContent: "space-between", flexWrap: "wrap", width: "100%", gap: isMobile ? "12vw" : "1vw" }}>
                     {customerList
-                        .sort((a, b) => (a < b ? -1 : 1))
+                        .sort((a, b) => (a.name < b.name ? -1 : 1))
                         .map((customer) => (
                             <CustomerContainer key={customer.id} customer={customer} />
                         ))}
