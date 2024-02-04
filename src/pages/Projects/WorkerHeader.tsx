@@ -4,45 +4,28 @@ import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWork
 import { getWeekDay } from "../Tools/project/getWeekDay"
 import { isDateInThisWeek } from "../Tools/project/isDateInThisWeek"
 import { getCurrentWeekDays } from "../Tools/project/getCurrentWeekDays"
+import { DayButton } from "./DayButton"
+import { day_button_style } from "../../style/day_button_style"
+import { GeneralTimesButton } from "./GeneralTimesButton"
 
 interface WorkerHeaderProps {
     worker: ProjectWorker
+    working: boolean
 }
 
-export const WorkerHeader: React.FC<WorkerHeaderProps> = ({ worker }) => {
+export const WorkerHeader: React.FC<WorkerHeaderProps> = ({ worker, working }) => {
     const week_dates = getCurrentWeekDays()
     const week_times = worker.times.filter((time) => isDateInThisWeek(new Date(Number(time.started))))
     const month_times = worker.times.filter((time) => new Date(Number(time.started)).getMonth() == new Date().getMonth())
 
-    const button_style: SxProps = { flexDirection: "column", alignItems: "center", textAlign: "center", flex: 1, borderRight: "1px solid" }
-
     return (
         <Box sx={{ borderBottom: "1px solid", borderColor: "primary.main", width: "100%", justifyContent: "space-between", paddingBottom: "0.5vw" }}>
-            {week_dates.map((date) => {
-                const times = worker.times.filter((time) => new Date(Number(time.started)).getDate() == date.getDate())
-                const worked_time = getTotalWorked(times)
-                const formatted_time = formatTotalWorked(worked_time, true)
-                const active = date.getDate() == new Date().getDate()
-
-                return (
-                    <MenuItem key={date.getTime()} sx={{ padding: 0, minWidth: 0, minHeight: 0, ...button_style }} disabled={active}>
-                        <Box sx={{ fontSize: "1.2rem" }}>{getWeekDay(date.getDay())}</Box>
-                        <Box>{formatted_time}</Box>
-                    </MenuItem>
-                )
-            })}
-            <Box sx={button_style}>
-                <Box sx={{ fontSize: "1.2rem" }}>{"total semana"}</Box>
-                <Box>{formatTotalWorked(getTotalWorked(week_times), true)}</Box>
-            </Box>
-            <Box sx={button_style}>
-                <Box sx={{ fontSize: "1.2rem" }}>{"total mês"}</Box>
-                <Box>{formatTotalWorked(getTotalWorked(month_times), true)}</Box>
-            </Box>
-            <Box sx={{ ...button_style, borderRight: "" }}>
-                <Box sx={{ fontSize: "1.2rem" }}>{"total"}</Box>
-                <Box>{formatTotalWorked(getTotalWorked(worker.times), true)}</Box>
-            </Box>
+            {week_dates.map((date) => (
+                <DayButton key={date.getTime()} date={date} worker={worker} working={working} />
+            ))}
+            <GeneralTimesButton working={working} times={week_times} label="total semana" />
+            <GeneralTimesButton working={working} times={month_times} label="total mês" />
+            <GeneralTimesButton working={working} times={worker.times} label="total" />
         </Box>
     )
 }

@@ -86,7 +86,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
             console.log(project)
             projects.updateProject(project)
             setLoading(false)
-            setSelectedRole(null)
+            setSelectedRole("")
         })
 
         io.on("project:stop:error", (error) => {
@@ -104,7 +104,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
 
     return (
         <Paper elevation={5} sx={{ bgcolor: "background.default", padding: "1vw", color: "text.secondary", gap: "1vw", flexDirection: "column" }}>
-            <WorkerHeader worker={worker} />
+            <WorkerHeader worker={worker} working={working} />
             <Box sx={{ alignItems: "center", gap: "1vw" }}>
                 <Avatar user={worker.user} size={"4vw"} noClickModal small />
                 <Box sx={{ gap: "0.5vw", flexDirection: "column", width: "20vw" }}>
