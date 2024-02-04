@@ -26,6 +26,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
         .map((role) => role.project_roles!.split(", "))
         .filter((item) => !!item)
         .flatMap((item) => item)
+    valid_roles.push("")
 
     const { confirm } = useConfirmDialog()
     const { snackbar } = useSnackbar()
@@ -85,6 +86,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
             console.log(project)
             projects.updateProject(project)
             setLoading(false)
+            setSelectedRole(null)
         })
 
         io.on("project:stop:error", (error) => {
@@ -111,11 +113,14 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
                     <Box sx={{ alignItems: "center", gap: "1vw" }}>
                         <Autocomplete
                             options={valid_roles}
+                            getOptionDisabled={(option) => !option}
                             renderInput={(params) => <TaiTextField {...params} />}
                             onChange={(_, value) => setSelectedRole(value)}
+                            value={working ? worker.times[worker.times.length - 1].role : ""}
                             disableClearable
                             ListboxProps={{ sx: { width: "100%" } }}
                             fullWidth
+                            disabled={user?.id != worker.user.id || working}
                         />
                         <Button
                             variant="outlined"
