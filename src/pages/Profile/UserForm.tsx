@@ -48,8 +48,8 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
         <Box
             sx={{
                 flexDirection: "column",
-                paddingTop: isMobile? "9vw" : "0",
-                gap: isMobile? "9vw" : "2vw"
+                paddingTop: isMobile ? "9vw" : "0",
+                gap: isMobile ? "9vw" : "2vw",
             }}
         >
             <Container name="Informações Pessoais">
@@ -117,7 +117,7 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                         MenuProps: {
                             sx: selectMenuStyle,
                         },
-                        sx: {overflow: "hidden", paddingRight: "12vw"},
+                        sx: { overflow: "hidden", paddingRight: "12vw" },
                     }}
                     required
                 >
@@ -135,7 +135,8 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     sx={textFieldStyle}
                     SelectProps={{
                         MenuProps: {
-                            sx: selectMenuStyle,
+                            // sx: selectMenuStyle,
+                            MenuListProps: { sx: { bgcolor: "background.default", height: "max-content" } },
                         },
                         sx: { overflow: "hidden", paddingRight: "12vw" },
                         value: selectedRoles,
