@@ -14,6 +14,7 @@ import FastfoodIcon from "@mui/icons-material/Fastfood"
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza"
 import LunchDiningIcon from "@mui/icons-material/LunchDining"
 import { CoffeeSwitch } from "./CoffeeSystem/CoffeeSwitch"
+import { WorkingShortcut } from "./WorkingShortcut"
 
 interface UserDrawerProps {}
 
@@ -101,6 +102,8 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({}) => {
                     {user?.status == 4 && <Stopwatch />}
                 </Box>
             </Box>
+
+            {user && <WorkingShortcut user={user} />}
 
             <CoffeeSwitch bottom={"3vw"} />
             <ModeToggler bottom={0} right="6vw" />

@@ -32,3 +32,10 @@ declare interface Link {
     name?: string
     url: string
 }
+
+interface Working {
+    project: Project
+    customer: Customer
+    worker: ProjectWorker
+    role: string
+}

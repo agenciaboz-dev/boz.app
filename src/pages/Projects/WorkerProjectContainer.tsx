@@ -10,6 +10,7 @@ import { TaiTextField } from "../../components/TaiTextField"
 import { TodayTime } from "./TodayTime"
 import { WorkerHeader } from "./WorkerHeader"
 import { useSnackbar } from "burgos-snackbar"
+import { useCustomers } from "../../hooks/useCustomers"
 
 interface WorkerProjectContainerProps {
     worker: ProjectWorker
@@ -20,6 +21,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
     const io = useIo()
     const projects = useProject()
     const { user } = useUser()
+    const { customers } = useCustomers()
     if (!user) return null
     const valid_roles = user.roles
         .filter((role) => !!role.project_roles)
@@ -71,27 +73,34 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
     }
 
     useEffect(() => {
+        setLoading(false)
+    }, [working])
+
+    useEffect(() => {
         io.on("project:play:success", (project: Project) => {
             console.log(project)
             projects.updateProject(project)
-            setLoading(false)
+            projects.setWorking({
+                project,
+                customer: customers.find((customer) => customer.id == project.customer_id)!,
+                role: selectedRole || "",
+                worker,
+            })
         })
 
         io.on("project:play:error", (error) => {
             console.log(error)
-            setLoading(false)
         })
 
         io.on("project:stop:success", (project: Project) => {
             console.log(project)
             projects.updateProject(project)
-            setLoading(false)
             setSelectedRole("")
+            projects.setWorking(undefined)
         })
 
         io.on("project:stop:error", (error) => {
             console.log(error)
-            setLoading(false)
         })
 
         return () => {
@@ -100,7 +109,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
             io.off("project:stop:success")
             io.off("project:stop:error")
         }
-    }, [])
+    }, [selectedRole])
 
     return (
         <Paper elevation={5} sx={{ bgcolor: "background.default", padding: "1vw", color: "text.secondary", gap: "1vw", flexDirection: "column" }}>
