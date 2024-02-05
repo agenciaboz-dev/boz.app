@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom"
 import colors from "../../style/colors"
 import { Label } from "../Tools/Wakeup/Label"
 import { useUser } from "../../hooks/useUser"
+import { getWorkers } from "../Tools/project/getWorkers"
+import { getYouWorking } from "../Tools/project/getYouWorking"
 
 interface ProjectButtonProps {
     project: Project
@@ -17,12 +19,8 @@ export const ProjectButton: React.FC<ProjectButtonProps> = ({ project }) => {
 
     const { user } = useUser()
 
-    const you_worker = project.workers.find((item) => item.user_id == user?.id)
-    const you_working = !!you_worker?.times.length && !you_worker.times[you_worker.times.length - 1].ended
-    const how_many_working = useMemo(
-        () => project.workers.filter((worker) => !!worker.times.length && !worker.times[worker.times.length - 1].ended),
-        [project]
-    )
+    const you_working = getYouWorking(project, user)
+    const how_many_working = useMemo(() => getWorkers(project), [project])
 
     return (
         <MenuItem
