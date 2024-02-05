@@ -53,20 +53,20 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         id: 2,
         name: "default_dark",
         timestamp: "",
-        primary: "#8CDCFE",
+        primary: "#00AFEF",
         secondary: "#ffffff",
         terciary: "#D9D9D9",
         success: "#34A853",
         warning: "#ffa726",
         background: {
             primary: "#1F1F1F",
-            secondary: "#181818"
+            secondary: "#181818",
         },
         text: {
-            primary: "#8CDCFE",
+            primary: "#00AFEF",
             secondary: "#D9D9D9",
-            terciary: "#0078D4"
-        }
+            terciary: "#0078D4",
+        },
     }
 
     const [colors, setColors] = useState<Theme>(default_colors)
