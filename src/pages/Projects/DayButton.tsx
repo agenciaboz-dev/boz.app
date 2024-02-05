@@ -3,6 +3,7 @@ import { Box, MenuItem, SxProps } from "@mui/material"
 import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
 import { getWeekDay } from "../Tools/project/getWeekDay"
 import { day_button_style } from "../../style/day_button_style"
+import { getTodayTimes } from "../Tools/project/getTodayTimes"
 
 interface DayButtonProps {
     date: Date
@@ -11,7 +12,7 @@ interface DayButtonProps {
 }
 
 export const DayButton: React.FC<DayButtonProps> = ({ date, worker, working }) => {
-    const times = worker.times.filter((time) => new Date(Number(time.started)).getDate() == date.getDate())
+    const times = getTodayTimes(worker.times)
     const today = date.getDate() == new Date().getDate()
 
     const button_style: SxProps = {

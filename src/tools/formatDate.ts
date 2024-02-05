@@ -41,7 +41,7 @@ const days = {
 export const monthName = (month: number) => {
     return months[month + 1] || "Mês inválido"
 }
-const weekDay = (day: number) => {
+const weekDay = (day: 1 | 2 | 3 | 4 | 5 | 6 | 7) => {
     return days[day]
 }
 
