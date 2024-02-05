@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom"
 import { getWorkers } from "../Tools/project/getWorkers"
 import { getYouWorking } from "../Tools/project/getYouWorking"
 import { useUser } from "../../hooks/useUser"
-import { UsersToolip } from "../Profile/UsersTooltip"
+import { WorkersTooltip } from "./WorkersTooltip"
 
 interface CustomerButtonProps {
     customer: Customer
@@ -33,35 +33,38 @@ export const CustomerButton: React.FC<CustomerButtonProps> = ({ customer }) => {
 
     return (
         <>
-            <MenuItem
-                sx={{
-                    width: "100%",
-                    justifyContent: "space-between",
-                }}
-                onClick={() => {
-                    setShowProjects((show) => !show)
-                }}
-            >
-                <p
-                    style={{
-                        width: isMobile ? "100%" : "10vw",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                    }}
-                >
-                    {customer.name}
-                </p>
-                <Box sx={{ gap: "0.5vw" }}>
-                    {!!current_working?.length && (
-                        <UsersToolip users={current_working.map((worker) => worker.user)}>
-                            <Label label={current_working.length.toString()} color={you_working ? "success" : "warning"} />
-                        </UsersToolip>
-                    )}
-                    <KeyboardArrowDown sx={{ rotate: showProjects ? "-180deg" : 0, transition: "0.3s" }} />
+            <WorkersTooltip workers={current_working}>
+                <Box sx={{ flexDirection: "column" }}>
+                    <MenuItem
+                        sx={{
+                            width: "100%",
+                            justifyContent: "space-between",
+                        }}
+                        onClick={() => {
+                            setShowProjects((show) => !show)
+                        }}
+                    >
+                        <p
+                            style={{
+                                width: isMobile ? "100%" : "10vw",
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                textOverflow: "ellipsis",
+                            }}
+                        >
+                            {customer.name}
+                        </p>
+                        <Box sx={{ gap: "0.5vw" }}>
+                            {!!current_working?.length && (
+                                <Label label={current_working.length.toString()} color={you_working ? "success" : "warning"} />
+                            )}
+                            <KeyboardArrowDown sx={{ rotate: showProjects ? "-180deg" : 0, transition: "0.3s" }} />
+                        </Box>
+                    </MenuItem>
                 </Box>
-            </MenuItem>
-            <Collapse in={active || showProjects}>
+            </WorkersTooltip>
+
+            <Collapse in={showProjects}>
                 {customer.projects.map((project) => (
                     <ProjectButton key={project.id} project={project} />
                 ))}

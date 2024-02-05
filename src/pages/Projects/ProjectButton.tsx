@@ -6,6 +6,7 @@ import { Label } from "../Tools/Wakeup/Label"
 import { useUser } from "../../hooks/useUser"
 import { getWorkers } from "../Tools/project/getWorkers"
 import { getYouWorking } from "../Tools/project/getYouWorking"
+import { WorkersTooltip } from "./WorkersTooltip"
 
 interface ProjectButtonProps {
     project: Project
@@ -23,33 +24,37 @@ export const ProjectButton: React.FC<ProjectButtonProps> = ({ project }) => {
     const how_many_working = useMemo(() => getWorkers(project), [project])
 
     return (
-        <MenuItem
-            sx={{
-                width: "100%",
-                pointerEvents: active ? "none" : "",
-                bgcolor: active ? colors.primaryLight : "",
-                color: active ? "white" : "",
-                fontWeight: active ? "bold" : "normal",
-                justifyContent: "space-between",
-                fontSize: active ? "1vw" : "1vw",
-                paddingLeft: "3vw",
-            }}
-            onClick={() => {
-                navigate(`/projects/${project.id}`)
-            }}
-        >
-            <p
-                style={{
-                    width: isMobile ? "100%" : "10vw",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                }}
-            >
-                {project.name}
-            </p>
-            {!!how_many_working.length && <Label label={how_many_working.length.toString()} color={you_working ? "success" : "warning"} />}
-            {/* <Box sx={{ gap: isMobile ? "5vw" : "0.5vw" }}>{you_worker && <Label label={you_worker.role} color={working ? "success" : "info"} />}</Box> */}
-        </MenuItem>
+        <WorkersTooltip workers={how_many_working}>
+            <Box>
+                <MenuItem
+                    sx={{
+                        width: "100%",
+                        pointerEvents: active ? "none" : "",
+                        bgcolor: active ? colors.primaryLight : "",
+                        color: active ? "white" : "",
+                        fontWeight: active ? "bold" : "normal",
+                        justifyContent: "space-between",
+                        fontSize: active ? "1vw" : "1vw",
+                        paddingLeft: "3vw",
+                    }}
+                    onClick={() => {
+                        navigate(`/projects/${project.id}`)
+                    }}
+                >
+                    <p
+                        style={{
+                            width: isMobile ? "100%" : "10vw",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                        }}
+                    >
+                        {project.name}
+                    </p>
+                    {!!how_many_working.length && <Label label={how_many_working.length.toString()} color={you_working ? "success" : "warning"} />}
+                    {/* <Box sx={{ gap: isMobile ? "5vw" : "0.5vw" }}>{you_worker && <Label label={you_worker.role} color={working ? "success" : "info"} />}</Box> */}
+                </MenuItem>
+            </Box>
+        </WorkersTooltip>
     )
 }
