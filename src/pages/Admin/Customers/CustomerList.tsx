@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Box, MenuItem, Paper, useMediaQuery } from "@mui/material"
 import { useCustomers } from "../../../hooks/useCustomers"
 import { CustomerContainer } from "../../../components/CustomerContainer"
@@ -24,10 +24,13 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
 
     const [customerList, setCustomerList] = useState(customers)
 
-    const handleSearch = (value: string) => {
-        const result = customers.filter((customer) => normalize(customer.name).includes(value))
-        setCustomerList(result)
-    }
+    const handleSearch = useCallback(
+        (value: string) => {
+            const result = customers.filter((customer) => normalize(customer.name).includes(normalize(value)))
+            setCustomerList(result)
+        },
+        [customers]
+    )
 
     useEffect(() => {
         setCustomerList(customers)

@@ -59,9 +59,7 @@ export const NewCustomer: React.FC<NewCustomerProps> = ({}) => {
 
     return (
         <Box sx={{ padding: "0vw 0vw", flexDirection: "column" }}>
-            <Box
-                sx={{ backgroundColor: "background.paper", borderRadius: "0.3vw 3vw 0 3vw", height: "75%", width: "100%" }}
-            ></Box>
+            <Box sx={{ backgroundColor: "background.paper", borderRadius: "0.3vw 3vw 0 3vw", height: "75%", width: "100%" }}></Box>
             <Paper
                 elevation={0}
                 sx={{
@@ -114,13 +112,7 @@ export const NewCustomer: React.FC<NewCustomerProps> = ({}) => {
                                             height: "100%",
                                         }}
                                     >
-                                        <TextField
-                                            label="Nome"
-                                            name="name"
-                                            value={values.name}
-                                            onChange={handleChange}
-                                            sx={textFieldStyle}
-                                        />
+                                        <TextField label="Nomea" name="name" value={values.name} onChange={handleChange} sx={textFieldStyle} />
                                         <TextField
                                             label="Recomendações"
                                             name="recomendations"
