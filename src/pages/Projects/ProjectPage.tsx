@@ -10,6 +10,7 @@ import { ProjectInfo } from "./ProjectInfo"
 import { NewProject } from "./NewProject"
 import { useUser } from "../../hooks/useUser"
 import { getTotalWorked } from "../Tools/project/getTotalWorked"
+import { getTodayTimes } from "../Tools/project/getTodayTimes"
 
 interface ProjectPageProps {
     user: User
@@ -99,7 +100,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ user }) => {
                         <Box sx={{ flexDirection: "column", gap: "1vw" }}>
                             {you_worker && <WorkerProjectContainer key={you_worker.id} worker={you_worker} project={project} />}
                             {worker_list
-                                .sort((a, b) => getTotalWorked(b.times) - getTotalWorked(a.times))
+                                .sort((a, b) => getTotalWorked(getTodayTimes(b.times)) - getTotalWorked(getTodayTimes(a.times)))
                                 .map((worker) => (
                                     <WorkerProjectContainer key={worker.id} worker={worker} project={project} />
                                 ))}
