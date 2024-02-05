@@ -35,7 +35,11 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
     )
 
     const initialValues: NewProjectForm = current_project
-        ? { ...current_project, deadline: current_project.deadline ? new Date(Number(current_project.deadline)).toLocaleDateString("pt-br") : "" }
+        ? {
+              ...current_project,
+              deadline: current_project.deadline ? new Date(Number(current_project.deadline)).toLocaleDateString("pt-br") : "",
+              links: [...current_project.links, { name: "", url: "" }],
+          }
         : {
               name: "",
               description: "",
@@ -61,7 +65,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
                 values.deadline = deadline
             }
 
-            if (!values.links[values.links.length - 1].url) {
+            if (!values.links.length || !values.links[values.links.length - 1].url) {
                 values.links = []
             }
 
@@ -123,6 +127,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
                 console.log(weeks)
                 setWeeks(weeks)
             } catch (error) {
+                console.log(error)
                 setWeeks("")
             }
         } else {
