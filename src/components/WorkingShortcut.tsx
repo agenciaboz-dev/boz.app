@@ -42,48 +42,15 @@ export const WorkingShortcut: React.FC<WorkingShortcutProps> = ({ user }) => {
     const [loading, setLoading] = useState(false)
 
     const onPlay = useCallback(() => {
-        if (loading) return
-        if (!selectedRole) {
-            snackbar({ severity: "error", text: "selecione uma função" })
-            return
-        }
-        if (!selectedProject) {
-            snackbar({ severity: "error", text: "selecione um projeto" })
-            return
-        }
-        if (!selectedCustomer) {
-            snackbar({ severity: "error", text: "selecione um cliente" })
-            return
-        }
+        if (loading || !selectedRole || !selectedCustomer || !selectedProject || !worker) return
 
-        if (!worker) return
-
-        const already_working = user.working_projects.find((item) => !!item.times.length && !item.times[item.times.length - 1].ended)
-        if (already_working) {
-            console.log(already_working)
-            confirm({
-                title: `você já está trabalhando`,
-                content: `deseja parar de trabalhar em ${already_working.project.name} e começar ${selectedProject.name}?`,
-                onConfirm: () => {
-                    setLoading(true)
-                    io.emit("project:stop", already_working.times[already_working.times.length - 1], already_working)
-                    const data: PlayProjectForm = { worker_id: worker.id, role: selectedRole }
-                    io.emit("project:play", data)
-                },
-            })
-        } else {
-            setLoading(true)
-            const data: PlayProjectForm = { worker_id: worker.id, role: selectedRole }
-            io.emit("project:play", data)
-        }
-    }, [user.working_projects, selectedRole])
+        projects.play({ project: selectedProject, customer: selectedCustomer, role: selectedRole, worker }, () => setLoading(true))
+    }, [selectedRole, selectedProject, selectedCustomer, worker])
 
     const onStop = () => {
-        if (loading) return
         if (!worker) return
-
         setLoading(true)
-        io.emit("project:stop", worker.times[worker.times.length - 1], worker)
+        projects.stop(worker)
     }
 
     useEffect(() => {
@@ -100,50 +67,10 @@ export const WorkingShortcut: React.FC<WorkingShortcutProps> = ({ user }) => {
     }, [selectedCustomer])
 
     useEffect(() => {
-        console.log({ working: projects.working })
         if (projects.working) {
             setSelectedCustomer(projects.working.customer)
         }
     }, [projects.working])
-
-    useEffect(() => {
-        io.on("project:play:success", (project: Project) => {
-            console.log(project)
-            projects.updateProject(project)
-            setSelectedProject(project)
-            projects.setWorking({
-                project,
-                customer: customers.find((customer) => customer.id == project.customer_id)!,
-                role: selectedRole || "",
-                worker: project.workers.find((worker) => worker.user_id == user.id)!,
-            })
-        })
-
-        io.on("project:play:error", (error) => {
-            console.log(error)
-            setLoading(false)
-        })
-
-        io.on("project:stop:success", (project: Project) => {
-            console.log(project)
-            projects.updateProject(project)
-            setSelectedProject(project)
-            setSelectedRole("")
-            projects.setWorking(undefined)
-        })
-
-        io.on("project:stop:error", (error) => {
-            console.log(error)
-            setLoading(false)
-        })
-
-        return () => {
-            io.off("project:play:success")
-            io.off("project:play:error")
-            io.off("project:stop:success")
-            io.off("project:stop:error")
-        }
-    }, [selectedRole])
 
     return (
         <Box sx={{ padding: "2vw", flexDirection: "column", gap: "1vw" }}>
@@ -155,6 +82,7 @@ export const WorkingShortcut: React.FC<WorkingShortcutProps> = ({ user }) => {
                 value={selectedCustomer}
                 onChange={(_, value) => setSelectedCustomer(value)}
                 isOptionEqualToValue={(option, value) => option?.id == value?.id}
+                disabled={working}
             />
             <Autocomplete
                 options={project_options}
@@ -164,6 +92,7 @@ export const WorkingShortcut: React.FC<WorkingShortcutProps> = ({ user }) => {
                 value={selectedProject}
                 onChange={(_, value) => setSelectedProject(value)}
                 isOptionEqualToValue={(option, value) => option.id == value.id}
+                disabled={working}
             />
             <TaiTextField
                 value={selectedRole}

@@ -2,10 +2,8 @@ import React, { useCallback, useEffect, useState } from "react"
 import { Autocomplete, Box, Button, CircularProgress, Paper } from "@mui/material"
 import { Avatar } from "../../components/Avatar"
 import { PlayCircleRounded, StopCircle } from "@mui/icons-material"
-import { useIo } from "../../hooks/useIo"
 import { useProject } from "../../hooks/useProject"
 import { useUser } from "../../hooks/useUser"
-import { useConfirmDialog } from "burgos-confirm"
 import { TaiTextField } from "../../components/TaiTextField"
 import { TodayTime } from "./TodayTime"
 import { WorkerHeader } from "./WorkerHeader"
@@ -18,7 +16,6 @@ interface WorkerProjectContainerProps {
 }
 
 export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ worker, project }) => {
-    const io = useIo()
     const projects = useProject()
     const { user } = useUser()
     const { customers } = useCustomers()
@@ -30,13 +27,12 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
         .flatMap((item) => item)
     valid_roles.push("")
 
-    const { confirm } = useConfirmDialog()
     const { snackbar } = useSnackbar()
 
     const working = !!worker.times.length && !!worker.times[worker.times.length - 1].started && !worker.times[worker.times.length - 1].ended
 
-    const [loading, setLoading] = useState(false)
     const [selectedRole, setSelectedRole] = useState<string | null>()
+    const [loading, setLoading] = useState(false)
 
     const onPlay = useCallback(() => {
         if (loading) return
@@ -45,71 +41,20 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
             return
         }
 
-        const already_working = user.working_projects.find((item) => !!item.times.length && !item.times[item.times.length - 1].ended)
-        if (already_working) {
-            console.log(already_working)
-            confirm({
-                title: `você já está trabalhando`,
-                content: `deseja parar de trabalhar em ${already_working.project.name} e começar ${project.name}?`,
-                onConfirm: () => {
-                    setLoading(true)
-                    io.emit("project:stop", already_working.times[already_working.times.length - 1], already_working)
-                    const data: PlayProjectForm = { worker_id: worker.id, role: selectedRole }
-                    io.emit("project:play", data)
-                },
-            })
-        } else {
-            setLoading(true)
-            const data: PlayProjectForm = { worker_id: worker.id, role: selectedRole }
-            io.emit("project:play", data)
-        }
+        const customer = customers.find((customer) => customer.id == project.customer_id)
+        if (!customer) return
+
+        projects.play({ project, customer, role: selectedRole, worker }, () => setLoading(true))
     }, [user.working_projects, selectedRole])
 
     const onStop = () => {
-        if (loading) return
-
         setLoading(true)
-        io.emit("project:stop", worker.times[worker.times.length - 1], worker)
+        projects.stop(worker)
     }
 
     useEffect(() => {
         setLoading(false)
     }, [working])
-
-    useEffect(() => {
-        io.on("project:play:success", (project: Project) => {
-            console.log(project)
-            projects.updateProject(project)
-            projects.setWorking({
-                project,
-                customer: customers.find((customer) => customer.id == project.customer_id)!,
-                role: selectedRole || "",
-                worker,
-            })
-        })
-
-        io.on("project:play:error", (error) => {
-            console.log(error)
-        })
-
-        io.on("project:stop:success", (project: Project) => {
-            console.log(project)
-            projects.updateProject(project)
-            setSelectedRole("")
-            projects.setWorking(undefined)
-        })
-
-        io.on("project:stop:error", (error) => {
-            console.log(error)
-        })
-
-        return () => {
-            io.off("project:play:success")
-            io.off("project:play:error")
-            io.off("project:stop:success")
-            io.off("project:stop:error")
-        }
-    }, [selectedRole])
 
     return (
         <Paper elevation={5} sx={{ bgcolor: "background.default", padding: "1vw", color: "text.secondary", gap: "1vw", flexDirection: "column" }}>

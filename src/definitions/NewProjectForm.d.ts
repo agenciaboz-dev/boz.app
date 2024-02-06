@@ -20,6 +20,8 @@ declare interface LinkForm {
 }
 
 declare interface PlayProjectForm {
-    worker_id: number
+    worker: ProjectWorker
     role: string
+    customer: Customer
+    project: Project
 }
