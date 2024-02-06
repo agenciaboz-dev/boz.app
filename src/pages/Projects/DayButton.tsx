@@ -4,6 +4,7 @@ import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWork
 import { getWeekDay } from "../Tools/project/getWeekDay"
 import { day_button_style } from "../../style/day_button_style"
 import { getTodayTimes } from "../Tools/project/getTodayTimes"
+import { getDateTimes } from "../Tools/project/getDateTimes"
 
 interface DayButtonProps {
     date: Date
@@ -12,7 +13,7 @@ interface DayButtonProps {
 }
 
 export const DayButton: React.FC<DayButtonProps> = ({ date, worker, working }) => {
-    const times = getTodayTimes(worker.times)
+    const times = getDateTimes(worker.times, date)
     const today = date.getDate() == new Date().getDate()
 
     const button_style: SxProps = {
