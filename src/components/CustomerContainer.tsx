@@ -34,7 +34,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
                 borderBottom: "2px solid",
                 borderRadius: isMobile ? "3vw" : "0 3vw",
                 padding: isMobile ? "0 0 5vw 0" : "2vw",
-                width: isMobile ? "80vw" : "30vw",
+                // width: isMobile ? "80vw" : "30vw",
                 // bgcolor: customer.active ? "background.default" : alpha(theme.palette.error.main, 0.25),
                 color: customer.active ? "primary.main" : "error.main",
                 position: "relative",
@@ -45,10 +45,7 @@ export const CustomerContainer: React.FC<CustomerContainerProps> = ({ customer }
         >
             <Box sx={{ flexDirection: "column", gap: isMobile ? "5vw" : "1.5vw" }}>
                 <Box sx={{ gap: isMobile ? "3vw" : "1vw", alignItems: "center" }}>
-                    <CustomerAvatar
-                        customer={customer}
-                        sx={{ width: isMobile ? "15vw" : "5vw", height: isMobile ? "15vw" : "5vw" }}
-                    />
+                    <CustomerAvatar customer={customer} sx={{ width: isMobile ? "15vw" : "5vw", height: isMobile ? "15vw" : "5vw" }} />
                     <Box
                         sx={{
                             fontWeight: "bold",

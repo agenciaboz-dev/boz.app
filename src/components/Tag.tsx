@@ -18,7 +18,7 @@ export const Tag: React.FC<TagProps> = ({ name, tooltip, fontSize, sx, color, on
     const { darkMode } = useDarkMode()
 
     return (
-        <Tooltip title={tooltip} enterDelay={0} placement="bottom-start">
+        <Tooltip title={tooltip} enterDelay={0} placement="bottom">
             <Box
                 sx={{
                     fontSize: `${fontSize}`,

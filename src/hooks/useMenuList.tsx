@@ -18,11 +18,14 @@ import { useWarnings } from "./useWarnings"
 import ApiIcon from "@mui/icons-material/Api"
 import PaletteIcon from "@mui/icons-material/Palette"
 import { AccountTree } from "@mui/icons-material"
+import { useCustomers } from "./useCustomers"
 
 export const useMenuList = () => {
     const navigate = useNavigate()
-    const { user } = useUser()
     const warnings = useWarnings()
+
+    const { user, list } = useUser()
+    const { customers } = useCustomers()
 
     const electron = window.electron
 
@@ -89,14 +92,22 @@ export const useMenuList = () => {
             id: 5,
             name: "Coleguinhas",
             path: "/users",
-            icon: <Groups3Icon />,
+            icon: (
+                <StyledBadge badgeContent={list.length} color="warning">
+                    <Groups3Icon />
+                </StyledBadge>
+            ),
             onClick: () => navigate("/users"),
         },
         {
             id: 6,
             name: "Clientes",
             path: "/customers",
-            icon: <BusinessIcon />,
+            icon: (
+                <StyledBadge badgeContent={customers.filter((customer) => customer.active).length} color="warning">
+                    <BusinessIcon />
+                </StyledBadge>
+            ),
             onClick: () => navigate("/customers"),
         },
         {
