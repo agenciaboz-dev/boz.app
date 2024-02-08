@@ -15,13 +15,17 @@ interface WakeupProps {
     user: User
 }
 
-export const Title: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
+export const Title: React.FC<{ title: string; children?: React.ReactNode; icon?: React.ReactNode }> = ({
+    title,
+    children,
+    icon,
+}) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
 
     return (
         <Box sx={{ flexDirection: "column", gap: "1vw", padding: isMobile ? "5vw 0" : "1vw 0" }}>
             <Box sx={{ alignItems: "center", justifyContent: "center", gap: "0.5vw" }}>
-                <ApiIcon />
+                {icon ? icon : <ApiIcon />}
                 <p style={{ textAlign: "center", fontWeight: "800", fontSize: "1.2vw" }}>{title}</p>
             </Box>
             <Box sx={{ flexDirection: "column" }}>{children}</Box>

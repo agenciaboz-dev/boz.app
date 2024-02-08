@@ -22,10 +22,11 @@ export const Admin: React.FC<AdminProps> = ({ user }) => {
                 width: "100vw",
                 height: "100vh",
                 bgcolor: "background.default",
-                overflow: "hidden"
-            }}>
+                overflow: "hidden",
+            }}
+        >
             <Header user={user} />
-            <Box sx={{ flexDirection: "column", overflowY: "auto", height: isMobile ? "90vh" : "87vh" }}>
+            <Box sx={{ flexDirection: "column", overflowY: "auto", height: isMobile ? "90vh" : "90%" }}>
                 <Routes>
                     <Route index element={<Users user={user} />} />
                     <Route path="/users/*" element={<Users user={user} />} />
