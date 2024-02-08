@@ -49,6 +49,13 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
               links: [{ name: "", url: "" }],
           }
 
+    const checkLinks = (values: NewProjectForm) => {
+        if (!values.links[values.links.length - 1].url) {
+            values.links = values.links.slice(0, -1)
+            checkLinks(values)
+        }
+    }
+
     const formik = useFormik<NewProjectForm>({
         initialValues,
         onSubmit: (values) => {
@@ -65,9 +72,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
                 values.deadline = deadline
             }
 
-            if (!values.links.length || !values.links[values.links.length - 1].url) {
-                values.links = []
-            }
+            checkLinks(values)
 
             values.customer_id = selectedCustomer.id
 
@@ -154,7 +159,17 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
     }, [])
 
     return (
-        <Paper sx={{ flexDirection: "column", gap: "2vw", padding: "2vw", width: "99%", bgcolor: "background.default", borderTopRightRadius: "2vw" }}>
+        <Paper
+            sx={{
+                flexDirection: "column",
+                gap: "2vw",
+                padding: "2vw",
+                width: "99%",
+                bgcolor: "background.default",
+                borderTopRightRadius: "2vw",
+                overflowY: "auto",
+            }}
+        >
             <Title name={current_project ? "editar projeto" : "novo projeto"} />
             <Box sx={{ width: "100%", gap: "1vw", height: "90%" }}>
                 <form onSubmit={formik.handleSubmit}>
