@@ -50,7 +50,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
           }
 
     const checkLinks = (values: NewProjectForm) => {
-        if (!values.links[values.links.length - 1].url) {
+        if (current_project && values.links.length && !values.links[values.links.length - 1].url) {
             values.links = values.links.slice(0, -1)
             checkLinks(values)
         }

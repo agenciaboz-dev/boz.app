@@ -64,15 +64,12 @@ export const NewRequest: React.FC<NewRequestProps> = ({ user, api }) => {
                             >
                                 <MenuItem value="GET">GET</MenuItem>
                                 <MenuItem value="POST">POST</MenuItem>
+                                <MenuItem value="PATCH">PATCH</MenuItem>
+                                <MenuItem value="DELETE">DELETE</MenuItem>
                             </TextField>
                         </Grid>
                         <Grid item xs={9}>
-                            <TaiTextField
-                                label="Nome"
-                                name="name"
-                                value={formik.values.name}
-                                onChange={formik.handleChange}
-                            />
+                            <TaiTextField label="Nome" name="name" value={formik.values.name} onChange={formik.handleChange} />
                         </Grid>
                     </Grid>
                     <TaiTextField label="Url" name="url" value={formik.values.url} onChange={formik.handleChange} />

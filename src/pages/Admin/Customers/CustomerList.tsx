@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { Box, MenuItem, Paper, useMediaQuery } from "@mui/material"
+import { Box, Grid, MenuItem, Paper, SxProps, useMediaQuery } from "@mui/material"
 import { useCustomers } from "../../../hooks/useCustomers"
 import { CustomerContainer } from "../../../components/CustomerContainer"
 import { useSearch } from "../../../hooks/useSearch"
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom"
 import AddIcon from "@mui/icons-material/Add"
 import colors from "../../../style/colors"
 import { useColors } from "../../../hooks/useColors"
+import { Tag } from "../../../components/Tag"
 
 interface CustomerListProps {}
 
@@ -23,6 +24,8 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
     const colors = useColors()
 
     const [customerList, setCustomerList] = useState(customers)
+
+    const tag_style: SxProps = { height: "1.5vw", fontSize: "0.8rem", fontWeight: "bold" }
 
     const handleSearch = useCallback(
         (value: string) => {
@@ -59,23 +62,40 @@ export const CustomerList: React.FC<CustomerListProps> = ({}) => {
                     gap: isMobile ? "5vw" : "1vw",
                 }}
             >
-                <p
-                    style={{
-                        fontWeight: "bold",
-                        fontSize: isMobile ? "6vw" : "1.3vw",
-                        textAlign: isMobile ? "center" : "start",
-                        color: colors.text.primary,
-                    }}
-                >
-                    Clientes
-                </p>
-                <Box sx={{ justifyContent: "space-between", flexWrap: "wrap", width: "100%", gap: isMobile ? "12vw" : "1vw" }}>
+                <Box sx={{ gap: "1vw", alignItems: "center" }}>
+                    <p
+                        style={{
+                            fontWeight: "bold",
+                            fontSize: isMobile ? "6vw" : "1.3vw",
+                            textAlign: isMobile ? "center" : "start",
+                            color: colors.text.primary,
+                        }}
+                    >
+                        Clientes
+                    </p>
+                    <Tag
+                        name={customers.filter((customer) => customer.active).length.toString()}
+                        tooltip="ativos"
+                        color="success.main"
+                        sx={tag_style}
+                    />
+                    <Tag
+                        name={customers.filter((customer) => !customer.active).length.toString()}
+                        tooltip="inativos"
+                        color="error.main"
+                        sx={tag_style}
+                    />
+                    <Tag name={customers.length.toString()} tooltip="total" color="warning.main" sx={tag_style} />
+                </Box>
+                <Grid container columns={3} spacing={3}>
                     {customerList
                         .sort((a, b) => (a.name < b.name ? -1 : 1))
                         .map((customer) => (
-                            <CustomerContainer key={customer.id} customer={customer} />
+                            <Grid item xs={1} key={customer.id}>
+                                <CustomerContainer key={customer.id} customer={customer} />
+                            </Grid>
                         ))}
-                </Box>
+                </Grid>
             </Box>
         </Box>
     )

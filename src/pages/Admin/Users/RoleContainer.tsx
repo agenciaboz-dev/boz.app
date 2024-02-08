@@ -1,8 +1,9 @@
 import React from "react"
-import { Box, Paper, Skeleton, useMediaQuery } from "@mui/material"
+import { Box, Paper, Skeleton, SxProps, useMediaQuery } from "@mui/material"
 import { useArray } from "burgos-array"
 import { useUser } from "../../../hooks/useUser"
 import { UserCard } from "./UserCard"
+import { Tag } from "../../../components/Tag"
 
 interface RoleContainerProps {
     department: Department
@@ -17,6 +18,8 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
     const connectedUsers = userList.filter((user) => connectedList.map((item) => item.id).includes(user.id))
     const nonConnectedUsers = userList.filter((user) => !connectedList.map((item) => item.id).includes(user.id))
 
+    const tag_style: SxProps = { height: "1.5vw", fontSize: "0.8rem", fontWeight: "bold" }
+
     return (
         <Box
             sx={{
@@ -30,7 +33,10 @@ export const RoleContainer: React.FC<RoleContainerProps> = ({ department, users 
                 paddingBottom: isMobile ? "15vw" : "3vw",
             }}
         >
-            <Box sx={{ fontWeight: "bold", padding: "0 0.7vw", fontSize: isMobile ? "6vw" : "1vw" }}>{department.name}</Box>
+            <Box sx={{ fontWeight: "bold", padding: "0 0.7vw", fontSize: isMobile ? "6vw" : "1vw", gap: "0.5vw" }}>
+                {department.name}
+                <Tag name={userList.length.toString()} tooltip="usuários" color="primary.main" sx={tag_style} />
+            </Box>
 
             <Box
                 sx={{
