@@ -58,10 +58,6 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
 
     const [firstRender, setFirstRender] = useState(true)
     const [deleting, setDeleting] = useState(false)
-    const [selectedRequest, setSelectedRequest] = useState<WakeupRequest>()
-    const [selectedEvent, setSelectedEvent] = useState<WakeupEvent>()
-    const [newRequest, setNewRequest] = useState(false)
-    const [newEvent, setNewEvent] = useState(false)
     const [localhost, setLocalhost] = useState<boolean>(storage.get(`bozapp:wakeup:${api?.id}:localhost`))
 
     const formik = useFormik({ initialValues: api!, onSubmit: (values) => console.log(values), enableReinitialize: true })
@@ -173,7 +169,18 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                     >
                                         {request.name}
                                     </p>
-                                    <Label label={request.method} color={request.method == "GET" ? "success" : "info"} />
+                                    <Label
+                                        label={request.method}
+                                        color={
+                                            request.method == "GET"
+                                                ? "success"
+                                                : request.method == "POST"
+                                                ? "info"
+                                                : request.method == "PATCH"
+                                                ? "warning"
+                                                : "error"
+                                        }
+                                    />
                                 </MenuItem>
                             )
                         })}
@@ -235,38 +242,19 @@ export const ApiPage: React.FC<ApiPageProps> = ({ user }) => {
                                         </Box>
                                         <Tooltip title={`Excluir ${formik.values.name}`} arrow>
                                             <IconButton color="primary" onClick={handleDelete}>
-                                                {deleting ? (
-                                                    <CircularProgress color="error" size="1.5rem" />
-                                                ) : (
-                                                    <DeleteForever />
-                                                )}
+                                                {deleting ? <CircularProgress color="error" size="1.5rem" /> : <DeleteForever />}
                                             </IconButton>
                                         </Tooltip>
                                     </Box>
                                     <Grid container spacing={1.5}>
                                         <Grid item xs={9}>
-                                            <TaiTextField
-                                                label="Name"
-                                                name="name"
-                                                value={formik.values.name}
-                                                onChange={formik.handleChange}
-                                            />
+                                            <TaiTextField label="Name" name="name" value={formik.values.name} onChange={formik.handleChange} />
                                         </Grid>
                                         <Grid item xs={3}>
-                                            <TaiTextField
-                                                label="Porta"
-                                                name="port"
-                                                value={formik.values.port}
-                                                onChange={formik.handleChange}
-                                            />
+                                            <TaiTextField label="Porta" name="port" value={formik.values.port} onChange={formik.handleChange} />
                                         </Grid>
                                     </Grid>
-                                    <TaiTextField
-                                        label="Base url"
-                                        name="baseUrl"
-                                        value={formik.values.baseUrl}
-                                        onChange={formik.handleChange}
-                                    />
+                                    <TaiTextField label="Base url" name="baseUrl" value={formik.values.baseUrl} onChange={formik.handleChange} />
                                     <TaiTextField
                                         label="Comments"
                                         multiline

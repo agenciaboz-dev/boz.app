@@ -202,6 +202,8 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
                         >
                             <MenuItem value="GET">GET</MenuItem>
                             <MenuItem value="POST">POST</MenuItem>
+                            <MenuItem value="PATCH">PATCH</MenuItem>
+                            <MenuItem value="DELETE">DELETE</MenuItem>
                         </TextField>
                     </Grid>
                     <Grid item xs={4}>
@@ -235,13 +237,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
                             onBlur={handlePayloadBlur}
                         />
                     )}
-                    <Button
-                        variant="contained"
-                        sx={{ color: "secondary.main" }}
-                        onClick={handleSend}
-                        fullWidth
-                        disabled={!jsonPayload}
-                    >
+                    <Button variant="contained" sx={{ color: "secondary.main" }} onClick={handleSend} fullWidth disabled={!jsonPayload}>
                         {loading ? <CircularProgress size="1.5rem" sx={{ color: "background.default" }} /> : "send"}
                     </Button>
                     <TaiTextField
@@ -267,12 +263,7 @@ export const RequestContainer: React.FC<RequestContainerProps> = ({ api }) => {
             </Box>
             <Box sx={{ padding: "0 2vw 0 1vw ", width: "100%" }}>
                 <Tooltip title={statusText}>
-                    <Button
-                        variant="contained"
-                        sx={{ width: "100%" }}
-                        disabled={!status}
-                        color={wakeup.statusCodeColor(status)}
-                    >
+                    <Button variant="contained" sx={{ width: "100%" }} disabled={!status} color={wakeup.statusCodeColor(status)}>
                         {status || "status"}
                     </Button>
                 </Tooltip>
