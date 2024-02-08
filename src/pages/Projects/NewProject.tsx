@@ -189,6 +189,7 @@ export const NewProject: React.FC<NewProjectProps> = ({ user, current_project })
                                     placeholder=""
                                     multiline
                                     minRows={5}
+                                    maxRows={10}
                                 />
                             </Grid>
                             <Grid item xs={6}>
