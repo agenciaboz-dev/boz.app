@@ -1,110 +1,96 @@
 import React from "react"
-import { Box, Grid, IconButton, Paper, Tooltip, useMediaQuery } from "@mui/material"
+import { Avatar, Box, Paper, useMediaQuery } from "@mui/material"
 import { backgroundStyle } from "../../../style/background"
 import { useUser } from "../../../hooks/useUser"
-import { StatusLogs } from "./StatusLogs"
 import { useColors } from "../../../hooks/useColors"
 import { Title } from "../../Tools/Wakeup"
-import { Add } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
 import { RiDashboardFill } from "react-icons/ri"
-import { CardData } from "../../../components/Dashboard/CardData"
+import { CardData } from "../../../components/Dashboard/General/CardData"
 import { BiSolidTimeFive } from "react-icons/bi"
 import { FaUsers } from "react-icons/fa"
 import { IoBusiness } from "react-icons/io5"
-import { BarChart, Bar, XAxis, YAxis, Tooltip as Tool, Legend, CartesianGrid, ResponsiveContainer } from "recharts"
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid"
+import { GridColDef } from "@mui/x-data-grid"
+import { RankingTable } from "../../../components/Dashboard/General/RankingTable"
+import { useCustomers } from "../../../hooks/useCustomers"
+import { useProject } from "../../../hooks/useProject"
+import { formatTotalWorked, getTotalWorked } from "../../Tools/project/getTotalWorked"
+import { ImConnection } from "react-icons/im"
+import { useDepartments } from "../../../hooks/useDepartments"
+import { ChartBar } from "../../../components/Dashboard/General/ChartBar"
+import { ChartPie } from "../../../components/Dashboard/General/CharPie"
+import { TermData } from "../../../components/Dashboard/General/TermData"
+import { TbPinnedFilled } from "react-icons/tb"
 
 interface StatsProps {
     user: User
 }
 
+const columns: GridColDef[] = [
+    {
+        field: "image",
+        headerName: "#",
+        width: 60,
+        editable: false,
+        renderCell: (params) => <Avatar variant="rounded" src={params.value} />,
+    },
+    {
+        field: "customer",
+        headerName: "Cliente",
+        width: 450,
+        editable: false,
+        renderHeader: () => <strong style={{ alignItems: "center", gap: "2vw" }}>{"Cliente "}</strong>,
+    },
+    {
+        field: "time",
+        headerName: "Horas trabalhadas",
+        width: 200,
+        editable: false,
+        renderHeader: () => <strong style={{ alignItems: "center", gap: "2vw" }}>{"Horas trabalhadas"}</strong>,
+    },
+]
 export const Stats: React.FC<StatsProps> = ({ user }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const colors = useColors()
     const { logs } = useUser()
     const navigate = useNavigate()
-    const columns: GridColDef[] = [
-        { field: "id", headerName: "ID", width: 90 },
-        {
-            field: "firstName",
-            headerName: "First name",
-            width: 150,
-            editable: true,
-        },
-        {
-            field: "lastName",
-            headerName: "Last name",
-            width: 150,
-            editable: true,
-        },
-        {
-            field: "age",
-            headerName: "Age",
-            type: "number",
-            width: 110,
-            editable: true,
-        },
-        {
-            field: "fullName",
-            headerName: "Full name",
-            description: "This column has a value getter and is not sortable.",
-            sortable: false,
-            width: 160,
-            valueGetter: (params: GridValueGetterParams) => `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-        },
-    ]
+    const { customers } = useCustomers()
+    const { list, connectedList } = useUser()
+    const departments = useDepartments()
+    const project = useProject()
 
-    const rows = [
-        { id: 1, lastName: "Snow", firstName: "Jon", age: 14 },
-        { id: 2, lastName: "Lannister", firstName: "Cersei", age: 31 },
-        { id: 3, lastName: "Lannister", firstName: "Jaime", age: 31 },
-        { id: 4, lastName: "Stark", firstName: "Arya", age: 11 },
-        { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-        { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-        { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-        { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-        { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-    ]
+    const barData = customers.map((customer) => {
+        const totalProjectTime = customer.projects.flatMap((project) => project.workers.flatMap((worker) => worker.times))
+        const total_worked = getTotalWorked(totalProjectTime)
+        return { cliente: customer.name, horas: total_worked }
+    })
 
-    const data = [
-        { cliente: "Cliente A", horas: 40 },
-        { cliente: "Cliente B", horas: 35 },
-        { cliente: "Cliente C", horas: 50 },
-        { cliente: "Cliente D", horas: 20 },
-        { cliente: "Cliente E", horas: 55 },
-        { cliente: "Cliente A", horas: 40 },
-        { cliente: "Cliente B", horas: 35 },
-        { cliente: "Cliente C", horas: 50 },
-        { cliente: "Cliente D", horas: 20 },
-        { cliente: "Cliente E", horas: 55 },
-        { cliente: "Cliente A", horas: 40 },
-        { cliente: "Cliente B", horas: 35 },
-        { cliente: "Cliente C", horas: 50 },
-        { cliente: "Cliente D", horas: 20 },
-        { cliente: "Cliente E", horas: 55 },
-        { cliente: "Cliente A", horas: 90 },
-        { cliente: "Cliente B", horas: 35 },
-        { cliente: "Cliente C", horas: 50 },
-        { cliente: "Cliente D", horas: 20 },
-        { cliente: "Cliente E", horas: 55 },
-        { cliente: "Cliente A", horas: 40 },
-        { cliente: "Cliente B", horas: 35 },
-        { cliente: "Cliente C", horas: 70 },
-        { cliente: "Cliente D", horas: 20 },
-        { cliente: "Cliente E", horas: 55 },
-        { cliente: "Cliente A", horas: 40 },
-        { cliente: "Cliente B", horas: 35 },
-        { cliente: "Cliente C", horas: 10 },
-        { cliente: "Cliente D", horas: 20 },
-        { cliente: "Cliente E", horas: 55 },
-        { cliente: "Cliente A", horas: 40 },
-        { cliente: "Cliente B", horas: 35 },
-        { cliente: "Cliente C", horas: 10 },
-        { cliente: "Cliente D", horas: 20 },
-        { cliente: "Cliente E", horas: 55 },
-        // Assumindo que você preencherá até 'Cliente Z' conforme seu exemplo
-    ]
+    const rows = customers.map((customer) => {
+        const totalProjectTime = customer.projects.flatMap((project) => project.workers.flatMap((worker) => worker.times))
+        const total_worked = getTotalWorked(totalProjectTime)
+
+        return {
+            id: customer.id,
+            customer: customer.name,
+            image: customer.image,
+            time: formatTotalWorked(total_worked, true),
+        }
+    })
+
+    const pieData = project.list.slice(0, 9).map((department, index) => {
+        return {
+            name: department.name,
+            value: 2 * index + 7,
+        }
+    })
+    const totalProjectTime = project.list.flatMap((project) => project.workers.flatMap((worker) => worker.times))
+    // const sortedList = project.list.slice().sort((a, b) => a.times - b.times)
+    const pie = project.list.map((department, index) => {
+        return {
+            name: department.name,
+            value: 2 * index + 7,
+        }
+    })
 
     return (
         <Box
@@ -154,116 +140,75 @@ export const Stats: React.FC<StatsProps> = ({ user }) => {
                         width: isMobile ? "100%" : "81%",
                         padding: "2vw 0vw 1vw 0vw",
                         flexDirection: "column",
-                        gap: "1vw",
+                        gap: "0,5vw",
                     }}
                 >
                     <Box sx={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                        <p style={{ textAlign: "center", fontWeight: "800", fontSize: "1vw", color: colors.text.primary }}>
+                        <p style={{ textAlign: "center", fontWeight: "800", fontSize: "1.5vw", color: colors.text.primary }}>
                             Estatísticas Gerais
                         </p>
                     </Box>
-                    <Box sx={{ width: "100%", gap: "1vw" }}>
-                        <Box sx={{ width: "50%", gap: "1.5vw", height: "100%", flexDirection: "column" }}>
+                    <Box sx={{ width: "100%", gap: "1vw", flexDirection: "row" }}>
+                        <Box sx={{ width: "50%", gap: "1vw", height: "100%", flexDirection: "column" }}>
                             <Box
                                 sx={{
                                     width: "100%",
                                     flexDirection: "column",
                                     alignItems: "center",
-                                    height: "30%",
                                     gap: "1vw",
                                 }}
                             >
                                 <Box sx={{ flexDirection: "row", width: "100%", gap: "1vw" }}>
-                                    <CardData icon={<FaUsers color="#fff" style={{ width: "1.3vw", height: "1.3vw" }} />}>
-                                        <Box sx={{ flexDirection: "column" }}>
-                                            <p style={{ fontWeight: "600", color: "#9C9C9C", fontSize: "0.8vw" }}>
-                                                Total de Colaboradores
-                                            </p>
-                                            <p style={{ fontWeight: "bold", color: colors.terciary, fontSize: "1.3vw" }}>
-                                                21
-                                            </p>
-                                        </Box>
-                                    </CardData>
-                                    <CardData icon={<IoBusiness color="#fff" style={{ width: "1.3vw", height: "1.3vw" }} />}>
-                                        <Box sx={{ flexDirection: "column" }}>
-                                            <p style={{ fontWeight: "600", color: "#9C9C9C", fontSize: "0.8vw" }}>
-                                                Total de Clientes
-                                            </p>
-                                            <p style={{ fontWeight: "bold", color: colors.terciary, fontSize: "1.3vw" }}>
-                                                21
-                                            </p>
-                                        </Box>
-                                    </CardData>
+                                    <CardData
+                                        icon={<FaUsers color="#fff" style={{ width: "1.5vw", height: "1.3vw" }} />}
+                                        data={list.map((item) => item).length}
+                                        title=" Total de Colaboradores"
+                                    />
+                                    <CardData
+                                        title="Total de Clientes"
+                                        data={customers.map((item) => item).length}
+                                        icon={<IoBusiness color="#fff" style={{ width: "1.3vw", height: "1.3vw" }} />}
+                                    />
                                 </Box>
                                 <Box sx={{ flexDirection: "row", width: "100%", gap: "1vw" }}>
                                     <CardData
-                                        icon={<BiSolidTimeFive color="#fff" style={{ width: "", height: "" }} />}
-                                    ></CardData>
+                                        title="Colaboradores Conectados"
+                                        data={connectedList.map((item) => item).length}
+                                        icon={<ImConnection color="#fff" style={{ width: "1.3vw", height: "1.3vw" }} />}
+                                    />
                                     <CardData
-                                        icon={<BiSolidTimeFive color="#fff" style={{ width: "", height: "" }} />}
-                                    ></CardData>
+                                        title="Clientes Ativos"
+                                        data={customers.filter((item) => item.active).length}
+                                        icon={<BiSolidTimeFive color="#fff" style={{ width: "1.3vw", height: "1.3vw" }} />}
+                                    />
                                 </Box>
                             </Box>
-                            <Box
-                                sx={{
-                                    width: "100%",
-                                    height: isMobile ? "auto" : "75%",
-                                    padding: isMobile ? "8vw 5vw" : "1vw  ",
-                                    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-                                    borderRadius: isMobile ? "0 2vw 0 0" : "0 2vw 0 2vw ",
-                                }}
-                            >
-                                <DataGrid
-                                    rows={rows}
-                                    columns={columns}
-                                    initialState={{
-                                        pagination: {
-                                            paginationModel: {
-                                                pageSize: 5,
-                                            },
-                                        },
-                                    }}
-                                    pageSizeOptions={[5]}
-                                    checkboxSelection
-                                    disableRowSelectionOnClick
-                                />
-                            </Box>
+                            <RankingTable title="Clientes x Tempo Trabalhado" columns={columns} rows={rows} />
                         </Box>
-                        <Box
-                            sx={{
-                                width: "46.7%",
-                                height: isMobile ? "auto" : "70%",
-                                padding: isMobile ? "8vw 5vw" : "1vw  ",
-                                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-                                borderRadius: isMobile ? "0 2vw 0 0" : "0 2vw 0 2vw ",
-                            }}
-                        >
-                            <BarChart
-                                width={730} // Ajuste conforme necessário para acomodar todos os clientes
-                                height={400}
-                                data={data}
-                                margin={{
-                                    top: 20,
-                                    right: 30,
-                                    left: 20,
-                                    bottom: 5,
-                                }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f5" />
-                                <XAxis dataKey="cliente" tick={{ fill: "gray", fontSize: 12 }} />
-                                <YAxis
-                                    label={{ value: "Horas", angle: -90, position: "insideLeft" }}
-                                    tick={{ fill: "gray", fontSize: 12 }}
-                                />
-                                <Tool />
-                                <Legend />
-                                <Bar
-                                    dataKey="horas"
-                                    fill={colors.primary}
-                                    name="Cliente x Horas Mensais"
-                                    radius={[5, 5, 0, 0]}
-                                />
-                            </BarChart>
+
+                        <Box sx={{ flexDirection: "column", width: "47%", height: "100%", gap: "1vw" }}>
+                            <Box sx={{ width: "100%", flexDirection: "row", height: "44%", gap: "1vw" }}>
+                                <ChartPie pieData={pieData} />
+                                <Box
+                                    sx={{
+                                        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                                        borderRadius: isMobile ? "0 2vw 0 0" : "0 2vw 0 2vw ",
+                                        width: "37%",
+                                        height: isMobile ? "auto" : "100%",
+                                        padding: isMobile ? "8vw 5vw" : "1vw",
+                                        flexDirection: "column",
+                                    }}
+                                >
+                                    <Box sx={{ flexDirection: "row", alignItems: "center" }}>
+                                        <p style={{ fontWeight: "600", color: "#9C9C9C", fontSize: "0.8vw" }}>Fixados</p>
+                                        <TbPinnedFilled color="#9C9C9C" style={{ width: "vw", height: "vw" }} />
+                                    </Box>
+                                    {customers.slice(0, 7).map((customer, index) => (
+                                        <TermData key={index} customer={customer} />
+                                    ))}
+                                </Box>
+                            </Box>
+                            <ChartBar data={barData} />
                         </Box>
                     </Box>
                 </Box>

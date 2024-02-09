@@ -1,14 +1,16 @@
 import { Box, useMediaQuery } from "@mui/material"
 import React from "react"
-import { useColors } from "../../hooks/useColors"
+import { useColors } from "../../../hooks/useColors"
 import { BiSolidTimeFive } from "react-icons/bi"
 
 interface CardDataProps {
     children?: React.ReactNode
     icon: React.ReactNode
+    data: any
+    title: string
 }
 
-export const CardData: React.FC<CardDataProps> = ({ children, icon }) => {
+export const CardData: React.FC<CardDataProps> = ({ children, icon, data, title }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const colors = useColors()
 
@@ -26,7 +28,12 @@ export const CardData: React.FC<CardDataProps> = ({ children, icon }) => {
                 alignItems: "center",
             }}
         >
-            <Box>{children}</Box>
+            <Box>
+                <Box sx={{ flexDirection: "column" }}>
+                    <p style={{ fontWeight: "600", color: "#9C9C9C", fontSize: "0.8vw" }}>{title}</p>
+                    <p style={{ fontWeight: "bold", color: colors.terciary, fontSize: "1.3vw" }}>{data}</p>
+                </Box>
+            </Box>
             <Box
                 sx={{
                     width: "2.5vw",
