@@ -13,7 +13,7 @@ export const formatTotalWorked = (worked_milliseconds: number, no_milli?: boolea
     const seconds = Math.floor((worked_milliseconds % 60000) / 1000)
 
     // Format hours and minutes as HH:mm
-    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-    const formattedTimeNoMIlli = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`
+    const formattedTime = `${hours.toString().padStart(2, "0")}h${minutes.toString().padStart(2, "0")}`
+    const formattedTimeNoMIlli = `${hours.toString().padStart(2, "0")}h${minutes.toString().padStart(2, "0")}`
     return no_milli ? formattedTimeNoMIlli : formattedTime
 }
