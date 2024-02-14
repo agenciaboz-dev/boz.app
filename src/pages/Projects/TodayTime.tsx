@@ -3,6 +3,7 @@ import { Box, LinearProgress } from "@mui/material"
 import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
 import { Progress } from "@mantine/core"
 import { useColors } from "../../hooks/useColors"
+import { getTodayTimes } from "../Tools/project/getTodayTimes"
 
 interface TodayTimeProps {
     worker: ProjectWorker
@@ -11,7 +12,7 @@ interface TodayTimeProps {
 
 export const TodayTime: React.FC<TodayTimeProps> = ({ worker, working }) => {
     const colors = useColors()
-    const today_times = worker.times.filter((time) => new Date(Number(time.started)).getDay() == new Date().getDay())
+    const today_times = getTodayTimes(worker.times)
     const [workedToday, setWorkedToday] = useState(getTotalWorked(today_times))
     const [formatedWorkedTime, setFormatedWorkedTime] = useState(formatTotalWorked(workedToday))
 
