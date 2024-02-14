@@ -40,6 +40,11 @@ export const Projects: React.FC<ProjectsProps> = ({ user }) => {
                         borderRadius: isMobile ? "0 2vw 0 0" : "0 0 0 2vw ",
                         color: "secondary.main",
                         overflowX: "hidden",
+                        // hiding scrollbar
+                        "&::-webkit-scrollbar": {
+                            width: 0,
+                            height: 0,
+                        },
                     }}
                     elevation={5}
                 >
