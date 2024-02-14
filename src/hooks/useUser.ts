@@ -30,26 +30,26 @@ export const useUser = () => {
 
     const isRole = (role: string) => !!user?.roles.find((item) => item.tag == role)
 
-    const handleWorkingOnStatusChange = useCallback(
-        (user: User) => {
-            if (user.status == 1) {
-                if (!!userContext.workPausedId) {
-                    const data: PlayProjectForm = { worker_id: userContext.workPausedId, role: userContext.workPausedRole }
-                    setTimeout(() => io.emit("project:play", data), 500)
-                    userContext.setWorkPausedId(0)
-                    userContext.setWorkPausedRole("")
-                }
-            } else {
-                const working = user.working_projects.find((worker) => !!worker.times.length && !worker.times[worker.times.length - 1].ended)
-                if (working) {
-                    setTimeout(() => io.emit("project:stop", working.times[working.times.length - 1], working), 500)
-                    userContext.setWorkPausedId(working.id)
-                    userContext.setWorkPausedRole(working.times[working.times.length - 1].role!)
-                }
-            }
-        },
-        [userContext.workPausedId]
-    )
+    // const handleWorkingOnStatusChange = useCallback(
+    //     (user: User) => {
+    //         if (user.status == 1) {
+    //             if (!!userContext.workPausedId) {
+    //                 const data: PlayProjectForm = { worker_id: userContext.workPausedId, role: userContext.workPausedRole }
+    //                 setTimeout(() => io.emit("project:play", data), 500)
+    //                 userContext.setWorkPausedId(0)
+    //                 userContext.setWorkPausedRole("")
+    //             }
+    //         } else {
+    //             const working = user.working_projects.find((worker) => !!worker.times.length && !worker.times[worker.times.length - 1].ended)
+    //             if (working) {
+    //                 setTimeout(() => io.emit("project:stop", working.times[working.times.length - 1], working), 500)
+    //                 userContext.setWorkPausedId(working.id)
+    //                 userContext.setWorkPausedRole(working.times[working.times.length - 1].role!)
+    //             }
+    //         }
+    //     },
+    //     [userContext.workPausedId]
+    // )
 
     const updateStatus = (status: number) => {
         if (!user) return
@@ -59,7 +59,7 @@ export const useUser = () => {
         setUser(updatedUser)
         io.emit("user:status:update", updatedUser)
 
-        handleWorkingOnStatusChange(updatedUser)
+        // handleWorkingOnStatusChange(updatedUser)
     }
 
     const saveLoginData = (values: LoginForm | null) => {

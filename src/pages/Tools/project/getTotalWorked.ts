@@ -1,7 +1,9 @@
 export const getTotalWorked = (times: ProjectTime[]) => {
-    const worked_milliseconds = times.reduce((total, current) => {
-        return (Number(current.worked) || new Date().getTime() - Number(current.started)) + total
-    }, 0)
+    const worked_milliseconds = times
+        .filter((time) => !!time.worked)
+        .reduce((total, current) => {
+            return (Number(current.worked) || new Date().getTime() - Number(current.started)) + total
+        }, 0)
 
     return worked_milliseconds
 }
