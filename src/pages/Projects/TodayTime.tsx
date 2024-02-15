@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, LinearProgress } from "@mui/material"
+import { Box, LinearProgress, useTheme } from "@mui/material"
 import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
 import { Progress } from "@mantine/core"
 import { useColors } from "../../hooks/useColors"
@@ -11,6 +11,7 @@ interface TodayTimeProps {
 }
 
 export const TodayTime: React.FC<TodayTimeProps> = ({ worker, working }) => {
+    const theme = useTheme()
     const colors = useColors()
     const today_times = getTodayTimes(worker.times)
     const [workedToday, setWorkedToday] = useState(getTotalWorked(today_times, working))
@@ -44,7 +45,7 @@ export const TodayTime: React.FC<TodayTimeProps> = ({ worker, working }) => {
             <Progress.Root size={"1.5vw"} radius={"2vw"}>
                 <Progress.Section value={getProgressValue()} color={colors.primary}>
                     {getProgressValue() >= 15 && (
-                        <Progress.Label style={{ alignSelf: "center", color: getProgressValue() == 100 ? colors.warning : "" }}>
+                        <Progress.Label style={{ alignSelf: "center", color: getProgressValue() == 100 ? theme.palette.error.main : "" }}>
                             {formatedWorkedTime}
                         </Progress.Label>
                     )}
