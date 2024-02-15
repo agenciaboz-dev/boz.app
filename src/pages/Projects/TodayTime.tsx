@@ -51,7 +51,7 @@ export const TodayTime: React.FC<TodayTimeProps> = ({ worker, working }) => {
                     )}
                 </Progress.Section>
                 {getProgressValue() < 15 && (
-                    <Progress.Label style={{ color: colors.primary, alignSelf: "center" }}>{formatedWorkedTime}</Progress.Label>
+                    <Progress.Label style={{ color: colors.primary, alignSelf: "center", paddingLeft: 10 }}>{formatedWorkedTime}</Progress.Label>
                 )}
             </Progress.Root>
         </Box>
