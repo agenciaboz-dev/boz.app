@@ -18,7 +18,12 @@ export const WorkerHeader: React.FC<WorkerHeaderProps> = ({ worker, working }) =
     return (
         <Box sx={{ borderBottom: "1px solid", borderColor: "primary.main", width: "100%", justifyContent: "space-between", paddingBottom: "0.5vw" }}>
             {week_dates.map((date) => (
-                <DayButton key={date.getTime()} date={date} worker={worker} working={working} />
+                <DayButton
+                    key={date.getTime()}
+                    date={date}
+                    worker={worker}
+                    working={working ? (new Date(Number(working.started)).toDateString() == date.toDateString() ? working : undefined) : undefined}
+                />
             ))}
             <GeneralTimesButton working={working} times={week_times} label="total semana" />
             <GeneralTimesButton working={working} times={month_times} label="total mês" />
