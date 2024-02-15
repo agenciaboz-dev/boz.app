@@ -13,7 +13,7 @@ interface DayButtonProps {
 
 export const DayButton: React.FC<DayButtonProps> = ({ date, worker, working }) => {
     const times = getDateTimes(worker.times, date)
-    const today = date.getDate() == new Date().getDate()
+    const today = date.toDateString() == new Date().toDateString()
 
     const button_style: SxProps = {
         ...day_button_style,
