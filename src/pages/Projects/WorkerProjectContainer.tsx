@@ -9,6 +9,7 @@ import { TodayTime } from "./TodayTime"
 import { WorkerHeader } from "./WorkerHeader"
 import { useSnackbar } from "burgos-snackbar"
 import { useCustomers } from "../../hooks/useCustomers"
+import { getCurrentWorkingTime } from "../Tools/project/getWorker"
 
 interface WorkerProjectContainerProps {
     worker: ProjectWorker
@@ -29,7 +30,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
 
     const { snackbar } = useSnackbar()
 
-    const working = !!worker.times.length && !!worker.times[worker.times.length - 1].started && !worker.times[worker.times.length - 1].ended
+    const working = getCurrentWorkingTime(worker)
 
     const [selectedRole, setSelectedRole] = useState<string | null>()
     const [loading, setLoading] = useState(false)
@@ -58,7 +59,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
 
     return (
         <Paper elevation={5} sx={{ bgcolor: "background.default", padding: "1vw", color: "text.secondary", gap: "1vw", flexDirection: "column" }}>
-            <WorkerHeader worker={worker} working={working} />
+            <WorkerHeader worker={worker} working={!!working} />
             <Box sx={{ alignItems: "center", gap: "1vw" }}>
                 <Avatar user={worker.user} size={"4vw"} noClickModal small />
                 <Box sx={{ gap: "0.5vw", flexDirection: "column", width: "20vw" }}>
@@ -70,11 +71,11 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
                             getOptionDisabled={(option) => !option}
                             renderInput={(params) => <TaiTextField {...params} />}
                             onChange={(_, value) => setSelectedRole(value)}
-                            value={working ? worker.times[worker.times.length - 1].role : ""}
+                            value={working?.role || ""}
                             disableClearable
                             ListboxProps={{ sx: { width: "100%", bgcolor: "background.default" } }}
                             fullWidth
-                            disabled={user?.id != worker.user.id || working}
+                            disabled={user?.id != worker.user.id || !!working}
                         />
                         <Button
                             variant="outlined"
@@ -87,7 +88,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
                     </Box>
                 </Box>
 
-                <TodayTime worker={worker} working={working} />
+                <TodayTime worker={worker} working={!!working} />
             </Box>
         </Paper>
     )
