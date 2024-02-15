@@ -4,13 +4,13 @@ import { day_button_style } from "../../style/day_button_style"
 import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
 
 interface GeneralTimesButtonProps {
-    working: boolean
+    working?: ProjectTime
     times: ProjectTime[]
     label: string
 }
 
 export const GeneralTimesButton: React.FC<GeneralTimesButtonProps> = ({ working, times, label }) => {
-    const [workedTime, setWorkedTime] = useState(getTotalWorked(times))
+    const [workedTime, setWorkedTime] = useState(getTotalWorked(times, working))
     const [formattedTime, setFormattedTime] = useState(formatTotalWorked(workedTime, true))
 
     useEffect(() => {

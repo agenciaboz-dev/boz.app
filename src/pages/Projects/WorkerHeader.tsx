@@ -1,16 +1,13 @@
 import React from "react"
-import { Box, MenuItem, SxProps } from "@mui/material"
-import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
-import { getWeekDay } from "../Tools/project/getWeekDay"
+import { Box } from "@mui/material"
 import { isDateInThisWeek } from "../Tools/project/isDateInThisWeek"
 import { getCurrentWeekDays } from "../Tools/project/getCurrentWeekDays"
 import { DayButton } from "./DayButton"
-import { day_button_style } from "../../style/day_button_style"
 import { GeneralTimesButton } from "./GeneralTimesButton"
 
 interface WorkerHeaderProps {
     worker: ProjectWorker
-    working: boolean
+    working?: ProjectTime
 }
 
 export const WorkerHeader: React.FC<WorkerHeaderProps> = ({ worker, working }) => {

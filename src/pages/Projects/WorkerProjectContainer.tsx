@@ -59,7 +59,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
 
     return (
         <Paper elevation={5} sx={{ bgcolor: "background.default", padding: "1vw", color: "text.secondary", gap: "1vw", flexDirection: "column" }}>
-            <WorkerHeader worker={worker} working={!!working} />
+            <WorkerHeader worker={worker} working={working} />
             <Box sx={{ alignItems: "center", gap: "1vw" }}>
                 <Avatar user={worker.user} size={"4vw"} noClickModal small />
                 <Box sx={{ gap: "0.5vw", flexDirection: "column", width: "20vw" }}>
@@ -88,7 +88,7 @@ export const WorkerProjectContainer: React.FC<WorkerProjectContainerProps> = ({ 
                     </Box>
                 </Box>
 
-                <TodayTime worker={worker} working={!!working} />
+                <TodayTime worker={worker} working={working} />
             </Box>
         </Paper>
     )

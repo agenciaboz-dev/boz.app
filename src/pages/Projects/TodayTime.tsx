@@ -7,13 +7,13 @@ import { getTodayTimes } from "../Tools/project/getTodayTimes"
 
 interface TodayTimeProps {
     worker: ProjectWorker
-    working: boolean
+    working?: ProjectTime
 }
 
 export const TodayTime: React.FC<TodayTimeProps> = ({ worker, working }) => {
     const colors = useColors()
     const today_times = getTodayTimes(worker.times)
-    const [workedToday, setWorkedToday] = useState(getTotalWorked(today_times))
+    const [workedToday, setWorkedToday] = useState(getTotalWorked(today_times, working))
     const [formatedWorkedTime, setFormatedWorkedTime] = useState(formatTotalWorked(workedToday))
 
     const getProgressValue = () => {
@@ -26,7 +26,7 @@ export const TodayTime: React.FC<TodayTimeProps> = ({ worker, working }) => {
     }, [workedToday])
 
     useEffect(() => {
-        if (working) {
+        if (!!working) {
             const interval = setInterval(() => {
                 setWorkedToday((total) => total + 1000)
             }, 1000)

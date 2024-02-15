@@ -3,13 +3,12 @@ import { Box, MenuItem, SxProps } from "@mui/material"
 import { formatTotalWorked, getTotalWorked } from "../Tools/project/getTotalWorked"
 import { getWeekDay } from "../Tools/project/getWeekDay"
 import { day_button_style } from "../../style/day_button_style"
-import { getTodayTimes } from "../Tools/project/getTodayTimes"
 import { getDateTimes } from "../Tools/project/getDateTimes"
 
 interface DayButtonProps {
     date: Date
     worker: ProjectWorker
-    working: boolean
+    working?: ProjectTime
 }
 
 export const DayButton: React.FC<DayButtonProps> = ({ date, worker, working }) => {
@@ -22,15 +21,15 @@ export const DayButton: React.FC<DayButtonProps> = ({ date, worker, working }) =
         fontWeight: today ? "bold" : "",
     }
 
-    const [workedTime, setWorkedTime] = useState(getTotalWorked(times))
+    const [workedTime, setWorkedTime] = useState(getTotalWorked(times, working))
     const [formattedTime, setFormattedTime] = useState(formatTotalWorked(workedTime, true))
 
     useEffect(() => {
-        setFormattedTime(formatTotalWorked(workedTime, !today))
+        setFormattedTime(formatTotalWorked(workedTime, true))
     }, [workedTime])
 
     useEffect(() => {
-        if (working && today) {
+        if (!!working && today) {
             const interval = setInterval(() => {
                 setWorkedTime((total) => total + 1000)
             }, 1000)
