@@ -43,9 +43,13 @@ export const TodayTime: React.FC<TodayTimeProps> = ({ worker, working }) => {
             {/* <LinearProgress variant="determinate" value={getProgressValue()} sx={{ height: "1.5vw", borderRadius: "1vw" }} /> */}
             <Progress.Root size={"1.5vw"} radius={"2vw"}>
                 <Progress.Section value={getProgressValue()} color={colors.primary}>
-                    {getProgressValue() >= 10 && <Progress.Label style={{ alignSelf: "center" }}>{formatedWorkedTime}</Progress.Label>}
+                    {getProgressValue() >= 15 && (
+                        <Progress.Label style={{ alignSelf: "center", color: getProgressValue() == 100 ? colors.warning : "" }}>
+                            {formatedWorkedTime}
+                        </Progress.Label>
+                    )}
                 </Progress.Section>
-                {getProgressValue() < 10 && (
+                {getProgressValue() < 15 && (
                     <Progress.Label style={{ color: colors.primary, alignSelf: "center" }}>{formatedWorkedTime}</Progress.Label>
                 )}
             </Progress.Root>
