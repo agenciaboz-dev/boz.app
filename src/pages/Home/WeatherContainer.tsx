@@ -4,9 +4,9 @@ import { ContainerWrapper } from "./ContainerWrapper"
 import { ContainerSkeleton } from "./ContainerSkeleton"
 import axios from "axios"
 
-interface TasksContainerProps {}
+interface WeatherContainerProps {}
 
-export const TasksContainer: React.FC<TasksContainerProps> = ({}) => {
+export const WeatherContainer: React.FC<WeatherContainerProps> = ({}) => {
     const [weather, setWeather] = useState("")
 
     const getWeather = async () => {

@@ -4,7 +4,7 @@ import { Header } from "../../components/Header"
 import { backgroundStyle } from "../../style/background"
 import { UsersContainer } from "./UsersContainer"
 import { StatusLogsContainer } from "./StatusLogsContainer"
-import { TasksContainer } from "./TasksContainer"
+import { WeatherContainer } from "./WeatherContainer"
 import { BirthdaysContainer } from "./BirthdaysContainer"
 import { ContainerSkeleton } from "./ContainerSkeleton"
 
@@ -19,7 +19,7 @@ export const Home: React.FC<HomeProps> = ({ user }) => {
             <Box sx={{ padding: "2vw", flex: 1 }}>
                 <Grid container spacing={4} columns={3}>
                     <UsersContainer user={user} />
-                    <TasksContainer />
+                    <WeatherContainer />
                     <StatusLogsContainer user={user} />
                     <BirthdaysContainer user={user} />
                     <ContainerSkeleton />
