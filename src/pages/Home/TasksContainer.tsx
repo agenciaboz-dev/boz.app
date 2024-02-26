@@ -15,7 +15,12 @@ export const TasksContainer: React.FC<TasksContainerProps> = ({}) => {
     }
 
     useEffect(() => {
+        const interval = setInterval(() => getWeather(), 1000 * 60 * 1)
         getWeather()
+
+        return () => {
+            clearInterval(interval)
+        }
     }, [])
 
     return weather ? (
