@@ -5,7 +5,7 @@ import { backgroundStyle } from "../../style/background"
 import { UsersContainer } from "./UsersContainer"
 import { StatusLogsContainer } from "./StatusLogsContainer"
 import { TasksContainer } from "./TasksContainer"
-import { ChatContainer } from "./ChatContainer"
+import { BirthdaysContainer } from "./BirthdaysContainer"
 import { ContainerSkeleton } from "./ContainerSkeleton"
 
 interface HomeProps {
@@ -21,7 +21,7 @@ export const Home: React.FC<HomeProps> = ({ user }) => {
                     <UsersContainer user={user} />
                     <TasksContainer />
                     <StatusLogsContainer user={user} />
-                    <ChatContainer user={user} />
+                    <BirthdaysContainer user={user} />
                     <ContainerSkeleton />
                 </Grid>
             </Box>
