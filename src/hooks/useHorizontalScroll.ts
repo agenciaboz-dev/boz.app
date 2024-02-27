@@ -10,8 +10,8 @@ export function useHorizontalScroll() {
                 if (e.deltaY == 0) return
                 e.preventDefault()
                 el.scrollTo({
-                    left: el.scrollLeft + e.deltaY * 3,
-                    behavior: "smooth"
+                    left: el.scrollLeft + e.deltaY * 1,
+                    // behavior: "smooth"
                 })
             }
             el.addEventListener("wheel", onWheel)
