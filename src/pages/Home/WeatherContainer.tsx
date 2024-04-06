@@ -3,6 +3,7 @@ import { Box } from "@mui/material"
 import { ContainerWrapper } from "./ContainerWrapper"
 import { ContainerSkeleton } from "./ContainerSkeleton"
 import axios from "axios"
+import { WeatherComponent } from "./WeatherComponent"
 
 interface WeatherContainerProps {}
 
@@ -25,7 +26,10 @@ export const WeatherContainer: React.FC<WeatherContainerProps> = ({}) => {
 
     return weather ? (
         <ContainerWrapper>
-            <Box sx={{ fontSize: "5rem", fontWeight: "bold", justifyContent: "center", alignItems: "center", height: 1 }}>{weather}</Box>
+            <Box sx={{ fontSize: "5rem", fontWeight: "bold", justifyContent: "center", alignItems: "center", height: 1 }}>
+                {weather}
+            </Box>
+            {/* <WeatherComponent /> */}
         </ContainerWrapper>
     ) : (
         <ContainerSkeleton />
