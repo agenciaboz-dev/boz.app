@@ -26,10 +26,7 @@ export const WeatherContainer: React.FC<WeatherContainerProps> = ({}) => {
 
     return weather ? (
         <ContainerWrapper>
-            <Box sx={{ fontSize: "5rem", fontWeight: "bold", justifyContent: "center", alignItems: "center", height: 1 }}>
-                {weather}
-            </Box>
-            {/* <WeatherComponent /> */}
+            <WeatherComponent />
         </ContainerWrapper>
     ) : (
         <ContainerSkeleton />

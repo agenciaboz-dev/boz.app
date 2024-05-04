@@ -1,6 +1,6 @@
 import { Box } from "@mui/system"
 import React, { useEffect, useState } from "react"
-import { format } from "date-fns-tz"
+import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 
 import clear_day from "../../assets/icons/SVG/2nd Set - Color/clear-day.svg"
@@ -25,16 +25,11 @@ import thunder_showers_day from "../../assets/icons/SVG/2nd Set - Color/thunder-
 import thunder_showers_night from "../../assets/icons/SVG/2nd Set - Color/thunder-showers-night.svg"
 import thunder from "../../assets/icons/SVG/2nd Set - Color/thunder.svg"
 import wind from "../../assets/icons/SVG/2nd Set - Color/wind.svg"
-import { CircularProgress } from "@mui/material"
+import { Divider, Skeleton } from "@mui/material"
 import axios from "axios"
 import { useArray } from "burgos-array"
 
 interface WeatherComponentProps {}
-
-const style = {
-    fontSize: "3vw",
-    color: "gray",
-}
 
 const iconMappings: { [key: string]: string } = {
     "clear-day": clear_day,
@@ -87,83 +82,140 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
     const formattedDateTime = format(currentDateTime, "EEEE, HH:mm", { locale: ptBR })
     const [data, setData] = useState<any>()
     const [loading, setLoading] = useState(false)
-    const token = "HDYZ4EFPY3HGBAZCNDVBPJ5UX"
+    const token = "JTZPXAPR4ZHRJ22NJGRWJNT87"
     const [icon, setIcon] = useState<string>("")
     const array = useArray().newArray(24)
     const days = useArray().newArray(10)
 
     const dateTime = formattedDateTime.charAt(0).toUpperCase() + formattedDateTime.slice(1)
 
-    useEffect(() => {
-        const climate = async () => {
-            try {
-                const response = await axios.get(
-                    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Curitiba?key=${token}`
-                )
-                const { icon } = response.data.currentConditions
-                setData(response.data)
-                console.log({ opa: response.data })
-            } catch (error) {
-                console.log(error)
-            }
+    const climate = async () => {
+        try {
+            const response = await axios.get(
+                `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Curitiba?key=${token}`
+            )
+            const { icon } = response.data.currentConditions
+            setData(response.data)
+            console.log({ opa: response.data.days })
+        } catch (error) {
+            console.log(error)
         }
-
+    }
+    useEffect(() => {
         climate()
     }, [])
 
-    return (
-        data !== null && (
-            <Box
-                sx={{
-                    height: "100%",
-                    width: "1",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    p: "0vw",
-                }}
-            >
-                <Box sx={{ width: 1, height: 0.55, flexDirection: "column" }}>
-                    <Box sx={{ width: 1, height: 0.55 }}>
-                        <Box sx={{ flexDirection: "row", justifyContent: "space-between", width: 1 }}>
-                            <Box sx={{ flexDirection: "row", justifyContent: "space-between", width: 0.5 }}>
-                                <Box sx={{ flexDirection: "row", gap: "1vw" }}>
-                                    <img src={clear_day} style={{ width: "3.5vw", height: "3.5vw" }} />
-                                    <Box sx={{ alignItems: "start", gap: "0.3vw" }}>
-                                        <p style={{ fontSize: "2.8rem", fontWeight: "600", margin: 0, padding: 0 }}>20</p>
-                                        <p style={{ fontSize: "1.5rem", position: "relative", top: "0.6vw" }}>°C</p>
-                                    </Box>
+    return data !== null ? (
+        <Box
+            sx={{
+                height: "100%",
+                width: "1",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignItems: "center",
+                p: "0vw",
+            }}
+        >
+            <Box sx={{ width: 1, height: 0.6, flexDirection: "column" }}>
+                <Box sx={{ width: 1, height: 0.45 }}>
+                    <Box sx={{ flexDirection: "row", justifyContent: "space-between", width: 1 }}>
+                        <Box sx={{ flexDirection: "row", justifyContent: "space-between", width: 0.5 }}>
+                            <Box sx={{ flexDirection: "row", gap: "1vw" }}>
+                                <img
+                                    src={data && iconMappings[data.currentConditions.icon]}
+                                    style={{ width: "3.5vw", height: "3.5vw" }}
+                                />
+                                <Box sx={{ alignItems: "start", gap: "0.3vw" }}>
+                                    <p style={{ fontSize: "2.8rem", fontWeight: "600", margin: 0, padding: 0 }}>
+                                        {data && ((data.currentConditions.temp - 32) / 1.8).toFixed(0)}
+                                    </p>
+                                    <p style={{ fontSize: "1.5rem", position: "relative", top: "0.6vw" }}>°C</p>
                                 </Box>
                             </Box>
-                            <Box sx={{ flexDirection: "column", alignItems: "end" }}>
-                                <p style={{ fontWeight: "600", fontSize: "1.2rem" }}>Clima</p>
-                                <p style={{ fontSize: "0.9rem" }}>{dateTime}</p>
-                                <p style={{ fontSize: "0.8rem" }}> Parcialmente Nublado</p>
-                                {/* <p style={{ fontSize: "1rem" }}> {data?.icon && climaMappings[data.icon]}</p> */}
-                            </Box>
+                        </Box>
+                        <Box sx={{ flexDirection: "column", alignItems: "end" }}>
+                            <p style={{ fontWeight: "600", fontSize: "1.2rem" }}>Clima</p>
+                            <p style={{ fontSize: "0.9rem" }}>{dateTime}</p>
+                            <p style={{ fontSize: "0.8rem" }}> {data && climaMappings[data.currentConditions.icon]}</p>
                         </Box>
                     </Box>
-                    <Box sx={{ width: 1, height: 0.45, gap: "1vw", overflowX: "auto", overflowY: "hidden" }}>
-                        {array.map((item) => (
-                            <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }}>
-                                <p style={{ fontSize: "0.8rem" }}>14:00</p>
-                                <img src={partly_cloudy_day} style={{ width: "1.3vw", height: "1.3vw" }} />
-                                <p style={{ fontSize: "0.8rem" }}>16°</p>
-                            </Box>
-                        ))}
-                    </Box>
                 </Box>
-                
-                <Box sx={{ width: 1, height: 0.42, justifyContent: "space-between", alignItems: "center" }}>
-                    {days.map((item) => (
-                        <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }}>
-                            <p style={{ fontSize: "1rem" }}>Hoje</p>
-                            <img src={rain} style={{ width: "2vw", height: "2vw" }} />
-                            <p style={{ fontSize: "1rem" }}>16°</p>
+                <Divider />
+                <Box sx={{ width: 1, height: 0.55, gap: "1vw", overflowX: "auto", overflowY: "hidden", pt: "0.5vw" }}>
+                    {data &&
+                        data.days[1].hours
+                            .filter((item: any) => {
+                                const horaItem = parseInt(item.datetime.split(":")[0]) // Extrair a hora do item
+                                return horaItem >= new Date().getHours() // Filtrar itens a partir do horário atual
+                            })
+                            .map((item: any, index: number) => (
+                                <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
+                                    <p style={{ fontSize: "0.8rem" }}>
+                                        {item.datetime.split(":")[0] + ":" + item.datetime.split(":")[1]}
+                                    </p>
+                                    <img src={iconMappings[item.icon]} style={{ width: "1.4vw", height: "1.4vw" }} />
+                                    <p style={{ fontSize: "0.8rem" }}>{data && ((item.temp - 32) / 1.8).toFixed(0)}°</p>
+                                </Box>
+                            ))}
+                    {data &&
+                        data.days[2].hours
+                            .filter((item: any) => {
+                                const horaItem = parseInt(item.datetime.split(":")[0]) // Extrair a hora do item
+                                return horaItem < new Date().getHours() // Filtrar itens a partir do horário atual
+                            })
+                            .map((item: any, index: number) => (
+                                <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
+                                    <p style={{ fontSize: "0.8rem" }}>
+                                        {item.datetime.split(":")[0] + ":" + item.datetime.split(":")[1]}
+                                    </p>
+                                    <img src={iconMappings[item.icon]} style={{ width: "1.4vw", height: "1.4vw" }} />
+                                    <p style={{ fontSize: "0.8rem" }}>{data && ((item.temp - 32) / 1.8).toFixed(0)}°</p>
+                                </Box>
+                            ))}
+                </Box>
+                <Divider />
+            </Box>
+            <Box
+                sx={{
+                    width: 1,
+                    height: 0.42,
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    overflowX: "auto",
+                    overflowY: "hidden",
+                    pt: "0.7vw",
+                }}
+            >
+                {data && (
+                    <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }}>
+                        <p style={{ fontSize: "1rem", fontWeight: "bold1" }}>Hoje</p>
+                        <img src={data.days && iconMappings[data.days[1].icon]} style={{ width: "2vw", height: "2vw" }} />
+                        <Box sx={{ flexDirection: "column" }}>
+                            <p style={{ fontSize: "1rem", color: "orange" }}>
+                                {data.days && ((data.days[1].tempmax - 32) / 1.8).toFixed(0)}°
+                            </p>
+                            <p style={{ fontSize: "1rem" }}>
+                                {data.days && ((data.days[1].tempmin - 32) / 1.8).toFixed(0)}°
+                            </p>
+                        </Box>
+                    </Box>
+                )}
+                {data &&
+                    data.days.slice(3, 11).map((item: any, index: any) => (
+                        <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
+                            <p style={{ fontSize: "1rem" }}>{format(new Date(item.datetime), "dd/MM")}</p>
+                            <img src={iconMappings[item.icon]} style={{ width: "2vw", height: "2vw" }} />
+                            <Box sx={{ flexDirection: "column" }}>
+                                <p style={{ fontSize: "1rem", color: "orange" }}>
+                                    {data && ((item.tempmax - 32) / 1.8).toFixed(0)}°
+                                </p>
+                                <p style={{ fontSize: "1rem" }}>{data && ((item.tempmin - 32) / 1.8).toFixed(0)}°</p>
+                            </Box>
                         </Box>
                     ))}
-                </Box>
-                {/* <Box sx={{ flexDirection: "row", alignItems: "center", gap: "3vw", width: "65%" }}>
+            </Box>
+            {/* //aqui */}
+            {/* <Box sx={{ flexDirection: "row", alignItems: "center", gap: "3vw", width: "65%" }}>
                     {loading ? (
                         <CircularProgress sx={{ color: "white" }} />
                     ) : (
@@ -179,7 +231,8 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
                     <p style={{ fontSize: "2.9vw" }}>{dateTime}</p>
                     <p style={{ fontSize: "3vw" }}> {data?.icon && climaMappings[data.icon]}</p>
                 </Box> */}
-            </Box>
-        )
+        </Box>
+    ) : (
+        <Skeleton />
     )
 }
