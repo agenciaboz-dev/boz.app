@@ -16,7 +16,7 @@ export const Tools: React.FC<ToolsProps> = ({ user }) => {
     return (
         <Box sx={backgroundStyle}>
             <Header user={user} />
-            <Box sx={{ flexDirection: "column", overflowY: "auto", height: "90vh" }}>
+            <Box sx={{ flexDirection: "column", height: "90vh" }}>
                 <Routes>
                     <Route path="/qrcode" element={<QrCodeGenerator user={user} />} />
                     <Route path="/update" element={<Update user={user} />} />

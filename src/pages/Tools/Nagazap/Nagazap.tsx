@@ -38,7 +38,7 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
     }, [])
 
     return (
-        <Box sx={{ ...backgroundStyle, padding: "2vw", paddingBottom: "8vw", overflow: "hidden", flexDirection: "row" }}>
+        <Box sx={{ ...backgroundStyle, padding: "2vw", paddingBottom: "8vw", flexDirection: "row" }}>
             <Paper
                 sx={{
                     width: "17vw",
