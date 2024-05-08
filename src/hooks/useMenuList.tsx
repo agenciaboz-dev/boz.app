@@ -150,7 +150,7 @@ export const useMenuList = () => {
                     icon: <WhatsAppIcon />,
                     name: "Nagazap",
                     path: "/nagazap",
-                    onClick: () => navigate("/tools/nagazap"),
+                    onClick: () => navigate("/tools/nagazap/"),
                 },
             ],
         },

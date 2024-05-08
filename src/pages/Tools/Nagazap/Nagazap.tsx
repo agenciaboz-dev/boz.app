@@ -8,6 +8,8 @@ import { Route, Routes } from "react-router-dom"
 import { Token } from "./Token"
 import { Nagazap } from "../../../types/server/class/Nagazap"
 import { api } from "../../../api"
+import { Info } from "./Info"
+import { MessagesScreen } from "./Messages/Messages"
 
 interface NagazapProps {
     user: User
@@ -58,13 +60,16 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
                 elevation={5}
             >
                 <Title title="Nagazap" icon={<WhatsApp />}>
+                    <ToolButton label="Info" route="/" />
                     <ToolButton label="Token" route="/token" />
+                    <ToolButton label="Mensagens" route="/messages" />
                 </Title>
             </Paper>
             <Box sx={{ width: "80vw" }}>
                 <Routes>
-                    <Route index element={<></>} />
+                    <Route index element={<Info />} />
                     <Route path="/token" element={<Token nagazap={nagazap} setNagazap={setNagazap} />} />
+                    <Route path="/messages" element={<MessagesScreen />} />
                 </Routes>
             </Box>
         </Box>

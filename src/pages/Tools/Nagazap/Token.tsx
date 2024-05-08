@@ -5,6 +5,7 @@ import { Nagazap } from "../../../types/server/class/Nagazap"
 import { TaiTextField } from "../../../components/TaiTextField"
 import { useFormik } from "formik"
 import { api } from "../../../api"
+import { Subroute } from "./Subroute"
 
 interface TokenProps {
     nagazap?: Nagazap
@@ -32,22 +33,15 @@ export const Token: React.FC<TokenProps> = ({ nagazap, setNagazap }) => {
     })
 
     return (
-        <Paper
-            sx={{
-                flexDirection: "column",
-                gap: "2vw",
-                padding: "2vw",
-                width: "99%",
-                bgcolor: "background.default",
-                borderTopRightRadius: "2vw",
-                overflowY: "auto",
-            }}
-        >
-            <Title name={"Token"} />
-
+        <Subroute title="Token">
             {nagazap ? (
                 <form onSubmit={formik.handleSubmit} style={{ gap: "1vw", display: "flex" }}>
-                    <TaiTextField label="Token" value={nagazap?.token} />
+                    <TaiTextField
+                        label={new Date(Number(nagazap.lastUpdated)).toLocaleString("pt-br")}
+                        name="token"
+                        value={formik.values.token}
+                        onChange={formik.handleChange}
+                    />
                     <Button type="submit" variant="contained">
                         {loading ? <CircularProgress size={"1.5rem"} color="inherit" /> : "salvar"}
                     </Button>
@@ -55,6 +49,6 @@ export const Token: React.FC<TokenProps> = ({ nagazap, setNagazap }) => {
             ) : (
                 <p>cadê o nagazap</p>
             )}
-        </Paper>
+        </Subroute>
     )
 }
