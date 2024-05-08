@@ -6,6 +6,7 @@ import { QrCodeGenerator } from "./QrCodeGenerator"
 import { Route, Routes } from "react-router-dom"
 import { Update } from "./Update"
 import { Wakeup } from "./Wakeup"
+import { NagazapScreen } from "./Nagazap/Nagazap"
 
 interface ToolsProps {
     user: User
@@ -19,6 +20,7 @@ export const Tools: React.FC<ToolsProps> = ({ user }) => {
                 <Routes>
                     <Route path="/qrcode" element={<QrCodeGenerator user={user} />} />
                     <Route path="/update" element={<Update user={user} />} />
+                    <Route path="/nagazap/*" element={<NagazapScreen user={user} />} />
                     <Route path="/wakeup/*" element={<Wakeup user={user} />} />
                 </Routes>
             </Box>
