@@ -158,7 +158,7 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
                     </Paper>
 
                     <Paper sx={{ padding: "1vw", alignItems: "center" }}>
-                        <Grid container columns={3} spacing={2}>
+                        <Grid container columns={4} spacing={2}>
                             <Grid item xs={1}>
                                 <Button component="label" variant="outlined" sx={{ borderStyle: "dashed", height: "100%", gap: "1vw" }} fullWidth>
                                     <CloudUpload />
