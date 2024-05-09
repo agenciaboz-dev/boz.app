@@ -6,14 +6,17 @@ import { NagaMessage } from "../../../../types/server/class/Nagazap"
 import { MessageContainer } from "./MessageContainer"
 import { Refresh } from "@mui/icons-material"
 import { useIo } from "../../../../hooks/useIo"
+import { useSearch } from "../../../../hooks/useSearch"
 
 interface MessagesScreenProps {}
 
 export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
     const io = useIo()
+    const { setOnSearch } = useSearch()
 
     const [loading, setLoading] = useState(false)
     const [messages, setMessages] = useState<NagaMessage[]>([])
+    const [filteredMessages, setFilteredMessages] = useState<NagaMessage[]>(messages)
 
     const fetchMessages = async () => {
         setLoading(true)
@@ -29,7 +32,17 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
         }
     }
 
+    const onSearch = (value: string) => {
+        const text = value.toLowerCase()
+        setFilteredMessages(
+            messages.filter(
+                (message) => message.from.includes(text) || message.name.toLowerCase().includes(text) || message.text.toLowerCase().includes(text)
+            )
+        )
+    }
+
     useEffect(() => {
+        setOnSearch(() => onSearch, "mensagens")
         fetchMessages()
 
         io.on("nagazap:message", (message) => {
@@ -41,6 +54,10 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
         }
     }, [])
 
+    useEffect(() => {
+        setFilteredMessages(messages)
+    }, [messages])
+
     return (
         <Subroute
             title="Mensagens"
@@ -51,7 +68,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
             }
         >
             <Grid container columns={1} spacing={2}>
-                {messages
+                {filteredMessages
                     .sort((a, b) => Number(b.timestamp) - Number(a.timestamp))
                     .map((item) => (
                         <MessageContainer key={item.id} message={item} />
