@@ -44,6 +44,7 @@
     "react-text-mask": "^5.5.0",
     "react-timer-hook": "^3.0.7",
     "react-use-measure": "^2.1.1",
+    "read-excel-file": "^5.8.1",
     "rechart": "^0.0.1",
     "recharts": "^2.11.0",
     "remove": "^0.1.5",

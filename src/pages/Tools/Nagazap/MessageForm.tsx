@@ -4,10 +4,11 @@ import { Subroute } from "./Subroute"
 import { useFormik } from "formik"
 import { OvenForm, WhatsappForm, WhatsappTemplateComponent } from "../../../types/server/Meta/WhatsappBusiness/WhatsappForm"
 import { TaiTextField } from "../../../components/TaiTextField"
-import { Delete, DeleteForever, PlusOne } from "@mui/icons-material"
+import { CloudUpload, Delete, DeleteForever, PlusOne } from "@mui/icons-material"
 import { api } from "../../../api"
 import { TemplateComponent, TemplateInfo } from "../../../types/server/Meta/WhatsappBusiness/TemplatesInfo"
 import { Avatar, FileInputButton } from "@files-ui/react"
+import { getPhonesfromSheet } from "../../../tools/getPhonesFromSheet"
 
 interface MessageFormProps {}
 
@@ -19,6 +20,7 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
     const [templates, setTemplates] = useState<TemplateInfo[]>([])
     const [image, setImage] = useState<File>()
     const [loading, setLoading] = useState(false)
+    const [sheetPhones, setSheetPhones] = useState<string[]>([])
 
     const fetchTemplates = async () => {
         try {
@@ -36,7 +38,9 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
             console.log(values)
             const formData = new FormData()
             if (image) formData.append("file", image)
-            formData.append("data", JSON.stringify(values))
+
+            const data: OvenForm = { ...values, to: [...values.to, ...sheetPhones] }
+            formData.append("data", JSON.stringify(data))
 
             setLoading(true)
             try {
@@ -50,9 +54,21 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
         },
     })
 
-    const onNewMessage = () => {
+    const handleSheetsUpload = async (event: any) => {
+        const file = event?.target?.files[0]
+        if (file) {
+            try {
+                const phones = await getPhonesfromSheet(file)
+                setSheetPhones(phones.map((phone) => phone.phone))
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+    const onNewPhone = (phone = "") => {
         const to = [...formik.values.to]
-        to.push("")
+        to.push(phone)
         formik.setFieldValue("to", to)
     }
 
@@ -143,6 +159,13 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
 
                     <Paper sx={{ padding: "1vw", alignItems: "center" }}>
                         <Grid container columns={3} spacing={2}>
+                            <Grid item xs={1}>
+                                <Button component="label" variant="outlined" sx={{ borderStyle: "dashed", height: "100%", gap: "1vw" }} fullWidth>
+                                    <CloudUpload />
+                                    {!!sheetPhones.length ? `${sheetPhones.length} números importados` : "Importar planilha"}
+                                    <input onChange={handleSheetsUpload} style={{ display: "none" }} type="file" />
+                                </Button>
+                            </Grid>
                             {formik.values.to.map((number, index) => (
                                 <Grid item xs={1} key={index}>
                                     <TaiTextField
@@ -161,7 +184,7 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
                                 </Grid>
                             ))}
                             <Grid item xs={1}>
-                                <Button variant="outlined" sx={{ borderStyle: "dashed", height: "100%" }} onClick={onNewMessage} fullWidth>
+                                <Button variant="outlined" sx={{ borderStyle: "dashed", height: "100%" }} onClick={() => onNewPhone()} fullWidth>
                                     <PlusOne />
                                 </Button>
                             </Grid>
@@ -169,7 +192,7 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
                     </Paper>
                 </Box>
 
-                <Button type="submit" variant="contained" disabled={!formik.values.to.length || !formik.values.template}>
+                <Button type="submit" variant="contained" disabled={(!formik.values.to.length && !sheetPhones.length) || !formik.values.template}>
                     {loading ? <CircularProgress size="1.5rem" color="inherit" /> : "enviar"}
                 </Button>
             </form>
