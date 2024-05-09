@@ -74,7 +74,7 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
                     <Route index element={<Info />} />
                     <Route path="/token" element={<Token nagazap={nagazap} setNagazap={setNagazap} />} />
                     <Route path="/messages" element={<MessagesScreen />} />
-                    <Route path="/oven" element={<Oven />} />
+                    <Route path="/oven" element={<Oven nagazap={nagazap} setNagazap={setNagazap} />} />
                     <Route path="/message_form" element={<MessageFormScreen />} />
                 </Routes>
             </Box>
