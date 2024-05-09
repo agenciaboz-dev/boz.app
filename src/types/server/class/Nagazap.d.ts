@@ -25,7 +25,9 @@ export declare class Nagazap {
     stack: WhatsappForm[];
     frequency: string;
     batchSize: number;
+    lastMessageTime: string;
     static get(): Promise<Nagazap>;
+    static shouldBake(): Promise<void>;
     constructor(data: NagazapPrisma);
     getMessages(): Promise<NagaMessage[]>;
     updateToken(token: string): Promise<void>;
@@ -37,9 +39,14 @@ export declare class Nagazap {
     saveMessage(data: NagaMessageForm): Promise<NagaMessage>;
     queueMessage(data: WhatsappForm): Promise<WhatsappForm[]>;
     getTemplates(): Promise<any>;
-    newOven(data: OvenForm): Promise<void>;
     uploadMedia(file: UploadedFile, filepath: string): Promise<string>;
     sendMessage(message: WhatsappForm): Promise<void>;
     prepareBatch(data: OvenForm, image_id?: string): Promise<void>;
+    updateOvenSettings(data: {
+        batchSize?: number;
+        frequency?: string;
+    }): Promise<void>;
+    saveStack(): Promise<void>;
+    bake(): Promise<void>;
 }
 export {};

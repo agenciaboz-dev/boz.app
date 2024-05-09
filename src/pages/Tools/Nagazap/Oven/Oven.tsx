@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react"
-import { Box, CircularProgress, IconButton, MenuItem, TextField } from "@mui/material"
+import { Box, CircularProgress, Grid, IconButton, MenuItem, TextField } from "@mui/material"
 import { Subroute } from "../Subroute"
 import { TaiTextField } from "../../../../components/TaiTextField"
 import { Nagazap } from "../../../../types/server/class/Nagazap"
 import { Refresh, Save } from "@mui/icons-material"
 import { api } from "../../../../api"
+import { WhatsappForm } from "../../../../types/server/Meta/WhatsappBusiness/WhatsappForm"
+import { Batch } from "./Batch"
+import { useIo } from "../../../../hooks/useIo"
 
 interface OvenProps {
     nagazap?: Nagazap
@@ -12,10 +15,22 @@ interface OvenProps {
 }
 
 export const Oven: React.FC<OvenProps> = ({ nagazap, setNagazap }) => {
+    function chunkArray<T>(array: T[], chunkSize: number): T[][] {
+        const result: T[][] = []
+        for (let i = 0; i < array.length; i += chunkSize) {
+            const chunk: T[] = array.slice(i, i + chunkSize)
+            result.push(chunk)
+        }
+        return result
+    }
+
+    const io = useIo()
+
     const [frequency, setFrequency] = useState(nagazap?.frequency || "")
     const [batchSize, setBatchSize] = useState(nagazap?.batchSize || 0)
     const [loading, setLoading] = useState(false)
     const [frequencyUnit, setFrequencyUnit] = useState<"mili" | "seg" | "min" | "hour">("mili")
+    const [batches, setBatches] = useState<WhatsappForm[][]>([])
 
     const textfield_size = 250
 
@@ -54,11 +69,26 @@ export const Oven: React.FC<OvenProps> = ({ nagazap, setNagazap }) => {
     }
 
     useEffect(() => {
+        console.log(batches)
+    }, [batches])
+
+    useEffect(() => {
         if (nagazap) {
             setFrequency(nagazap.frequency)
             setBatchSize(nagazap.batchSize)
+            setBatches(chunkArray(nagazap.stack, nagazap.batchSize))
         }
     }, [nagazap])
+
+    useEffect(() => {
+        refresh()
+
+        io.on("nagazap:update", (data) => setNagazap(data))
+
+        return () => {
+            io.off("nagazap:update")
+        }
+    }, [])
 
     return (
         <Subroute
@@ -115,6 +145,14 @@ export const Oven: React.FC<OvenProps> = ({ nagazap, setNagazap }) => {
                     </IconButton>
                 </Box>
             }
-        ></Subroute>
+        >
+            <Grid container columns={4} spacing={2}>
+                {batches.map((batch, index) => (
+                    <Grid item xs={1} key={index}>
+                        <Batch batch={batch} nagazap={nagazap} index={index} />
+                    </Grid>
+                ))}
+            </Grid>
+        </Subroute>
     )
 }

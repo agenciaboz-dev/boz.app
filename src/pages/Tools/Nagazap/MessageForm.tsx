@@ -9,6 +9,7 @@ import { api } from "../../../api"
 import { TemplateComponent, TemplateInfo } from "../../../types/server/Meta/WhatsappBusiness/TemplatesInfo"
 import { Avatar, FileInputButton } from "@files-ui/react"
 import { getPhonesfromSheet } from "../../../tools/getPhonesFromSheet"
+import { useSnackbar } from "burgos-snackbar"
 
 interface MessageFormProps {}
 
@@ -17,6 +18,8 @@ const ComponentType: React.FC<{ component: TemplateComponent }> = ({ component }
 }
 
 export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
+    const { snackbar } = useSnackbar()
+
     const [templates, setTemplates] = useState<TemplateInfo[]>([])
     const [image, setImage] = useState<File>()
     const [loading, setLoading] = useState(false)
@@ -46,6 +49,7 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
             try {
                 const response = await api.post("/whatsapp/oven", formData)
                 console.log(response)
+                snackbar({ severity: "success", text: "Mensagens colocadas no forno" })
             } catch (error) {
                 console.log(error)
             } finally {

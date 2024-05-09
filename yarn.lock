@@ -2115,10 +2115,10 @@ buffers@~0.1.1:
   resolved "https://registry.yarnpkg.com/buffers/-/buffers-0.1.1.tgz#b24579c3bed4d6d396aeee6d9a8ae7f5482ab7bb"
   integrity sha512-9q/rDEGSb/Qsvv2qvzIzdluL5k7AaJOTrw23z9reQthrbF7is4CtlT0DXyO1oei2DCp4uojjzQ7igaSHp1kAEQ==
 
-burgos-array@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/burgos-array/-/burgos-array-1.0.2.tgz#c0531601b9d3c2539f45dee58c9656afac4c9ee2"
-  integrity sha512-K7oU+yClg+gcUrfFncdSuZ7TYrk/8buRW1+eWq7rmCNtbXdVwPXHTP9eOb9wlJWFmV1Nt6w19mcxb6bzXIQQtg==
+burgos-array@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/burgos-array/-/burgos-array-1.1.0.tgz#3593f89d685d87d936f5967a018d80fa1368aecb"
+  integrity sha512-M++EBfOpQbCyNzP8uJnpQJ5iDCO1yt8VSkdkJaLaZzM8pFI9/g8xHsWJzIE4UY+uIDISZrOzccOdAxqzxp20rw==
 
 burgos-confirm@^1.3.1:
   version "1.3.1"
