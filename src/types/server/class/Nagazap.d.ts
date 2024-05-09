@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { OvenForm, WhatsappForm } from "../types/shared/Meta/WhatsappBusiness/WhatsappForm";
 export type NagaMessagePrisma = Prisma.NagazapMessageGetPayload<{}>;
 export type NagaMessageForm = Omit<Prisma.NagazapMessageGetPayload<{}>, "id">;
 export type NagazapPrisma = Prisma.NagazapGetPayload<{}>;
@@ -17,6 +18,7 @@ export declare class Nagazap {
     phoneId: string;
     bussinessId: string;
     lastUpdated: string;
+    stack: WhatsappForm[];
     static get(): Promise<Nagazap>;
     constructor(data: NagazapPrisma);
     getMessages(): Promise<NagaMessage[]>;
@@ -27,4 +29,7 @@ export declare class Nagazap {
     };
     getInfo(): Promise<any>;
     saveMessage(data: NagaMessageForm): Promise<NagaMessage>;
+    queueMessage(data: WhatsappForm): Promise<WhatsappForm[]>;
+    getTemplates(): Promise<any>;
+    newOven(data: OvenForm): Promise<void>;
 }

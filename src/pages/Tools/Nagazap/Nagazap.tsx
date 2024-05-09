@@ -10,6 +10,8 @@ import { Nagazap } from "../../../types/server/class/Nagazap"
 import { api } from "../../../api"
 import { Info } from "./Info"
 import { MessagesScreen } from "./Messages/Messages"
+import { Oven } from "./Oven/Oven"
+import { MessageFormScreen } from "./MessageForm"
 
 interface NagazapProps {
     user: User
@@ -60,9 +62,11 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
                 elevation={5}
             >
                 <Title title="Nagazap" icon={<WhatsApp />}>
-                    <ToolButton label="Info" route="/" />
+                    <ToolButton label="Informações" route="/" />
                     <ToolButton label="Token" route="/token" />
                     <ToolButton label="Mensagens" route="/messages" />
+                    <ToolButton label="Forno" route="/oven" />
+                    <ToolButton label="Enviar mensagem" route="/message_form" />
                 </Title>
             </Paper>
             <Box sx={{ width: "80vw" }}>
@@ -70,6 +74,8 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
                     <Route index element={<Info />} />
                     <Route path="/token" element={<Token nagazap={nagazap} setNagazap={setNagazap} />} />
                     <Route path="/messages" element={<MessagesScreen />} />
+                    <Route path="/oven" element={<Oven />} />
+                    <Route path="/message_form" element={<MessageFormScreen />} />
                 </Routes>
             </Box>
         </Box>
