@@ -113,9 +113,9 @@ export const MessageFormScreen: React.FC<MessageFormProps> = ({}) => {
                                     return (
                                         <Grid item xs={1}>
                                             <ComponentType component={component} />
-                                            <Box sx={{ alignItems: "center", flexDirection: "column" }}>
+                                            <Box sx={{ flexDirection: "column" }}>
                                                 <Avatar
-                                                    style={{ width: "100%", height: "auto", aspectRatio: "2/1", objectFit: "contain" }}
+                                                    style={{ width: "60%", height: "auto", aspectRatio: "2/1", objectFit: "contain" }}
                                                     emptyLabel="Enviar imagem"
                                                     changeLabel="Trocar imagem"
                                                     src={image}
