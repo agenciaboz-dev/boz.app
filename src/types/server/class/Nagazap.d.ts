@@ -23,6 +23,7 @@ export declare class Nagazap {
     bussinessId: string;
     lastUpdated: string;
     stack: WhatsappForm[];
+    blacklist: string[];
     frequency: string;
     batchSize: number;
     lastMessageTime: string;
@@ -37,6 +38,7 @@ export declare class Nagazap {
     };
     getInfo(): Promise<any>;
     saveMessage(data: NagaMessageForm): Promise<NagaMessage>;
+    addToBlacklist(number: string): Promise<void>;
     queueMessage(data: WhatsappForm): Promise<WhatsappForm[]>;
     getTemplates(): Promise<any>;
     uploadMedia(file: UploadedFile, filepath: string): Promise<string>;

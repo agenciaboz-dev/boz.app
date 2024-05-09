@@ -12,6 +12,7 @@ import { Info } from "./Info"
 import { MessagesScreen } from "./Messages/Messages"
 import { Oven } from "./Oven/Oven"
 import { MessageFormScreen } from "./MessageForm"
+import { Blacklist } from "./Blacklist/Blacklist"
 
 interface NagazapProps {
     user: User
@@ -67,6 +68,7 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
                     <ToolButton label="Mensagens" route="/messages" />
                     <ToolButton label="Forno" route="/oven" />
                     <ToolButton label="Enviar mensagem" route="/message_form" />
+                    <ToolButton label="Lista negra" route="/blacklist" />
                 </Title>
             </Paper>
             <Box sx={{ width: "80vw" }}>
@@ -75,6 +77,7 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
                     <Route path="/token" element={<Token nagazap={nagazap} setNagazap={setNagazap} />} />
                     <Route path="/messages" element={<MessagesScreen />} />
                     <Route path="/oven" element={<Oven nagazap={nagazap} setNagazap={setNagazap} />} />
+                    <Route path="/blacklist" element={<Blacklist nagazap={nagazap} setNagazap={setNagazap} />} />
                     <Route path="/message_form" element={<MessageFormScreen />} />
                 </Routes>
             </Box>
