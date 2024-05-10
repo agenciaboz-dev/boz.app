@@ -27,6 +27,7 @@ export declare class Nagazap {
     frequency: string;
     batchSize: number;
     lastMessageTime: string;
+    paused: boolean;
     static get(): Promise<Nagazap>;
     static shouldBake(): Promise<void>;
     constructor(data: NagazapPrisma);
@@ -39,6 +40,7 @@ export declare class Nagazap {
     getInfo(): Promise<any>;
     saveMessage(data: NagaMessageForm): Promise<NagaMessage>;
     addToBlacklist(number: string): Promise<void>;
+    removeFromBlacklist(number: string): Promise<void>;
     queueMessage(data: WhatsappForm): Promise<WhatsappForm[]>;
     getTemplates(): Promise<any>;
     uploadMedia(file: UploadedFile, filepath: string): Promise<string>;
@@ -50,5 +52,9 @@ export declare class Nagazap {
     }): Promise<void>;
     saveStack(): Promise<void>;
     bake(): Promise<void>;
+    pause(): Promise<void>;
+    start(): Promise<void>;
+    clearOven(): Promise<void>;
+    emit(): void;
 }
 export {};

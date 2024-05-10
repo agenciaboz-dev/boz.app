@@ -12,7 +12,7 @@ interface BatchProps {
 
 export const Batch: React.FC<BatchProps> = ({ batch, nagazap, index }) => {
     return nagazap ? (
-        <Paper sx={{ flexDirection: "column", padding: "1vw", gap: "1vw", height: "100%" }}>
+        <Paper sx={{ flexDirection: "column", padding: "1vw", gap: "1vw", height: "100%", opacity: nagazap.paused ? 0.4 : 1 }}>
             <Title
                 name={`${index + 1}`}
                 right={

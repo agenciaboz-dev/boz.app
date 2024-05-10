@@ -13,12 +13,15 @@ import { MessagesScreen } from "./Messages/Messages"
 import { Oven } from "./Oven/Oven"
 import { MessageFormScreen } from "./MessageForm"
 import { Blacklist } from "./Blacklist/Blacklist"
+import { useIo } from "../../../hooks/useIo"
 
 interface NagazapProps {
     user: User
 }
 
 export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
+    const io = useIo()
+    
     const [nagazap, setNagazap] = useState<Nagazap>()
     const [loading, setLoading] = useState(false)
 
@@ -38,6 +41,12 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
 
     useEffect(() => {
         refreshNagazap()
+
+        io.on("nagazap:update", (data) => setNagazap(data))
+
+        return () => {
+            io.off("nagazap:update")
+        }
     }, [])
 
     return (
