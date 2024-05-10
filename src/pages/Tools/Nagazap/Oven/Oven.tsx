@@ -3,7 +3,7 @@ import { Box, CircularProgress, Grid, IconButton, MenuItem, TextField } from "@m
 import { Subroute } from "../Subroute"
 import { TaiTextField } from "../../../../components/TaiTextField"
 import { Nagazap } from "../../../../types/server/class/Nagazap"
-import { Pause, PauseCircle, PlayArrow, PlayCircle, Refresh, Save } from "@mui/icons-material"
+import { DeleteForever, Pause, PauseCircle, PlayArrow, PlayCircle, Refresh, Save } from "@mui/icons-material"
 import { api } from "../../../../api"
 import { WhatsappForm } from "../../../../types/server/Meta/WhatsappBusiness/WhatsappForm"
 import { Batch } from "./Batch"
@@ -94,6 +94,20 @@ export const Oven: React.FC<OvenProps> = ({ nagazap, setNagazap }) => {
         }
     }
 
+    const onClearOvenClick = async () => {
+        if (loading) return
+        setLoading(true)
+
+        try {
+            const response = await api.get("/whatsapp/clearOven")
+            setNagazap(response.data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         refresh()
     }, [])
@@ -107,6 +121,11 @@ export const Oven: React.FC<OvenProps> = ({ nagazap, setNagazap }) => {
                         <Box sx={{ bgcolor: nagazap.paused ? "warning.main" : "success.main", borderRadius: "100%", width: "1vw", height: "1vw" }} />
                     </Box>
                     <Box sx={{ gap: "1vw" }}>
+                        {!!batches.length && (
+                            <IconButton sx={{ width: 45 }} onClick={onClearOvenClick} disabled={loading} color="error">
+                                {<DeleteForever />}
+                            </IconButton>
+                        )}
                         <IconButton sx={{ width: 45 }} onClick={() => onStatusToggleClick(nagazap.paused ? "start" : "pause")}>
                             {nagazap.paused ? <PlayCircle color="success" /> : <PauseCircle color="warning" />}
                         </IconButton>
