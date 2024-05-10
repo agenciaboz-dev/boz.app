@@ -21,7 +21,7 @@ interface NagazapProps {
 
 export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
     const io = useIo()
-    
+
     const [nagazap, setNagazap] = useState<Nagazap>()
     const [loading, setLoading] = useState(false)
 
@@ -73,11 +73,11 @@ export const NagazapScreen: React.FC<NagazapProps> = ({ user }) => {
             >
                 <Title title="Nagazap" icon={<WhatsApp />}>
                     <ToolButton label="Informações" route="/" />
-                    <ToolButton label="Token" route="/token" />
                     <ToolButton label="Mensagens" route="/messages" />
-                    <ToolButton label="Forno" route="/oven" />
                     <ToolButton label="Enviar mensagem" route="/message_form" />
+                    <ToolButton label="Forno" route="/oven" />
                     <ToolButton label="Lista negra" route="/blacklist" />
+                    <ToolButton label="Token" route="/token" />
                 </Title>
             </Paper>
             <Box sx={{ width: "80vw" }}>

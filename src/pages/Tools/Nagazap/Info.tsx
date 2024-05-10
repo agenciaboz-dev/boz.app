@@ -5,6 +5,7 @@ import { api } from "../../../api"
 import { NagazapPhoneNumber } from "../../../types/NagazapPhoneNumber"
 import { Title } from "../../Profile/UserComponents"
 import { Refresh } from "@mui/icons-material"
+import { Nagazap } from "../../../types/server/class/Nagazap"
 
 interface InfoProps {}
 
@@ -13,6 +14,22 @@ interface PhoneProps {
 }
 
 const NagaPhone: React.FC<PhoneProps> = ({ nagaPhone }) => {
+    const [nagazap, setNagazap] = useState<Nagazap>()
+
+    const refreshNagazap = async () => {
+        try {
+            const response = await api.get("/whatsapp")
+            setNagazap(response.data)
+            console.log(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        refreshNagazap()
+    }, [])
+
     return (
         <Grid item xs={1}>
             <Paper sx={{ padding: "1vw", flexDirection: "column", gap: "1vw" }}>
@@ -22,6 +39,9 @@ const NagaPhone: React.FC<PhoneProps> = ({ nagaPhone }) => {
                     Confiabilidade:{" "}
                     <Box sx={{ borderRadius: "100%", width: "1vw", height: "1vw", bgcolor: nagaPhone.quality_rating.toLowerCase() }} />
                 </Box>
+                <Box>App ID: {nagazap?.appId}</Box>
+                <Box>Phone ID: {nagazap?.phoneId}</Box>
+                <Box>Bussiness ID: {nagazap?.bussinessId}</Box>
             </Paper>
         </Grid>
     )
@@ -61,7 +81,7 @@ export const Info: React.FC<InfoProps> = ({}) => {
             <Grid container columns={3} spacing={2}>
                 {loading ? (
                     <Grid item xs={1}>
-                        <Skeleton variant="rounded" animation="wave" sx={{ width: "100%", height: "9.5vw" }} />
+                        <Skeleton variant="rounded" animation="wave" sx={{ width: "100%", height: "17vw" }} />
                     </Grid>
                 ) : (
                     phones.map((item) => <NagaPhone key={item.id} nagaPhone={item} />)
