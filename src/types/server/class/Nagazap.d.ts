@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { OvenForm, WhatsappForm } from "../types/shared/Meta/WhatsappBusiness/WhatsappForm";
 import { UploadedFile } from "express-fileupload";
+import { FailedMessageLog, SentMessageLog } from "../types/shared/Meta/WhatsappBusiness/Logs";
 export type NagaMessagePrisma = Prisma.NagazapMessageGetPayload<{}>;
 export type NagaMessageForm = Omit<Prisma.NagazapMessageGetPayload<{}>, "id">;
 export type NagazapPrisma = Prisma.NagazapGetPayload<{}>;
@@ -28,6 +29,8 @@ export declare class Nagazap {
     batchSize: number;
     lastMessageTime: string;
     paused: boolean;
+    sentMessages: SentMessageLog[];
+    failedMessages: FailedMessageLog[];
     static get(): Promise<Nagazap>;
     static shouldBake(): Promise<void>;
     constructor(data: NagazapPrisma);
@@ -55,6 +58,8 @@ export declare class Nagazap {
     pause(): Promise<void>;
     start(): Promise<void>;
     clearOven(): Promise<void>;
+    log(data: any): Promise<void>;
+    errorLog(data: any, number: string): Promise<void>;
     emit(): void;
 }
 export {};
