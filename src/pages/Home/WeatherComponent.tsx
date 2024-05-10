@@ -28,6 +28,7 @@ import wind from "../../assets/icons/SVG/2nd Set - Color/wind.svg"
 import { Divider, Skeleton } from "@mui/material"
 import axios from "axios"
 import { useArray } from "burgos-array"
+import { ContainerSkeleton } from "./ContainerSkeleton"
 
 interface WeatherComponentProps {}
 
@@ -201,7 +202,7 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
                     </Box>
                 )}
                 {data &&
-                    data.days.slice(3, 11).map((item: any, index: any) => (
+                    data.days.slice(2, 11).map((item: any, index: any) => (
                         <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
                             <p style={{ fontSize: "1rem" }}>{format(new Date(item.datetime), "dd/MM")}</p>
                             <img src={iconMappings[item.icon]} style={{ width: "2vw", height: "2vw" }} />
@@ -233,6 +234,6 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
                 </Box> */}
         </Box>
     ) : (
-        <Skeleton />
+        <ContainerSkeleton />
     )
 }
