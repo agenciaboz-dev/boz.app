@@ -50,7 +50,7 @@ export const Logs: React.FC<LogsProps> = ({ nagazap, setNagazap }) => {
         >
             <Grid container columns={2} spacing={3}>
                 <LogsList list={nagazap.sentMessages.filter((log) => log.data.contacts[0].wa_id.slice(2).includes(filter))} type="success" />
-                <LogsList list={nagazap.failedMessages} type="error" />
+                <LogsList list={nagazap.failedMessages.filter((log) => log.number.slice(2).includes(filter))} type="error" />
             </Grid>
         </Subroute>
     ) : null
