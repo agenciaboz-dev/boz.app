@@ -16,6 +16,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
 
     const [loading, setLoading] = useState(false)
     const [messages, setMessages] = useState<NagaMessage[]>([])
+    const [filter, setFilter] = useState("")
     const [filteredMessages, setFilteredMessages] = useState<NagaMessage[]>(messages)
 
     const fetchMessages = async () => {
@@ -23,6 +24,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
 
         try {
             const response = await api.get("/whatsapp/messages")
+            console.log("a")
             console.log(response.data)
             setMessages(response.data)
         } catch (error) {
@@ -34,11 +36,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
 
     const onSearch = (value: string) => {
         const text = value.toLowerCase()
-        const filtered = messages.filter(
-            (message) => message.from.includes(text) || message.name.toLowerCase().includes(text) || message.text.toLowerCase().includes(text)
-        )
-        console.log(filtered)
-        setFilteredMessages(filtered)
+        setFilter(text)
     }
 
     useEffect(() => {
@@ -68,7 +66,13 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
             }
         >
             <Grid container columns={1} spacing={2}>
-                {filteredMessages
+                {messages
+                    .filter(
+                        (message) =>
+                            message?.from?.includes(filter) ||
+                            message?.name?.toLowerCase()?.includes(filter) ||
+                            message?.text?.toLowerCase()?.includes(filter)
+                    )
                     .sort((a, b) => Number(b.timestamp) - Number(a.timestamp))
                     .map((item) => (
                         <MessageContainer key={item.id} message={item} />
