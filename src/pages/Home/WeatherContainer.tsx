@@ -127,9 +127,7 @@ export const WeatherContainer: React.FC<WeatherContainerProps> = ({}) => {
 
     return weather ? (
         <ContainerWrapper>
-            <Box sx={{ fontSize: "5rem", fontWeight: "bold", justifyContent: "center", alignItems: "center", height: 1 }}>
-                <img src={iconMappings[icon]} style={{ width: "17vw", height: "17vw" }} />
-            </Box>
+            <WeatherComponent />
         </ContainerWrapper>
     ) : (
         <ContainerSkeleton />

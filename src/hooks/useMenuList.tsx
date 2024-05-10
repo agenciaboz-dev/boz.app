@@ -145,6 +145,13 @@ export const useMenuList = () => {
                     path: "/update",
                     onClick: () => navigate("/tools/update"),
                 },
+                {
+                    id: 4,
+                    icon: <WhatsAppIcon />,
+                    name: "Nagazap",
+                    path: "/nagazap",
+                    onClick: () => navigate("/tools/nagazap/"),
+                },
             ],
         },
         {

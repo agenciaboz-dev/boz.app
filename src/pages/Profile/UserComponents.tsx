@@ -24,7 +24,7 @@ export const Data: React.FC<{
     )
 }
 
-export const Title: React.FC<{ name: string }> = ({ name }) => {
+export const Title: React.FC<{ name: string; right?: React.ReactNode }> = ({ name, right }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const colors = useColors()
     return (
@@ -33,13 +33,15 @@ export const Title: React.FC<{ name: string }> = ({ name }) => {
                 color: lighten(colors.text.secondary, 0.3),
                 fontWeight: "bold",
                 borderBottom: "1px solid",
-                paddingBottom: isMobile? "3vw" : "0.5vw",
+                paddingBottom: isMobile ? "3vw" : "0.5vw",
                 width: "100%",
-                fontSize: isMobile? "6vw" : "1.1vw",
-                justifyContent: isMobile? "center" : "start"
+                fontSize: isMobile ? "6vw" : "1.1vw",
+                justifyContent: isMobile ? "center" : "space-between",
+                alignItems: "center",
             }}
         >
             <p style={{ color: colors.primary }}>{name}</p>
+            {right}
         </Box>
     )
 }

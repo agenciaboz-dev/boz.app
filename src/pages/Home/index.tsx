@@ -18,8 +18,8 @@ export const Home: React.FC<HomeProps> = ({ user }) => {
             <Header user={user} />
             <Box sx={{ padding: "2vw", flex: 1 }}>
                 <Grid container spacing={4} columns={3}>
-                    <UsersContainer user={user} />
                     <WeatherContainer />
+                    <UsersContainer user={user} />
                     <StatusLogsContainer user={user} />
                     <BirthdaysContainer user={user} />
                     <ContainerSkeleton />
