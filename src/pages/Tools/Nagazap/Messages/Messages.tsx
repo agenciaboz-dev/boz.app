@@ -34,11 +34,11 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({}) => {
 
     const onSearch = (value: string) => {
         const text = value.toLowerCase()
-        setFilteredMessages(
-            messages.filter(
-                (message) => message.from.includes(text) || message.name.toLowerCase().includes(text) || message.text.toLowerCase().includes(text)
-            )
+        const filtered = messages.filter(
+            (message) => message.from.includes(text) || message.name.toLowerCase().includes(text) || message.text.toLowerCase().includes(text)
         )
+        console.log(filtered)
+        setFilteredMessages(filtered)
     }
 
     useEffect(() => {

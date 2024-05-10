@@ -5,6 +5,7 @@ import { Subroute } from "../Subroute"
 import { api } from "../../../../api"
 import { Refresh } from "@mui/icons-material"
 import { LogsList } from "./LogsList"
+import { useSearch } from "../../../../hooks/useSearch"
 
 interface LogsProps {
     nagazap?: Nagazap
@@ -12,7 +13,10 @@ interface LogsProps {
 }
 
 export const Logs: React.FC<LogsProps> = ({ nagazap, setNagazap }) => {
+    const { setOnSearch } = useSearch()
+
     const [loading, setLoading] = useState(false)
+    const [filter, setFilter] = useState("")
 
     const refresh = async () => {
         setLoading(true)
@@ -28,8 +32,11 @@ export const Logs: React.FC<LogsProps> = ({ nagazap, setNagazap }) => {
         }
     }
 
+    const handleSearch = (value: string) => setFilter(value)
+
     useEffect(() => {
         refresh()
+        setOnSearch(() => handleSearch, "logs")
     }, [])
 
     return nagazap ? (
@@ -42,7 +49,7 @@ export const Logs: React.FC<LogsProps> = ({ nagazap, setNagazap }) => {
             }
         >
             <Grid container columns={2} spacing={3}>
-                <LogsList list={nagazap.sentMessages} type="success" />
+                <LogsList list={nagazap.sentMessages.filter((log) => log.data.contacts[0].wa_id.slice(2).includes(filter))} type="success" />
                 <LogsList list={nagazap.failedMessages} type="error" />
             </Grid>
         </Subroute>

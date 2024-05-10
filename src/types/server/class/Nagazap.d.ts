@@ -44,10 +44,11 @@ export declare class Nagazap {
     saveMessage(data: NagaMessageForm): Promise<NagaMessage>;
     addToBlacklist(number: string): Promise<void>;
     removeFromBlacklist(number: string): Promise<void>;
-    queueMessage(data: WhatsappForm): Promise<WhatsappForm[]>;
     getTemplates(): Promise<any>;
     uploadMedia(file: UploadedFile, filepath: string): Promise<string>;
     sendMessage(message: WhatsappForm): Promise<void>;
+    queueMessage(data: WhatsappForm): Promise<WhatsappForm[]>;
+    queueBatch(data: WhatsappForm[]): Promise<WhatsappForm[]>;
     prepareBatch(data: OvenForm, image_id?: string): Promise<void>;
     updateOvenSettings(data: {
         batchSize?: number;
