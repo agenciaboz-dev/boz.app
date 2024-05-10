@@ -15,7 +15,7 @@ export const ContainerSkeleton: React.FC<ContainerSkeletonProps> = ({}) => {
                     borderRadius: "0 3vw",
                     boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
                     borderBottom: "solid 3px",
-                    borderBottomColor: "primary.main"
+                    borderBottomColor: "primary.main",
                 }}
             />
         </Grid>

@@ -135,7 +135,7 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
                             </Box>
                         </Box>
                         <Box sx={{ flexDirection: "column", alignItems: "end" }}>
-                            <p style={{ fontWeight: "600", fontSize: "1.2rem" }}>Clima</p>
+                            <p style={{ fontWeight: "600", fontSize: "1.2rem" }}>Curitiba</p>
                             <p style={{ fontSize: "0.9rem" }}>{dateTime}</p>
                             <p style={{ fontSize: "0.8rem" }}> {data && climaMappings[data.currentConditions.icon]}</p>
                         </Box>

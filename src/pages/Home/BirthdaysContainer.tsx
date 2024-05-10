@@ -4,6 +4,7 @@ import { ContainerWrapper } from "./ContainerWrapper"
 import { useUser } from "../../hooks/useUser"
 import { sortBirthday } from "../../tools/sortBirthday"
 import { UserAvatar } from "../Admin/Stats/StatusLogs"
+import birth from "../../assets/icons/birth.png"
 
 interface BirthdayContainerProps {
     user: User
@@ -17,14 +18,37 @@ export const BirthdaysContainer: React.FC<BirthdayContainerProps> = ({ user }) =
     return (
         <ContainerWrapper>
             <Box sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>Aniversários</Box>
-            <Box sx={{ flexDirection: "column" }}>
+            <Box sx={{ flexDirection: "row", gap: "0.5vw", flexWrap: "wrap", justifyContent: "space-between" }}>
+                <img
+                    src={birth}
+                    style={{
+                        position: "fixed",
+                        left: "40.8vw",
+                        top: "10vw",
+                        width: "2.5vw",
+                        height: "2.5vw",
+                        transform: "rotate(325deg)",
+                        zIndex: 1,
+                    }}
+                />
                 {next_birthdays.map((user, index) => {
                     const real_birthdate = new Date(user.birth)
                     real_birthdate.setDate(new Date(user.birth).getDate() + 1)
                     return (
-                        <Box sx={{ alignItems: "center", justifyContent: "space-between", fontWeight: index === 0 ? "bold" : "" }} key={user.id}>
+                        <Box
+                            sx={{
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                fontWeight: index === 0 ? "bold" : "",
+                                gap: "0.2vw",
+                                zIndex: 0,
+                            }}
+                            key={user.id}
+                        >
                             <UserAvatar user={user} />
-                            <Box>{real_birthdate.toLocaleDateString("pt-br", { day: "2-digit", month: "long" })}</Box>
+                            <Box sx={{ fontSize: "0.8vw" }}>
+                                {real_birthdate.toLocaleDateString("pt-br", { day: "2-digit", month: "long" })}
+                            </Box>
                         </Box>
                     )
                 })}

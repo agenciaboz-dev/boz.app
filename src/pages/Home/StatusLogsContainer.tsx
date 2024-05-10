@@ -1,5 +1,5 @@
-import React from "react"
-import { Box } from "@mui/material"
+import React, { useState } from "react"
+import { Box, Pagination } from "@mui/material"
 import { ContainerWrapper } from "./ContainerWrapper"
 import { useUser } from "../../hooks/useUser"
 import { Status } from "../Admin/Stats/StatusLogs"
@@ -23,16 +23,37 @@ const Log: React.FC<{ log: StatusLog }> = ({ log }) => {
 
 export const StatusLogsContainer: React.FC<StatusLogsContainerProps> = ({ user }) => {
     const { logs } = useUser()
+    // Estado para a página atual
+    const [page, setPage] = useState(1)
+    // Quantidade de logs por página
+    const itemsPerPage = 10
+    // Calcular o número total de páginas
+    const noOfPages = Math.ceil(logs.status.length / itemsPerPage)
+
+    // Manipula mudança de página
+    const handleChangePage = (event: any, value: any) => {
+        setPage(value)
+    }
     return logs.status.length ? (
         <ContainerWrapper>
-            <Box sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>Status [adicionar paginação]</Box>
-            <Box sx={{ flexDirection: "column" }}>
-                {logs.status
-                    .sort((a, b) => b.id - a.id)
-                    .slice(0, 100)
-                    .map((log) => (
-                        <Log key={log.id} log={log} />
-                    ))}
+            <Box sx={{ flexDirection: "column", height: "80%" }}>
+                <Box sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>Status</Box>
+                <Box sx={{ flexDirection: "column" }}>
+                    {logs.status
+                        .sort((a, b) => b.id - a.id)
+                        .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                        .map((log) => (
+                            <Log key={log.id} log={log} />
+                        ))}
+                </Box>
+                <Pagination
+                    count={noOfPages}
+                    page={page}
+                    onChange={handleChangePage}
+                    color="primary"
+                    variant="outlined"
+                    sx={{ mt: 2, alignSelf: "center" }}
+                />
             </Box>
         </ContainerWrapper>
     ) : (

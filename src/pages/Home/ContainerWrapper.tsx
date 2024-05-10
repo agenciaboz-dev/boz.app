@@ -21,8 +21,9 @@ export const ContainerWrapper: React.FC<ContainerWrapperProps> = ({ children }) 
                     borderBottom: "solid 3px",
                     borderBottomColor: "primary.main",
                     overflowY: "auto",
-                    gap: "1vw"
-                }}>
+                    gap: "1vw",
+                }}
+            >
                 {children}
             </Paper>
         </Grid>
