@@ -15,13 +15,15 @@ export const LogsList: React.FC<LogsListProps> = ({ list, type }) => {
         <Grid item xs={1}>
             <Paper sx={{ flexDirection: "column", padding: "1vw", gap: "1vw" }}>
                 <Title name={type == "success" ? "Enviadas" : "Falhas"} />
-                {list.map((item) =>
-                    type == "success" ? (
-                        <LogContainer key={item.timestamp} log={item as SentMessageLog} />
-                    ) : (
-                        <FailedLogContainer key={item.timestamp} log={item as FailedMessageLog} />
-                    )
-                )}
+                {list
+                    .sort((a, b) => Number(b.timestamp) - Number(a.timestamp))
+                    .map((item) =>
+                        type == "success" ? (
+                            <LogContainer key={item.timestamp} log={item as SentMessageLog} />
+                        ) : (
+                            <FailedLogContainer key={item.timestamp} log={item as FailedMessageLog} />
+                        )
+                    )}
             </Paper>
         </Grid>
     )
