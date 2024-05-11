@@ -28,10 +28,17 @@ export const Status: React.FC<{ status: number }> = ({ status }) => {
 }
 
 export const UserAvatar: React.FC<{ user: User; avatarSize?: string }> = ({ user, avatarSize }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
-    
+    const isMobile = useMediaQuery("(orientation: portrait)")
+
     return (
-        <Box sx={{ gap: isMobile ? "3vw" : "1vw", alignItems: "center", color: "text.secondary", fontSize: isMobile ? "5vw" : "1vw" }}>
+        <Box
+            sx={{
+                gap: isMobile ? "3vw" : "0.5vw",
+                alignItems: "center",
+                color: "text.secondary",
+                fontSize: isMobile ? "5vw" : "1vw",
+            }}
+        >
             <Avatar user={user} size={avatarSize || (isMobile ? "15vw" : "2.5vw")} small />
             {user.name.split(" ")[0]}
         </Box>
@@ -39,7 +46,7 @@ export const UserAvatar: React.FC<{ user: User; avatarSize?: string }> = ({ user
 }
 
 const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     const colors = useColors()
     const { darkMode } = useDarkMode()
@@ -55,33 +62,35 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
             selector: (row) => row.status,
             sortable: true,
             cell: (row) => <Status status={row.status} />,
-            width: isMobile? "33%" : "10vw",
+            width: isMobile ? "33%" : "10vw",
         },
         {
             name: "Horário",
             selector: (row) => row.datetime,
             sortable: true,
-            cell: (row) => <Box>{new Date(row.datetime).toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })}</Box>,
-            width: isMobile? "33%" : "6vw",
+            cell: (row) => (
+                <Box>{new Date(row.datetime).toLocaleTimeString("pt-br", { hour: "2-digit", minute: "2-digit" })}</Box>
+            ),
+            width: isMobile ? "33%" : "6vw",
         },
         {
             name: "Data",
             selector: (row) => row.datetime,
             sortable: true,
             cell: (row) => <Box>{new Date(row.datetime).toLocaleDateString("pt-br")}</Box>,
-            width: isMobile? "33%" : "5vw",
+            width: isMobile ? "33%" : "5vw",
         },
     ]
 
     return (
-        <Box sx={{ flexDirection: "column", width: isMobile? "90vw" : "25vw" }}>
+        <Box sx={{ flexDirection: "column", width: isMobile ? "90vw" : "25vw" }}>
             <Box
                 sx={{
-                    padding: isMobile? "3vw" : "1vw",
+                    padding: isMobile ? "3vw" : "1vw",
                     alignItems: "center",
                     color: "primary.main",
                     borderBottom: "2px solid",
-                    borderRadius: isMobile? "3vw" : "0.5vw",
+                    borderRadius: isMobile ? "3vw" : "0.5vw",
                     justifyContent: "space-between",
                     fontWeight: "normal",
                 }}
@@ -95,9 +104,9 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
                 <Box
                     sx={{
                         borderBottom: "2px solid",
-                        borderRadius: isMobile? "3vw" : "0.5vw",
+                        borderRadius: isMobile ? "3vw" : "0.5vw",
                         color: "primary.main",
-                        width: isMobile? "90vw" : "25vw",
+                        width: isMobile ? "90vw" : "25vw",
                         flexDirection: "column",
                     }}
                 >
@@ -125,12 +134,25 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
                         // fixedHeaderScrollHeight={"38.1vw"}
                         // onRowClicked={(row) => navigate(`/dashboard/products/${row.id}`)}
                         customStyles={{
-                            headCells: { style: { padding: isMobile? "0" : "" } },
-                            cells: { style: { padding: isMobile? "0" : "" } },
-                            headRow: { style: { backgroundColor: colors.background.primary, fontSize: isMobile? "3.5vw" : "0.6vw" } },
+                            headCells: { style: { padding: isMobile ? "0" : "" } },
+                            cells: { style: { padding: isMobile ? "0" : "" } },
+                            headRow: {
+                                style: {
+                                    backgroundColor: colors.background.primary,
+                                    fontSize: isMobile ? "3.5vw" : "0.6vw",
+                                },
+                            },
                             table: { style: { backgroundColor: colors.background.primary } },
-                            rows: { style: { cursor: "pointer", backgroundColor: colors.background.primary, fontSize: isMobile? "3.5vw" :"0.65vw" } },
-                            pagination: { style: { backgroundColor: colors.background.primary, fontSize: isMobile? "4vw" :"0.6vw" } },
+                            rows: {
+                                style: {
+                                    cursor: "pointer",
+                                    backgroundColor: colors.background.primary,
+                                    fontSize: isMobile ? "3.5vw" : "0.65vw",
+                                },
+                            },
+                            pagination: {
+                                style: { backgroundColor: colors.background.primary, fontSize: isMobile ? "4vw" : "0.6vw" },
+                            },
                         }}
                     />
                 </Box>
@@ -140,7 +162,7 @@ const UserContainer: React.FC<{ user: User; logs: StatusLog[] }> = ({ user, logs
 }
 
 export const StatusLogs: React.FC<StatusLogsProps> = ({ logs }) => {
-    const isMobile = useMediaQuery('(orientation: portrait)')
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     const { list, connectedList } = useUser()
 
@@ -151,14 +173,14 @@ export const StatusLogs: React.FC<StatusLogsProps> = ({ logs }) => {
         <Box
             sx={{
                 flexDirection: "column",
-                gap: isMobile? "5vw" : "1vw",
+                gap: isMobile ? "5vw" : "1vw",
                 color: "primary.main",
                 fontWeight: "bold",
                 height: "auto",
                 overflowY: "auto",
-                padding: isMobile? "5vw 0" : "0",
-                textAlign: isMobile? "center" : "start",
-                fontSize: isMobile? "6vw" : "1vw"
+                padding: isMobile ? "5vw 0" : "0",
+                textAlign: isMobile ? "center" : "start",
+                fontSize: isMobile ? "6vw" : "1vw",
             }}
         >
             Log de atividade

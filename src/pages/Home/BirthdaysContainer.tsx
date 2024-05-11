@@ -1,5 +1,5 @@
 import React from "react"
-import { Box } from "@mui/material"
+import { Box, Chip } from "@mui/material"
 import { ContainerWrapper } from "./ContainerWrapper"
 import { useUser } from "../../hooks/useUser"
 import { sortBirthday } from "../../tools/sortBirthday"
@@ -49,14 +49,16 @@ export const BirthdaysContainer: React.FC<BirthdayContainerProps> = ({ user }) =
                                 alignItems: "center",
                                 justifyContent: "space-between",
                                 fontWeight: index === 0 ? "bold" : "",
-                                gap: "0.2vw",
+                                gap: "0.3vw",
                                 zIndex: 0,
                             }}
                             key={user.id}
                         >
                             <UserAvatar user={user} />
-                            <Box sx={{ fontSize: "0.8vw" }}>
-                                {real_birthdate.toLocaleDateString("pt-br", { day: "2-digit", month: "long" })}
+                            <Box sx={{ fontSize: "0.7rem" }}>
+                                <Chip
+                                    label={real_birthdate.toLocaleDateString("pt-br", { day: "2-digit", month: "2-digit" })}
+                                />
                             </Box>
                         </Box>
                     )
