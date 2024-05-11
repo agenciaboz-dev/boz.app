@@ -18,13 +18,21 @@ export const BirthdaysContainer: React.FC<BirthdayContainerProps> = ({ user }) =
     return (
         <ContainerWrapper>
             <Box sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>Aniversários</Box>
-            <Box sx={{ flexDirection: "row", gap: "0.5vw", flexWrap: "wrap", justifyContent: "space-between" }}>
+            <Box
+                sx={{
+                    flexDirection: "row",
+                    gap: "0.5vw",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between",
+                    position: "relative",
+                }}
+            >
                 <img
                     src={birth}
                     style={{
-                        position: "fixed",
-                        left: "40.8vw",
-                        top: "10vw",
+                        position: "absolute",
+                        left: "-1vw",
+                        top: "-1.6vw",
                         width: "2.5vw",
                         height: "2.5vw",
                         transform: "rotate(325deg)",

@@ -29,6 +29,8 @@ import { Divider, Skeleton } from "@mui/material"
 import axios from "axios"
 import { useArray } from "burgos-array"
 import { ContainerSkeleton } from "./ContainerSkeleton"
+import colors from "../../style/colors"
+import { useHorizontalScroll } from "../../hooks/useHorizontalScroll"
 
 interface WeatherComponentProps {}
 
@@ -79,14 +81,11 @@ const climaMappings: { [key: string]: string } = {
     "rain-snow": rain_snow,
 }
 export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
+    const scrollRef = useHorizontalScroll()
     const currentDateTime = new Date()
     const formattedDateTime = format(currentDateTime, "EEEE, HH:mm", { locale: ptBR })
     const [data, setData] = useState<any>()
-    const [loading, setLoading] = useState(false)
     const token = "JTZPXAPR4ZHRJ22NJGRWJNT87"
-    const [icon, setIcon] = useState<string>("")
-    const array = useArray().newArray(24)
-    const days = useArray().newArray(10)
 
     const dateTime = formattedDateTime.charAt(0).toUpperCase() + formattedDateTime.slice(1)
 
@@ -95,7 +94,6 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
             const response = await axios.get(
                 `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Curitiba?key=${token}`
             )
-            const { icon } = response.data.currentConditions
             setData(response.data)
             console.log({ opa: response.data.days })
         } catch (error) {
@@ -142,7 +140,32 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
                     </Box>
                 </Box>
                 <Divider />
-                <Box sx={{ width: 1, height: 0.55, gap: "1vw", overflowX: "auto", overflowY: "hidden", pt: "0.5vw" }}>
+                <Box
+                    ref={scrollRef}
+                    sx={{
+                        width: 1,
+                        height: 0.55,
+                        gap: "1vw",
+                        overflowX: "auto",
+                        overflowY: "hidden",
+                        pt: "0.5vw",
+                        "&::-webkit-scrollbar": {
+                            width: "0.3vw",
+                            height: "0.4vw",
+                        },
+                        "&::-webkit-scrollbar-track": {
+                            background: "#f1f1f1",
+                            borderRadius: "0.4vw",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                            background: colors.primary,
+                            borderRadius: "0.4vw",
+                        },
+                        "&::-webkit-scrollbar-thumb:hover": {
+                            background: "primary.main",
+                        },
+                    }}
+                >
                     {data &&
                         data.days[1].hours
                             .filter((item: any) => {

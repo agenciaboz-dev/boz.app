@@ -17,9 +17,9 @@ export const UsersContainer: React.FC<UsersContainerProps> = ({ user }) => {
     return !!connectedList.length ? (
         <Paper
             sx={{
-                height: "90%",
-                maxHeight: "90%",
-                width: "20vw", // Garante que ocupe 20% da largura
+                height: "100%",
+                maxHeight: "100%",
+                width: "16vw", // Garante que ocupe 20% da largura
                 bgcolor: "background.default",
                 color: "primary.main",
                 borderRadius: "0 3vw",

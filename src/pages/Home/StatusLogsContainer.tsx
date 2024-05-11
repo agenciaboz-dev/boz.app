@@ -23,14 +23,10 @@ const Log: React.FC<{ log: StatusLog }> = ({ log }) => {
 
 export const StatusLogsContainer: React.FC<StatusLogsContainerProps> = ({ user }) => {
     const { logs } = useUser()
-    // Estado para a página atual
     const [page, setPage] = useState(1)
-    // Quantidade de logs por página
-    const itemsPerPage = 10
-    // Calcular o número total de páginas
+    const itemsPerPage = 9
     const noOfPages = Math.ceil(logs.status.length / itemsPerPage)
 
-    // Manipula mudança de página
     const handleChangePage = (event: any, value: any) => {
         setPage(value)
     }
