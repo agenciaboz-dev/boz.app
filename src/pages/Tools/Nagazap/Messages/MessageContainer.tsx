@@ -20,10 +20,11 @@ export const MessageContainer: React.FC<MessageContainerProps> = ({ message }) =
                     height: "100%",
                     gap: "0.75vw",
                     color: "secondary.main",
+                    bgcolor: "background.default",
                 }}
             >
                 <Title name={`${message.name}`} right={<Box sx={{ color: "primary.main" }}>{message.from}</Box>} />
-                <Box style={{ wordBreak: "break-all", whiteSpace: "pre-line" }}>{message.text}</Box>
+                <Box style={{ wordBreak: "break-all", whiteSpace: "pre-line", color: "text.secondary" }}>{message.text}</Box>
                 <Box style={{ fontSize: "0.6vw", marginTop: "auto" }}>{formatTime(new Date(Number(message.timestamp)))}</Box>
             </Paper>
         </Grid>

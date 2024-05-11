@@ -32,12 +32,19 @@ const NagaPhone: React.FC<PhoneProps> = ({ nagaPhone }) => {
 
     return (
         <Grid item xs={1}>
-            <Paper sx={{ padding: "1vw", flexDirection: "column", gap: "1vw" }}>
+            <Paper sx={{ padding: "1vw", flexDirection: "column", gap: "1vw", bgcolor: "background.default" }}>
                 <Title name={nagaPhone.verified_name} />
                 <Box>Número: {nagaPhone.display_phone_number}</Box>
                 <Box sx={{ alignItems: "center", gap: "1vw" }}>
                     Confiabilidade:{" "}
-                    <Box sx={{ borderRadius: "100%", width: "1vw", height: "1vw", bgcolor: nagaPhone.quality_rating.toLowerCase() }} />
+                    <Box
+                        sx={{
+                            borderRadius: "100%",
+                            width: "1vw",
+                            height: "1vw",
+                            bgcolor: nagaPhone.quality_rating.toLowerCase(),
+                        }}
+                    />
                 </Box>
                 <Box>App ID: {nagazap?.appId}</Box>
                 <Box>Phone ID: {nagazap?.phoneId}</Box>
