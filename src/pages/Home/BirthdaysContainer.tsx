@@ -31,11 +31,11 @@ export const BirthdaysContainer: React.FC<BirthdayContainerProps> = ({ user }) =
                     src={birth}
                     style={{
                         position: "absolute",
-                        left: "-1vw",
-                        top: "-1.6vw",
+                        left: "-1.3vw",
+                        top: "-1.3vw",
                         width: "2.5vw",
                         height: "2.5vw",
-                        transform: "rotate(325deg)",
+                        transform: "rotate(320deg)",
                         zIndex: 1,
                     }}
                 />

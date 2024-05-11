@@ -7,6 +7,7 @@ import { StatusLogsContainer } from "./StatusLogsContainer"
 import { WeatherContainer } from "./WeatherContainer"
 import { BirthdaysContainer } from "./BirthdaysContainer"
 import { ContainerSkeleton } from "./ContainerSkeleton"
+import { WarningContainer } from "./WarningContainer"
 
 interface HomeProps {
     user: User
@@ -20,7 +21,8 @@ export const Home: React.FC<HomeProps> = ({ user }) => {
                 <Box sx={{ width: "80%", flex: 1, height: "80%" }}>
                     <Grid container spacing={4} columns={2} rowSpacing={"2vw"}>
                         <Grid item xs={1}>
-                            <ContainerSkeleton />
+                            <WarningContainer />
+                            {/* <ContainerSkeleton /> */}
                         </Grid>
                         <Grid item xs={1}>
                             <BirthdaysContainer user={user} />

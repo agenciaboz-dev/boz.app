@@ -78,7 +78,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                         flexWrap: isMobile ? "wrap" : "nowrap",
                     }}
                 >
-                    <p style={{fontSize:"1.2vw", fontWeight:"800"}}>{warning.title}</p>
+                    <p style={{ fontSize: "1.2vw", fontWeight: "800" }}>{warning.title}</p>
                 </Box>
 
                 <Box
@@ -101,7 +101,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                             <UsersToolip users={unconfirmedUsers}>
                                 <Badge badgeContent={unconfirmedUsers.length} color="error">
                                     <IconButton color={"error"}>
-                                        <VisibilityOffIcon />
+                                        1 <VisibilityOffIcon />
                                     </IconButton>
                                 </Badge>
                             </UsersToolip>
