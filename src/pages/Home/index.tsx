@@ -22,7 +22,6 @@ export const Home: React.FC<HomeProps> = ({ user }) => {
                     <Grid container spacing={4} columns={2} rowSpacing={"2vw"}>
                         <Grid item xs={1}>
                             <WarningContainer />
-                            {/* <ContainerSkeleton /> */}
                         </Grid>
                         <Grid item xs={1}>
                             <BirthdaysContainer user={user} />

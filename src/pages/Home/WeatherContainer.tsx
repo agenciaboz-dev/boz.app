@@ -6,9 +6,5 @@ import { WeatherComponent } from "./WeatherComponent"
 interface WeatherContainerProps {}
 
 export const WeatherContainer: React.FC<WeatherContainerProps> = ({}) => {
-    return (
-        <ContainerWrapper>
-            <WeatherComponent />
-        </ContainerWrapper>
-    )
+    return <WeatherComponent />
 }

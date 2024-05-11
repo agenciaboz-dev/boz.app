@@ -5,6 +5,7 @@ import { useUser } from "../../hooks/useUser"
 import { sortBirthday } from "../../tools/sortBirthday"
 import { UserAvatar } from "../Admin/Stats/StatusLogs"
 import birth from "../../assets/icons/birth.png"
+import { ContainerSkeleton } from "./ContainerSkeleton"
 
 interface BirthdayContainerProps {
     user: User
@@ -15,7 +16,7 @@ export const BirthdaysContainer: React.FC<BirthdayContainerProps> = ({ user }) =
     const next_birthdays = sortBirthday(list)
     // console.log(next_birthdays)
 
-    return (
+    return list ? (
         <ContainerWrapper>
             <Box sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>Aniversários</Box>
             <Box
@@ -62,5 +63,7 @@ export const BirthdaysContainer: React.FC<BirthdayContainerProps> = ({ user }) =
                 })}
             </Box>
         </ContainerWrapper>
+    ) : (
+        <ContainerSkeleton />
     )
 }

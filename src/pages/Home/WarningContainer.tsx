@@ -4,6 +4,7 @@ import { ContainerWrapper } from "./ContainerWrapper"
 import { useWarnings } from "../../hooks/useWarnings"
 import { useUser } from "../../hooks/useUser"
 import { useNavigate } from "react-router-dom"
+import { ContainerSkeleton } from "./ContainerSkeleton"
 
 interface WarningContainerProps {}
 
@@ -26,7 +27,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({}) => {
         setList(warnings.list)
     }, [warnings.list])
 
-    return (
+    return list ? (
         <ContainerWrapper>
             <Box
                 sx={{
@@ -98,5 +99,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({}) => {
                 sx={{ mt: 2, alignSelf: "center" }}
             />
         </ContainerWrapper>
+    ) : (
+        <ContainerSkeleton />
     )
 }

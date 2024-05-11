@@ -25,7 +25,7 @@ import thunder_showers_day from "../../assets/icons/SVG/2nd Set - Color/thunder-
 import thunder_showers_night from "../../assets/icons/SVG/2nd Set - Color/thunder-showers-night.svg"
 import thunder from "../../assets/icons/SVG/2nd Set - Color/thunder.svg"
 import wind from "../../assets/icons/SVG/2nd Set - Color/wind.svg"
-import { Divider, Skeleton } from "@mui/material"
+import { Divider, Paper, Skeleton } from "@mui/material"
 import axios from "axios"
 import { useArray } from "burgos-array"
 import { ContainerSkeleton } from "./ContainerSkeleton"
@@ -104,142 +104,161 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
         climate()
     }, [])
 
-    return data !== null ? (
-        <Box
+    return data ? (
+        <Paper
             sx={{
-                height: "100%",
-                width: "1",
+                height: "39vh",
+                width: "100%",
+                bgcolor: "background.default",
+                color: "primary.main",
+                borderRadius: "0 3vw",
+                padding: "2vw",
                 flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
-                p: "0vw",
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                borderBottom: "solid 3px",
+                borderBottomColor: "primary.main",
+                overflowY: "auto",
+                gap: "1vw",
             }}
         >
-            <Box sx={{ width: 1, height: 0.6, flexDirection: "column" }}>
-                <Box sx={{ width: 1, height: 0.45 }}>
-                    <Box sx={{ flexDirection: "row", justifyContent: "space-between", width: 1 }}>
-                        <Box sx={{ flexDirection: "row", justifyContent: "space-between", width: 0.5 }}>
-                            <Box sx={{ flexDirection: "row", gap: "1vw" }}>
-                                <img
-                                    src={data && iconMappings[data.currentConditions.icon]}
-                                    style={{ width: "3.5vw", height: "3.5vw" }}
-                                />
-                                <Box sx={{ alignItems: "start", gap: "0.3vw" }}>
-                                    <p style={{ fontSize: "2.8rem", fontWeight: "600", margin: 0, padding: 0 }}>
-                                        {data && ((data.currentConditions.temp - 32) / 1.8).toFixed(0)}
-                                    </p>
-                                    <p style={{ fontSize: "1.5rem", position: "relative", top: "0.6vw" }}>°C</p>
-                                </Box>
-                            </Box>
-                        </Box>
-                        <Box sx={{ flexDirection: "column", alignItems: "end" }}>
-                            <p style={{ fontWeight: "600", fontSize: "1.2rem" }}>Curitiba</p>
-                            <p style={{ fontSize: "0.9rem" }}>{dateTime}</p>
-                            <p style={{ fontSize: "0.8rem" }}> {data && climaMappings[data.currentConditions.icon]}</p>
-                        </Box>
-                    </Box>
-                </Box>
-                <Divider />
-                <Box
-                    ref={scrollRef}
-                    sx={{
-                        width: 1,
-                        height: 0.55,
-                        gap: "1vw",
-                        overflowX: "auto",
-                        overflowY: "hidden",
-                        pt: "0.5vw",
-                        "&::-webkit-scrollbar": {
-                            width: "0.3vw",
-                            height: "0.4vw",
-                        },
-                        "&::-webkit-scrollbar-track": {
-                            background: "#f1f1f1",
-                            borderRadius: "0.4vw",
-                        },
-                        "&::-webkit-scrollbar-thumb": {
-                            background: colors.primary,
-                            borderRadius: "0.4vw",
-                        },
-                        "&::-webkit-scrollbar-thumb:hover": {
-                            background: "primary.main",
-                        },
-                    }}
-                >
-                    {data &&
-                        data.days[1].hours
-                            .filter((item: any) => {
-                                const horaItem = parseInt(item.datetime.split(":")[0]) // Extrair a hora do item
-                                return horaItem >= new Date().getHours() // Filtrar itens a partir do horário atual
-                            })
-                            .map((item: any, index: number) => (
-                                <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
-                                    <p style={{ fontSize: "0.8rem" }}>
-                                        {item.datetime.split(":")[0] + ":" + item.datetime.split(":")[1]}
-                                    </p>
-                                    <img src={iconMappings[item.icon]} style={{ width: "1.4vw", height: "1.4vw" }} />
-                                    <p style={{ fontSize: "0.8rem" }}>{data && ((item.temp - 32) / 1.8).toFixed(0)}°</p>
-                                </Box>
-                            ))}
-                    {data &&
-                        data.days[2].hours
-                            .filter((item: any) => {
-                                const horaItem = parseInt(item.datetime.split(":")[0]) // Extrair a hora do item
-                                return horaItem < new Date().getHours() // Filtrar itens a partir do horário atual
-                            })
-                            .map((item: any, index: number) => (
-                                <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
-                                    <p style={{ fontSize: "0.8rem" }}>
-                                        {item.datetime.split(":")[0] + ":" + item.datetime.split(":")[1]}
-                                    </p>
-                                    <img src={iconMappings[item.icon]} style={{ width: "1.4vw", height: "1.4vw" }} />
-                                    <p style={{ fontSize: "0.8rem" }}>{data && ((item.temp - 32) / 1.8).toFixed(0)}°</p>
-                                </Box>
-                            ))}
-                </Box>
-                <Divider />
-            </Box>
             <Box
                 sx={{
-                    width: 1,
-                    height: 0.42,
+                    height: "100%",
+                    width: "1",
+                    flexDirection: "column",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    overflowX: "auto",
-                    overflowY: "hidden",
-                    pt: "0.7vw",
+                    p: "0vw",
                 }}
             >
-                {data && (
-                    <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }}>
-                        <p style={{ fontSize: "1rem", fontWeight: "bold1" }}>Hoje</p>
-                        <img src={data.days && iconMappings[data.days[1].icon]} style={{ width: "2vw", height: "2vw" }} />
-                        <Box sx={{ flexDirection: "column" }}>
-                            <p style={{ fontSize: "1rem", color: "orange" }}>
-                                {data.days && ((data.days[1].tempmax - 32) / 1.8).toFixed(0)}°
-                            </p>
-                            <p style={{ fontSize: "1rem" }}>
-                                {data.days && ((data.days[1].tempmin - 32) / 1.8).toFixed(0)}°
-                            </p>
-                        </Box>
-                    </Box>
-                )}
-                {data &&
-                    data.days.slice(2, 11).map((item: any, index: any) => (
-                        <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
-                            <p style={{ fontSize: "1rem" }}>{format(new Date(item.datetime), "dd/MM")}</p>
-                            <img src={iconMappings[item.icon]} style={{ width: "2vw", height: "2vw" }} />
-                            <Box sx={{ flexDirection: "column" }}>
-                                <p style={{ fontSize: "1rem", color: "orange" }}>
-                                    {data && ((item.tempmax - 32) / 1.8).toFixed(0)}°
-                                </p>
-                                <p style={{ fontSize: "1rem" }}>{data && ((item.tempmin - 32) / 1.8).toFixed(0)}°</p>
+                <Box sx={{ width: 1, height: 0.6, flexDirection: "column" }}>
+                    <Box sx={{ width: 1, height: 0.45 }}>
+                        <Box sx={{ flexDirection: "row", justifyContent: "space-between", width: 1 }}>
+                            <Box sx={{ flexDirection: "row", justifyContent: "space-between", width: 0.5 }}>
+                                <Box sx={{ flexDirection: "row", gap: "1vw" }}>
+                                    <img
+                                        src={data && iconMappings[data.currentConditions.icon]}
+                                        style={{ width: "3.5vw", height: "3.5vw" }}
+                                    />
+                                    <Box sx={{ alignItems: "start", gap: "0.3vw" }}>
+                                        <p style={{ fontSize: "2.8rem", fontWeight: "600", margin: 0, padding: 0 }}>
+                                            {data && ((data.currentConditions.temp - 32) / 1.8).toFixed(0)}
+                                        </p>
+                                        <p style={{ fontSize: "1.5rem", position: "relative", top: "0.6vw" }}>°C</p>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Box sx={{ flexDirection: "column", alignItems: "end" }}>
+                                <p style={{ fontWeight: "600", fontSize: "1.2rem" }}>Curitiba</p>
+                                <p style={{ fontSize: "0.9rem" }}>{dateTime}</p>
+                                <p style={{ fontSize: "0.8rem" }}> {data && climaMappings[data.currentConditions.icon]}</p>
                             </Box>
                         </Box>
-                    ))}
-            </Box>
-            {/* //aqui */}
-            {/* <Box sx={{ flexDirection: "row", alignItems: "center", gap: "3vw", width: "65%" }}>
+                    </Box>
+                    <Divider />
+                    <Box
+                        ref={scrollRef}
+                        sx={{
+                            width: 1,
+                            height: 0.55,
+                            gap: "1vw",
+                            overflowX: "auto",
+                            overflowY: "hidden",
+                            pt: "0.5vw",
+                            "&::-webkit-scrollbar": {
+                                width: "0.3vw",
+                                height: "0.4vw",
+                            },
+                            "&::-webkit-scrollbar-track": {
+                                background: "#f1f1f1",
+                                borderRadius: "0.4vw",
+                            },
+                            "&::-webkit-scrollbar-thumb": {
+                                background: colors.primary,
+                                borderRadius: "0.4vw",
+                            },
+                            "&::-webkit-scrollbar-thumb:hover": {
+                                background: "primary.main",
+                            },
+                        }}
+                    >
+                        {data &&
+                            data.days[1].hours
+                                .filter((item: any) => {
+                                    const horaItem = parseInt(item.datetime.split(":")[0]) // Extrair a hora do item
+                                    return horaItem >= new Date().getHours() // Filtrar itens a partir do horário atual
+                                })
+                                .map((item: any, index: number) => (
+                                    <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
+                                        <p style={{ fontSize: "0.8rem" }}>
+                                            {item.datetime.split(":")[0] + ":" + item.datetime.split(":")[1]}
+                                        </p>
+                                        <img src={iconMappings[item.icon]} style={{ width: "1.4vw", height: "1.4vw" }} />
+                                        <p style={{ fontSize: "0.8rem" }}>{data && ((item.temp - 32) / 1.8).toFixed(0)}°</p>
+                                    </Box>
+                                ))}
+                        {data &&
+                            data.days[2].hours
+                                .filter((item: any) => {
+                                    const horaItem = parseInt(item.datetime.split(":")[0]) // Extrair a hora do item
+                                    return horaItem < new Date().getHours() // Filtrar itens a partir do horário atual
+                                })
+                                .map((item: any, index: number) => (
+                                    <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
+                                        <p style={{ fontSize: "0.8rem" }}>
+                                            {item.datetime.split(":")[0] + ":" + item.datetime.split(":")[1]}
+                                        </p>
+                                        <img src={iconMappings[item.icon]} style={{ width: "1.4vw", height: "1.4vw" }} />
+                                        <p style={{ fontSize: "0.8rem" }}>{data && ((item.temp - 32) / 1.8).toFixed(0)}°</p>
+                                    </Box>
+                                ))}
+                    </Box>
+                    <Divider />
+                </Box>
+                <Box
+                    sx={{
+                        width: 1,
+                        height: 0.42,
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        overflowX: "auto",
+                        overflowY: "hidden",
+                        pt: "0.7vw",
+                    }}
+                >
+                    {data && (
+                        <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }}>
+                            <p style={{ fontSize: "1rem", fontWeight: "bold1" }}>Hoje</p>
+                            <img
+                                src={data.days && iconMappings[data.days[1].icon]}
+                                style={{ width: "2vw", height: "2vw" }}
+                            />
+                            <Box sx={{ flexDirection: "column" }}>
+                                <p style={{ fontSize: "1rem", color: "orange" }}>
+                                    {data.days && ((data.days[1].tempmax - 32) / 1.8).toFixed(0)}°
+                                </p>
+                                <p style={{ fontSize: "1rem" }}>
+                                    {data.days && ((data.days[1].tempmin - 32) / 1.8).toFixed(0)}°
+                                </p>
+                            </Box>
+                        </Box>
+                    )}
+                    {data &&
+                        data.days.slice(2, 11).map((item: any, index: any) => (
+                            <Box sx={{ flexDirection: "column", alignItems: "center", gap: "0.3vw" }} key={index}>
+                                <p style={{ fontSize: "1rem" }}>{format(new Date(item.datetime), "dd/MM")}</p>
+                                <img src={iconMappings[item.icon]} style={{ width: "2vw", height: "2vw" }} />
+                                <Box sx={{ flexDirection: "column" }}>
+                                    <p style={{ fontSize: "1rem", color: "orange" }}>
+                                        {data && ((item.tempmax - 32) / 1.8).toFixed(0)}°
+                                    </p>
+                                    <p style={{ fontSize: "1rem" }}>{data && ((item.tempmin - 32) / 1.8).toFixed(0)}°</p>
+                                </Box>
+                            </Box>
+                        ))}
+                </Box>
+                {/* //aqui */}
+                {/* <Box sx={{ flexDirection: "row", alignItems: "center", gap: "3vw", width: "65%" }}>
                     {loading ? (
                         <CircularProgress sx={{ color: "white" }} />
                     ) : (
@@ -255,7 +274,8 @@ export const WeatherComponent: React.FC<WeatherComponentProps> = ({}) => {
                     <p style={{ fontSize: "2.9vw" }}>{dateTime}</p>
                     <p style={{ fontSize: "3vw" }}> {data?.icon && climaMappings[data.icon]}</p>
                 </Box> */}
-        </Box>
+            </Box>
+        </Paper>
     ) : (
         <ContainerSkeleton />
     )
