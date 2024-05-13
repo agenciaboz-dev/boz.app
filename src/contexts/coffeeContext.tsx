@@ -71,6 +71,9 @@ export const CoffeeProvider: React.FC<CoffeeProviderProps> = ({ children }) => {
                     window.parent.focus()
                 }
             }
+
+            const audio = new Audio("/coffee_lovers.mp4")
+            audio.play()
         })
 
         io.on("coffee:timer", (timer) => {
@@ -107,8 +110,6 @@ export const CoffeeProvider: React.FC<CoffeeProviderProps> = ({ children }) => {
     useEffect(() => {
         io.on("coffee:maker", (user) => {
             setMaker(user)
-            const audio = new Audio("/coffee_lovers.mp4")
-            audio.play()
         })
 
         io.on("coffee:making", () => {
