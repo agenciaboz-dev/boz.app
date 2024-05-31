@@ -50,56 +50,67 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ customer }) 
                     Ver mais
                 </p>
             </Box>
-            {list
-                .sort((a, b) => b.id - a.id)
-                .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-                .map((warning) => (
-                    <Box sx={{ flexDirection: "column" }}>
-                        <Box
-                            sx={{ alignItems: "center", width: 1, justifyContent: "space-between", color: "text.secondary" }}
-                        >
-                            <Box sx={{ flexDirection: "column", width: 0.7 }}>
-                                <p
-                                    style={{
-                                        fontSize: "1rem",
-                                        fontWeight: "800",
-                                        maxWidth: "100%",
-                                        overflowX: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "nowrap",
-                                    }}
-                                >
-                                    {warning.title}
-                                </p>
-                                <p
-                                    style={{
-                                        fontSize: "0.8rem",
-                                        maxWidth: "100%",
-                                        overflowX: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "nowrap",
-                                    }}
-                                >
-                                    {warning.text}
-                                </p>
-                            </Box>
-                            <Box sx={{ flexDirection: "column", width: 0.2, textAlign: "end" }}>
-                                <p style={{ fontSize: "0.8rem" }}>{warning.creator.name.split(" ")[0]}</p>
-                                <p style={{ fontSize: "0.8rem" }}>
-                                    {new Date(Number(warning.date)).toLocaleString("pt-br")}
-                                </p>
+            {!customer ? (
+                list
+                    .sort((a, b) => b.id - a.id)
+                    .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                    .map((warning) => (
+                        <Box sx={{ flexDirection: "column" }}>
+                            <Box
+                                sx={{
+                                    alignItems: "center",
+                                    width: 1,
+                                    justifyContent: "space-between",
+                                    color: "text.secondary",
+                                }}
+                            >
+                                <Box sx={{ flexDirection: "column", width: 0.7 }}>
+                                    <p
+                                        style={{
+                                            fontSize: "1rem",
+                                            fontWeight: "800",
+                                            maxWidth: "100%",
+                                            overflowX: "hidden",
+                                            textOverflow: "ellipsis",
+                                            whiteSpace: "nowrap",
+                                        }}
+                                    >
+                                        {warning.title}
+                                    </p>
+                                    <p
+                                        style={{
+                                            fontSize: "0.8rem",
+                                            maxWidth: "100%",
+                                            overflowX: "hidden",
+                                            textOverflow: "ellipsis",
+                                            whiteSpace: "nowrap",
+                                        }}
+                                    >
+                                        {warning.text}
+                                    </p>
+                                </Box>
+                                <Box sx={{ flexDirection: "column", width: 0.2, textAlign: "end" }}>
+                                    <p style={{ fontSize: "0.8rem" }}>{warning.creator.name.split(" ")[0]}</p>
+                                    <p style={{ fontSize: "0.8rem" }}>
+                                        {new Date(Number(warning.date)).toLocaleString("pt-br")}
+                                    </p>
+                                </Box>
                             </Box>
                         </Box>
-                    </Box>
-                ))}
-            <Pagination
-                count={noOfPages}
-                onChange={handleChangePage}
-                color="primary"
-                variant="outlined"
-                page={page}
-                sx={{ mt: 2, alignSelf: "center" }}
-            />
+                    ))
+            ) : (
+                <p>Construindo ...</p>
+            )}
+            {!customer && (
+                <Pagination
+                    count={noOfPages}
+                    onChange={handleChangePage}
+                    color="primary"
+                    variant="outlined"
+                    page={page}
+                    sx={{ mt: 2, alignSelf: "center" }}
+                />
+            )}
         </ContainerWrapper>
     ) : (
         <ContainerSkeleton />

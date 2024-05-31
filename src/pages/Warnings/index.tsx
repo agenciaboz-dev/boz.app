@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Paper, SxProps, useMediaQuery } from "@mui/material"
+import { Box, Paper, SxProps, Tab, Tabs, useMediaQuery } from "@mui/material"
 import { Header } from "../../components/Header"
 import { backgroundStyle } from "../../style/background"
 import { useWarnings } from "../../hooks/useWarnings"
@@ -16,9 +16,15 @@ export const Warnings: React.FC<WarningsProps> = ({ user }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const warnings = useWarnings()
 
+    const [value, setValue] = React.useState("intern")
+
     const { isAdmin } = useUser()
 
     const [list, setList] = useState<Warning[]>(warnings.list)
+
+    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+        setValue(newValue)
+    }
 
     const scrollBar: SxProps = {
         overflowY: "auto",
@@ -67,13 +73,19 @@ export const Warnings: React.FC<WarningsProps> = ({ user }) => {
                 >
                     Avisos
                 </h1>
-                {isAdmin() && <NewWarning user={user} />}
-                {list
-                    .sort((a, b) => b.id - a.id)
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <Tabs value={value} onChange={handleChange}>
+                        <Tab value={"intern"} label="Interno" sx={{ textTransform: "capitalize", fontSize: "1vw" }} />
+                        <Tab value={"customer"} label="Clientes" sx={{ textTransform: "capitalize", fontSize: "1vw" }} />
+                    </Tabs>
+                </Box>
+                {isAdmin() && <NewWarning user={user} customer={value === "customer" ? true : false} />}
+                {value === "intern"
+                    ? list
+                          .sort((a, b) => b.id - a.id)
 
-                    .map((warning) => (
-                        <WarningContainer key={warning.id} warning={warning} user={user} />
-                    ))}
+                          .map((warning) => <WarningContainer key={warning.id} warning={warning} user={user} />)
+                    : value === "customer" && <p></p>}
             </Box>
         </Box>
     )

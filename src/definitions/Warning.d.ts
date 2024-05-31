@@ -11,4 +11,7 @@ declare interface Warning {
 declare interface NewWarning {
     title: string
     text: string
+    customer?: Customer
+    customerId?: number
+    departments: Department[]
 }
