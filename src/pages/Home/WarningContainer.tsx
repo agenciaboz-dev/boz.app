@@ -6,9 +6,11 @@ import { useUser } from "../../hooks/useUser"
 import { useNavigate } from "react-router-dom"
 import { ContainerSkeleton } from "./ContainerSkeleton"
 
-interface WarningContainerProps {}
+interface WarningContainerProps {
+    customer?: boolean
+}
 
-export const WarningContainer: React.FC<WarningContainerProps> = ({}) => {
+export const WarningContainer: React.FC<WarningContainerProps> = ({ customer }) => {
     const navigate = useNavigate()
     const warnings = useWarnings()
 
@@ -38,7 +40,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({}) => {
                     justifyContent: "space-between",
                 }}
             >
-                Avisos
+                {customer ? "Avisos Cliente" : "Avisos"}
                 <p
                     style={{ fontSize: "0.8rem", cursor: "pointer", textDecoration: "underline" }}
                     onClick={() => {

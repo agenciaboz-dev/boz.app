@@ -22,7 +22,7 @@ export const UsersContainer: React.FC<UsersContainerProps> = ({ user }) => {
                 width: "16vw", // Garante que ocupe 20% da largura
                 bgcolor: "background.default",
                 color: "primary.main",
-                borderRadius: "0 3vw",
+                // borderRadius: "0 3vw",
                 padding: "2vw",
                 flexDirection: "column",
                 boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",

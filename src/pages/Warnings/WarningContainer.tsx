@@ -56,7 +56,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                 bgcolor: colors.background.primary,
                 gap: isMobile ? "3vw" : "0.5vw",
                 color: "primary.main",
-                borderRadius: isMobile ? "3vw" : "0 3vw",
+                // borderRadius: isMobile ? "3vw" : "0 3vw",
                 // borderBottom: "2px solid",
                 padding: isMobile ? "3vw" : "2vw",
                 flexDirection: "column",

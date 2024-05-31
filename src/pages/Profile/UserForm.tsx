@@ -14,7 +14,9 @@ interface UserFormProps {
     values: UserForm
     handleChange: {
         (e: React.ChangeEvent<any>): void
-        <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any> ? void : (e: string | React.ChangeEvent<any>) => void
+        <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any>
+            ? void
+            : (e: string | React.ChangeEvent<any>) => void
     }
     selectedRoles: Role[]
     setSelectedRoles: (roles: Role[]) => void
@@ -53,13 +55,13 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
             }}
         >
             <Container name="Informações Pessoais">
-                <TaiTextField label="Nome" name="name" value={values.name} onChange={handleChange} style={style} required />
+                <TaiTextField label="Nome" name="name" value={values.name} onChange={handleChange} sx={style} required />
                 <TaiTextField
                     label="Telefone"
                     name="phone"
                     value={values.phone}
                     onChange={handleChange}
-                    style={style}
+                    sx={style}
                     required
                     InputProps={{
                         inputComponent: MaskedInput,
@@ -71,21 +73,21 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     name="cpf"
                     value={values.cpf}
                     onChange={handleChange}
-                    style={style}
+                    sx={style}
                     required
                     InputProps={{
                         inputComponent: MaskedInput,
                         inputProps: { mask: masks.cpf },
                     }}
                 />
-                <TaiTextField label="E-mail" name="email" value={values.email} onChange={handleChange} style={style} required />
+                <TaiTextField label="E-mail" name="email" value={values.email} onChange={handleChange} sx={style} required />
 
                 <TaiTextField
                     label="Data de nascimento"
                     name="birth"
                     value={values.birth}
                     onChange={handleChange}
-                    style={style}
+                    sx={style}
                     required
                     InputProps={{
                         inputComponent: MaskedInput,
@@ -97,12 +99,26 @@ export const UserForm: React.FC<UserFormProps> = ({ values, handleChange, select
                     name="username"
                     value={values.username}
                     onChange={handleChange}
-                    style={style}
+                    sx={style}
                     required
                     disabled={!createOnly}
                 />
-                <TaiTextField label="Instagram" name="instagram" value={values.instagram} onChange={handleChange} style={style} required={false} />
-                <TaiTextField label="Github" name="Github" value={values.github} onChange={handleChange} style={style} required={false} />
+                <TaiTextField
+                    label="Instagram"
+                    name="instagram"
+                    value={values.instagram}
+                    onChange={handleChange}
+                    sx={style}
+                    required={false}
+                />
+                <TaiTextField
+                    label="Github"
+                    name="Github"
+                    value={values.github}
+                    onChange={handleChange}
+                    sx={style}
+                    required={false}
+                />
             </Container>
 
             <Container name="Setor">

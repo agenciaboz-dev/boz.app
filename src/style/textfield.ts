@@ -40,7 +40,7 @@ export const textFieldStyle: SxProps = {
     },
 
     "& .MuiInputBase-root": {
-        borderRadius: "0 1vw 0vw 1vw",
+        // borderRadius: "0 1vw 0vw 1vw",
 
         "@media (max-width: 600px)": {
             borderRadius: "0 3vw 0vw 3vw",

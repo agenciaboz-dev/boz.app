@@ -17,20 +17,21 @@ export const Home: React.FC<HomeProps> = ({ user }) => {
     return (
         <Box sx={backgroundStyle}>
             <Header user={user} />
-            <Box sx={{ padding: "2vw", gap: "2vw", flex: 1, height: 1, width: 1 }}>
-                <Box sx={{ width: "80%", flex: 1, height: "80%" }}>
-                    <Grid container spacing={4} columns={2} rowSpacing={"2vw"}>
+            <Box sx={{ padding: "2vw", gap: "2vw", height: 0.9, width: 1 }}>
+                <Box sx={{ width: "81%", height: "100%" }}>
+                    <Grid container columns={2} rowSpacing={1} columnSpacing={3}>
+                        <Grid item xs={1}>
+                            <WarningContainer customer />
+                        </Grid>
                         <Grid item xs={1}>
                             <WarningContainer />
                         </Grid>
                         <Grid item xs={1}>
-                            <BirthdaysContainer user={user} />
-                        </Grid>
-                        <Grid item xs={1.3}>
                             <WeatherContainer />
                         </Grid>
-                        <Grid item xs={0.7}>
-                            <StatusLogsContainer user={user} />
+                        <Grid item xs={1}>
+                            <BirthdaysContainer user={user} />
+                            {/* <StatusLogsContainer user={user} /> */}
                         </Grid>
                     </Grid>
                 </Box>
