@@ -6,6 +6,7 @@ declare interface Warning {
 
     creator: User
     customer: Customer
+    customerId: number
     departments: Department[]
     confirmed: User[]
 }

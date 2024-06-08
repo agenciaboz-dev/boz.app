@@ -24,7 +24,7 @@ export const Home: React.FC<HomeProps> = ({ user }) => {
                             <WarningContainer customer />
                         </Grid>
                         <Grid item xs={1}>
-                            <WarningContainer />
+                            <WarningContainer customer={false} />
                         </Grid>
                         <Grid item xs={1}>
                             <WeatherContainer />
