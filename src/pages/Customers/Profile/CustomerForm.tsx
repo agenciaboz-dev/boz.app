@@ -24,7 +24,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
     setSelectedServices,
     createOnly,
 }) => {
-    const isMobile = useMediaQuery('(orientation:portrait)')
+    const isMobile = useMediaQuery("(orientation:portrait)")
     const { services } = useCustomers()
 
     const handleServiceSelect = (child: any) => {
@@ -44,13 +44,13 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                 flexDirection: "column",
                 height: "100%",
                 width: "100%",
-                gap: isMobile? "3vw" : "0.7vw",
-                flexShrink: "unset"
+                gap: isMobile ? "3vw" : "0.7vw",
+                flexShrink: "unset",
             }}
         >
             <TaiTextField label="Nome" name="name" value={values.name} onChange={handleChange} required={true} />
             <TaiTextField
-                label="Recomendações"
+                label="Descrição"
                 name="recomendations"
                 value={values.recomendations}
                 onChange={handleChange}

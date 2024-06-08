@@ -16,7 +16,15 @@ export const Data: React.FC<{
     return !value ? (
         <Skeleton variant="rounded" sx={{ width: "20vw", height: "2vw" }} animation="wave" />
     ) : (
-        <Box sx={{ gap: isMobile? "2vw" : "0.4vw", alignItems: "center", color, fontSize: isMobile? "4vw" : "1vw", width: isMobile? "100%" : "30vw" }}>
+        <Box
+            sx={{
+                gap: isMobile ? "2vw" : "0.4vw",
+                alignItems: "center",
+                color,
+                fontSize: isMobile ? "4vw" : "1vw",
+                width: isMobile ? "100%" : "30vw",
+            }}
+        >
             <Icon />
             <p style={{ fontWeight: "bold" }}>{title}:</p>
             {value}
@@ -46,13 +54,22 @@ export const Title: React.FC<{ name: string; right?: React.ReactNode }> = ({ nam
     )
 }
 
-export const Container: React.FC<{ children: React.ReactNode; name: string }> = ({ children, name }) => {
+export const Container: React.FC<{ children: React.ReactNode; titleChildren?: React.ReactNode; name: string }> = ({
+    children,
+    titleChildren,
+    name,
+}) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
 
     return (
-        <Box sx={{ flexDirection: "column", gap: isMobile? "5vw" : "1vw" }}>
-            <Title name={name} />
-            <Box sx={{ gap: isMobile? "3vw" : "0.7vw", width: "100%", flexWrap: "wrap", justifyContent: "space-between" }}>{children}</Box>
+        <Box sx={{ flexDirection: "column", gap: isMobile ? "5vw" : "1vw" }}>
+            <Box sx={{ flexDirection: "row", width: 1, alignItems: "center", justifyContent: "space-between" }}>
+                <Title name={name} />
+                {titleChildren}
+            </Box>
+            <Box sx={{ gap: isMobile ? "3vw" : "0.7vw", width: "100%", flexWrap: "wrap", justifyContent: "space-between" }}>
+                {children}
+            </Box>
         </Box>
     )
 }
