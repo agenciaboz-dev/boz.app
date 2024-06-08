@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Badge, Box, CircularProgress, IconButton, Paper, useMediaQuery } from "@mui/material"
+import { Badge, Box, Chip, CircularProgress, IconButton, Paper, useMediaQuery } from "@mui/material"
 import ThumbUpIcon from "@mui/icons-material/ThumbUp"
 import ThumbDownIcon from "@mui/icons-material/ThumbDown"
 import { useIo } from "../../hooks/useIo"
@@ -49,12 +49,16 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
         }
     }, [])
 
+    useEffect(() => {
+        console.log()
+    }, [])
+
     return (
         <Paper
             elevation={0}
             sx={{
                 bgcolor: colors.background.primary,
-                gap: isMobile ? "3vw" : "0.5vw",
+                gap: isMobile ? "3vw" : "0.2vw",
                 color: "primary.main",
                 // borderRadius: isMobile ? "3vw" : "0 3vw",
                 // borderBottom: "2px solid",
@@ -75,10 +79,21 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                     sx={{
                         alignItems: "center",
                         gap: "0.5vw",
+                        padding: isMobile ? "0" : "0 0.3vw",
                         flexWrap: isMobile ? "wrap" : "nowrap",
                     }}
                 >
                     <p style={{ fontSize: "1.2vw", fontWeight: "800" }}>{warning.title}</p>
+                    <Box sx={{ gap: "1vw" }}>
+                        {warning.customer && <Chip label={warning.customer.name} />}
+                        {warning.departments &&
+                            warning.departments.map((item) => (
+                                <>
+                                    {" "}
+                                    | <Chip label={`@${"Atendimento"}`} />
+                                </>
+                            ))}
+                    </Box>
                 </Box>
 
                 <Box
@@ -86,9 +101,10 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                         alignItems: "center",
                         justifyContent: "space-between",
                         width: "100%",
+                        padding: isMobile ? "0" : "0 0.3vw",
                     }}
                 >
-                    <p>
+                    <p style={{ fontSize: "0.8vw" }}>
                         {warning.creator.name.split(" ")[0]} - {new Date(Number(warning.date)).toLocaleString("pt-br")}
                     </p>
 
@@ -101,7 +117,7 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
                             <UsersToolip users={unconfirmedUsers}>
                                 <Badge badgeContent={unconfirmedUsers.length} color="error">
                                     <IconButton color={"error"}>
-                                        1 <VisibilityOffIcon />
+                                        <VisibilityOffIcon />
                                     </IconButton>
                                 </Badge>
                             </UsersToolip>
@@ -120,9 +136,9 @@ export const WarningContainer: React.FC<WarningContainerProps> = ({ warning, use
             <Box
                 sx={{
                     flexDirection: "column",
-                    gap: isMobile ? "3vw" : "0.3vw",
+                    gap: isMobile ? "3vw" : "0.2vw",
                     color: "text.secondary",
-                    padding: isMobile ? "0" : "0 1vw",
+                    padding: isMobile ? "0" : "0 0.3vw",
                     textAlign: "justify",
                 }}
             >

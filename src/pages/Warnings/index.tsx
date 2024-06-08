@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { Box, Paper, SxProps, Tab, Tabs, useMediaQuery } from "@mui/material"
+import { Box, SxProps, Tab, Tabs, useMediaQuery } from "@mui/material"
 import { Header } from "../../components/Header"
 import { backgroundStyle } from "../../style/background"
 import { useWarnings } from "../../hooks/useWarnings"
 import { useUser } from "../../hooks/useUser"
 import { NewWarning } from "./NewWarning"
 import { WarningContainer } from "./WarningContainer"
-import { useColors } from "../../hooks/useColors"
 
 interface WarningsProps {
     user: User
@@ -82,10 +81,14 @@ export const Warnings: React.FC<WarningsProps> = ({ user }) => {
                 {isAdmin() && <NewWarning user={user} customer={value === "customer" ? true : false} />}
                 {value === "intern"
                     ? list
+                          .filter((item) => !item.customer)
                           .sort((a, b) => b.id - a.id)
-
                           .map((warning) => <WarningContainer key={warning.id} warning={warning} user={user} />)
-                    : value === "customer" && <p></p>}
+                    : value === "customer" &&
+                      list
+                          .filter((item) => item.customer)
+                          .sort((a, b) => b.id - a.id)
+                          .map((warning) => <WarningContainer key={warning.id} warning={warning} user={user} />)}
             </Box>
         </Box>
     )

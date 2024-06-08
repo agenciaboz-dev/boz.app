@@ -58,16 +58,23 @@ export const NewWarning: React.FC<NewWarningProps> = ({ user, customer }) => {
 
     const handleSubmit = (values: NewWarning, bag: FormikHelpers<NewWarning>) => {
         if (loading) false
-        console.log(values)
-        // setLoading(true)
-        // io.emit("warning:new", { ...values, creatorId: user.id })
-        // bag.resetForm()
+
+        const findDepartments = getDepartmentsByName(selectedDepartments, departments)
+        const data = {
+            ...values,
+            departments: findDepartments,
+        }
+        console.log(data)
+        setLoading(true)
+        io.emit("warning:new", { ...data, creatorId: user.id })
+        bag.resetForm()
     }
 
     useEffect(() => {
-        io.on("warning:new:success", () => {
+        io.on("warning:new:success", (warning: Warning) => {
             setLoading(false)
             snackbar({ severity: "success", text: "Novo aviso criado com sucesso" })
+            console.log(warning)
         })
 
         io.on("warning:new:error", (error) => {
@@ -82,8 +89,17 @@ export const NewWarning: React.FC<NewWarningProps> = ({ user, customer }) => {
         }
     }, [])
 
+    const getDepartmentsByName = (names: string[], allDepartments: { id: number; name: string }[]) => {
+        return allDepartments.filter((department) => names.includes(department.name))
+    }
+
+    useEffect(() => {
+        const findDepartments = getDepartmentsByName(selectedDepartments, departments)
+        console.log(findDepartments)
+    }, [selectedDepartments])
+
     return (
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
             {({ values, handleChange }) => (
                 <Form>
                     <Box sx={{ flexDirection: "column", gap: "1vw" }}>
@@ -115,7 +131,7 @@ export const NewWarning: React.FC<NewWarningProps> = ({ user, customer }) => {
                                         </MenuItem>
                                     ))}
                                 </TaiTextField>
-                                <TaiTextField
+                                {/* <TaiTextField
                                     select
                                     label="Departamentos"
                                     name="departments"
@@ -156,7 +172,7 @@ export const NewWarning: React.FC<NewWarningProps> = ({ user, customer }) => {
                                             {department.name}
                                         </MenuItem>
                                     ))}
-                                </TaiTextField>
+                                </TaiTextField> */}
                             </Box>
                         )}
                         <TaiTextField

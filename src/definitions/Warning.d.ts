@@ -5,6 +5,8 @@ declare interface Warning {
     date: string
 
     creator: User
+    customer: Customer
+    departments: Department[]
     confirmed: User[]
 }
 
